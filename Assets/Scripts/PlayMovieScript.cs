@@ -1,22 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Video;
 
 public class PlayMovieScript : MonoBehaviour {
 	public MovieTexture movTexture;
+	public VideoPlayer vidPlayer;
 	public GameObject pressStartAnimation;
 	private bool fadedOut;
 
 	void Start () {
 		fadedOut = false;
-	
-		GetComponent<Renderer>().material.mainTexture = movTexture;
-		movTexture.Play();
+		vidPlayer = GetComponent<VideoPlayer> ();
+		//GetComponent<Renderer>().material.mainTexture = movTexture;
+		//movTexture.Play();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		if (!movTexture.isPlaying && !fadedOut) {
+		if (!fadedOut && !vidPlayer.isPlaying) {
 			
 			fadedOut = true;
 			iTween.FadeTo (gameObject, 0f, .5f);

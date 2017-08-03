@@ -6,6 +6,9 @@ public class DataManagerScript : MonoBehaviour {
 	public static DataManagerScript dataManager;
 
 	//public static string version; 
+
+    // Universal game variables
+
 	public int teamOneWins;
 	public int teamTwoWins;
 	public static bool playerOnePlaying = true;
@@ -13,6 +16,8 @@ public class DataManagerScript : MonoBehaviour {
 	public static bool playerThreePlaying = true;
 	public static bool playerFourPlaying = true;
 	public static bool CRTMode = true;
+
+    // Player shapes
 
 	public static int playerOneType;
 	public static int playerTwoType;
@@ -40,6 +45,9 @@ public class DataManagerScript : MonoBehaviour {
 	public static int playerFourAces;
 	public static int playerFourReturns;
 	public static int playerFourBumbles;
+
+    // Match stats
+
 	public static int playerFourScores;
 
 	public static int longestRallyCount;
@@ -50,13 +58,17 @@ public class DataManagerScript : MonoBehaviour {
 	public static float gameTime;
 
 	// Tournament mode variables
+
 	public bool tournamentMode;
 	public static int TM_TeamOneWins;
 	public static int TM_TeamTwoWins;
 
 	public static string version;
 	public static bool xboxMode = true;
-	void Awake(){
+
+    // Save instance of self over scene loads
+	void Awake() {
+
 		if (dataManager == null) {
 			DontDestroyOnLoad (gameObject);
 			dataManager = this;
@@ -64,26 +76,29 @@ public class DataManagerScript : MonoBehaviour {
 			Destroy (gameObject);
 		}
 	}
+
 	// Use this for initialization
 	void Start () {
+
+        // Version number
+        // TODO: Uncomment public property instead?
 		version = "V1.5.6";
-		//xboxMode = true;
+
+        // Determine if on Xbox
+        // TODO: make dynamic 
+        xboxMode = false;
+
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
-
-
+    // Reset all player shape choices
 	public static void ResetPlayerTypes(){
 		playerOneType = 0;
 		playerTwoType = 0;
 		playerThreeType = 0;
 		playerFourType = 0;
-
 	}
+
+    // Reset all plater stats AND global match stats
 	public static void ResetStats(){
 		 playerOneAces = 0;
 		 playerOneReturns = 0;

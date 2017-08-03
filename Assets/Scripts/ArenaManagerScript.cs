@@ -8,6 +8,8 @@ public class ArenaManagerScript : MonoBehaviour {
 	private int markerPos = 0;
 	private float[] markerYPositions  = {7.4f, 3.7f, 0f, -3.7f, -7.4f};
 	private float[] markerXPositions = { -17.58f, -1.81f };
+
+    // TODO: Use JoystickButtons object
 	private string jumpButton1 = "Jump_P1";
 	private string gravButton1 = "Grav_P1";
 	private string vertAxis1 = "Vertical_P1";
@@ -24,7 +26,6 @@ public class ArenaManagerScript : MonoBehaviour {
 	private string jumpButton2_Xbox = "Jump_P2_Xbox";
 	private string jumpButton3_Xbox = "Jump_P3_Xbox";
 	private string jumpButton4_Xbox = "Jump_P4_Xbox";
-
 	private string gravButton1_Xbox = "Grav_P1_Xbox";
 	private string gravButton2_Xbox = "Grav_P2_Xbox";
 	private string gravButton3_Xbox = "Grav_P3_Xbox";
@@ -203,16 +204,20 @@ public class ArenaManagerScript : MonoBehaviour {
 
 			foreach (string butt in buttons) {
 				if (Input.GetButtonDown (butt)) {
-					// log which arena
+					
 					if (markerPos == 0) {
-						Debug.Log ("choosing random level");
-						DataManagerScript.arenaType = Random.Range (0, numberOfArenas);
-						IncreasePlayCount ("randomArenaPlays");
 
-					} else {
+                        // Get and log random arena type
+						DataManagerScript.arenaType = Random.Range (0, numberOfArenas);
+						IncreasePlayCount ("randomArenaPlays"); // log which arena
+
+                    } else {
+
+                        // Set and log chosen arena type
 						DataManagerScript.arenaType = markerPos;
-						IncreasePlayCount ("arena" + markerPos + "Plays");
-					}
+						IncreasePlayCount ("arena" + markerPos + "Plays"); // log which arena
+
+                    }
 					StartCoroutine ("NextScene");
 				}
 			}
@@ -245,9 +250,8 @@ public class ArenaManagerScript : MonoBehaviour {
 			marker.transform.localScale = new Vector3(3f, marker.transform.localScale.y, marker.transform.localScale.z) ;
 			posY = markerYPositions [markerPos];
 		}
-		Vector3 tempPos = new Vector3(posX, posY, 1f);
-//		
+
+		Vector3 tempPos = new Vector3(posX, posY, 1f);	
 		marker.transform.position = tempPos;
-		Debug.Log (markerPos);
 	}
 }

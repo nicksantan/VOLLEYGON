@@ -56,7 +56,6 @@ public class ProtipManagerScript : MonoBehaviour {
 		
 	void Update(){
 		if (Input.GetButton (startButton1) && Input.GetButton (startButton2) && Input.GetButton (startButton3) && Input.GetButton (startButton4)) {
-			Debug.Log ("Skipping protip");
 			StartCoroutine ("NextScene");
 		}	
 	}

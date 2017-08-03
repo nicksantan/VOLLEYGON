@@ -13,10 +13,8 @@ public class FakePlayerScript : MonoBehaviour {
 	public string chooseAxis;
 	public string chooseAxis_Xbox;
 
-	public string confirmKey;
-	public string cancelKey;
-	private string confirmKey_Xbox;
-	private string cancelKey_Xbox;
+    private JoystickButtons joystickButtons;
+
 	public int playerIdentifier; 
 	public Text readyText;
 	public Text toJoinText;
@@ -39,7 +37,6 @@ public class FakePlayerScript : MonoBehaviour {
 	public GameObject trapezoid;
 	public GameObject rectangle;
 	public GameObject star;
-
 
 	private int numberOfPlayerTypes = 6;
 
@@ -71,7 +68,6 @@ public class FakePlayerScript : MonoBehaviour {
 			trapezoid.SetActive (false);
 			rectangle.SetActive (false);
 			star.SetActive (false);
-
 
 			if (whichType == 0) {
 //				fakePlayer1.GetComponent<MeshFilter> ().mesh = meshType1;
@@ -117,24 +113,31 @@ public class FakePlayerScript : MonoBehaviour {
 
 
 	void activateReadyState(){
+
 		if (taggedIn) {
+
 			if (!readyToPlay) {
 				audio.PlayOneShot (readySound);
 			}
+
 			readyToPlay = true;
 			playerDescription.enabled = false;
 			playerDifficulty.enabled = false;
 
-	
 			if (readyToPlay) {
+
 				readyText.GetComponent<CanvasRenderer> ().SetAlpha (1.0f);
 				readyBG.GetComponent<CanvasRenderer> ().SetAlpha (1.0f);
+
 			} else {
 				
 				readyText.GetComponent<CanvasRenderer> ().SetAlpha (0.0f);
 				readyBG.GetComponent<CanvasRenderer> ().SetAlpha (0.0f);
+
 			}
+
 		} else {
+
 			taggedIn = true;
 			audio.PlayOneShot (tagInSound);
 			toJoinText.GetComponent<CanvasRenderer> ().SetAlpha (0.0f);
@@ -149,41 +152,43 @@ public class FakePlayerScript : MonoBehaviour {
 			star.SetActive (false);
 
 			switch (thisType) {
-			case 0:
-				square.SetActive (true);
-				break;
-			case 1:
-				circle.SetActive (true);
-				break;
-			case 2:
-				triangle.SetActive (true);
-				break;
-			case 3:
-				trapezoid.SetActive (true);
-				break;
-			case 4:
-				rectangle.SetActive (true);
-				break;
-			case 5:
-				star.SetActive (true);
-				break;
+
+			    case 0:
+				    square.SetActive (true);
+				    break;
+			    case 1:
+				    circle.SetActive (true);
+				    break;
+			    case 2:
+				    triangle.SetActive (true);
+				    break;
+			    case 3:
+				    trapezoid.SetActive (true);
+				    break;
+			    case 4:
+				    rectangle.SetActive (true);
+				    break;
+			    case 5:
+				    star.SetActive (true);
+				    break;
 
 			}
-
+                                
 			switch(playerIdentifier){
 
-			case 1:
-				DataManagerScript.playerOnePlaying = true;
-				break;
-			case 2:
-				DataManagerScript.playerTwoPlaying = true;
-				break;
-			case 3:
-				DataManagerScript.playerThreePlaying = true;
-				break;
-			case 4:
-				DataManagerScript.playerFourPlaying = true;
-				break;
+			    case 1:
+				    DataManagerScript.playerOnePlaying = true;
+				    break;
+			    case 2:
+				    DataManagerScript.playerTwoPlaying = true;
+				    break;
+			    case 3:
+				    DataManagerScript.playerThreePlaying = true;
+				    break;
+			    case 4:
+				    DataManagerScript.playerFourPlaying = true;
+				    break;
+
 			}
 		}
 		ChoosePlayerScript.Instance.CheckStartable ();
@@ -191,13 +196,19 @@ public class FakePlayerScript : MonoBehaviour {
 	}
 
 	void cancelReadyState(){
+
+        // Revert from "ready to play" state to tagged in
 		if (readyToPlay) {
+
 			readyToPlay = false;
 			readyText.GetComponent<CanvasRenderer> ().SetAlpha (0.0f);
 			readyBG.GetComponent<CanvasRenderer> ().SetAlpha (0.0f);
 			playerDescription.enabled = true;
 			playerDifficulty.enabled = true;
+
+        // Revert from tagged in to nothingness
 		} else if (taggedIn) {
+
 			taggedIn = false;
 			toJoinText.GetComponent<CanvasRenderer> ().SetAlpha (1.0f);
 			sr.enabled = false;
@@ -225,22 +236,21 @@ public class FakePlayerScript : MonoBehaviour {
 				break;
 			}
 		}
+
 		ChoosePlayerScript.Instance.CheckStartable ();
 	}
 
 
 	void Start () {
 
-		// assign xbox keys dynamically
-		confirmKey_Xbox = confirmKey + "_Xbox";
-		cancelKey_Xbox = cancelKey + "_Xbox";
+        // Assign button names
+        joystickButtons = new JoystickButtons(playerIdentifier);
 
 		normalAxis = new Axis(chooseAxis);
 		xboxAxis = new Axis(chooseAxis_Xbox);
 
 		sr = GetComponent<SpriteRenderer> ();
 		readyText.GetComponent<CanvasRenderer>().SetAlpha(0.0f);
-		//sr.sprite = squareSprite;
 
 		readyBG.GetComponent<CanvasRenderer> ().SetAlpha (0.0f);
 		sr.enabled = false;
@@ -267,10 +277,6 @@ public class FakePlayerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		//Debug.Log(Input.GetAxis("Vertical_P1_Xbox")) ;
-		// only allow input if game isn't already starting
-		//Debug.Log(ChoosePlayerScript.Instance.locked);
-	//	Debug.Log(DataManagerScript.xboxMode);
 		if (!ChoosePlayerScript.Instance.locked) {
 
 //			if (!DataManagerScript.xboxMode) {
@@ -282,11 +288,11 @@ public class FakePlayerScript : MonoBehaviour {
 			CheckAxis (normalAxis);
 			CheckAxis (xboxAxis);
 
-			if (Input.GetButtonDown (confirmKey) || Input.GetButtonDown(confirmKey_Xbox)) {
+			if ( Input.GetButtonDown ( joystickButtons.jump ) ) {
 				activateReadyState ();
 			}
 
-			if (Input.GetButtonDown (cancelKey) || Input.GetButtonDown(cancelKey_Xbox)) {
+			if ( Input.GetButtonDown (joystickButtons.grav ) ) {
 				cancelReadyState ();
 			}
 		}

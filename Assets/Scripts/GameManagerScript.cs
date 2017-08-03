@@ -58,21 +58,10 @@ public class GameManagerScript : MonoBehaviour {
 	public string startButton3 = "Start_P3";
 	public string startButton4 = "Start_P4";
 
-
-
 	// Static singleton property
 	public static GameManagerScript Instance { get; private set; }
 
-
-	// Use this for initialization
-
-	void StartReplay(){
-		//EZReplayManager.get.record();
-	}
-	void Start () {
-		
-
-	}
+    // Initialization
 	void Awake()
 	{
 		// Save a reference to the AudioHandler component as our singleton instance
@@ -176,15 +165,16 @@ public class GameManagerScript : MonoBehaviour {
 			playersActive++;
 			whichSoloPlayer = 4;
 		}
-		Debug.Log (playersActive);
+
 		if (playersActive == 1) {
+
 			OnePlayerMode = true;
-			Debug.Log("one player mode on");
 			InstantiateClone (whichSoloPlayer);
 			ball.GetComponent<BallScript> ().onePlayerMode = true;
 			rallyCountText.gameObject.SetActive (true);
-			Debug.Log ("rally count text enabled");
-		} else {
+
+        }
+        else {
 			OnePlayerMode = false;
 		}
 
@@ -208,55 +198,47 @@ public class GameManagerScript : MonoBehaviour {
 		Material whichMat = null;
 
 		switch (whichSoloPlayer) {
-		case 1:
-			playerClone = Instantiate (playerClonePrefab, new Vector3 (10.0f, -5f, -0.5f), Quaternion.identity);
-			playerType = Player1.GetComponent<PlayerController> ().playerType;
-			playerClone.GetComponent<PlayerController> ().team = 2;
-			playerClone.GetComponent<PlayerController> ().horiz = "Horizontal_P1";
-			playerClone.GetComponent<PlayerController> ().jumpButton = "Jump_P1";
-			playerClone.GetComponent<PlayerController> ().gravButton = "Grav_P1";
-			playerClone.GetComponent<PlayerController> ().startingGrav = 1;
-			whichMat = Player1Material;
-			// determine position
-			// run a config function to bind the controls
-			break;
-		case 2:
-			playerClone = Instantiate (playerClonePrefab, new Vector3 (10.0f, 5f, -0.5f), Quaternion.identity);
-			playerType = Player2.GetComponent<PlayerController> ().playerType;
-			playerClone.GetComponent<PlayerController> ().team = 2;
-			playerClone.GetComponent<PlayerController> ().horiz = "Horizontal_P2";
-			playerClone.GetComponent<PlayerController> ().jumpButton = "Jump_P2";
-			playerClone.GetComponent<PlayerController> ().gravButton = "Grav_P2";
-			playerClone.GetComponent<PlayerController> ().startingGrav = -1;
-			whichMat = Player2Material;
-			break;
-		case 3:
-			playerClone = Instantiate (playerClonePrefab, new Vector3 (-10.0f, -5f, -0.5f), Quaternion.identity);
-			playerType = Player3.GetComponent<PlayerController> ().playerType;
-			playerClone.GetComponent<PlayerController> ().team = 1;
-			playerClone.GetComponent<PlayerController> ().horiz = "Horizontal_P3";
-			playerClone.GetComponent<PlayerController> ().jumpButton = "Jump_P3";
-			playerClone.GetComponent<PlayerController> ().gravButton = "Grav_P3";
-			playerClone.GetComponent<PlayerController> ().startingGrav = 1;
-			whichMat = Player3Material;
-			break;
-		case 4:
-			playerClone = Instantiate (playerClonePrefab, new Vector3 (-10.0f, 5f, -0.5f), Quaternion.identity);
-			playerType = Player4.GetComponent<PlayerController> ().playerType;
-			playerClone.GetComponent<PlayerController> ().team = 1;
-			playerClone.GetComponent<PlayerController> ().horiz = "Horizontal_P4";
-			playerClone.GetComponent<PlayerController> ().jumpButton = "Jump_P4";
-			playerClone.GetComponent<PlayerController> ().gravButton = "Grav_P4";
-			playerClone.GetComponent<PlayerController> ().startingGrav = -1;
-			whichMat = Player4Material;
-			break;
 
-		default:
-			playerClone = Instantiate (playerClonePrefab, new Vector3 (10.0f, -5f, -0.5f), Quaternion.identity);
+		    case 1:
+			    playerClone = Instantiate (playerClonePrefab, new Vector3 (10.0f, -5f, -0.5f), Quaternion.identity);
+			    playerType = Player1.GetComponent<PlayerController> ().playerType;
+			    playerClone.GetComponent<PlayerController> ().team = 2;
+			    playerClone.GetComponent<PlayerController> ().startingGrav = 1;
+			    whichMat = Player1Material;
+			    // determine position
+			    // run a config function to bind the controls
+			    break;
 
-			playerType = Player1.GetComponent<PlayerController> ().playerType;
-			playerClone.GetComponent<PlayerController> ().team = 2;
-			break;
+		    case 2:
+			    playerClone = Instantiate (playerClonePrefab, new Vector3 (10.0f, 5f, -0.5f), Quaternion.identity);
+			    playerType = Player2.GetComponent<PlayerController> ().playerType;
+			    playerClone.GetComponent<PlayerController> ().team = 2;
+			    playerClone.GetComponent<PlayerController> ().startingGrav = -1;
+			    whichMat = Player2Material;
+			    break;
+
+		    case 3:
+			    playerClone = Instantiate (playerClonePrefab, new Vector3 (-10.0f, -5f, -0.5f), Quaternion.identity);
+			    playerType = Player3.GetComponent<PlayerController> ().playerType;
+			    playerClone.GetComponent<PlayerController> ().team = 1;
+			    playerClone.GetComponent<PlayerController> ().startingGrav = 1;
+			    whichMat = Player3Material;
+			    break;
+
+		    case 4:
+			    playerClone = Instantiate (playerClonePrefab, new Vector3 (-10.0f, 5f, -0.5f), Quaternion.identity);
+			    playerType = Player4.GetComponent<PlayerController> ().playerType;
+			    playerClone.GetComponent<PlayerController> ().team = 1;
+			    playerClone.GetComponent<PlayerController> ().startingGrav = -1;
+			    whichMat = Player4Material;
+			    break;
+
+		    default:
+			    playerClone = Instantiate (playerClonePrefab, new Vector3 (10.0f, -5f, -0.5f), Quaternion.identity);
+			    playerType = Player1.GetComponent<PlayerController> ().playerType;
+			    playerClone.GetComponent<PlayerController> ().team = 2;
+                playerClone.GetComponent<PlayerController>().startingGrav = 1;
+                break;
 		}
 
 		playerClone.SetActive (true);
@@ -275,9 +257,11 @@ public class GameManagerScript : MonoBehaviour {
 	void LaunchTitleScreen(){
 		Application.LoadLevel ("titleScene");
 	}
+
 	void LaunchStatsScreen(){
 		StartCoroutine ("FadeToStats");
 	}
+
 	IEnumerator FadeToStats(){
 		float fadeTime = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
 		yield return new WaitForSeconds (fadeTime);

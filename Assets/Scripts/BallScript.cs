@@ -71,10 +71,11 @@ public class BallScript : MonoBehaviour {
 	// Use this for initialization
 
 	void Awake(){
-		//Debug.Log (GameManagerScript.Instance.CurrentArena);
-	//	CurrentArena = GameManagerScript.Instance.CurrentArena;
-		Debug.Log ("assign arena");
+		// Debug.Log (GameManagerScript.Instance.CurrentArena);
+	    // CurrentArena = GameManagerScript.Instance.CurrentArena;
+		// Debug.Log ("assign arena");
 	}
+
 	void Start () {
 		audio = GetComponent<AudioSource> ();
 		lastScore = 0;
@@ -106,7 +107,7 @@ public class BallScript : MonoBehaviour {
 		//Debug.Log (CurrentArena);
 		if (rb.velocity.magnitude > 80f) {
 
-			Debug.Log (rb.velocity.magnitude);
+			// Debug.Log (rb.velocity.magnitude);
 		}
 		if(rb.velocity.magnitude > maxSpeed)
 		{
@@ -187,11 +188,6 @@ public class BallScript : MonoBehaviour {
 			bouncesOnBottomLeft = 0;
 			bouncesOnBottomRight = 0;
 			CurrentArena.BroadcastMessage ("ReturnColor");
-//			Arena1.BroadcastMessage("ReturnColor");
-//			Arena2.BroadcastMessage("ReturnColor");
-//			Arena3.BroadcastMessage("ReturnColor");
-//			Arena4.BroadcastMessage("ReturnColor");
-			//Debug.Log ("Bounces reset!");
 
 			DataManagerScript.currentRallyCount += 1;
 			if (DataManagerScript.currentRallyCount > DataManagerScript.longestRallyCount) {
@@ -228,6 +224,7 @@ public class BallScript : MonoBehaviour {
 		scoreText.CrossFadeAlpha(0f,.25f,false);
 		winByTwoText.CrossFadeAlpha (0f, .25f, false);
 	}
+
 	void ResetBall(){
 		trail.GetComponent<Trail>().ClearSystem (true);
 		trail.SetActive (false);
@@ -256,13 +253,10 @@ public class BallScript : MonoBehaviour {
 		rb.gravityScale = originalGrav * signValue;
 
 		if (Mathf.Sign (rb.gravityScale) < 0) {
-			Debug.Log ("changing sprite?");
-			//gravityIndicator.GetComponent<PlayAnimationScript> ().PlayAnimation ();
 			GetComponent<SpriteRenderer>().sprite = reverseGravSprite;
 			redball.SetActive (true);
 			//blueball.SetActive (false);
 		} else {
-		//	gravityIndicator.GetComponent<PlayAnimationScript> ().PlayAnimation ();
 			GetComponent<SpriteRenderer>().sprite = originalSprite;
 			blueball.SetActive (true);
 			redball.SetActive (false);
@@ -272,7 +266,7 @@ public class BallScript : MonoBehaviour {
 	void GravChange(){
 		rb.gravityScale *= -1;
 		SoundManagerScript.instance.PlaySingle (gravityChangeSound);
-		Debug.Log ("sign of gravity scale is " + Mathf.Sign (rb.gravityScale));
+		// Debug.Log ("sign of gravity scale is " + Mathf.Sign (rb.gravityScale));
 		if (Mathf.Sign (rb.gravityScale) < 0) {
 			//Debug.Log ("changing sprite?");
 			//GetComponent<SpriteRenderer>().sprite = reverseGravSprite;
@@ -548,7 +542,7 @@ public class BallScript : MonoBehaviour {
 				} else {
 					// single mode
 					singleModeBalls--;
-					Debug.Log ("scored");
+					// Debug.Log ("scored");
 					// generate a random number between one and two
 					int randomTrack = Random.Range(1,3);
 					MusicManagerScript.Instance.SwitchMusic (randomTrack);

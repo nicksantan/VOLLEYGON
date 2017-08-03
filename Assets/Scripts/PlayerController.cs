@@ -15,15 +15,10 @@ public class PlayerController : MonoBehaviour {
 	private float startJumpPower;
 
     // Button names
-	public string horiz = "Horizontal_P1";
-    public string jumpButton = "Jump_P1";
-    public string gravButton = "Grav_P1";
-	private string horiz_Xbox;
-	private string jumpButton_Xbox;
-	private string gravButton_Xbox;
+    private JoystickButtons joystickButtons;
 
     // Properties of player by ID
-	public int playerID;
+    public int playerID;
 	public int playerType = 0;
     private string playerColor;
 
@@ -93,11 +88,6 @@ public class PlayerController : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        // Input strings for Xbox
-		gravButton_Xbox = gravButton + "_Xbox";
-		jumpButton_Xbox = jumpButton + "_Xbox";
-		horiz_Xbox = horiz + "_Xbox";
-
         // Particle system?
         if ( GetComponent<ParticleSystem>() != null) {
             ps = transform.Find("ssps").GetComponent<ParticleSystem>();
@@ -156,6 +146,9 @@ public class PlayerController : MonoBehaviour {
 			    break;
         }
 
+        // Get player input names
+        joystickButtons = new JoystickButtons(playerID);
+
         // Get stats for chosen shape
         string playerShape = shapeNames[playerType];
         ShapeStats stats = new ShapeStats( playerShape );
@@ -179,13 +172,9 @@ public class PlayerController : MonoBehaviour {
     }
 
     void FixedUpdate () {
-		
-		float moveHorizontal;
-		//if (DataManagerScript.xboxMode) {
-			moveHorizontal = Input.GetAxis (horiz_Xbox);
-		//} else {
-			moveHorizontal += Input.GetAxis (horiz);
-        //	}
+
+        // Get horizontal input 
+        float moveHorizontal = Input.GetAxis ( joystickButtons.horizontal );
 
         // Clamp input
         moveHorizontal = Mathf.Clamp(moveHorizontal, -1f, 1f);
@@ -206,7 +195,7 @@ public class PlayerController : MonoBehaviour {
 		if (!inPenalty) {
 
             // Handle jumping
-			if (Input.GetButtonDown (jumpButton) || Input.GetButtonDown(jumpButton_Xbox)) {
+			if ( Input.GetButtonDown (joystickButtons.jump) ) {
 
 				if (isJumping == false && rb != null) {
 					Vector3 jumpForce = new Vector3 (0f, jumpPower * rb.gravityScale, 0f);
@@ -217,7 +206,7 @@ public class PlayerController : MonoBehaviour {
 			}
 
             // Handle gravity switch
-			if (Input.GetButtonDown (gravButton) || Input.GetButtonDown(gravButton_Xbox)) {
+			if ( Input.GetButtonDown (joystickButtons.grav) ) {
 				rb.gravityScale *= -1f;
 				SoundManagerScript.instance.RandomizeSfx (changeGravSound1, changeGravSound2);
 			}

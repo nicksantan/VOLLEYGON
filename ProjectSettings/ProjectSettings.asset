@@ -270,6 +270,20 @@ PlayerSettings:
       m_Icon: {fileID: 2800000, guid: 1d0684f456f12400eb753964f210ec4f, type: 3}
       m_Width: 16
       m_Height: 16
+  - m_BuildTarget: XboxOne
+    m_Icons:
+    - serializedVersion: 2
+      m_Icon: {fileID: 0}
+      m_Width: 100
+      m_Height: 100
+    - serializedVersion: 2
+      m_Icon: {fileID: 0}
+      m_Width: 208
+      m_Height: 208
+    - serializedVersion: 2
+      m_Icon: {fileID: 0}
+      m_Width: 480
+      m_Height: 480
   m_BuildTargetBatching: []
   m_BuildTargetGraphicsAPIs:
   - m_BuildTarget: WindowsStandaloneSupport

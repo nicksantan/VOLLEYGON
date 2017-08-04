@@ -108,7 +108,9 @@ public class ChoosePlayerScript : MonoBehaviour {
 		}
 
 		if ((playersOnLeft == 1 && playersOnRight == 0) && noUnreadyPlayers () || (playersOnLeft == 0 && playersOnRight == 1) && noUnreadyPlayers ()) {
-			gameIsStartable = true;
+
+            // Single player startable
+            gameIsStartable = true;
 			msgBG.enabled = true;
 			msgBG2.enabled = true;
 			onePlayerMessage.enabled = true;
@@ -116,37 +118,36 @@ public class ChoosePlayerScript : MonoBehaviour {
 			oneOnOneMessage.enabled = false;
 
 		} else if (playersOnLeft > 0 && playersOnRight > 0 && noUnreadyPlayers()) {
-			Debug.Log ("Game is now startable");
-			gameIsStartable = true;
-			if (playersOnLeft == 2 && playersOnRight == 1 || playersOnLeft == 1 && playersOnRight == 2) {
 
-				// display 2v1 message
+            // Multiplayer game is startable
+			gameIsStartable = true;
+            msgBG.enabled = true;
+            msgBG2.enabled = true;
+
+            if (playersOnLeft == 2 && playersOnRight == 1 || playersOnLeft == 1 && playersOnRight == 2) {
+
+				// Display 2v1 message
 				twoOnOneMessage.enabled = true;
-				msgBG.enabled = true;
-				msgBG2.enabled = true;
-				// Debug.Log ("Showing 2v1 message");
-				oneOnOneMessage.enabled = false;
-				onePlayerMessage.enabled = false;
+                oneOnOneMessage.enabled = false;
+                onePlayerMessage.enabled = false;
 
 			} else if (playersOnLeft == 1 && playersOnRight == 1){
 
-				//display press start to begin 1v 1 message
+				// Display 1v1 message
 				oneOnOneMessage.enabled = true;
 				twoOnOneMessage.enabled = false;
 				onePlayerMessage.enabled = false;
-				msgBG.enabled = true;
-				msgBG2.enabled = true;
-				// Debug.Log ("showing one on one message");
 
 			}
+
 		} else {
 
+            // Game is not startable
 			twoOnOneMessage.enabled = false;
 			oneOnOneMessage.enabled = false;
 			onePlayerMessage.enabled = false;
 			msgBG.enabled = false;
 			msgBG2.enabled = false;
-			// Debug.Log ("No longer startable. Hiding messages");
 			gameIsStartable = false;
 
 		}

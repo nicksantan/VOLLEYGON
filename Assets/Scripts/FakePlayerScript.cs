@@ -10,8 +10,6 @@ public class FakePlayerScript : MonoBehaviour {
 	public Sprite trapezoidSprite;
 
 	public Image readyBG;
-	public string chooseAxis;
-	public string chooseAxis_Xbox;
 
     private JoystickButtons joystickButtons;
 
@@ -39,9 +37,8 @@ public class FakePlayerScript : MonoBehaviour {
 	public GameObject star;
 
 	private int numberOfPlayerTypes = 6;
-
-	Axis normalAxis;
-	Axis xboxAxis;
+    
+	Axis axis;
 
 	SpriteRenderer sr;
 
@@ -220,34 +217,44 @@ public class FakePlayerScript : MonoBehaviour {
 			star.SetActive (false);
 			playerDescription.enabled = false;
 			playerDifficulty.enabled = false;
+
 			switch(playerIdentifier){
 
-			case 1:
-				DataManagerScript.playerOnePlaying = false;
-				break;
-			case 2:
-				DataManagerScript.playerTwoPlaying = false;
-				break;
-			case 3:
-				DataManagerScript.playerThreePlaying = false;
-				break;
-			case 4:
-				DataManagerScript.playerFourPlaying = false;
-				break;
+			    case 1:
+				    DataManagerScript.playerOnePlaying = false;
+				    break;
+			    case 2:
+				    DataManagerScript.playerTwoPlaying = false;
+				    break;
+			    case 3:
+				    DataManagerScript.playerThreePlaying = false;
+				    break;
+			    case 4:
+				    DataManagerScript.playerFourPlaying = false;
+				    break;
 			}
 		}
 
 		ChoosePlayerScript.Instance.CheckStartable ();
 	}
 
+    // Function to tie joystick to player 
+    void assignJoystickToPlayer (int joystick) {
+
+        // Save player int
+        playerIdentifier = joystick;
+
+        // Assign button names from player int
+        joystickButtons = new JoystickButtons(playerIdentifier);
+
+    }
 
 	void Start () {
 
-        // Assign button names
+        // TEMP: assign joystick to player manually
         joystickButtons = new JoystickButtons(playerIdentifier);
 
-		normalAxis = new Axis(chooseAxis);
-		xboxAxis = new Axis(chooseAxis_Xbox);
+        axis = new Axis( joystickButtons.vertical );
 
 		sr = GetComponent<SpriteRenderer> ();
 		readyText.GetComponent<CanvasRenderer>().SetAlpha(0.0f);
@@ -277,7 +284,7 @@ public class FakePlayerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		if (!ChoosePlayerScript.Instance.locked) {
+		if (!ChoosePlayerScript.Instance.locked && joystickButtons != null ) {
 
 //			if (!DataManagerScript.xboxMode) {
 //				CheckAxis (chooseAxis);
@@ -285,8 +292,7 @@ public class FakePlayerScript : MonoBehaviour {
 //				CheckAxis (chooseAxis_Xbox);
 //			}
 
-			CheckAxis (normalAxis);
-			CheckAxis (xboxAxis);
+			CheckAxis (axis);
 
 			if ( Input.GetButtonDown ( joystickButtons.jump ) ) {
 				activateReadyState ();

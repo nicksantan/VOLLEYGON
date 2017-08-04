@@ -13,8 +13,7 @@ public class JoystickButtons {
     public JoystickButtons(int player)
     {
 
-        switch (player)
-        {
+        switch (player) {
 
             case 1:
                 this.horizontal = (DataManagerScript.xboxMode) ? "Horizontal_P1_Xbox" : "Horizontal_P1";

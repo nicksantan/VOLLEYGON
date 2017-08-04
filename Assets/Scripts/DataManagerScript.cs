@@ -23,11 +23,17 @@ public class DataManagerScript : MonoBehaviour {
 	public static int playerTwoType;
 	public static int playerThreeType;
 	public static int playerFourType;
-	public static int arenaType;
 
-	// Player stats
+    // Player joysticks
 
-	public static int playerOneAces;
+    public static int playerOneJoystick;
+    public static int playerTwoJoystick;
+    public static int playerThreeJoystick;
+    public static int playerFourJoystick;
+
+    // Player stats
+
+    public static int playerOneAces;
 	public static int playerOneReturns;
 	public static int playerOneBumbles;
 	public static int playerOneScores;
@@ -46,9 +52,12 @@ public class DataManagerScript : MonoBehaviour {
 	public static int playerFourReturns;
 	public static int playerFourBumbles;
 
+    // Arena type
+    public static int arenaType;
+
     // Match stats
 
-	public static int playerFourScores;
+    public static int playerFourScores;
 
 	public static int longestRallyCount;
 	public static int matchTime;

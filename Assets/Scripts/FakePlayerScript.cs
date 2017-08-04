@@ -254,12 +254,13 @@ public class FakePlayerScript : MonoBehaviour {
         // TEMP: assign joystick to player manually
         joystickButtons = new JoystickButtons(playerIdentifier);
 
+        // Get axis string from joystick class
         axis = new Axis( joystickButtons.vertical );
 
 		sr = GetComponent<SpriteRenderer> ();
 		readyText.GetComponent<CanvasRenderer>().SetAlpha(0.0f);
+		readyBG.GetComponent<CanvasRenderer> ().SetAlpha(0.0f);
 
-		readyBG.GetComponent<CanvasRenderer> ().SetAlpha (0.0f);
 		sr.enabled = false;
 		playerDescription.enabled = false;
 		playerDifficulty.enabled = false;
@@ -286,14 +287,10 @@ public class FakePlayerScript : MonoBehaviour {
 		
 		if (!ChoosePlayerScript.Instance.locked && joystickButtons != null ) {
 
-//			if (!DataManagerScript.xboxMode) {
-//				CheckAxis (chooseAxis);
-//			} else if (DataManagerScript.xboxMode) {
-//				CheckAxis (chooseAxis_Xbox);
-//			}
-
+            // Joystick movements
 			CheckAxis (axis);
 
+            // Button presses
 			if ( Input.GetButtonDown ( joystickButtons.jump ) ) {
 				activateReadyState ();
 			}
@@ -305,104 +302,54 @@ public class FakePlayerScript : MonoBehaviour {
 	}
 
 	void CheckAxis(Axis whichAxis){
-		if (Input.GetAxisRaw (whichAxis.axisName) > 0) {
-			if (whichAxis.axisInUse == false) {
-				// Call your event function here.
-				whichAxis.axisInUse = true;
 
-				if (!readyToPlay && taggedIn) {
-					if (playerIdentifier == 1) {
-						DataManagerScript.playerOneType += 1; 
-						DataManagerScript.playerOneType = DataManagerScript.playerOneType % numberOfPlayerTypes;
-						thisType = DataManagerScript.playerOneType;
-						audio.PlayOneShot (tickUp);
-						UpdatePlayerType (DataManagerScript.playerOneType);
-					} else if (playerIdentifier == 2) {
-						DataManagerScript.playerTwoType += 1; 
-						DataManagerScript.playerTwoType = DataManagerScript.playerTwoType % numberOfPlayerTypes;
-						thisType = DataManagerScript.playerTwoType;
-						audio.PlayOneShot (tickUp);
-						UpdatePlayerType (DataManagerScript.playerTwoType);
+        // Up or down pressed
+		if (Input.GetAxisRaw (whichAxis.axisName) > 0 || Input.GetAxisRaw(whichAxis.axisName) < 0) {
 
-					} else if (playerIdentifier == 3) {
-						DataManagerScript.playerThreeType += 1; 
-						DataManagerScript.playerThreeType = DataManagerScript.playerThreeType % numberOfPlayerTypes;
-						thisType = DataManagerScript.playerThreeType;
-						audio.PlayOneShot (tickUp);
-						UpdatePlayerType (DataManagerScript.playerThreeType);
+            // Only proceed if player is tagged in but not ready, and joystick not already pressed up/down
+            if (whichAxis.axisInUse == false && !readyToPlay && taggedIn ) {
 
-					} else if (playerIdentifier == 4) {
-						DataManagerScript.playerFourType += 1; 
-						DataManagerScript.playerFourType = DataManagerScript.playerFourType % numberOfPlayerTypes;
-						thisType = DataManagerScript.playerFourType;
-						audio.PlayOneShot (tickUp);
-						UpdatePlayerType (DataManagerScript.playerFourType);
-					}
+                // Boolean to prevent scrolling more than one tick per press
+                whichAxis.axisInUse = true;
+
+                // See if going up or down
+                bool goingUp = Input.GetAxisRaw(whichAxis.axisName) > 0;
+
+                // Move up or down through shape ints
+                int difference = (goingUp) ? 1 : -1;
+
+                // Set type for player 
+				switch (playerIdentifier) {
+
+                    case 1:
+                        thisType = DataManagerScript.playerOneType = (numberOfPlayerTypes + DataManagerScript.playerOneType + difference ) % numberOfPlayerTypes;
+                        break;
+                    case 2:
+                        thisType = DataManagerScript.playerTwoType = (numberOfPlayerTypes + DataManagerScript.playerTwoType + difference ) % numberOfPlayerTypes;
+                        break;
+                    case 3: 
+                        thisType = DataManagerScript.playerThreeType = (numberOfPlayerTypes + DataManagerScript.playerThreeType + difference ) % numberOfPlayerTypes;
+                        break;
+                    case 4: 
+                        thisType = DataManagerScript.playerFourType = (numberOfPlayerTypes + DataManagerScript.playerFourType + difference ) % numberOfPlayerTypes;
+                        break;
+
 				}
-			}
-		}
 
-		if (Input.GetAxisRaw (whichAxis.axisName) < 0) {
+                // Play sound effect
+                AudioClip tick = ( goingUp ) ? tickUp : tickDown;
+                audio.PlayOneShot(tick);
 
+                // Save type
+                UpdatePlayerType(thisType);
+            }
 
-			if (whichAxis.axisInUse == false) {
-				// Call your event function here.
-				whichAxis.axisInUse = true;
-				if (!readyToPlay && taggedIn) {
-					if (playerIdentifier == 1) {
-						DataManagerScript.playerOneType -= 1; 
-						if (DataManagerScript.playerOneType < 0) {
-							DataManagerScript.playerOneType = numberOfPlayerTypes - 1;
-						}
-						audio.PlayOneShot (tickDown);
-						thisType = DataManagerScript.playerOneType;
-						UpdatePlayerType (DataManagerScript.playerOneType);
-					} else if (playerIdentifier == 2) {
-						DataManagerScript.playerTwoType -= 1; 
-						if (DataManagerScript.playerTwoType < 0) {
-							DataManagerScript.playerTwoType = numberOfPlayerTypes - 1;
-						}
-						audio.PlayOneShot (tickDown);
-						thisType = DataManagerScript.playerTwoType;
-						UpdatePlayerType (DataManagerScript.playerTwoType);
-
-					} else if (playerIdentifier == 3) {
-						DataManagerScript.playerThreeType -= 1; 
-						if (DataManagerScript.playerThreeType < 0) {
-							DataManagerScript.playerThreeType = numberOfPlayerTypes - 1;
-
-						}
-						Debug.Log (DataManagerScript.playerThreeType);
-						audio.PlayOneShot (tickDown);
-						thisType = DataManagerScript.playerThreeType;
-						UpdatePlayerType (DataManagerScript.playerThreeType);
-
-					} else if (playerIdentifier == 4) {
-						DataManagerScript.playerFourType -= 1; 
-						if (DataManagerScript.playerFourType < 0) {
-							DataManagerScript.playerFourType = numberOfPlayerTypes - 1;
-
-						}
-						Debug.Log (DataManagerScript.playerFourType);
-						audio.PlayOneShot (tickDown);
-						thisType = DataManagerScript.playerFourType;
-						UpdatePlayerType (DataManagerScript.playerFourType);
-					}
-				}
-				//				if (!readyToPlay && taggedIn) {
-				//					DataManagerScript.playerOneType -= 1; 
-				//					if (DataManagerScript.playerOneType < 0) {
-				//						DataManagerScript.playerOneType = numberOfPlayerTypes - 1;
-				//					}
-				//					DataManagerScript.playerOneType = DataManagerScript.playerOneType % numberOfPlayerTypes;
-				//					Debug.Log ("YES!" + DataManagerScript.playerOneType);
-				//					UpdatePlayerType (DataManagerScript.playerOneType);
-				//				}
-			}
-		}
-
-		if (Input.GetAxisRaw (whichAxis.axisName) == 0) {
-			whichAxis.axisInUse = false;
-		}
+        }
+        else if (Input.GetAxisRaw(whichAxis.axisName) == 0)
+        {
+            // Reset boolean to prevent scrolling more than one tick per press when joystick returns to 0
+            whichAxis.axisInUse = false;
+        }
+        
 	}
 }

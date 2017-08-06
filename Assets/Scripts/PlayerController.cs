@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour {
 	private float startJumpPower;
 
     // Button names
-    private JoystickButtons joystickButtons;
+    private JoystickButtons buttons;
 
     // Properties of player by ID
     public int playerID;
@@ -130,24 +130,30 @@ public class PlayerController : MonoBehaviour {
             pandemoniumCounter.GetComponent<TextMesh>().color = new Vector4(0f, 0f, 0f, 0f);
         }
 
-		// Assign player color
+        int joystick = -1;
+
+		// Assign player color and joystick
 		switch (playerID) {
 		    case 1:
 			    playerColor = "1069A8";
+                joystick = DataManagerScript.playerOneJoystick;
 			    break;
 		    case 2:
 			    playerColor = "7CBEE8";
-			    break;
+                joystick = DataManagerScript.playerTwoJoystick;
+                break;
 		    case 3:
 			    playerColor = "D63236";
-			    break;
+                joystick = DataManagerScript.playerThreeJoystick;
+                break;
 		    case 4:
 			    playerColor = "D97A7B";
-			    break;
+                joystick = DataManagerScript.playerFourJoystick;
+                break;
         }
 
         // Get player input names
-        joystickButtons = new JoystickButtons(playerID);
+        buttons = new JoystickButtons(joystick);
 
         // Get stats for chosen shape
         string playerShape = shapeNames[playerType];
@@ -174,7 +180,7 @@ public class PlayerController : MonoBehaviour {
     void FixedUpdate () {
 
         // Get horizontal input 
-        float moveHorizontal = Input.GetAxis ( joystickButtons.horizontal );
+        float moveHorizontal = Input.GetAxis ( buttons.horizontal );
 
         // Clamp input
         moveHorizontal = Mathf.Clamp(moveHorizontal, -1f, 1f);
@@ -195,7 +201,7 @@ public class PlayerController : MonoBehaviour {
 		if (!inPenalty) {
 
             // Handle jumping
-			if ( Input.GetButtonDown (joystickButtons.jump) ) {
+			if ( Input.GetButtonDown (buttons.jump) ) {
 
 				if (isJumping == false && rb != null) {
 					Vector3 jumpForce = new Vector3 (0f, jumpPower * rb.gravityScale, 0f);
@@ -206,7 +212,7 @@ public class PlayerController : MonoBehaviour {
 			}
 
             // Handle gravity switch
-			if ( Input.GetButtonDown (joystickButtons.grav) ) {
+			if ( Input.GetButtonDown (buttons.grav) && rb != null ) {
 				rb.gravityScale *= -1f;
 				SoundManagerScript.instance.RandomizeSfx (changeGravSound1, changeGravSound2);
 			}

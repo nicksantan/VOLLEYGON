@@ -24,12 +24,12 @@ public class DataManagerScript : MonoBehaviour {
 	public static int playerThreeType;
 	public static int playerFourType;
 
-    // Player joysticks
+    // Player joysticks (default to nonsense int)
 
-    public static int playerOneJoystick;
-    public static int playerTwoJoystick;
-    public static int playerThreeJoystick;
-    public static int playerFourJoystick;
+    public static int playerOneJoystick = -1;
+    public static int playerTwoJoystick = -1;
+    public static int playerThreeJoystick = -1;
+    public static int playerFourJoystick = -1;
 
     // Player stats
 

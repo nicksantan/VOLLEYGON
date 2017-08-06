@@ -10,8 +10,7 @@ public class JoystickButtons {
     public string start;
 
     // Get explicit strings from player number
-    public JoystickButtons(int player)
-    {
+    public JoystickButtons(int player) {
 
         switch (player) {
 

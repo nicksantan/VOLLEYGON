@@ -11,7 +11,8 @@ public class FakePlayerScript : MonoBehaviour {
 
 	public Image readyBG;
 
-    private JoystickButtons joystickButtons;
+    private JoystickButtons buttons;
+    private int joystickIdentifier = -1;
 
 	public int playerIdentifier; 
 	public Text readyText;
@@ -38,27 +39,13 @@ public class FakePlayerScript : MonoBehaviour {
 
 	private int numberOfPlayerTypes = 6;
     
-	Axis axis;
+	Axis verticalAxis;
 
-	SpriteRenderer sr;
+    SpriteRenderer sr;
 
 	void UpdatePlayerType(int whichType){
 		if (!readyToPlay) {
-			switch(playerIdentifier){
 
-			case 1:
-				DataManagerScript.playerOneType = whichType;
-				break;
-			case 2:
-				DataManagerScript.playerTwoType = whichType;
-				break;
-			case 3:
-				DataManagerScript.playerThreeType = whichType;
-				break;
-			case 4:
-				DataManagerScript.playerFourType = whichType;
-				break;
-			}
 			square.SetActive (false);
 			circle.SetActive (false);
 			triangle.SetActive (false);
@@ -67,51 +54,39 @@ public class FakePlayerScript : MonoBehaviour {
 			star.SetActive (false);
 
 			if (whichType == 0) {
-//				fakePlayer1.GetComponent<MeshFilter> ().mesh = meshType1;
-				//change sprite here
-				//sr.sprite = squareSprite;
 				square.SetActive (true);
 				playerDescription.text = "CLASSIC\nDEFENSIVE";
 				playerDifficulty.text = "EASY";
 			} else if (whichType == 1) {
-				//sr.sprite = circleSprite;
 				circle.SetActive (true);
 				playerDescription.text = "ALL-AROUND\nVERSATILE";
 				playerDifficulty.text = "MEDIUM";
-				//change sprite here
 			} else if (whichType == 2){
-				//sr.sprite = triangleSprite;
 				triangle.SetActive (true);
 				playerDescription.text = "AIRBORNE\nAGGRESSIVE";
 				playerDifficulty.text = "HARD";
-				//change sprite here
 			} else if (whichType == 3){
-			//	sr.sprite = trapezoidSprite;
 				trapezoid.SetActive (true);
 				playerDescription.text = "CRAZY!\nWEIRD!";
 				playerDifficulty.text = "EXPERTS ONLY";
-				//change sprite here
 			} else if (whichType == 4){
-				//	sr.sprite = trapezoidSprite;
 				rectangle.SetActive (true);
 				playerDescription.text = "DEFENSIVE\nSLOW";
 				playerDifficulty.text = "EASY";
-				//change sprite here
 			} else if (whichType == 5){
-				//	sr.sprite = trapezoidSprite;
 				star.SetActive (true);
 				playerDescription.text = "STRONG\nUNPREDICTABLE";
 				playerDifficulty.text = "HARD";
-				//change sprite here
 			}
 
 		}
 	}
 
-
 	void activateReadyState(){
 
 		if (taggedIn) {
+
+            // Ready up
 
 			if (!readyToPlay) {
 				audio.PlayOneShot (readySound);
@@ -135,12 +110,12 @@ public class FakePlayerScript : MonoBehaviour {
 
 		} else {
 
+            // Tag in
 			taggedIn = true;
 			audio.PlayOneShot (tagInSound);
 			toJoinText.GetComponent<CanvasRenderer> ().SetAlpha (0.0f);
 			playerDescription.enabled = true;
 			playerDifficulty.enabled = true;
-			//sr.enabled = true;
 			square.SetActive (false);
 			circle.SetActive (false);
 			triangle.SetActive (false);
@@ -206,6 +181,8 @@ public class FakePlayerScript : MonoBehaviour {
         // Revert from tagged in to nothingness
 		} else if (taggedIn) {
 
+            joystickIdentifier = -1;
+            buttons = null;
 			taggedIn = false;
 			toJoinText.GetComponent<CanvasRenderer> ().SetAlpha (1.0f);
 			sr.enabled = false;
@@ -238,26 +215,9 @@ public class FakePlayerScript : MonoBehaviour {
 		ChoosePlayerScript.Instance.CheckStartable ();
 	}
 
-    // Function to tie joystick to player 
-    void assignJoystickToPlayer (int joystick) {
-
-        // Save player int
-        playerIdentifier = joystick;
-
-        // Assign button names from player int
-        joystickButtons = new JoystickButtons(playerIdentifier);
-
-    }
-
 	void Start () {
 
-        // TEMP: assign joystick to player manually
-        joystickButtons = new JoystickButtons(playerIdentifier);
-
-        // Get axis string from joystick class
-        axis = new Axis( joystickButtons.vertical );
-
-		sr = GetComponent<SpriteRenderer> ();
+        sr = GetComponent<SpriteRenderer> ();
 		readyText.GetComponent<CanvasRenderer>().SetAlpha(0.0f);
 		readyBG.GetComponent<CanvasRenderer> ().SetAlpha(0.0f);
 
@@ -284,24 +244,65 @@ public class FakePlayerScript : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		
-		if (!ChoosePlayerScript.Instance.locked && joystickButtons != null ) {
+
+        // Be on the lookout for any button presses and see if joystick was assigned
+        if (!taggedIn && Input.anyKeyDown)
+        {
+            checkForJoystick();
+        }
+
+        if (!ChoosePlayerScript.Instance.locked && buttons != null) {
 
             // Joystick movements
-			CheckAxis (axis);
+            checkVerticalAxis(verticalAxis);
 
-            // Button presses
-			if ( Input.GetButtonDown ( joystickButtons.jump ) ) {
-				activateReadyState ();
-			}
+            if (Input.GetButtonDown(buttons.jump))
+            {
+                activateReadyState();
+            }
 
-			if ( Input.GetButtonDown (joystickButtons.grav ) ) {
+            if ( Input.GetButtonDown (buttons.grav ) ) {
 				cancelReadyState ();
 			}
 		}
 	}
 
-	void CheckAxis(Axis whichAxis){
+    void checkForJoystick()
+    {
+        // Get joystick for player slot
+        switch (playerIdentifier)
+        {
+
+            case 1:
+                joystickIdentifier = DataManagerScript.playerOneJoystick;
+                break;
+            case 2:
+                joystickIdentifier = DataManagerScript.playerTwoJoystick;
+                break;
+            case 3:
+                joystickIdentifier = DataManagerScript.playerThreeJoystick;
+                break;
+            case 4:
+                joystickIdentifier = DataManagerScript.playerFourJoystick;
+                break;
+
+        }
+
+        // Activate slot if a joystick was selected
+        if (joystickIdentifier != -1)
+        {
+
+            Debug.Log("Player " + playerIdentifier + " Joystick " + joystickIdentifier);
+
+            // Assign joystick to player
+            buttons = new JoystickButtons(joystickIdentifier);
+
+            // Get axis string from joystick class
+            verticalAxis = new Axis(buttons.vertical);
+        }
+    }
+
+    void checkVerticalAxis(Axis whichAxis){
 
         // Up or down pressed
 		if (Input.GetAxisRaw (whichAxis.axisName) > 0 || Input.GetAxisRaw(whichAxis.axisName) < 0) {
@@ -322,16 +323,16 @@ public class FakePlayerScript : MonoBehaviour {
 				switch (playerIdentifier) {
 
                     case 1:
-                        thisType = DataManagerScript.playerOneType = (numberOfPlayerTypes + DataManagerScript.playerOneType + difference ) % numberOfPlayerTypes;
+                        thisType = DataManagerScript.playerOneType = ( numberOfPlayerTypes + DataManagerScript.playerOneType + difference ) % numberOfPlayerTypes;
                         break;
                     case 2:
-                        thisType = DataManagerScript.playerTwoType = (numberOfPlayerTypes + DataManagerScript.playerTwoType + difference ) % numberOfPlayerTypes;
+                        thisType = DataManagerScript.playerTwoType = ( numberOfPlayerTypes + DataManagerScript.playerTwoType + difference ) % numberOfPlayerTypes;
                         break;
                     case 3: 
-                        thisType = DataManagerScript.playerThreeType = (numberOfPlayerTypes + DataManagerScript.playerThreeType + difference ) % numberOfPlayerTypes;
+                        thisType = DataManagerScript.playerThreeType = ( numberOfPlayerTypes + DataManagerScript.playerThreeType + difference ) % numberOfPlayerTypes;
                         break;
                     case 4: 
-                        thisType = DataManagerScript.playerFourType = (numberOfPlayerTypes + DataManagerScript.playerFourType + difference ) % numberOfPlayerTypes;
+                        thisType = DataManagerScript.playerFourType = ( numberOfPlayerTypes + DataManagerScript.playerFourType + difference ) % numberOfPlayerTypes;
                         break;
 
 				}

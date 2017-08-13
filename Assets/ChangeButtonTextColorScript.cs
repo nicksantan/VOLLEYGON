@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ChangeButtonTextColorScript : MonoBehaviour, ISelectHandler {
+public class ChangeButtonTextColorScript : MonoBehaviour, ISelectHandler, IDeselectHandler {
 
 	public Text t;
 

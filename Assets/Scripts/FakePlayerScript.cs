@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class FakePlayerScript : MonoBehaviour {
 
-	public Sprite squareSprite;
+    public Sprite squareSprite;
 	public Sprite circleSprite;
 	public Sprite triangleSprite;
 	public Sprite trapezoidSprite;

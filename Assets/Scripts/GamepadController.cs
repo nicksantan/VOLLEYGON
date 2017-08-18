@@ -121,12 +121,16 @@ public class GamepadController : MonoBehaviour {
                 int numberOfSlots = 4;
                 slot = ( slot + difference ) % numberOfSlots;
                 if (slot == 0) slot = numberOfSlots;
-                Debug.Log(slot);
+
+                // Get selected slot coordinates
+                GameObject selectedSlotPlayer = GameObject.Find("Fake Player " + slot);
+                float x = selectedSlotPlayer.transform.position.x;
 
                 // Move icon
-                gameObject.transform.Translate(200 * slot, 0, 0);
+                float y = gameObject.transform.position.y;
+                gameObject.transform.position = new Vector3(x, y, 0f);
             }
-
+            
         }
         else if (Input.GetAxisRaw(axis.axisName) == 0)
         {

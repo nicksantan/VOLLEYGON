@@ -198,7 +198,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Update(){
 
-		if (!inPenalty) {
+		if (!inPenalty && buttons != null) {
 
             // Handle jumping
 			if ( Input.GetButtonDown (buttons.jump) ) {

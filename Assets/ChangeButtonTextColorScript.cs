@@ -15,11 +15,11 @@ public class ChangeButtonTextColorScript : MonoBehaviour, ISelectHandler, IDesel
 //
 
 	public void OnDeselect(BaseEventData eventData){
-		ChangeColor (Color.green);
+		ChangeColor (Color.white);
 		Debug.Log ("DISABLED!");
 	}
 	public void OnSelect(BaseEventData eventData){
-		ChangeColor (Color.blue);
+		ChangeColor (Color.yellow);
 	}
 
 

@@ -33,6 +33,8 @@ public class TitleManagerScript : MonoBehaviour {
 
 	private string[] buttons = {jumpButton1, jumpButton2, jumpButton3, jumpButton4, gravButton1, gravButton2, gravButton3, gravButton4, startButton1, startButton2, startButton3, startButton4, jumpButton1_Xbox, jumpButton2_Xbox, jumpButton3_Xbox, jumpButton4_Xbox, gravButton1_Xbox, gravButton2_Xbox, gravButton3_Xbox, gravButton4_Xbox, startButton1_Xbox, startButton2_Xbox, startButton3_Xbox, startButton4_Xbox};
 	public Text versionText;
+	public GameObject mainMenuPanel;
+	private bool mainMenuActive = false;
 
 
 
@@ -54,52 +56,14 @@ public class TitleManagerScript : MonoBehaviour {
 
 		for (int i = 0; i < buttons.Length; i++) {
 			if (Input.GetButtonDown (buttons [i])) {
-				Application.LoadLevel ("choosePlayerScene");
+				if (!mainMenuActive) {
+					
+					mainMenuActive = true;
+					mainMenuPanel.SetActive (true);
+					// set the correct event system if necessary here and activate them
+				}
+//				Application.LoadLevel ("choosePlayerScene");
 			}
 		}
-//		}
-//		if (Input.GetButtonDown ("Jump_P1_Xbox")) {
-//			Debug.Log ("button");
-//		}
-//		if (Input.GetButtonDown (jumpButton1)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//		if (Input.GetButtonDown (gravButton1)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//		if (Input.GetButtonDown (jumpButton2)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//		if (Input.GetButtonDown (gravButton2)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//		if (Input.GetButtonDown (jumpButton3)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//		if (Input.GetButtonDown (gravButton3)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//		if (Input.GetButtonDown (jumpButton4)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//		if (Input.GetButtonDown (gravButton4)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//
-//		if (Input.GetButtonDown (startButton1)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//
-//		if (Input.GetButtonDown (startButton2)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//
-//		if (Input.GetButtonDown (startButton3)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//
-//		if (Input.GetButtonDown (startButton4)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
 	}
 }

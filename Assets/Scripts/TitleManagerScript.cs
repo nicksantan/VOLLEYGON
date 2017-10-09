@@ -33,13 +33,21 @@ public class TitleManagerScript : MonoBehaviour {
 
 	private string[] buttons = {jumpButton1, jumpButton2, jumpButton3, jumpButton4, gravButton1, gravButton2, gravButton3, gravButton4, startButton1, startButton2, startButton3, startButton4, jumpButton1_Xbox, jumpButton2_Xbox, jumpButton3_Xbox, jumpButton4_Xbox, gravButton1_Xbox, gravButton2_Xbox, gravButton3_Xbox, gravButton4_Xbox, startButton1_Xbox, startButton2_Xbox, startButton3_Xbox, startButton4_Xbox};
 	public Text versionText;
-
+	public Text creditsText;
 
 
 	// Use this for initialization
 	void Start () {
 		MusicManagerScript.Instance.FadeOutEverything ();
 		versionText.text = DataManagerScript.version;
+
+		if (DataManagerScript.creditMode){
+			creditsText.text = "CREDITS: " + DataManagerScript.credits;
+		} else {
+			creditsText.text = "FREE PLAY";
+		}
+
+
 		DataManagerScript.ResetStats ();
 		DataManagerScript.ResetPlayerTypes ();
 

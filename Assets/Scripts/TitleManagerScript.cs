@@ -58,7 +58,13 @@ public class TitleManagerScript : MonoBehaviour {
 
 		for (int i = 0; i < buttons.Length; i++) {
 			if (Input.GetButtonDown (buttons [i])) {
-				Application.LoadLevel ("choosePlayerScene");
+				if (DataManagerScript.creditMode && DataManagerScript.credits > 0) {
+					DataManagerScript.credits -= 1; 
+					Application.LoadLevel ("choosePlayerScene");
+				} else if (!DataManagerScript.creditMode) {
+					Application.LoadLevel ("choosePlayerScene");
+				}
+					
 			}
 		}
 

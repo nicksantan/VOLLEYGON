@@ -1,5 +1,6 @@
 # VOLLEYGON
 
+v1.5.7a -- Added 'credit' mode to arcade build. Separated arcade and console builds.
 v1.5.6 -- Refactored player stats code.
 v1.5.4 -- Removed some extraneous assets, changed some compression settings.
 v1.5.3 -- Added 'how to' video during attract mode.

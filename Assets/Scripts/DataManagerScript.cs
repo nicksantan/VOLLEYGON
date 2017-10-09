@@ -20,6 +20,10 @@ public class DataManagerScript : MonoBehaviour {
 	public static int playerFourType;
 	public static int arenaType;
 
+	// Arcade / credit-mode variables
+	public static bool creditMode = true;
+	public static int credits;
+
 	// Player stats
 
 	public static int playerOneAces;
@@ -66,7 +70,7 @@ public class DataManagerScript : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
-		version = "V1.5.6";
+		version = "V1.5.7";
 		//xboxMode = true;
 	}
 	

@@ -21,6 +21,8 @@ public class MusicManagerScript : MonoBehaviour {
 	public AudioSource fourthSourceSetTwo;
 	public AudioSource fifthSourceSetTwo;
 
+	public AudioSource coinInsert;
+
 	public int whichSource;
 	public float masterVolume;
 	private int whichTrack;
@@ -107,6 +109,10 @@ public class MusicManagerScript : MonoBehaviour {
 	public void StartFourth (){
 		TurnOffEverything ();
 		fourthSource.volume = masterVolume;
+	}
+
+	public void CoinInsert(){
+		coinInsert.Play ();
 	}
 
 	public void FadeOutEverything(){

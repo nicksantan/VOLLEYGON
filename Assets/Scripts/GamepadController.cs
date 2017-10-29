@@ -18,22 +18,15 @@ public class GamepadController : MonoBehaviour {
         // Get horizontal axis
         horizontalAxis = new Axis(buttons.horizontal);
 
-        // TEMP: Start at slot 1
-        slot = 1;
+        // Start at slot to match joystick int
+        slot = joystick;
 
-        // Get selected slot coordinates
-        GameObject selectedSlotPlayer = GameObject.Find("Fake Player " + slot);
-        float x = selectedSlotPlayer.transform.position.x;
-
-        // Move icon
-        float y = gameObject.transform.position.y;
-        gameObject.transform.position = new Vector3(x, y, 0f);
+        moveIcon(false);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-
         // Joystick movements
         checkHorizontalAxis(horizontalAxis);
 
@@ -131,25 +124,11 @@ public class GamepadController : MonoBehaviour {
                 // See if going right or left
                 bool goingRight = Input.GetAxisRaw(axis.axisName) > 0;
 
-                // Move up or down through joystick ints
-                int difference = (goingRight) ? 1 : -1;
+                // Get new slot
+                iterateSlot(goingRight);
 
-                // TODO: Play sound effect
-                // AudioClip tick = (goingUp) ? tickUp : tickDown;
-                // audio.PlayOneShot(tick);
-
-                // Update selected slot
-                int numberOfSlots = 4;
-                slot = ( slot + difference ) % numberOfSlots;
-                if (slot == 0) slot = numberOfSlots;
-
-                // Get selected slot coordinates
-                GameObject selectedSlotPlayer = GameObject.Find("Fake Player " + slot);
-                float x = selectedSlotPlayer.transform.position.x;
-
-                // Move icon
-                float y = gameObject.transform.position.y;
-                gameObject.transform.position = new Vector3(x, y, 0f);
+                // Move the icon
+                moveIcon(true);
             }
             
         }
@@ -157,6 +136,62 @@ public class GamepadController : MonoBehaviour {
         {
             // Reset boolean to prevent scrolling more than one tick per press when joystick returns to 0
             axis.axisInUse = false;
+        }
+    }
+    
+    // Function for looping over availible slots and selecting next open slot
+    void iterateSlot(bool goingRight)
+    { 
+        // Move up or down through joystick ints
+        int difference = (goingRight) ? 1 : -1;
+
+        // Look for next slot based on input direction
+        int numberOfSlots = 4;
+        int nextSlot = (slot + difference) % numberOfSlots;
+        if (nextSlot == 0) nextSlot = numberOfSlots;
+
+        // See if desired slot is taken
+        bool slotTaken = false;
+        switch (nextSlot)
+        {
+            case 1:
+                slotTaken = DataManagerScript.playerOneJoystick != -1;
+                break;
+            case 2:
+                slotTaken = DataManagerScript.playerTwoJoystick != -1;
+                break;
+            case 3:
+                slotTaken = DataManagerScript.playerThreeJoystick != -1;
+                break;
+            case 4:
+                slotTaken = DataManagerScript.playerFourJoystick != -1;
+                break;
+        }
+
+        slot = nextSlot;
+
+        if (slotTaken)
+        {
+            // Try again if slot taken
+            iterateSlot(goingRight);
+        }
+    }
+
+    void moveIcon(bool playSound)
+    {
+        // Get selected slot coordinates
+        GameObject selectedSlotPlayer = GameObject.Find("Fake Player " + slot);
+        float x = selectedSlotPlayer.transform.position.x + ((joystick * 2f) - 5f);
+
+        // Move icon
+        float y = gameObject.transform.position.y;
+        gameObject.transform.position = new Vector3(x, y, 0f);
+
+        if (playSound)
+        {
+            // TODO: Play sound effect
+            // AudioClip tick = (goingUp) ? tickUp : tickDown;
+            // audio.PlayOneShot(tick);
         }
     }
 }

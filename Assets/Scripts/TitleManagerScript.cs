@@ -33,13 +33,16 @@ public class TitleManagerScript : MonoBehaviour {
 
 	private string[] buttons = {jumpButton1, jumpButton2, jumpButton3, jumpButton4, gravButton1, gravButton2, gravButton3, gravButton4, startButton1, startButton2, startButton3, startButton4, jumpButton1_Xbox, jumpButton2_Xbox, jumpButton3_Xbox, jumpButton4_Xbox, gravButton1_Xbox, gravButton2_Xbox, gravButton3_Xbox, gravButton4_Xbox, startButton1_Xbox, startButton2_Xbox, startButton3_Xbox, startButton4_Xbox};
 	public Text versionText;
-
+	public Text creditsText;
 
 
 	// Use this for initialization
 	void Start () {
 		MusicManagerScript.Instance.FadeOutEverything ();
 		versionText.text = DataManagerScript.version;
+
+		UpdateCredits ();
+
 		DataManagerScript.ResetStats ();
 		DataManagerScript.ResetPlayerTypes ();
 
@@ -49,57 +52,30 @@ public class TitleManagerScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
+
 	void Update () {
 		MusicManagerScript.Instance.FadeOutEverything ();
 
 		for (int i = 0; i < buttons.Length; i++) {
 			if (Input.GetButtonDown (buttons [i])) {
-				Application.LoadLevel ("choosePlayerScene");
+				if (DataManagerScript.creditMode && DataManagerScript.credits > 0) {
+					DataManagerScript.credits -= 1; 
+					Application.LoadLevel ("choosePlayerScene");
+				} else if (!DataManagerScript.creditMode) {
+					Application.LoadLevel ("choosePlayerScene");
+				}
+					
 			}
 		}
-//		}
-//		if (Input.GetButtonDown ("Jump_P1_Xbox")) {
-//			Debug.Log ("button");
-//		}
-//		if (Input.GetButtonDown (jumpButton1)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//		if (Input.GetButtonDown (gravButton1)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//		if (Input.GetButtonDown (jumpButton2)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//		if (Input.GetButtonDown (gravButton2)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//		if (Input.GetButtonDown (jumpButton3)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//		if (Input.GetButtonDown (gravButton3)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//		if (Input.GetButtonDown (jumpButton4)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//		if (Input.GetButtonDown (gravButton4)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//
-//		if (Input.GetButtonDown (startButton1)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//
-//		if (Input.GetButtonDown (startButton2)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//
-//		if (Input.GetButtonDown (startButton3)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
-//
-//		if (Input.GetButtonDown (startButton4)) {
-//			Application.LoadLevel("choosePlayerScene");
-//		}
+
+		UpdateCredits ();
+	}
+
+	void UpdateCredits(){
+		if (DataManagerScript.creditMode) {
+			creditsText.text = "CREDITS: " + DataManagerScript.credits;
+		} else {
+			creditsText.text = "FREE PLAY";
+		}
 	}
 }

@@ -20,6 +20,11 @@ public class DataManagerScript : MonoBehaviour {
 	public static int playerFourType;
 	public static int arenaType;
 
+	// Arcade / credit-mode variables
+	public static bool creditMode = true;
+	public static int credits;
+	private static string coinInsertButton = "Coin_Insert";
+	public static AudioClip coinInsertSFX;
 	// Player stats
 
 	public static int playerOneAces;
@@ -66,13 +71,20 @@ public class DataManagerScript : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
-		version = "V1.5.6";
+		version = "V1.5.7a";
 		//xboxMode = true;
+		credits = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		// Check for inserted coin across all scenes
+		if (Input.GetButtonDown (coinInsertButton) && creditMode) {
+			credits += 1;
+			Debug.Log ("COIN INSERT");
+			// play a credit sfx here
+			MusicManagerScript.Instance.CoinInsert();
+		};
 	}
 
 

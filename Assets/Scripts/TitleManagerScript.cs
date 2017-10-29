@@ -18,6 +18,7 @@ public class TitleManagerScript : MonoBehaviour {
 	static public string startButton3 = "Start_P3";
 	static public string startButton4 = "Start_P4";
 
+	private JoystickButtons joyButts;
 	// Xbox buttons
 	static private string jumpButton1_Xbox = "Jump_P1_Xbox";
 	static private string gravButton1_Xbox = "Grav_P1_Xbox";
@@ -35,16 +36,14 @@ public class TitleManagerScript : MonoBehaviour {
 	private string[] buttons = {jumpButton1, jumpButton2, jumpButton3, jumpButton4, gravButton1, gravButton2, gravButton3, gravButton4, startButton1, startButton2, startButton3, startButton4, jumpButton1_Xbox, jumpButton2_Xbox, jumpButton3_Xbox, jumpButton4_Xbox, gravButton1_Xbox, gravButton2_Xbox, gravButton3_Xbox, gravButton4_Xbox, startButton1_Xbox, startButton2_Xbox, startButton3_Xbox, startButton4_Xbox};
 	public Text versionText;
 	public GameObject mainMenuPanel;
+	public GameObject singlePlayerPanel;
+	public GameObject soloModeButton;
+
 	private bool mainMenuActive = false;
 
 	public EventSystem es1;
-	public EventSystem es2;
-	public EventSystem es3;
-	public EventSystem es4;
 
-
-
-
+	public Button firstButton;
 
 
 	// Use this for initialization
@@ -58,26 +57,73 @@ public class TitleManagerScript : MonoBehaviour {
 		//Cursor.lockState = CursorLockMode.Locked;
 
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		MusicManagerScript.Instance.FadeOutEverything ();
 
 		for (int i = 0; i < buttons.Length; i++) {
 			if (Input.GetButtonDown (buttons [i])) {
+
+				// If the main menu isn't activated, activate it.
 				if (!mainMenuActive) {
-					
 					mainMenuActive = true;
 					mainMenuPanel.SetActive (true);
-
-					// set the correct event system if necessary here and activate them
-					es1.GetComponent<StandaloneInputModule>().horizontalAxis = "Horizontal_P1";
-					es1.GetComponent<StandaloneInputModule>().verticalAxis = "Vertical_P1";
-					es1.GetComponent<StandaloneInputModule>().submitButton = "Jump_P1";
-					es1.GetComponent<StandaloneInputModule>().cancelButton = "Grav_P1";
+					//activate first button (weird ui thing)
+					//firstButton.Select();
+					print("resetting selected game object");
+					es1.SetSelectedGameObject(null);
+					es1.SetSelectedGameObject(es1.firstSelectedGameObject);
+		
+					// get the player number 
+					int player = 0;
+					if (buttons[i].Contains ("P1")) {
+						player = 1;
+					};
+					if (buttons[i].Contains ("P2")) {
+						player = 2;
+					};
+					if (buttons[i].Contains ("P3")) {
+						player = 3;
+					};
+					if (buttons[i].Contains ("P4")) {
+						player = 4;
+					};
+					// depending on which controller was tagged in, set the input stringes here
+					joyButts = new JoystickButtons (player);
+					print (joyButts.vertical);
+					es1.GetComponent<StandaloneInputModule> ().horizontalAxis = joyButts.horizontal;
+					es1.GetComponent<StandaloneInputModule> ().verticalAxis = joyButts.vertical;
+					es1.GetComponent<StandaloneInputModule> ().submitButton = joyButts.jump;
+					es1.GetComponent<StandaloneInputModule> ().cancelButton = joyButts.grav;
 				}
-//				Application.LoadLevel ("choosePlayerScene");
+
+				if (buttons[i] == joyButts.grav) {
+					// cancel was pressed
+					if (mainMenuActive && !singlePlayerPanel.active) {
+						mainMenuActive = false;
+						mainMenuPanel.SetActive (false);
+						Debug.Log ("Canceling out of main menu");
+					} else if (singlePlayerPanel.active) {
+						print ("Cancelling out of single player menu");
+						es1.SetSelectedGameObject(null);
+						es1.SetSelectedGameObject(es1.firstSelectedGameObject);
+						singlePlayerPanel.SetActive (false);
+						mainMenuPanel.SetActive (true);
+					}
+				}
+			
 			}
+		
+		
 		}
+		// TODO: Listen for 'cancel' button to close menus here.
+
+	}
+
+	public void SetUpSinglePlayerMenu (){
+		es1.SetSelectedGameObject(soloModeButton);
+	}
+	public void StartMultiplayerGame(){
+		Application.LoadLevel ("ChoosePlayerScene");
 	}
 }

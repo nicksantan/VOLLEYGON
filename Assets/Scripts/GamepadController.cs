@@ -7,7 +7,7 @@ public class GamepadController : MonoBehaviour {
     private JoystickButtons buttons;
     private Axis horizontalAxis;
     private bool slotSelected = false;
-    private bool taggedIn = false;
+    private bool readiedUp = false;
 
     // Use this for initialization
     void Start () {
@@ -38,19 +38,19 @@ public class GamepadController : MonoBehaviour {
                 selectSlotForJoystick();
             } else
             {
-                taggedIn = true;
+                readiedUp = true;
             }
         }
 
         // Unselect slot
         if (Input.GetButtonDown(buttons.grav))
         {
-            if (!taggedIn)
+            if (!readiedUp)
             {
                 unselectSlotForJoystick();
             } else
             {
-                taggedIn = false;
+                readiedUp = false;
             }
         }
     }
@@ -105,7 +105,7 @@ public class GamepadController : MonoBehaviour {
 
         // Gamepad has been unassigned
         slotSelected = false;
-        taggedIn = false;
+        readiedUp = false;
     }
 
     void checkHorizontalAxis(Axis axis)

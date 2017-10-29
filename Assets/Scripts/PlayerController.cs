@@ -180,25 +180,30 @@ public class PlayerController : MonoBehaviour {
     void FixedUpdate () {
 
         // Get horizontal input 
-        float moveHorizontal = Input.GetAxis ( buttons.horizontal );
+        if (buttons != null && buttons.horizontal != null)
+        {
+            float moveHorizontal = Input.GetAxis(buttons.horizontal);
 
-        // Clamp input
-        moveHorizontal = Mathf.Clamp(moveHorizontal, -1f, 1f);
+            // Clamp input
+            moveHorizontal = Mathf.Clamp(moveHorizontal, -1f, 1f);
 
-		if (isJumping) {
-			GetComponent<Rigidbody2D> ().angularVelocity = (moveHorizontal * spinPower * rb.gravityScale);
-		}
+            if (isJumping)
+            {
+                GetComponent<Rigidbody2D>().angularVelocity = (moveHorizontal * spinPower * rb.gravityScale);
+            }
 
-        if (GetComponent<Rigidbody2D>() != null) {
-            Vector3 v3 = GetComponent<Rigidbody2D>().velocity;
-            v3.x = moveHorizontal * speed;
-            GetComponent<Rigidbody2D>().velocity = v3;
+            if (GetComponent<Rigidbody2D>() != null)
+            {
+                Vector3 v3 = GetComponent<Rigidbody2D>().velocity;
+                v3.x = moveHorizontal * speed;
+                GetComponent<Rigidbody2D>().velocity = v3;
+            }
         }
 	}
 
 	void Update(){
 
-		if (!inPenalty && buttons != null) {
+		if (!inPenalty && buttons != null && buttons.jump != null) {
 
             // Handle jumping
 			if ( Input.GetButtonDown (buttons.jump) ) {
@@ -317,7 +322,7 @@ public class PlayerController : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D coll){
 		if (coll.gameObject.tag == "Powerup") {
-			Debug.Log ("Happening");
+			// Debug.Log ("Happening");
 			//Script other = coll.gameObject.GetComponent<NewPowerUpScript> ();
 			int whichPowerup = coll.gameObject.GetComponent<NewPowerUpScript> ().powerupType;
 			if (coll.gameObject.GetComponent<NewPowerUpScript> ().isAvailable) {

@@ -7,9 +7,10 @@ public class GamepadController : MonoBehaviour {
     private JoystickButtons buttons;
     private Axis horizontalAxis;
     private bool slotSelected = false;
+    private bool taggedIn = false;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 
         // Get button strings from joystick number 
         buttons = new JoystickButtons(joystick);
@@ -20,6 +21,13 @@ public class GamepadController : MonoBehaviour {
         // TEMP: Start at slot 1
         slot = 1;
 
+        // Get selected slot coordinates
+        GameObject selectedSlotPlayer = GameObject.Find("Fake Player " + slot);
+        float x = selectedSlotPlayer.transform.position.x;
+
+        // Move icon
+        float y = gameObject.transform.position.y;
+        gameObject.transform.position = new Vector3(x, y, 0f);
     }
 
     // Update is called once per frame
@@ -32,13 +40,25 @@ public class GamepadController : MonoBehaviour {
         // Select slot
         if (Input.GetButtonDown(buttons.jump))
         {
-            selectSlotForJoystick();
+            if (!slotSelected)
+            {
+                selectSlotForJoystick();
+            } else
+            {
+                taggedIn = true;
+            }
         }
 
         // Unselect slot
         if (Input.GetButtonDown(buttons.grav))
         {
-            unselectSlotForJoystick();
+            if (!taggedIn)
+            {
+                unselectSlotForJoystick();
+            } else
+            {
+                taggedIn = false;
+            }
         }
     }
 
@@ -63,9 +83,9 @@ public class GamepadController : MonoBehaviour {
 
         }
 
-        Debug.Log("Slot assigned: " + joystick);
+        // Debug.Log("Slot assigned: " + joystick);
 
-        // Gamepage has been assigned
+        // Gamepad has been assigned
         slotSelected = true;
     }
 
@@ -90,8 +110,9 @@ public class GamepadController : MonoBehaviour {
 
         }
 
-        // Gamepage has been unassigned
+        // Gamepad has been unassigned
         slotSelected = false;
+        taggedIn = false;
     }
 
     void checkHorizontalAxis(Axis axis)

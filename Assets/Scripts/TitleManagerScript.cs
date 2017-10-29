@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class TitleManagerScript : MonoBehaviour {
 
@@ -36,6 +37,14 @@ public class TitleManagerScript : MonoBehaviour {
 	public GameObject mainMenuPanel;
 	private bool mainMenuActive = false;
 
+	public EventSystem es1;
+	public EventSystem es2;
+	public EventSystem es3;
+	public EventSystem es4;
+
+
+
+
 
 
 	// Use this for initialization
@@ -60,7 +69,12 @@ public class TitleManagerScript : MonoBehaviour {
 					
 					mainMenuActive = true;
 					mainMenuPanel.SetActive (true);
+
 					// set the correct event system if necessary here and activate them
+					es1.GetComponent<StandaloneInputModule>().horizontalAxis = "Horizontal_P1";
+					es1.GetComponent<StandaloneInputModule>().verticalAxis = "Vertical_P1";
+					es1.GetComponent<StandaloneInputModule>().submitButton = "Jump_P1";
+					es1.GetComponent<StandaloneInputModule>().cancelButton = "Grav_P1";
 				}
 //				Application.LoadLevel ("choosePlayerScene");
 			}

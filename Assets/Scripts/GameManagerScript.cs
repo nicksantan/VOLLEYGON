@@ -18,12 +18,14 @@ public class GameManagerScript : MonoBehaviour {
 	public bool isGameOver;
 	public int scorePlayedTo = 5;
 	public int arenaType;
+	public bool paused = false;
 	private float timeSinceLastPowerup;
 	private float powerupAppearTime;
 	public GameObject speedPowerupPrefab;
 	public GameObject powerupPrefab;
 	public GameObject gravityIndicator;
 	public GameObject playerClonePrefab;
+	public GameObject pausePanel;
 
 	public GameObject ball;
 
@@ -349,6 +351,22 @@ public class GameManagerScript : MonoBehaviour {
 			
 		if (!isGameOver) {
 			ConsiderAPowerup ();
+		}
+
+		if (Input.GetKeyDown (KeyCode.P)) {
+			TogglePause ();
+		}
+	}
+
+	void TogglePause(){
+		if (!paused) {
+			Time.timeScale = 0;
+			paused = true;
+			pausePanel.SetActive (true);
+		} else {
+			Time.timeScale = 1;
+			paused = false;
+			pausePanel.SetActive (false);
 		}
 	}
 

@@ -19,6 +19,7 @@ public class TitleManagerScript : MonoBehaviour {
 	static public string startButton4 = "Start_P4";
 
 	private JoystickButtons joyButts;
+	private int player = 1;
 	// Xbox buttons
 	static private string jumpButton1_Xbox = "Jump_P1_Xbox";
 	static private string gravButton1_Xbox = "Grav_P1_Xbox";
@@ -75,7 +76,7 @@ public class TitleManagerScript : MonoBehaviour {
 					es1.SetSelectedGameObject(es1.firstSelectedGameObject);
 		
 					// get the player number 
-					int player = 0;
+
 					if (buttons[i].Contains ("P1")) {
 						player = 1;
 					};
@@ -126,6 +127,7 @@ public class TitleManagerScript : MonoBehaviour {
 		Application.LoadLevel ("ChoosePlayerScene");
 	}
 	public void StartOptionsMenu(){
+		DataManagerScript.playerControllingMenus = player;
 		Application.LoadLevel ("OptionsScene");
 	}
 }

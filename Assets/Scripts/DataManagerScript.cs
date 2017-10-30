@@ -17,6 +17,9 @@ public class DataManagerScript : MonoBehaviour {
 	public static bool playerFourPlaying = true;
 	public static bool CRTMode = true;
 
+	// UI Flags
+
+	public static int playerControllingMenus = 1;
     // Player shapes
 
 	public static int playerOneType;

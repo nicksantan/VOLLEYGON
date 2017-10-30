@@ -20,6 +20,7 @@ public class GameManagerScript : MonoBehaviour {
 	public int scorePlayedTo = 5;
 	public int arenaType;
 	public bool paused = false;
+	public bool recentlyPaused = false;
 	private float timeSinceLastPowerup;
 	private float powerupAppearTime;
 	public GameObject speedPowerupPrefab;
@@ -376,9 +377,14 @@ public class GameManagerScript : MonoBehaviour {
 			Time.timeScale = 1;
 			paused = false;
 			pausePanel.SetActive (false);
+			recentlyPaused = true;
+			Invoke ("CancelRecentlyPaused", 0.1f);
 		}
 	}
 
+	public void CancelRecentlyPaused(){
+		recentlyPaused = false;
+	}
 	public void QuitGame(){
 		Application.LoadLevel ("TitleScene");
 	}

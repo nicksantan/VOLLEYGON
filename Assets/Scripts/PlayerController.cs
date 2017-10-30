@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour {
     public bool isJumping = false;
     private bool inPenalty = false;
     private bool canMove = true;
+	private bool recentlyPaused = false;
 
     // Particle system
 	public ParticleSystem ps;
@@ -206,7 +207,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Update(){
 
-		if (!inPenalty && buttons != null && buttons.jump != null && !GameManagerScript.Instance.paused ) {
+		if (!inPenalty && buttons != null && buttons.jump != null && !GameManagerScript.Instance.recentlyPaused ) {
 
             // Handle jumping
 			if ( Input.GetButtonDown (buttons.jump) ) {

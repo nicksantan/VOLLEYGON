@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class GameManagerScript : MonoBehaviour {
 
@@ -59,6 +60,8 @@ public class GameManagerScript : MonoBehaviour {
 	public string startButton2 = "Start_P2";
 	public string startButton3 = "Start_P3";
 	public string startButton4 = "Start_P4";
+
+	public EventSystem es;
 
 	// Static singleton property
 	public static GameManagerScript Instance { get; private set; }
@@ -359,10 +362,14 @@ public class GameManagerScript : MonoBehaviour {
 	}
 
 	void TogglePause(){
+		
 		if (!paused) {
+			
+			pausePanel.SetActive (true);
+			es.SetSelectedGameObject(null);
+			es.SetSelectedGameObject(es.firstSelectedGameObject);
 			Time.timeScale = 0;
 			paused = true;
-			pausePanel.SetActive (true);
 		} else {
 			Time.timeScale = 1;
 			paused = false;

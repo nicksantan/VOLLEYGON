@@ -328,6 +328,7 @@ MonoBehaviour:
   startingGrav: 1
   isJumping: 0
   ps: {fileID: 0}
+  es: {fileID: 0}
   trianglePC: {fileID: 16993497}
   trapezoidPC: {fileID: 16993498}
   rectanglePC: {fileID: 0}
@@ -1131,7 +1132,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 211173859}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 685068963}
+        m_MethodName: QuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &211173859
@@ -3406,6 +3418,7 @@ MonoBehaviour:
   startingGrav: 1
   isJumping: 0
   ps: {fileID: 0}
+  es: {fileID: 452662710}
   trianglePC: {fileID: 410775736}
   trapezoidPC: {fileID: 410775731}
   rectanglePC: {fileID: 410775741}
@@ -4999,6 +5012,7 @@ MonoBehaviour:
   startingGrav: 1
   isJumping: 0
   ps: {fileID: 0}
+  es: {fileID: 0}
   trianglePC: {fileID: 655527186}
   trapezoidPC: {fileID: 655527187}
   rectanglePC: {fileID: 0}
@@ -5371,7 +5385,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &690586221
 GameObject:
@@ -7762,7 +7776,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 411342, guid: 0cbc1f0ef1ba1441e854e84e911cfe46, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 11404522, guid: 0cbc1f0ef1ba1441e854e84e911cfe46, type: 2}
       propertyPath: scoreText
@@ -8121,6 +8135,7 @@ MonoBehaviour:
   startingGrav: 1
   isJumping: 0
   ps: {fileID: 0}
+  es: {fileID: 0}
   trianglePC: {fileID: 1067319486}
   trapezoidPC: {fileID: 1067319487}
   rectanglePC: {fileID: 0}
@@ -8624,6 +8639,7 @@ MonoBehaviour:
   startingGrav: -1
   isJumping: 0
   ps: {fileID: 0}
+  es: {fileID: 452662710}
   trianglePC: {fileID: 1094186020}
   trapezoidPC: {fileID: 1094186015}
   rectanglePC: {fileID: 1094186025}
@@ -9917,6 +9933,10 @@ Prefab:
       propertyPath: m_CollisionDetection
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11415504, guid: f1f0da2e2f4204fccb420a80b6585ce7, type: 2}
+      propertyPath: es
+      value: 
+      objectReference: {fileID: 452662710}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f1f0da2e2f4204fccb420a80b6585ce7, type: 2}
   m_IsPrefabParent: 0
@@ -11324,6 +11344,7 @@ MonoBehaviour:
   startingGrav: -1
   isJumping: 0
   ps: {fileID: 0}
+  es: {fileID: 452662710}
   trianglePC: {fileID: 1468053645}
   trapezoidPC: {fileID: 1468053640}
   rectanglePC: {fileID: 1468053650}
@@ -14482,7 +14503,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 502.72665
+  Phase: 507.8365
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5
@@ -14518,7 +14539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 22fe62a5d4de91a4995c1363cbc2492e, type: 3}
   Mode: 1
-  Timer: 607.08386
+  Timer: 623.4363
   Speed: 0.8
   Frequency: 12
   Amplitude: 0
@@ -15365,6 +15386,7 @@ MonoBehaviour:
   startingGrav: 1
   isJumping: 0
   ps: {fileID: 0}
+  es: {fileID: 0}
   trianglePC: {fileID: 1944651238}
   trapezoidPC: {fileID: 1944651239}
   rectanglePC: {fileID: 0}
@@ -15808,7 +15830,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2005359916}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 685068963}
+        m_MethodName: Unpause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &2005359916

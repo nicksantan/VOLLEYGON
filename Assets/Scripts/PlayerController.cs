@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 using PigeonCoopToolkit.Effects.Trails;
 
@@ -32,6 +33,8 @@ public class PlayerController : MonoBehaviour {
     // Particle system
 	public ParticleSystem ps;
 
+	// Eventsystem
+	public EventSystem es;
     // Rigidbody, mesh, colliders
     Rigidbody2D rb;
     MeshRenderer mr;
@@ -203,7 +206,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Update(){
 
-		if (!inPenalty && buttons != null && buttons.jump != null) {
+		if (!inPenalty && buttons != null && buttons.jump != null && !GameManagerScript.Instance.paused ) {
 
             // Handle jumping
 			if ( Input.GetButtonDown (buttons.jump) ) {
@@ -220,6 +223,16 @@ public class PlayerController : MonoBehaviour {
 			if ( Input.GetButtonDown (buttons.grav) && rb != null ) {
 				rb.gravityScale *= -1f;
 				SoundManagerScript.instance.RandomizeSfx (changeGravSound1, changeGravSound2);
+			}
+		}
+
+		if (Input.GetButtonDown (buttons.start)) {
+			if (!GameManagerScript.Instance.paused) {
+				GameManagerScript.Instance.Pause ();
+				es.GetComponent<StandaloneInputModule> ().horizontalAxis = buttons.horizontal;
+				es.GetComponent<StandaloneInputModule> ().verticalAxis = buttons.vertical;
+				es.GetComponent<StandaloneInputModule> ().submitButton = buttons.jump;
+				es.GetComponent<StandaloneInputModule> ().cancelButton = buttons.grav;
 			}
 		}
 

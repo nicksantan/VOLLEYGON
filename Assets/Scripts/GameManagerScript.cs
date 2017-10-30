@@ -356,25 +356,31 @@ public class GameManagerScript : MonoBehaviour {
 			ConsiderAPowerup ();
 		}
 
-		if (Input.GetKeyDown (KeyCode.P)) {
-			TogglePause ();
-		}
+//		if (Input.GetKeyDown (KeyCode.P)) {
+//			Pause ();
+//		}
 	}
 
-	void TogglePause(){
-		
+	public void Pause(){
 		if (!paused) {
-			
 			pausePanel.SetActive (true);
 			es.SetSelectedGameObject(null);
 			es.SetSelectedGameObject(es.firstSelectedGameObject);
 			Time.timeScale = 0;
 			paused = true;
-		} else {
+		} 
+	}
+
+	public void Unpause(){
+		if (paused){
 			Time.timeScale = 1;
 			paused = false;
 			pausePanel.SetActive (false);
 		}
+	}
+
+	public void QuitGame(){
+		Application.LoadLevel ("TitleScene");
 	}
 
 	void ConsiderAPowerup(){

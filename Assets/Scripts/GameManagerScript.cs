@@ -368,6 +368,7 @@ public class GameManagerScript : MonoBehaviour {
 			es.SetSelectedGameObject(null);
 			es.SetSelectedGameObject(es.firstSelectedGameObject);
 			MusicManagerScript.Instance.TurnOffEverything ();
+			SoundManagerScript.instance.muteSFX ();
 			Time.timeScale = 0;
 			paused = true;
 		} 
@@ -380,6 +381,7 @@ public class GameManagerScript : MonoBehaviour {
 			pausePanel.SetActive (false);
 			recentlyPaused = true;
 			MusicManagerScript.Instance.RestoreFromPause ();
+			SoundManagerScript.instance.unMuteSFX ();
 			Invoke ("CancelRecentlyPaused", 0.1f);
 		}
 	}

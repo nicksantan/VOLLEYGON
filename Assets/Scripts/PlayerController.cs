@@ -207,7 +207,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Update(){
 
-		if (!inPenalty && buttons != null && buttons.jump != null && !GameManagerScript.Instance.recentlyPaused ) {
+		if (!inPenalty && buttons != null && buttons.jump != null && !GameManagerScript.Instance.paused && !GameManagerScript.Instance.recentlyPaused ) {
 
             // Handle jumping
 			if ( Input.GetButtonDown (buttons.jump) ) {
@@ -221,7 +221,7 @@ public class PlayerController : MonoBehaviour {
 			}
 
             // Handle gravity switch
-			if ( Input.GetButtonDown (buttons.grav) && rb != null ) {
+			if ( Input.GetButtonDown (buttons.grav) && rb != null && !GameManagerScript.Instance.paused ) {
 				rb.gravityScale *= -1f;
 				SoundManagerScript.instance.RandomizeSfx (changeGravSound1, changeGravSound2);
 			}

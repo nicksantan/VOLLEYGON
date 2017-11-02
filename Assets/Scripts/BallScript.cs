@@ -429,6 +429,18 @@ public class BallScript : MonoBehaviour {
 
 		} 
 	}
+
+	//TODO: Other elements play SFX through the sound manager. It's bad that the ball is different. 
+	public void Pause(){
+		//audio.volume = 0;
+		audio.Pause();
+	}
+
+	public void UnPause(){
+//		audio.volume = 1f;
+		audio.UnPause ();
+	}
+		
 	void OnCollisionEnter2D(Collision2D coll){
 
 		if (coll.gameObject.tag == "Wall") {

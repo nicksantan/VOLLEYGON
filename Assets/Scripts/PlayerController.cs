@@ -181,64 +181,82 @@ public class PlayerController : MonoBehaviour {
         PlayerPrefs.SetInt(whichType, tempTotal);
     }
 
-    void FixedUpdate () {
-
-        // Get horizontal input 
-        if (buttons != null && buttons.horizontal != null)
+    void FixedUpdate()
+    {
+        if (transform.parent.tag != "FakePlayer")
         {
-            float moveHorizontal = Input.GetAxis(buttons.horizontal);
 
-            // Clamp input
-            moveHorizontal = Mathf.Clamp(moveHorizontal, -1f, 1f);
-
-            if (isJumping)
+            // Get horizontal input 
+            if (buttons != null && buttons.horizontal != null)
             {
-                GetComponent<Rigidbody2D>().angularVelocity = (moveHorizontal * spinPower * rb.gravityScale);
-            }
+                float moveHorizontal = Input.GetAxis(buttons.horizontal);
 
-            if (GetComponent<Rigidbody2D>() != null)
-            {
-                Vector3 v3 = GetComponent<Rigidbody2D>().velocity;
-                v3.x = moveHorizontal * speed;
-                GetComponent<Rigidbody2D>().velocity = v3;
+                // Clamp input
+                moveHorizontal = Mathf.Clamp(moveHorizontal, -1f, 1f);
+
+                if (isJumping)
+                {
+                    GetComponent<Rigidbody2D>().angularVelocity = (moveHorizontal * spinPower * rb.gravityScale);
+                }
+
+                if (GetComponent<Rigidbody2D>() != null)
+                {
+                    Vector3 v3 = GetComponent<Rigidbody2D>().velocity;
+                    v3.x = moveHorizontal * speed;
+                    GetComponent<Rigidbody2D>().velocity = v3;
+                }
             }
         }
-	}
+    }
 
-	void Update(){
+	void Update() {
+        if (transform.parent.tag != "FakePlayer")
+        {
 
-		if (!inPenalty && buttons != null && buttons.jump != null && !GameManagerScript.Instance.paused && !GameManagerScript.Instance.recentlyPaused ) {
+            if (!inPenalty
+                && buttons != null
+                && buttons.jump != null
+                && GameManagerScript.Instance != null
+                && !GameManagerScript.Instance.paused
+                && !GameManagerScript.Instance.recentlyPaused)
+            {
 
-            // Handle jumping
-			if ( Input.GetButtonDown (buttons.jump) ) {
+                // Handle jumping
+                if (Input.GetButtonDown(buttons.jump))
+                {
 
-				if (isJumping == false && rb != null) {
-					Vector3 jumpForce = new Vector3 (0f, jumpPower * rb.gravityScale, 0f);
-					rb.AddForce (jumpForce);
-					SoundManagerScript.instance.RandomizeSfx (jumpSound1, jumpSound2);
-					isJumping = true;
-				}
-			}
+                    if (isJumping == false && rb != null)
+                    {
+                        Vector3 jumpForce = new Vector3(0f, jumpPower * rb.gravityScale, 0f);
+                        rb.AddForce(jumpForce);
+                        SoundManagerScript.instance.RandomizeSfx(jumpSound1, jumpSound2);
+                        isJumping = true;
+                    }
+                }
 
-            // Handle gravity switch
-			if ( Input.GetButtonDown (buttons.grav) && rb != null && !GameManagerScript.Instance.paused ) {
-				rb.gravityScale *= -1f;
-				SoundManagerScript.instance.RandomizeSfx (changeGravSound1, changeGravSound2);
-			}
-		}
+                // Handle gravity switch
+                if (Input.GetButtonDown(buttons.grav) && rb != null && !GameManagerScript.Instance.paused)
+                {
+                    rb.gravityScale *= -1f;
+                    SoundManagerScript.instance.RandomizeSfx(changeGravSound1, changeGravSound2);
+                }
+            }
 
-		if (Input.GetButtonDown (buttons.start)) {
-			if (!GameManagerScript.Instance.paused) {
-				GameManagerScript.Instance.Pause ();
-				es.GetComponent<StandaloneInputModule> ().horizontalAxis = buttons.horizontal;
-				es.GetComponent<StandaloneInputModule> ().verticalAxis = buttons.vertical;
-				es.GetComponent<StandaloneInputModule> ().submitButton = buttons.jump;
-				es.GetComponent<StandaloneInputModule> ().cancelButton = buttons.grav;
-			}
-		}
+            if (buttons != null && Input.GetButtonDown(buttons.start))
+            {
+                if (!GameManagerScript.Instance.paused)
+                {
+                    GameManagerScript.Instance.Pause();
+                    es.GetComponent<StandaloneInputModule>().horizontalAxis = buttons.horizontal;
+                    es.GetComponent<StandaloneInputModule>().verticalAxis = buttons.vertical;
+                    es.GetComponent<StandaloneInputModule>().submitButton = buttons.jump;
+                    es.GetComponent<StandaloneInputModule>().cancelButton = buttons.grav;
+                }
+            }
 
-		ClampPosition ();
-		ManagePowerups ();
+            ClampPosition();
+            ManagePowerups();
+        }
 	}
 
 	void checkPenalty(){

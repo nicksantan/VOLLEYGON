@@ -64,7 +64,6 @@ public class GamepadController : MonoBehaviour {
 
         // Unselect slot
         if (Input.GetButtonDown(buttons.grav)) {
-            Debug.Log(playerReady);
             if (!playerReady) {
                 unselectSlotForJoystick();
             }
@@ -136,7 +135,6 @@ public class GamepadController : MonoBehaviour {
         }
 
         // Gamepad has been unassigned
-        Debug.Log("Unselect");
         slotSelected = false;
         readiedUp = false;
     }

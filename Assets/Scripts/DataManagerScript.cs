@@ -21,7 +21,7 @@ public class DataManagerScript : MonoBehaviour {
 	public static int arenaType;
 
 	// Arcade / credit-mode variables
-	public static bool creditMode = true;
+	public static bool creditMode = false;
 	public static int credits;
 	private static string coinInsertButton = "Coin_Insert";
 	public static AudioClip coinInsertSFX;

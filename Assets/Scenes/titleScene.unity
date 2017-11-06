@@ -429,7 +429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pressStartAnimation: {fileID: 1461209255}
   stillLogo: {fileID: 1402068454}
-  colorCyclingBG: {fileID: 0}
+  colorCyclingBG: {fileID: 172339246}
 --- !u!23 &445539521
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1572,7 +1572,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 57.125362
+  Phase: 60.569485
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5

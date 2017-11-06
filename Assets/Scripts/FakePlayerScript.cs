@@ -41,8 +41,6 @@ public class FakePlayerScript : MonoBehaviour {
     
 	Axis verticalAxis;
 
-
-
     SpriteRenderer sr;
 
 	void UpdatePlayerType(int whichType){
@@ -85,9 +83,6 @@ public class FakePlayerScript : MonoBehaviour {
 	}
 
 	void activateReadyState(){
-
-        ChoosePlayerScript manager = ChoosePlayerScript.Instance;
-        Debug.Log(manager.player1Ready);
 
 		if (taggedIn) {
 

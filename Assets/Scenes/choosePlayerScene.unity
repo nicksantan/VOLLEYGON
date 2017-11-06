@@ -607,7 +607,6 @@ MonoBehaviour:
   startingGrav: 1
   isJumping: 0
   ps: {fileID: 0}
-  es: {fileID: 0}
   trianglePC: {fileID: 70616939}
   trapezoidPC: {fileID: 70616935}
   rectanglePC: {fileID: 0}
@@ -1805,7 +1804,6 @@ MonoBehaviour:
   startingGrav: 1
   isJumping: 0
   ps: {fileID: 0}
-  es: {fileID: 0}
   trianglePC: {fileID: 251343693}
   trapezoidPC: {fileID: 251343689}
   rectanglePC: {fileID: 0}
@@ -4041,7 +4039,6 @@ MonoBehaviour:
   startingGrav: 1
   isJumping: 0
   ps: {fileID: 0}
-  es: {fileID: 0}
   trianglePC: {fileID: 480526817}
   trapezoidPC: {fileID: 480526813}
   rectanglePC: {fileID: 480526821}
@@ -4419,7 +4416,6 @@ MonoBehaviour:
   startingGrav: 1
   isJumping: 0
   ps: {fileID: 0}
-  es: {fileID: 0}
   trianglePC: {fileID: 499084701}
   trapezoidPC: {fileID: 499084697}
   rectanglePC: {fileID: 0}
@@ -5072,7 +5068,6 @@ MonoBehaviour:
   startingGrav: 1
   isJumping: 0
   ps: {fileID: 0}
-  es: {fileID: 0}
   trianglePC: {fileID: 555820042}
   trapezoidPC: {fileID: 555820038}
   rectanglePC: {fileID: 0}
@@ -5440,7 +5435,7 @@ GameObject:
   - component: {fileID: 579324263}
   m_Layer: 0
   m_Name: Fake Player 2
-  m_TagString: FakePlayer
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6246,7 +6241,6 @@ MonoBehaviour:
   startingGrav: 1
   isJumping: 0
   ps: {fileID: 0}
-  es: {fileID: 0}
   trianglePC: {fileID: 622331648}
   trapezoidPC: {fileID: 622331644}
   rectanglePC: {fileID: 0}
@@ -7111,7 +7105,7 @@ GameObject:
   - component: {fileID: 736303008}
   m_Layer: 0
   m_Name: Fake Player 4
-  m_TagString: FakePlayer
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8063,7 +8057,6 @@ MonoBehaviour:
   startingGrav: 1
   isJumping: 0
   ps: {fileID: 0}
-  es: {fileID: 0}
   trianglePC: {fileID: 792009926}
   trapezoidPC: {fileID: 792009922}
   rectanglePC: {fileID: 792009930}
@@ -8897,7 +8890,6 @@ MonoBehaviour:
   startingGrav: 1
   isJumping: 0
   ps: {fileID: 0}
-  es: {fileID: 0}
   trianglePC: {fileID: 894976736}
   trapezoidPC: {fileID: 894976732}
   rectanglePC: {fileID: 0}
@@ -9415,7 +9407,7 @@ GameObject:
   - component: {fileID: 1040935893}
   m_Layer: 0
   m_Name: Fake Player 3
-  m_TagString: FakePlayer
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9963,7 +9955,6 @@ MonoBehaviour:
   startingGrav: 1
   isJumping: 0
   ps: {fileID: 0}
-  es: {fileID: 0}
   trianglePC: {fileID: 1047990873}
   trapezoidPC: {fileID: 1047990869}
   rectanglePC: {fileID: 0}
@@ -10645,7 +10636,6 @@ MonoBehaviour:
   startingGrav: 1
   isJumping: 0
   ps: {fileID: 0}
-  es: {fileID: 0}
   trianglePC: {fileID: 1146637871}
   trapezoidPC: {fileID: 1146637867}
   rectanglePC: {fileID: 0}
@@ -10995,7 +10985,6 @@ MonoBehaviour:
   startingGrav: 1
   isJumping: 0
   ps: {fileID: 0}
-  es: {fileID: 0}
   trianglePC: {fileID: 1147612617}
   trapezoidPC: {fileID: 1147612613}
   rectanglePC: {fileID: 0}
@@ -11693,10 +11682,6 @@ Prefab:
     - target: {fileID: 11432246, guid: 20d2aec620f7941d1bfa9914d31b45d0, type: 2}
       propertyPath: chooseAxis_Xbox
       value: Vertical_P1_Xbox
-      objectReference: {fileID: 0}
-    - target: {fileID: 103506, guid: 20d2aec620f7941d1bfa9914d31b45d0, type: 2}
-      propertyPath: m_TagString
-      value: FakePlayer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 20d2aec620f7941d1bfa9914d31b45d0, type: 2}
@@ -12594,7 +12579,6 @@ MonoBehaviour:
   startingGrav: 1
   isJumping: 0
   ps: {fileID: 0}
-  es: {fileID: 0}
   trianglePC: {fileID: 1439899512}
   trapezoidPC: {fileID: 1439899508}
   rectanglePC: {fileID: 0}
@@ -12945,7 +12929,6 @@ MonoBehaviour:
   startingGrav: 1
   isJumping: 0
   ps: {fileID: 0}
-  es: {fileID: 0}
   trianglePC: {fileID: 1456609309}
   trapezoidPC: {fileID: 1456609305}
   rectanglePC: {fileID: 0}
@@ -13501,7 +13484,6 @@ MonoBehaviour:
   startingGrav: 1
   isJumping: 0
   ps: {fileID: 0}
-  es: {fileID: 0}
   trianglePC: {fileID: 1539305110}
   trapezoidPC: {fileID: 1539305106}
   rectanglePC: {fileID: 0}
@@ -15457,7 +15439,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 85.72183
+  Phase: 81.81729
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5
@@ -16302,7 +16284,6 @@ MonoBehaviour:
   startingGrav: 1
   isJumping: 0
   ps: {fileID: 0}
-  es: {fileID: 0}
   trianglePC: {fileID: 2035558789}
   trapezoidPC: {fileID: 2035558785}
   rectanglePC: {fileID: 0}
@@ -16922,10 +16903,6 @@ MonoBehaviour:
   oneOnOneMessage: {fileID: 1899593084}
   twoOnOneMessage: {fileID: 1190058800}
   locked: 0
-  player1Ready: 0
-  player2Ready: 0
-  player3Ready: 0
-  player4Ready: 0
 --- !u!4 &2126456561
 Transform:
   m_ObjectHideFlags: 0

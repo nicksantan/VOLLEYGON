@@ -18,7 +18,6 @@ TagManager:
   - Powerup
   - Ball
   - MidpointMarker
-  - FakePlayer
   layers:
   - Default
   - TransparentFX

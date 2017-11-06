@@ -28,10 +28,10 @@ public class ChoosePlayerScript : MonoBehaviour {
 
 	private bool gameIsStartable = false;
 
-    public bool player1Ready = false;
-    public bool player2Ready = false;
-    public bool player3Ready = false;
-    public bool player4Ready = false;
+	private bool player1Ready = false;
+	private bool player2Ready = false;
+	private bool player3Ready = false;
+	private bool player4Ready = false;
 
 	private int playersOnLeft = 0;
 	private int playersOnRight = 0;

@@ -4,10 +4,14 @@ public class GamepadController : MonoBehaviour {
 
     public int joystick;
     public int slot = 0; // default to nonexistent slot
-    private JoystickButtons buttons;
+    public JoystickButtons buttons;
+    private GameObject selectedSlotPlayer;
     private Axis horizontalAxis;
     private bool slotSelected = false;
     private bool readiedUp = false;
+    private bool playerReady = false;
+    private bool playerTagged = false;
+    private bool shouldActivate = false;
 
     // Use this for initialization
     void Start () {
@@ -25,38 +29,57 @@ public class GamepadController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
+        // Get ready state from manager
+        switch (slot)
+        {
+            case 1:
+                playerReady = ChoosePlayerScript.Instance.player1Ready;
+                playerTagged = DataManagerScript.playerOnePlaying;
+                break;
+            case 2:
+                playerReady = ChoosePlayerScript.Instance.player2Ready;
+                playerTagged = DataManagerScript.playerTwoPlaying;
+                break;
+            case 3:
+                playerReady = ChoosePlayerScript.Instance.player3Ready;
+                playerTagged = DataManagerScript.playerThreePlaying;
+                break;
+            case 4:
+                playerReady = ChoosePlayerScript.Instance.player4Ready;
+                playerTagged = DataManagerScript.playerFourPlaying;
+                break;
+        }
+
         // Joystick movements
         checkHorizontalAxis(horizontalAxis);
 
         // Select slot
-        if (Input.GetButtonDown(buttons.jump))
-        {
-            if (!slotSelected)
-            {
+        if (Input.GetButtonDown(buttons.jump)) {
+            if (!slotSelected && !playerTagged) {
                 selectSlotForJoystick();
-            } else
-            {
-                readiedUp = true;
             }
         }
 
         // Unselect slot
-        if (Input.GetButtonDown(buttons.grav))
-        {
-            if (!readiedUp)
-            {
+        if (Input.GetButtonDown(buttons.grav)) {
+            Debug.Log(playerReady);
+            if (!playerReady) {
                 unselectSlotForJoystick();
-            } else
-            {
-                readiedUp = false;
             }
         }
     }
 
-    void selectSlotForJoystick()
+    private void FixedUpdate()
     {
+        if (shouldActivate)
+        {
+            activateFakePlayer();
+        }
+    }
+
+    void selectSlotForJoystick() {
         // Set joystick for player slot
         switch (slot)
         {
@@ -73,13 +96,22 @@ public class GamepadController : MonoBehaviour {
             case 4:
                 DataManagerScript.playerFourJoystick = joystick;
                 break;
-
         }
 
         // Debug.Log("Slot assigned: " + joystick);
+        
+        // Tell fake player it has a joystick now, and activate
+        selectedSlotPlayer = GameObject.Find("Fake Player " + slot);
+        shouldActivate = true;
 
         // Gamepad has been assigned
         slotSelected = true;
+    }
+
+    void activateFakePlayer() {
+        selectedSlotPlayer.GetComponent<FakePlayerScript>().checkForJoystick();
+        selectedSlotPlayer.GetComponent<FakePlayerScript>().activateReadyState();
+        shouldActivate = false;
     }
 
     void unselectSlotForJoystick()
@@ -104,6 +136,7 @@ public class GamepadController : MonoBehaviour {
         }
 
         // Gamepad has been unassigned
+        Debug.Log("Unselect");
         slotSelected = false;
         readiedUp = false;
     }
@@ -180,7 +213,7 @@ public class GamepadController : MonoBehaviour {
     void moveIcon(bool playSound)
     {
         // Get selected slot coordinates
-        GameObject selectedSlotPlayer = GameObject.Find("Fake Player " + slot);
+        selectedSlotPlayer = GameObject.Find("Fake Player " + slot);
         float x = selectedSlotPlayer.transform.position.x + ((joystick * 2f) - 5f);
 
         // Move icon

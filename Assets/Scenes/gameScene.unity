@@ -4155,7 +4155,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &535072812
 GameObject:
@@ -4429,7 +4429,7 @@ Transform:
   m_LocalScale: {x: 41.7, y: 23.4, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &581180703
 MonoBehaviour:
@@ -5222,7 +5222,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 453734, guid: 31cc3b62bb65048338c5529689c77ca1, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 155482, guid: 31cc3b62bb65048338c5529689c77ca1, type: 2}
       propertyPath: m_IsActive
@@ -5345,6 +5345,7 @@ MonoBehaviour:
   scorePlayedTo: 11
   arenaType: 0
   paused: 0
+  recentlyPaused: 0
   speedPowerupPrefab: {fileID: 158322, guid: 2da9bdec1cf964e78aea491151751577, type: 2}
   powerupPrefab: {fileID: 133766, guid: e241f0b08689e4d8b8c81984d26532ac, type: 2}
   gravityIndicator: {fileID: 1166926510}
@@ -7906,7 +7907,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 479356, guid: e241f0b08689e4d8b8c81984d26532ac, type: 2}
       propertyPath: m_RootOrder
-      value: 18
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 133766, guid: e241f0b08689e4d8b8c81984d26532ac, type: 2}
       propertyPath: m_IsActive
@@ -14503,7 +14504,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 507.8365
+  Phase: 580.05975
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5
@@ -14539,7 +14540,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 22fe62a5d4de91a4995c1363cbc2492e, type: 3}
   Mode: 1
-  Timer: 623.4363
+  Timer: 854.5554
   Speed: 0.8
   Frequency: 12
   Amplitude: 0

@@ -65,7 +65,7 @@ public class TitleManagerScript : MonoBehaviour {
 		XboxOneKeyCode.Gamepad4ButtonY
 	};
 
-    public static bool GettValidButtonDown(XboxOneKeyCode[] validButtons, out XboxOneKeyCode buttonThatWasPressed) {
+    public static bool GetValidButtonDown(XboxOneKeyCode[] validButtons, out XboxOneKeyCode buttonThatWasPressed) {
         for (int i = 0; i < validButtons.Length; i++) {
             XboxOneKeyCode keyCode = validButtons[i];
             if (XboxOneInput.GetKeyDown(keyCode)) {
@@ -91,7 +91,7 @@ public class TitleManagerScript : MonoBehaviour {
 
 				// Get gamepad
 	            XboxOneKeyCode keyCode;
-	            if (GettValidButtonDown(startTitleButtons, out keyCode)) {
+	            if (GetValidButtonDown(startTitleButtons, out keyCode)) {
 	                int gamepadIndex = (int)XboxOneInput.GetGamepadIndexFromGamepadButton(keyCode);
 
 	                // Sign in if active player is not associated with this controller
@@ -106,8 +106,7 @@ public class TitleManagerScript : MonoBehaviour {
 				}
 			}
 			else {
-
-				// Iterate over all gamepads for input
+				// Iterate over all inputs for actions
 				for (int i = 0; i < gamepads.Length; i++) {
 					if (Input.GetButtonDown (gamepads[i].jump) || Input.GetButtonDown (gamepads[i].start)) {
 
@@ -119,13 +118,16 @@ public class TitleManagerScript : MonoBehaviour {
 		} else {
 			// Listen for user change (Y button)
 			if (XboxOneInput.GetKeyDown( XboxOneKeyCode.GamepadButtonY )) {
+
 				// Get gamepad
 	            XboxOneKeyCode keyCode;
-	            if (GettValidButtonDown(yButtons, out keyCode)) {
+	            if (GetValidButtonDown(yButtons, out keyCode)) {
 	                int gamepadIndex = (int)XboxOneInput.GetGamepadIndexFromGamepadButton(keyCode);
 
+					Debug.Log("Index: " + gamepadIndex + " | Controller: " + DataManagerScript.gamepadControllingMenus);
+
 	                // Back out and log in again if active player presses Y
-	                if (XboxOneInput.GetUserIdForGamepad((uint)gamepadIndex) == DataManagerScript.gamepadControllingMenus) {
+	                if (gamepadIndex == DataManagerScript.gamepadControllingMenus) {
 						cancelCurrentMenu(true);
 	                	DataManagerScript.shouldActivateMenu = true;
 						UsersManager.RequestSignIn(Users.AccountPickerOptions.None, (ulong)gamepadIndex);
@@ -162,7 +164,6 @@ public class TitleManagerScript : MonoBehaviour {
 
 		// Save "active" user if on xbox
 		if (DataManagerScript.xboxMode) {
-			Debug.Log("saving user");
 			int userId = XboxOneInput.GetUserIdForGamepad((uint)gamepad);
 			DataManagerScript.userControllingMenus = UsersManager.FindUserById(userId);
 		}

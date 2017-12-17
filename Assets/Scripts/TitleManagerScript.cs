@@ -124,8 +124,6 @@ public class TitleManagerScript : MonoBehaviour {
 	            if (GetValidButtonDown(yButtons, out keyCode)) {
 	                int gamepadIndex = (int)XboxOneInput.GetGamepadIndexFromGamepadButton(keyCode);
 
-					Debug.Log("Index: " + gamepadIndex + " | Controller: " + DataManagerScript.gamepadControllingMenus);
-
 	                // Back out and log in again if active player presses Y
 	                if (gamepadIndex == DataManagerScript.gamepadControllingMenus) {
 						cancelCurrentMenu(true);

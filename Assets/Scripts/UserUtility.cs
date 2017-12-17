@@ -71,8 +71,5 @@ public class UserUtility : MonoBehaviour {
 			info = u.Id + ": " + u.OnlineID;
 		}
 		Debug.Log("> App Current User Changed: [" + info + "]\n");
-
-		Debug.Log(u.pairedControllerIds);
-		Debug.Log(u.pairedControllerIds.Count);
 	}
 }

@@ -77,16 +77,16 @@ public class ChoosePlayerScript : MonoBehaviour {
 		gamepad4 = new JoystickButtons(4);
 
 		// Activate gamepad for player who selected the game mode
-		if (DataManagerScript.playerControllingMenus == 1) {
+		if (DataManagerScript.gamepadControllingMenus == 1) {
 			gamepadIcon1.SetActive(true);
 		}
-		else if (DataManagerScript.playerControllingMenus == 2) {
+		else if (DataManagerScript.gamepadControllingMenus == 2) {
 			gamepadIcon2.SetActive(true);
 		}
-		else if (DataManagerScript.playerControllingMenus == 3) {
+		else if (DataManagerScript.gamepadControllingMenus == 3) {
 			gamepadIcon3.SetActive(true);
 		}
-		else if (DataManagerScript.playerControllingMenus == 4) {
+		else if (DataManagerScript.gamepadControllingMenus == 4) {
 			gamepadIcon4.SetActive(true);
 		}
 

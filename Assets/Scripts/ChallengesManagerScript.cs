@@ -32,13 +32,13 @@ public class ChallengesManagerScript : MonoBehaviour {
         locked = false;
 
         // Assign joystick to player
-		joystickIdentifier = DataManagerScript.playerControllingMenus;
+		joystickIdentifier = DataManagerScript.gamepadControllingMenus;
         buttons = new JoystickButtons(joystickIdentifier);
 
         // Get axis string from joystick class
         verticalAxis = new Axis(buttons.vertical);
 		horizontalAxis = new Axis(buttons.horizontal);
-        
+
         Vector3 tempPos = new Vector3(markerXPositions[0], markerYPositions[0], 1f);
         marker.transform.position = tempPos;
     }
@@ -46,7 +46,7 @@ public class ChallengesManagerScript : MonoBehaviour {
     void Update()
     {
         if (!locked){
-           
+
                 if (Input.GetAxisRaw(verticalAxis.axisName) < 0){
                     if (verticalAxis.axisInUse == false)
                     {
@@ -74,9 +74,9 @@ public class ChallengesManagerScript : MonoBehaviour {
                 {
                     verticalAxis.axisInUse = false;
                 }
-            
 
-          
+
+
                 if (Input.GetAxisRaw(horizontalAxis.axisName) < 0)
                 {
 				if (horizontalAxis.axisInUse == false)
@@ -106,12 +106,12 @@ public class ChallengesManagerScript : MonoBehaviour {
                 {
 				horizontalAxis.axisInUse = false;
                 }
-            
+
             {
 				if (Input.GetButtonDown(buttons.jump))
                 {
                     // Set chosen challenge
-                    DataManagerScript.challengeType = markerPos;       
+                    DataManagerScript.challengeType = markerPos;
                     StartCoroutine("NextScene");
                 }
             }

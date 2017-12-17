@@ -14,6 +14,7 @@ public class UserUtility : MonoBehaviour {
 
 			UsersManager.OnUsersChanged          += OnUsersChanged;
 			UsersManager.OnUserSignIn            += OnUserSignIn;
+			UsersManager.OnSignInComplete        += OnUserSignInComplete;
 			UsersManager.OnUserSignOut           += OnUserSignOut;
 			UsersManager.OnSignOutStarted        += OnUserSignOutStarted;
 			UsersManager.OnDisplayInfoChanged    += OnUserDisplayInfoChange;
@@ -30,6 +31,19 @@ public class UserUtility : MonoBehaviour {
 	void OnUserSignIn(int id)
 	{
 		Debug.Log("> User Signed In: [" + id.ToString() + "]\n");
+	}
+
+	void OnUserSignInComplete(int id, int otherId)
+	{
+		Debug.Log("> User Finished Signing In: [" + id.ToString() + " | " + otherId.ToString() + "]\n");
+		if (DataManagerScript.shouldActivateMenu == true) {
+			GameObject title = GameObject.Find("TitleManager");
+			if (title != null) {
+				TitleManagerScript titleScript = title.GetComponent<TitleManagerScript>();
+				titleScript.activateMainMenu(id);
+			}
+			DataManagerScript.shouldActivateMenu = false;
+		}
 	}
 
 	void OnUserSignOut(int id)

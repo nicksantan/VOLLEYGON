@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Users;
 
 public class DataManagerScript : MonoBehaviour {
 
@@ -18,9 +19,15 @@ public class DataManagerScript : MonoBehaviour {
 	public static bool CRTMode = true;
 	public static bool isChallengeMode = false;
 
+	// Flag for login on initial launch
+
+	public static bool shouldActivateMenu = false;
+
 	// UI Flags
 
-	public static int playerControllingMenus = 1;
+	public static int gamepadControllingMenus;
+	public static User userControllingMenus;
+
     // Player shapes
 
 	public static int playerOneType;

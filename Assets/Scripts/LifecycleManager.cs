@@ -104,7 +104,8 @@ public class LifecycleManager : MonoBehaviour {
 			// Hand pause reponsibility to game manager
 			// Never unpause game, leave pause screen open if game in progress
 			if (shouldPause) {
-				GameManagerScript.Instance.Pause();
+				JoystickButtons buttons = new JoystickButtons(DataManagerScript.gamepadControllingMenus);
+				GameManagerScript.Instance.Pause(buttons);
 			}
 
 		} else {

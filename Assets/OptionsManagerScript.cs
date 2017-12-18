@@ -10,9 +10,9 @@ public class OptionsManagerScript : MonoBehaviour {
 	public EventSystem es;
 	// Use this for initialization
 	void Start () {
-		
-		// determine which controller is 'in control'. 
-		whichPlayerIsControlling = DataManagerScript.playerControllingMenus;
+
+		// determine which controller is 'in control'.
+		whichPlayerIsControlling = DataManagerScript.gamepadControllingMenus;
 		joyButts = new JoystickButtons (whichPlayerIsControlling);
 		es.GetComponent<StandaloneInputModule> ().horizontalAxis = joyButts.horizontal;
 		es.GetComponent<StandaloneInputModule> ().verticalAxis = joyButts.vertical;
@@ -20,7 +20,7 @@ public class OptionsManagerScript : MonoBehaviour {
 		es.GetComponent<StandaloneInputModule> ().cancelButton = joyButts.grav;
 		//TODO: Will need to handle controller disconnects, etc.
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetButtonDown (joyButts.grav)) {
@@ -28,6 +28,6 @@ public class OptionsManagerScript : MonoBehaviour {
 		}
 
 		// Check for cancel button to go to previous scene
-				
+
 	}
 }

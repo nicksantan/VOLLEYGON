@@ -40,7 +40,7 @@ public class GameManagerScript : MonoBehaviour {
 
 	public GameObject ball;
 
-	// Hold references to each of the players. Activate or de-activate them based on options chosen on the previous page. 
+	// Hold references to each of the players. Activate or de-activate them based on options chosen on the previous page.
 	public GameObject Player1;
 	public GameObject Player2;
 	public GameObject Player3;
@@ -306,7 +306,7 @@ public class GameManagerScript : MonoBehaviour {
 			background.GetComponent<BackgroundColorScript> ().TurnOffMatchPoint ();
 
 			break;
-		case 2: 
+		case 2:
 			scoreboard.GetComponent<ScoreboardManagerScript> ().TeamTwoWin ();
 			background.GetComponent<BackgroundColorScript> ().whoWon = 2;
 			background.GetComponent<BackgroundColorScript> ().matchOver = true;
@@ -335,7 +335,7 @@ public class GameManagerScript : MonoBehaviour {
 		if (OnePlayerMode) {
 			rallyCountText.text = rallyCount.ToString();
 		}
-		// if all 4 start buttons are pressed, warp back to title screen 
+		// if all 4 start buttons are pressed, warp back to title screen
 		if (Input.GetButton (startButton1) && Input.GetButton (startButton2) && Input.GetButton (startButton3) && Input.GetButton (startButton4)) {
 			Debug.Log ("returning to title");
 			Application.LoadLevel ("titleScene");
@@ -349,7 +349,7 @@ public class GameManagerScript : MonoBehaviour {
 
 		if (timerRunning) {
 			gameTimer -= Time.deltaTime;
-		}	
+		}
 		if (teamOneScore >= scorePlayedTo && teamOneScore == teamTwoScore + 1) {
 			background.GetComponent<BackgroundColorScript> ().TurnOnMatchPoint (1);
 		} else if (teamTwoScore >= scorePlayedTo && teamTwoScore == teamOneScore + 1) {
@@ -362,19 +362,24 @@ public class GameManagerScript : MonoBehaviour {
 		//	Debug.Log ("Run team two wins routine here");
 			teamWins (2);
 		}
-			
+
 		if (!isGameOver) {
 			ConsiderAPowerup ();
 		}
-
-//		if (Input.GetKeyDown (KeyCode.P)) {
-//			Pause ();
-//		}
 	}
 
-	public void Pause(){
+	public void Pause(JoystickButtons buttons){
 		if (!paused) {
+			// Sho wpause
 			pausePanel.SetActive (true);
+
+			// Assign butons
+            es.GetComponent<StandaloneInputModule>().horizontalAxis = buttons.horizontal;
+            es.GetComponent<StandaloneInputModule>().verticalAxis = buttons.vertical;
+            es.GetComponent<StandaloneInputModule>().submitButton = buttons.jump;
+            es.GetComponent<StandaloneInputModule>().cancelButton = buttons.grav;
+
+            // Reset menu
 			es.SetSelectedGameObject(null);
 			es.SetSelectedGameObject(es.firstSelectedGameObject);
 			MusicManagerScript.Instance.TurnOffEverything ();
@@ -383,7 +388,7 @@ public class GameManagerScript : MonoBehaviour {
 			ball.GetComponent<BallScript>().Pause ();
 			Time.timeScale = 0;
 			paused = true;
-		} 
+		}
 	}
 
 	public void Unpause(){

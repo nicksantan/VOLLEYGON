@@ -10,13 +10,8 @@ public class ActivateFirstButtonScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		eventSystem.SetSelectedGameObject (selectedObject);
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-		
+		if (eventSystem != null) {
+			eventSystem.SetSelectedGameObject (selectedObject);
+		}
 	}
 }

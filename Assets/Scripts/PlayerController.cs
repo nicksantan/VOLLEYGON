@@ -144,7 +144,7 @@ public class PlayerController : MonoBehaviour {
 		// Assign player color and joystick
 		if (isChallengeMode) {
 
-			joystick = DataManagerScript.playerControllingMenus;
+			joystick = DataManagerScript.gamepadControllingMenus;
 
 		} else {
 			switch (playerID) {
@@ -249,11 +249,7 @@ public class PlayerController : MonoBehaviour {
             		&& GameManagerScript.Instance != null
 	                && !GameManagerScript.Instance.paused)
 	                {
-                    GameManagerScript.Instance.Pause();
-                    es.GetComponent<StandaloneInputModule>().horizontalAxis = buttons.horizontal;
-                    es.GetComponent<StandaloneInputModule>().verticalAxis = buttons.vertical;
-                    es.GetComponent<StandaloneInputModule>().submitButton = buttons.jump;
-                    es.GetComponent<StandaloneInputModule>().cancelButton = buttons.grav;
+                    GameManagerScript.Instance.Pause(buttons);
                 }
 
 	            ClampPosition();

@@ -611,6 +611,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c0c6b1e1a834d5a807d483811a9276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isChallengeMode: 0
   jumpPower: 2000
   speed: 15
   spinPower: -150
@@ -1815,6 +1816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c0c6b1e1a834d5a807d483811a9276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isChallengeMode: 0
   jumpPower: 2000
   speed: 15
   spinPower: -150
@@ -3428,6 +3430,80 @@ TrailRenderer:
     generateLightingData: 0
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
+--- !u!1 &425726914
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 425726915}
+  - component: {fileID: 425726917}
+  - component: {fileID: 425726916}
+  m_Layer: 5
+  m_Name: Player 4 User
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &425726915
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 425726914}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.99993753, y: 0.99993753, z: 0.99993753}
+  m_Children: []
+  m_Father: {fileID: 666405468}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 270.5, y: -210.17}
+  m_SizeDelta: {x: 187.01, y: 46.35}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &425726916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 425726914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 24299d427e090474eba7f072182ac4b1, type: 3}
+    m_FontSize: 12
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Y: LOG IN'
+--- !u!222 &425726917
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 425726914}
 --- !u!1 &452662708
 GameObject:
   m_ObjectHideFlags: 0
@@ -4069,6 +4145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c0c6b1e1a834d5a807d483811a9276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isChallengeMode: 0
   jumpPower: 2000
   speed: 15
   spinPower: -150
@@ -4451,6 +4528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c0c6b1e1a834d5a807d483811a9276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isChallengeMode: 0
   jumpPower: 2000
   speed: 15
   spinPower: -150
@@ -5112,6 +5190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c0c6b1e1a834d5a807d483811a9276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isChallengeMode: 0
   jumpPower: 2000
   speed: 15
   spinPower: -150
@@ -5377,6 +5456,80 @@ TrailRenderer:
     generateLightingData: 0
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
+--- !u!1 &563445265
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 563445266}
+  - component: {fileID: 563445268}
+  - component: {fileID: 563445267}
+  m_Layer: 5
+  m_Name: Player 1 User
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &563445266
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 563445265}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 666405468}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -272.85, y: -210.17}
+  m_SizeDelta: {x: 181.7, y: 46.345}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &563445267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 563445265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 24299d427e090474eba7f072182ac4b1, type: 3}
+    m_FontSize: 12
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Y: LOG IN'
+--- !u!222 &563445268
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 563445265}
 --- !u!1 &574122839
 GameObject:
   m_ObjectHideFlags: 0
@@ -5932,6 +6085,80 @@ Mesh:
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshOptimized: 0
+--- !u!1 &605434308
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 605434309}
+  - component: {fileID: 605434311}
+  - component: {fileID: 605434310}
+  m_Layer: 5
+  m_Name: Player 2 User
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &605434309
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 605434308}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.99993753, y: 0.99993753, z: 0.99993753}
+  m_Children: []
+  m_Father: {fileID: 666405468}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -90.85, y: -210.17}
+  m_SizeDelta: {x: 181.7, y: 46.348}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &605434310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 605434308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 24299d427e090474eba7f072182ac4b1, type: 3}
+    m_FontSize: 12
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Y: LOG IN'
+--- !u!222 &605434311
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 605434308}
 --- !u!1 &609940882
 GameObject:
   m_ObjectHideFlags: 0
@@ -6296,6 +6523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c0c6b1e1a834d5a807d483811a9276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isChallengeMode: 0
   jumpPower: 2000
   speed: 15
   spinPower: -150
@@ -6794,6 +7022,10 @@ RectTransform:
   - {fileID: 1899593083}
   - {fileID: 1111910143}
   - {fileID: 129272990}
+  - {fileID: 563445266}
+  - {fileID: 605434309}
+  - {fileID: 1112454141}
+  - {fileID: 425726915}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8127,6 +8359,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c0c6b1e1a834d5a807d483811a9276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isChallengeMode: 0
   jumpPower: 2000
   speed: 15
   spinPower: -150
@@ -8971,6 +9204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c0c6b1e1a834d5a807d483811a9276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isChallengeMode: 0
   jumpPower: 2000
   speed: 15
   spinPower: -150
@@ -10043,6 +10277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c0c6b1e1a834d5a807d483811a9276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isChallengeMode: 0
   jumpPower: 2000
   speed: 15
   spinPower: -150
@@ -10301,6 +10536,80 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1111910142}
+--- !u!1 &1112454140
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1112454141}
+  - component: {fileID: 1112454143}
+  - component: {fileID: 1112454142}
+  m_Layer: 5
+  m_Name: Player 3 User
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1112454141
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1112454140}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.99993753, y: 0.99993753, z: 0.99993753}
+  m_Children: []
+  m_Father: {fileID: 666405468}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 88.501, y: -210.17}
+  m_SizeDelta: {x: 177.01, y: 46.35}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1112454142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1112454140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 24299d427e090474eba7f072182ac4b1, type: 3}
+    m_FontSize: 12
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Y: LOG IN'
+--- !u!222 &1112454143
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1112454140}
 --- !u!1001 &1114665574
 Prefab:
   m_ObjectHideFlags: 0
@@ -10729,6 +11038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c0c6b1e1a834d5a807d483811a9276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isChallengeMode: 0
   jumpPower: 2000
   speed: 15
   spinPower: -150
@@ -11083,6 +11393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c0c6b1e1a834d5a807d483811a9276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isChallengeMode: 0
   jumpPower: 2000
   speed: 15
   spinPower: -150
@@ -12690,6 +13001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c0c6b1e1a834d5a807d483811a9276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isChallengeMode: 0
   jumpPower: 2000
   speed: 15
   spinPower: -150
@@ -13045,6 +13357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c0c6b1e1a834d5a807d483811a9276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isChallengeMode: 0
   jumpPower: 2000
   speed: 15
   spinPower: -150
@@ -13607,6 +13920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c0c6b1e1a834d5a807d483811a9276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isChallengeMode: 0
   jumpPower: 2000
   speed: 15
   spinPower: -150
@@ -15583,7 +15897,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 88.8142
+  Phase: 142.20062
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5
@@ -16425,6 +16739,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c0c6b1e1a834d5a807d483811a9276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isChallengeMode: 0
   jumpPower: 2000
   speed: 15
   spinPower: -150
@@ -17054,6 +17369,12 @@ MonoBehaviour:
   gamepadIcon2: {fileID: 625683637}
   gamepadIcon3: {fileID: 1367096266}
   gamepadIcon4: {fileID: 1594300144}
+  gamepadIcons: []
+  userText1: {fileID: 563445265}
+  userText2: {fileID: 605434308}
+  userText3: {fileID: 1112454140}
+  userText4: {fileID: 425726914}
+  usernames: []
   msgBG: {fileID: 1815882056}
   msgBG2: {fileID: 881620705}
   onePlayerMessage: {fileID: 1111910144}

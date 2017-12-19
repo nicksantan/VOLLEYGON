@@ -19,9 +19,10 @@ public class DataManagerScript : MonoBehaviour {
 	public static bool CRTMode = true;
 	public static bool isChallengeMode = false;
 
-	// Flag for login on initial launch
+	// Flags for user login events
 
 	public static bool shouldActivateMenu = false;
+	public static int slotToUpdate = -1;
 
 	// UI Flags
 

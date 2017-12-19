@@ -8,6 +8,7 @@ public class JoystickButtons {
     public string jump;
     public string grav;
     public string start;
+    public string y;
 
     // Get explicit strings from player number
     public JoystickButtons(int player) {
@@ -20,6 +21,7 @@ public class JoystickButtons {
                 this.jump = (DataManagerScript.xboxMode) ? "Jump_P1_Xbox" : "Jump_P1";
                 this.grav = (DataManagerScript.xboxMode) ? "Grav_P1_Xbox" : "Grav_P1";
                 this.start = (DataManagerScript.xboxMode) ? "Start_P1_Xbox" : "Start_P1";
+                this.y = "Y_P1_Xbox";
                 break;
 
             case 2:
@@ -28,6 +30,7 @@ public class JoystickButtons {
                 this.jump = (DataManagerScript.xboxMode) ? "Jump_P2_Xbox" : "Jump_P2";
                 this.grav = (DataManagerScript.xboxMode) ? "Grav_P2_Xbox" : "Grav_P2";
                 this.start = (DataManagerScript.xboxMode) ? "Start_P2_Xbox" : "Start_P2";
+                this.y = "Y_P2_Xbox";
                 break;
 
             case 3:
@@ -36,6 +39,7 @@ public class JoystickButtons {
                 this.jump = (DataManagerScript.xboxMode) ? "Jump_P3_Xbox" : "Jump_P3";
                 this.grav = (DataManagerScript.xboxMode) ? "Grav_P3_Xbox" : "Grav_P3";
                 this.start = (DataManagerScript.xboxMode) ? "Start_P3_Xbox" : "Start_P3";
+                this.y = "Y_P3_Xbox";
                 break;
 
             case 4:
@@ -44,6 +48,7 @@ public class JoystickButtons {
                 this.jump = (DataManagerScript.xboxMode) ? "Jump_P4_Xbox" : "Jump_P4";
                 this.grav = (DataManagerScript.xboxMode) ? "Grav_P4_Xbox" : "Grav_P4";
                 this.start = (DataManagerScript.xboxMode) ? "Start_P4_Xbox" : "Start_P4";
+                this.y = "Y_P4_Xbox";
                 break;
         }
     }

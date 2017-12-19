@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
+using Users;
+
 public class ChoosePlayerScript : MonoBehaviour {
 
 	public GameObject fakePlayer1;
@@ -13,11 +15,15 @@ public class ChoosePlayerScript : MonoBehaviour {
 	public GameObject gamepadIcon2;
 	public GameObject gamepadIcon3;
 	public GameObject gamepadIcon4;
+	public GameObject[] gamepadIcons;
 
-	private JoystickButtons gamepad1;
-	private JoystickButtons gamepad2;
-	private JoystickButtons gamepad3;
-	private JoystickButtons gamepad4;
+	public GameObject userText1;
+	public GameObject userText2;
+	public GameObject userText3;
+	public GameObject userText4;
+	public GameObject[] usernames;
+
+	private JoystickButtons[] joysticks = new JoystickButtons[4] { new JoystickButtons(1), new JoystickButtons(2), new JoystickButtons(3), new JoystickButtons(4) };
 
 	public Image msgBG;
 	public Image msgBG2;
@@ -41,6 +47,27 @@ public class ChoosePlayerScript : MonoBehaviour {
 	public static ChoosePlayerScript Instance { get; private set; }
 	// Use this for initialization
 
+	private string defaultText = "Y: LOG IN";
+
+	public static readonly XboxOneKeyCode[] yButtons = {
+		XboxOneKeyCode.Gamepad1ButtonY,
+		XboxOneKeyCode.Gamepad2ButtonY,
+		XboxOneKeyCode.Gamepad3ButtonY,
+		XboxOneKeyCode.Gamepad4ButtonY
+	};
+
+    public static bool GetValidButtonDown(XboxOneKeyCode[] validButtons, out XboxOneKeyCode buttonThatWasPressed) {
+        for (int i = 0; i < validButtons.Length; i++) {
+            XboxOneKeyCode keyCode = validButtons[i];
+            if (XboxOneInput.GetKeyDown(keyCode)) {
+                buttonThatWasPressed = keyCode;
+                return true;
+            }
+        }
+        buttonThatWasPressed = XboxOneKeyCode.Gamepad1ButtonA;
+        return false;
+    }
+
 	void Awake() {
 
 		Instance = this;
@@ -51,6 +78,12 @@ public class ChoosePlayerScript : MonoBehaviour {
 	}
 
 	void Start(){
+
+		// Reset slots
+    	DataManagerScript.playerOneJoystick = -1;
+    	DataManagerScript.playerTwoJoystick = -1;
+    	DataManagerScript.playerThreeJoystick = -1;
+    	DataManagerScript.playerFourJoystick = -1;
 
 		MusicManagerScript.Instance.StartRoot ();
 		oneOnOneMessage.enabled = false;
@@ -70,33 +103,19 @@ public class ChoosePlayerScript : MonoBehaviour {
 		DataManagerScript.playerThreeType = 0;
 		DataManagerScript.playerFourType = 0;
 
-		// Get all possible gamepads
-		gamepad1 = new JoystickButtons(1);
-		gamepad2 = new JoystickButtons(2);
-		gamepad3 = new JoystickButtons(3);
-		gamepad4 = new JoystickButtons(4);
+		// Make array of icons and usernames
+		gamepadIcons = new GameObject[4] { gamepadIcon1, gamepadIcon2, gamepadIcon3, gamepadIcon4 };
+		usernames = new GameObject[4] { userText1, userText2, userText3, userText4 };
 
-		// Activate gamepad for player who selected the game mode
-		if (DataManagerScript.gamepadControllingMenus == 1) {
-			gamepadIcon1.SetActive(true);
-		}
-		else if (DataManagerScript.gamepadControllingMenus == 2) {
-			gamepadIcon2.SetActive(true);
-		}
-		else if (DataManagerScript.gamepadControllingMenus == 3) {
-			gamepadIcon3.SetActive(true);
-		}
-		else if (DataManagerScript.gamepadControllingMenus == 4) {
-			gamepadIcon4.SetActive(true);
-		}
+		// Loop over icons and activate any already active in menu
+		for ( int i = 0; i < gamepadIcons.Length; i++) {
+			int gamepadId = i + 1;
 
-		// foreach (Users.User u in Users.UsersManager.Users) {
-		// 	if (u.IsSignedIn) {
-		// 		Debug.Log("Logged in: " + u.OnlineID);
-		// 		Debug.Log("Logged in: " + u.Index);
-		// 		Debug.Log("Logged in: " + u.Id);
-		// 	}
-		// }
+			// Activate gamepad for player who selected the game mode
+			if (DataManagerScript.gamepadControllingMenus == gamepadId) {
+				gamepadIcons[i].SetActive(true);
+			}
+		}
 	}
 
     // See if all players that are tagged in have also readied up
@@ -190,29 +209,96 @@ public class ChoosePlayerScript : MonoBehaviour {
 		Application.LoadLevel ("chooseArenaScene");
 	}
 
+	void exitIfNoOtherGamepads() {
+
+		// See if any gamepads besides this one are active
+		for ( int i = 0; i < gamepadIcons.Length; i++) {
+			if (gamepadIcons[i].activeSelf) {
+				return;
+			}
+		}
+
+		// If no gamepad icons were active, return to title
+		StartCoroutine ("BackToTitle");
+	}
+
+	IEnumerator BackToTitle(){
+		float fadeTime = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
+		yield return new WaitForSeconds (fadeTime);
+		Application.LoadLevel ("titleScene");
+	}
+
 	// Update is called once per frame
 	void Update () {
-		bool pressed1 = Input.GetButtonDown (gamepad1.start);
-		bool pressed2 = Input.GetButtonDown (gamepad2.start);
-		bool pressed3 = Input.GetButtonDown (gamepad3.start);
-		bool pressed4 = Input.GetButtonDown (gamepad4.start);
+		// Look for start button presses
+		for (int i = 0; i < joysticks.Length; i++) {
+			int slotId = i + 1;
+			JoystickButtons joystick = joysticks[i];
 
-		if (pressed1 || pressed2 || pressed3 || pressed4) {
-			if (gameIsStartable) {
-				Application.LoadLevel ("chooseArenaScene");
-			} else {
-				if (pressed1 && gamepadIcon1.activeSelf == false) {
-					gamepadIcon1.SetActive(true);
+			if (Input.GetButtonDown(joystick.start) || (Input.GetButtonDown(joystick.jump) && !gamepadIcons[i].activeSelf)) {
+
+				// Start game if startable and gamepad not tagged in
+				if (gameIsStartable && gamepadIcons[i].activeSelf) {
+
+                	// Load arena picker
+					Application.LoadLevel ("chooseArenaScene");
+
 				}
-				else if (pressed2 && gamepadIcon2.activeSelf == false) {
-					gamepadIcon2.SetActive(true);
+				else if (!gamepadIcons[i].activeSelf) {
+
+					// Tag in gamepad if not
+					gamepadIcons[i].SetActive(true);
+
 				}
-				else if (pressed3 && gamepadIcon3.activeSelf == false) {
-					gamepadIcon3.SetActive(true);
-				}
-				else if (pressed4 && gamepadIcon4.activeSelf == false) {
-					gamepadIcon4.SetActive(true);
-				}
+			}
+
+			// Show user select if on xbox
+			if (DataManagerScript.xboxMode) {
+
+				// See if this slot has a gamepad
+				int joystickForSlot = -1;
+				bool slotTaken = false;
+			    switch (slotId) {
+			        case 1:
+			        	joystickForSlot = DataManagerScript.playerOneJoystick;
+			            slotTaken = joystickForSlot != -1;
+			            break;
+			        case 2:
+			        	joystickForSlot = DataManagerScript.playerTwoJoystick;
+			            slotTaken = joystickForSlot != -1;
+			            break;
+			        case 3:
+			        	joystickForSlot = DataManagerScript.playerThreeJoystick;
+			            slotTaken = joystickForSlot != -1;
+			            break;
+			        case 4:
+			        	joystickForSlot = DataManagerScript.playerFourJoystick;
+			            slotTaken = joystickForSlot != -1;
+			            break;
+			    }
+
+			    // Show username or login prompt for selected slots
+			    if (slotTaken && !usernames[i].activeSelf) {
+
+			    	int id = XboxOneInput.GetUserIdForGamepad((uint)joystickForSlot);
+			    	showLoginPrompt(slotId, id);
+
+			    } else if (!slotTaken && usernames[i].activeSelf) {
+
+			    	// Reset text and hide prompt
+			    	usernames[i].SetActive(false);
+			    	usernames[i].GetComponent<Text>().text = defaultText;
+			    	Debug.Log("reset to default");
+
+			    }
+
+			    // Change player on Y press
+			    JoystickButtons slotsJoystick = new JoystickButtons(joystickForSlot);
+			    if (slotTaken && Input.GetButtonDown(slotsJoystick.y)) {
+			    	Debug.Log(">>> Y Pressed");
+			    	DataManagerScript.slotToUpdate = slotId;
+					UsersManager.RequestSignIn(Users.AccountPickerOptions.None, (ulong)joystickForSlot);
+			    }
 			}
 		}
 
@@ -221,4 +307,37 @@ public class ChoosePlayerScript : MonoBehaviour {
 			StartCoroutine ("StartGame");
 		}
 	}
+
+	void FixedUpdate() {
+		// Back out if no gamepads
+		exitIfNoOtherGamepads();
+	}
+
+	public void showLoginPrompt(int slotId, int userId) {
+		int slotIndex = slotId - 1;
+
+    	// Show default text or username
+    	string promptText = defaultText;
+
+		// Get user and print name
+    	if (userId != 0) {
+    		User u = UsersManager.FindUserById(userId);
+    		promptText = "Y: " + u.OnlineID;
+    	}
+
+    	Debug.Log("ID: " + userId + " | Name: " + promptText);
+    	Debug.Log(usernames[slotIndex].GetComponent<Text>().text);
+
+    	// Show text
+    	Text prompt = usernames[slotIndex].GetComponent<Text>();
+    	prompt.text = promptText;
+		if (!usernames[slotIndex].activeSelf) {
+			usernames[slotIndex].SetActive(true);
+		}
+
+		// Attempted fix for canvas not re-rendering with new value
+		Canvas.ForceUpdateCanvases();
+
+    	Debug.Log(usernames[slotIndex].GetComponent<Text>().text);
+    }
 }

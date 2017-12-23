@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class FadingScript : MonoBehaviour {
@@ -19,6 +20,8 @@ public class FadingScript : MonoBehaviour {
 		GUI.color = new Color (GUI.color.r, GUI.color.g, GUI.color.b, alpha);
 		GUI.depth = drawDepth;
 		GUI.DrawTexture (new Rect (0, 0, Screen.width, Screen.height), FadeOutTexture);
+
+		SceneManager.sceneLoaded += onLoaded;
 	}
 
 	public float BeginFade (int direction){
@@ -26,10 +29,8 @@ public class FadingScript : MonoBehaviour {
 		return (1/fadeSpeed);
 	}
 
-
-	void OnLevelWasLoaded(){
+	void onLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode){
 		alpha = 1;
 		BeginFade (-1);
 	}
-
 }

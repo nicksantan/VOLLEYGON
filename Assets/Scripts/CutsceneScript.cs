@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class CutsceneScript : MonoBehaviour {
@@ -12,10 +13,10 @@ public class CutsceneScript : MonoBehaviour {
 	}
 
 	void NextScene(){
-		Application.LoadLevel (nextScene);
+		SceneManager.LoadScene(nextScene);
 	}
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 }

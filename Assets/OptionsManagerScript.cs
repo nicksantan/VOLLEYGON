@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
 public class OptionsManagerScript : MonoBehaviour {
@@ -24,7 +25,7 @@ public class OptionsManagerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetButtonDown (joyButts.grav)) {
-			Application.LoadLevel ("titleScene");
+			SceneManager.LoadScene ("titleScene");
 		}
 
 		// Check for cancel button to go to previous scene

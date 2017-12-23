@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.UI;
 public class ProtipManagerScript : MonoBehaviour {
@@ -18,28 +19,19 @@ public class ProtipManagerScript : MonoBehaviour {
 		Invoke ("StartGame", proTipTime);
 		// make this a common shared function somehow
 		int playersActive = 0;
-		int whichSoloPlayer = 0;
 
 		// make this a common function in a class
 		if (DataManagerScript.playerOnePlaying == true) {
-			
 			playersActive++;
-			whichSoloPlayer = 1;
 		}
 		if (DataManagerScript.playerTwoPlaying == true) {
-			
 			playersActive++;
-			whichSoloPlayer = 2;
 		}
 		if (DataManagerScript.playerThreePlaying == true) {
-			
 			playersActive++;
-			whichSoloPlayer = 3;
 		}
 		if (DataManagerScript.playerFourPlaying == true) {
-			
 			playersActive++;
-			whichSoloPlayer = 4;
 		}
 
 		if (playersActive == 1) {
@@ -53,20 +45,20 @@ public class ProtipManagerScript : MonoBehaviour {
 	void StartGame(){
 		StartCoroutine ("NextScene");
 	}
-		
+
 	void Update(){
 		if (Input.GetButton (startButton1) && Input.GetButton (startButton2) && Input.GetButton (startButton3) && Input.GetButton (startButton4)) {
 			StartCoroutine ("NextScene");
-		}	
+		}
 	}
 
 	IEnumerator NextScene(){
 		float fadeTime = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
 		yield return new WaitForSeconds (fadeTime);
-		Application.LoadLevel ("GameScene");
+		SceneManager.LoadScene("GameScene");
 	}
 	void ChooseRandomProtip(){
-		
+
 		Transform protip = protipContainer.transform.GetChild (whichProtip);
 		int textNumber = whichProtip + 1;
 		numberText.text = textNumber.ToString () + "/" + protipContainer.transform.childCount.ToString ();

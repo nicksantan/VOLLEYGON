@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.UI;
 using System.Linq;
@@ -29,9 +30,9 @@ public class SingleStatManagerScript : MonoBehaviour {
 	List<string> buttons = new List<string>();
 
 
-		
 
-		
+
+
 
 	void Start () {
 		MusicManagerScript.Instance.StartIntro ();
@@ -60,7 +61,7 @@ public class SingleStatManagerScript : MonoBehaviour {
 		Invoke ("TimeOutTitle", 30f);
 
 	}
-	
+
 	// Update is called once per frame
 	void TimeOutTitle(){
 		StartCoroutine ("BackToTitle");
@@ -78,7 +79,7 @@ public class SingleStatManagerScript : MonoBehaviour {
 	}
 
 	public void CheckStartable(){
-		
+
 	}
 
 	public void increasePlayerReady(){
@@ -100,7 +101,7 @@ public class SingleStatManagerScript : MonoBehaviour {
 	IEnumerator BackToTitle(){
 		float fadeTime = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
 		yield return new WaitForSeconds (fadeTime);
-		Application.LoadLevel ("titleScene");
+		SceneManager.LoadScene("titleScene");
 	}
 
 	void PopulateStats(){
@@ -136,7 +137,7 @@ public class SingleStatManagerScript : MonoBehaviour {
 		int rallyCount = DataManagerScript.rallyCount;
 		//populate matchtime and longest rally counters
 
-		rallyCountText.text = rallyCount.ToString (); 
+		rallyCountText.text = rallyCount.ToString ();
 		int highScore = PlayerPrefs.GetInt ("highscore");
 		newText.enabled = false;
 		if (rallyCount > highScore) {

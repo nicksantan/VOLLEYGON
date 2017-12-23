@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -18,7 +19,7 @@ public class ChallengesManagerScript : MonoBehaviour {
     public AudioClip tickUp;
     public AudioClip tickDown;
 
-    private AudioSource audio;
+    private new AudioSource audio;
 
 	Axis verticalAxis;
 	Axis horizontalAxis;
@@ -123,7 +124,7 @@ public class ChallengesManagerScript : MonoBehaviour {
         locked = true;
         float fadeTime = GameObject.Find("FadeCurtain").GetComponent<FadingScript>().BeginFade(1);
         yield return new WaitForSeconds(fadeTime);
-        Application.LoadLevel("challengeScene");
+       SceneManager.LoadScene("challengeScene");
     }
 
     void updateMarkerPos()

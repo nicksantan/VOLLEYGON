@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 using Users;
 
@@ -141,7 +142,7 @@ public class TitleManagerScript : MonoBehaviour {
 	}
 
 	void cancelCurrentMenu(bool cancelAll) {
-		if (!singlePlayerPanel.active || cancelAll) {
+		if (!singlePlayerPanel.activeSelf || cancelAll) {
 			// Canceling out of main menu
 			mainMenuActive = false;
 			mainMenuPanel.SetActive (false);
@@ -184,14 +185,14 @@ public class TitleManagerScript : MonoBehaviour {
 		es1.SetSelectedGameObject(soloModeButton);
 	}
 	public void StartMultiplayerGame(){
-		Application.LoadLevel ("ChoosePlayerScene");
+		SceneManager.LoadScene ("ChoosePlayerScene");
 	}
 	public void StartChallengesGame(){
 		DataManagerScript.isChallengeMode = true;
-		Application.LoadLevel ("ChooseChallengeScene");
+		SceneManager.LoadScene ("ChooseChallengeScene");
 
 	}
 	public void StartOptionsMenu(){
-		Application.LoadLevel ("OptionsScene");
+		SceneManager.LoadScene ("OptionsScene");
 	}
 }

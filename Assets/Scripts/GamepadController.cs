@@ -65,7 +65,7 @@ public class GamepadController : MonoBehaviour {
         // Unselect slot
         if (Input.GetButtonDown(buttons.grav)) {
         	if (!slotSelected) {
-        		gameObject.active = false;
+        		gameObject.SetActive(false);
         	} else if (!playerReady) {
                 unselectSlotForJoystick();
             }

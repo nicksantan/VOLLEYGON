@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -17,7 +18,7 @@ public class StatsPlayerScript : MonoBehaviour {
 	private string confirmKey_Xbox;
 	private string cancelKey_Xbox;
 
-	public int playerIdentifier; 
+	public int playerIdentifier;
 	public Text readyText;
 	public Text toJoinText;
 	public Image readyBG;
@@ -48,7 +49,7 @@ public class StatsPlayerScript : MonoBehaviour {
 			readyBG.GetComponent<CanvasRenderer> ().SetAlpha (1.0f);
 
 			StatManagerScript.Instance.increasePlayerReady ();
-		} 
+		}
 	}
 
 	void cancelReadyState(){
@@ -57,7 +58,7 @@ public class StatsPlayerScript : MonoBehaviour {
 			readyText.GetComponent<CanvasRenderer> ().SetAlpha (0.0f);
 			readyBG.GetComponent<CanvasRenderer> ().SetAlpha (0.0f);
 			StatManagerScript.Instance.decreasePlayerReady ();
-		} 
+		}
 
 	}
 
@@ -82,7 +83,7 @@ public class StatsPlayerScript : MonoBehaviour {
 		sr.enabled = false;
 
 		switch(playerIdentifier){
-		
+
 		case 1:
 			whichType = DataManagerScript.playerOneType;
 						break;
@@ -154,7 +155,7 @@ public class StatsPlayerScript : MonoBehaviour {
 	}
 
 	void BackToTitle(){
-		Application.LoadLevel ("titleScene");
+		SceneManager.LoadScene("titleScene");
 	}
 	// Update is called once per frame
 	void Update () {

@@ -53,10 +53,10 @@ public class BallScript : MonoBehaviour {
 	public AudioClip gravityIsAboutToChangeSound;
 	public AudioClip bounceOffPlayerSound2;
 	public AudioClip bounceOffWallSound;
-	public AudioClip bounceOffScoringBoundarySound; 
+	public AudioClip bounceOffScoringBoundarySound;
 	public AudioClip largeHitSound;
 	private float maxSpeed = 68f;
-	private AudioSource audio;
+	private new AudioSource audio;
 	public bool didSirenPlayAlready;
 	// Use this for initialization
 
@@ -68,7 +68,7 @@ public class BallScript : MonoBehaviour {
 
 	void Start () {
 		audio = GetComponent<AudioSource> ();
-	
+
 		didSirenPlayAlready = false;
 		flashTime = 0f;
 		timeSinceLastFlash = 0f;
@@ -78,7 +78,7 @@ public class BallScript : MonoBehaviour {
 		rb.isKinematic = true;
 		//TODO: Replace invoke with a coroutine and add parameters
 		Invoke("LaunchBall", 3f);
-		timer = baseTimeBetweenGravChanges + Random.value * 10 ; 
+		timer = baseTimeBetweenGravChanges + Random.value * 10 ;
 		rb.gravityScale = gravScale;
 		originalGrav = gravScale;
 
@@ -134,7 +134,7 @@ public class BallScript : MonoBehaviour {
 		}
 
 		CheckForSideChange ();
-		 
+
 	}
 
 	void ResetTimer(){
@@ -145,9 +145,9 @@ public class BallScript : MonoBehaviour {
 	void LaunchBall(){
 		rb.isKinematic = false;
 		trail.SetActive (true);
-		//Send the ball in a random direction 
+		//Send the ball in a random direction
 		Transform child = gameObject.transform.Find("CircleTrails");
-		child.gameObject.SetActive (true); 
+		child.gameObject.SetActive (true);
 		ResetTimer();
 		//In the future, factor in the gravity factor;
 		rb.velocity = new Vector2 (Random.Range(-10.0F, 10.0F), Random.Range(10f*rb.gravityScale, 20F*rb.gravityScale));
@@ -188,7 +188,7 @@ public class BallScript : MonoBehaviour {
 		GameManagerScript.Instance.bouncesOnTopRight = 0;
 		timer = 10; // arbitrary high number
 		Transform child = gameObject.transform.Find("CircleTrails");
-		child.gameObject.SetActive (false); 
+		child.gameObject.SetActive (false);
 		// Reset last touch information
 		lastTouch = 0;
 		secondToLastTouch = 0;
@@ -243,7 +243,7 @@ public class BallScript : MonoBehaviour {
 		//TODO: this has to be a switch
 		//impactPos.y = 0.5f;
 		//Vector3 newPos = new Vector3(0f, 0.5f, -1f);
-		//childObject.transform.TransformPoint(newPos); 
+		//childObject.transform.TransformPoint(newPos);
 		Vector3 newPos = mask.InverseTransformPoint(impactPos);
 		newPos.z = -1f;
 		var size = coll.gameObject.GetComponent<BoxCollider2D>().size.y;
@@ -254,7 +254,7 @@ public class BallScript : MonoBehaviour {
 			newPos.y = -1f * size/2;
 		}
 		childObject.transform.localPosition = newPos;
-		coll.gameObject.transform.Find("Mask").GetComponent <SpriteMask> ().updateSprites (); 
+		coll.gameObject.transform.Find("Mask").GetComponent <SpriteMask> ().updateSprites ();
 		// control the color programatically
 		switch (whichNum) {
 		case 1:
@@ -281,7 +281,7 @@ public class BallScript : MonoBehaviour {
 		return new Color32(r,g,b, 255);
 	}
 
-	//TODO: Other elements play SFX through the sound manager. It's bad that the ball is different. 
+	//TODO: Other elements play SFX through the sound manager. It's bad that the ball is different.
 	public void Pause(){
 		//audio.volume = 0;
 		audio.Pause();
@@ -350,7 +350,7 @@ public class BallScript : MonoBehaviour {
 
 				GameManagerScript.Instance.ManageScore (this.transform.position.x);
 			} else {
-		
+
 				coll.gameObject.GetComponent<BorderScript> ().ChangeColor ();
 				}
 		} else if (coll.gameObject.tag == "Player"){

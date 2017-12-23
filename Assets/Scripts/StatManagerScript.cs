@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.UI;
 using System.Linq;
@@ -95,22 +96,22 @@ public class StatManagerScript : MonoBehaviour {
 
 		// Determine how many players are playing.
 		if (DataManagerScript.playerOnePlaying) {
-			playersPlaying++; 
+			playersPlaying++;
 		}
 		if (DataManagerScript.playerTwoPlaying) {
-			playersPlaying++; 
+			playersPlaying++;
 		}
 		if (DataManagerScript.playerThreePlaying) {
-			playersPlaying++; 
+			playersPlaying++;
 		}
 		if (DataManagerScript.playerFourPlaying) {
-			playersPlaying++; 
+			playersPlaying++;
 		}
 		LogStats ();
 		Invoke ("TimeOutTitle", 30f);
 
 	}
-	
+
 	// Update is called once per frame
 	void TimeOutTitle(){
 		StartCoroutine ("BackToTitle");
@@ -122,7 +123,7 @@ public class StatManagerScript : MonoBehaviour {
 	}
 
 	public void CheckStartable(){
-		
+
 	}
 
 	public void increasePlayerReady(){
@@ -164,11 +165,11 @@ public class StatManagerScript : MonoBehaviour {
 
 	}
 	void DetermineMVP(){
-		float p1Score = DataManagerScript.playerOneAces * aceWeight + DataManagerScript.playerOneScores * scoreWeight + DataManagerScript.playerOneReturns * returnWeight - DataManagerScript.playerOneBumbles * bumbleWeight; 
-		float p2Score = DataManagerScript.playerTwoAces * aceWeight + DataManagerScript.playerTwoScores * scoreWeight + DataManagerScript.playerTwoReturns * returnWeight - DataManagerScript.playerTwoBumbles * bumbleWeight; 
-		float p3Score = DataManagerScript.playerThreeAces * aceWeight + DataManagerScript.playerThreeScores * scoreWeight + DataManagerScript.playerThreeReturns * returnWeight - DataManagerScript.playerThreeBumbles * bumbleWeight; 
-		float p4Score = DataManagerScript.playerFourAces * aceWeight + DataManagerScript.playerFourScores * scoreWeight + DataManagerScript.playerFourReturns * returnWeight - DataManagerScript.playerFourBumbles * bumbleWeight; 
-	
+		float p1Score = DataManagerScript.playerOneAces * aceWeight + DataManagerScript.playerOneScores * scoreWeight + DataManagerScript.playerOneReturns * returnWeight - DataManagerScript.playerOneBumbles * bumbleWeight;
+		float p2Score = DataManagerScript.playerTwoAces * aceWeight + DataManagerScript.playerTwoScores * scoreWeight + DataManagerScript.playerTwoReturns * returnWeight - DataManagerScript.playerTwoBumbles * bumbleWeight;
+		float p3Score = DataManagerScript.playerThreeAces * aceWeight + DataManagerScript.playerThreeScores * scoreWeight + DataManagerScript.playerThreeReturns * returnWeight - DataManagerScript.playerThreeBumbles * bumbleWeight;
+		float p4Score = DataManagerScript.playerFourAces * aceWeight + DataManagerScript.playerFourScores * scoreWeight + DataManagerScript.playerFourReturns * returnWeight - DataManagerScript.playerFourBumbles * bumbleWeight;
+
 		float[] scores = { p1Score, p2Score, p3Score, p4Score };
 
 		if (p1Score == scores.Max ()) {
@@ -226,7 +227,7 @@ public class StatManagerScript : MonoBehaviour {
 	IEnumerator BackToTitle(){
 		float fadeTime = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
 		yield return new WaitForSeconds (fadeTime);
-		Application.LoadLevel ("titleScene");
+		SceneManager.LoadScene ("titleScene");
 	}
 
 	void PopulateStats(){
@@ -260,13 +261,13 @@ public class StatManagerScript : MonoBehaviour {
 		};
 
 		//populate matchtime and longest rally counters
-		longestRallyText.text = "LONGEST RALLY: " + DataManagerScript.longestRallyCount.ToString (); 
-		matchTimeText.text = "MATCH TIME: " + formattedMatchTime; 
+		longestRallyText.text = "LONGEST RALLY: " + DataManagerScript.longestRallyCount.ToString ();
+		matchTimeText.text = "MATCH TIME: " + formattedMatchTime;
 
 
 		// if player active...
 		if (DataManagerScript.playerOnePlaying) {
-			player1Aces.text = "ACES: " + DataManagerScript.playerOneAces.ToString (); 
+			player1Aces.text = "ACES: " + DataManagerScript.playerOneAces.ToString ();
 			player1Scores.text = "SCORES: " + DataManagerScript.playerOneScores.ToString ();
 			player1Returns.text = "RETURNS: " + DataManagerScript.playerOneReturns.ToString ();
 			player1Bumbles.text = "BUMBLES: " + DataManagerScript.playerOneBumbles.ToString ();
@@ -288,7 +289,7 @@ public class StatManagerScript : MonoBehaviour {
 			}
 
 		} else {
-			player1Aces.text = "ACES: " + DataManagerScript.playerFourAces.ToString (); 
+			player1Aces.text = "ACES: " + DataManagerScript.playerFourAces.ToString ();
 			player1Scores.text = "SCORES: " + DataManagerScript.playerFourScores.ToString ();
 			player1Returns.text = "RETURNS: " + DataManagerScript.playerFourReturns.ToString ();
 			player1Bumbles.text = "BUMBLES: " + DataManagerScript.playerFourBumbles.ToString ();
@@ -297,12 +298,12 @@ public class StatManagerScript : MonoBehaviour {
 			player1Returns.color = HexToColor ("000000");
 			player1Bumbles.color = HexToColor ("000000");
 			player1Title.color = HexToColor ("000000");
-//			player1Title.enabled = false; 
+//			player1Title.enabled = false;
 //			player1Labels.enabled = false;
 		}
 
 		if (DataManagerScript.playerTwoPlaying) {
-			player2Aces.text = "ACES: " + DataManagerScript.playerTwoAces.ToString (); 
+			player2Aces.text = "ACES: " + DataManagerScript.playerTwoAces.ToString ();
 			player2Scores.text = "SCORES: " + DataManagerScript.playerTwoScores.ToString ();
 			player2Returns.text = "RETURNS: " + DataManagerScript.playerTwoReturns.ToString ();
 			player2Bumbles.text = "BUMBLES: " + DataManagerScript.playerTwoBumbles.ToString ();
@@ -324,7 +325,7 @@ public class StatManagerScript : MonoBehaviour {
 			}
 
 		} else {
-			player2Aces.text = "ACES: " + DataManagerScript.playerFourAces.ToString (); 
+			player2Aces.text = "ACES: " + DataManagerScript.playerFourAces.ToString ();
 			player2Scores.text = "SCORES: " + DataManagerScript.playerFourScores.ToString ();
 			player2Returns.text = "RETURNS: " + DataManagerScript.playerFourReturns.ToString ();
 			player2Bumbles.text = "BUMBLES: " + DataManagerScript.playerFourBumbles.ToString ();
@@ -333,12 +334,12 @@ public class StatManagerScript : MonoBehaviour {
 			player2Returns.color = HexToColor ("000000");
 			player2Bumbles.color = HexToColor ("000000");
 			player2Title.color = HexToColor ("000000");
-			//player2Title.enabled = false; 
+			//player2Title.enabled = false;
 			//player2Labels.enabled = false;
 		}
 
 		if (DataManagerScript.playerThreePlaying) {
-			player3Aces.text = "ACES: " + DataManagerScript.playerThreeAces.ToString (); 
+			player3Aces.text = "ACES: " + DataManagerScript.playerThreeAces.ToString ();
 			player3Scores.text = "SCORES: " + DataManagerScript.playerThreeScores.ToString ();
 			player3Returns.text = "RETURNS: " + DataManagerScript.playerThreeReturns.ToString ();
 			player3Bumbles.text = "BUMBLES: " + DataManagerScript.playerThreeBumbles.ToString ();
@@ -360,9 +361,9 @@ public class StatManagerScript : MonoBehaviour {
 			}
 
 		} else {
-//			player3Title.enabled = false; 
+//			player3Title.enabled = false;
 //			player3Labels.enabled = false;
-			player3Aces.text = "ACES: " + DataManagerScript.playerFourAces.ToString (); 
+			player3Aces.text = "ACES: " + DataManagerScript.playerFourAces.ToString ();
 			player3Scores.text = "SCORES: " + DataManagerScript.playerFourScores.ToString ();
 			player3Returns.text = "RETURNS: " + DataManagerScript.playerFourReturns.ToString ();
 			player3Bumbles.text = "BUMBLES: " + DataManagerScript.playerFourBumbles.ToString ();
@@ -375,7 +376,7 @@ public class StatManagerScript : MonoBehaviour {
 		}
 
 		if (DataManagerScript.playerFourPlaying) {
-			player4Aces.text = "ACES: " + DataManagerScript.playerFourAces.ToString (); 
+			player4Aces.text = "ACES: " + DataManagerScript.playerFourAces.ToString ();
 			player4Scores.text = "SCORES: " + DataManagerScript.playerFourScores.ToString ();
 			player4Returns.text = "RETURNS: " + DataManagerScript.playerFourReturns.ToString ();
 			player4Bumbles.text = "BUMBLES: " + DataManagerScript.playerFourBumbles.ToString ();
@@ -398,9 +399,9 @@ public class StatManagerScript : MonoBehaviour {
 			}
 
 		} else {
-			//player4Title.enabled = false; 
+			//player4Title.enabled = false;
 			//player4Labels.enabled = false;
-			player4Aces.text = "ACES: " + DataManagerScript.playerFourAces.ToString (); 
+			player4Aces.text = "ACES: " + DataManagerScript.playerFourAces.ToString ();
 			player4Scores.text = "SCORES: " + DataManagerScript.playerFourScores.ToString ();
 			player4Returns.text = "RETURNS: " + DataManagerScript.playerFourReturns.ToString ();
 			player4Bumbles.text = "BUMBLES: " + DataManagerScript.playerFourBumbles.ToString ();

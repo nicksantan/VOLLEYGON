@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -206,7 +207,7 @@ public class ChoosePlayerScript : MonoBehaviour {
 	IEnumerator StartGame(){
 		float fadeTime = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
 		yield return new WaitForSeconds (fadeTime);
-		Application.LoadLevel ("chooseArenaScene");
+		SceneManager.LoadScene ("chooseArenaScene");
 	}
 
 	void exitIfNoOtherGamepads() {
@@ -225,7 +226,7 @@ public class ChoosePlayerScript : MonoBehaviour {
 	IEnumerator BackToTitle(){
 		float fadeTime = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
 		yield return new WaitForSeconds (fadeTime);
-		Application.LoadLevel ("titleScene");
+		SceneManager.LoadScene ("titleScene");
 	}
 
 	// Update is called once per frame
@@ -241,7 +242,7 @@ public class ChoosePlayerScript : MonoBehaviour {
 				if (gameIsStartable && gamepadIcons[i].activeSelf) {
 
                 	// Load arena picker
-					Application.LoadLevel ("chooseArenaScene");
+					SceneManager.LoadScene ("chooseArenaScene");
 
 				}
 				else if (!gamepadIcons[i].activeSelf) {

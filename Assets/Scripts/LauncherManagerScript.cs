@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class LauncherManagerScript : MonoBehaviour {
@@ -6,11 +7,11 @@ public class LauncherManagerScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Cursor.visible = false;
-		Application.LoadLevel ("TitleScene");
+		SceneManager.LoadScene("TitleScene");
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 }

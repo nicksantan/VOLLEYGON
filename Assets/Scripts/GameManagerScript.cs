@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
 public class GameManagerScript : MonoBehaviour {
@@ -108,7 +109,7 @@ public class GameManagerScript : MonoBehaviour {
 
 		// Set up arena based on options
 		arenaType = DataManagerScript.arenaType;
-	
+
 		// This is so dumb.
 		switch (arenaType) {
 
@@ -271,7 +272,7 @@ public class GameManagerScript : MonoBehaviour {
 	}
 
 	void LaunchTitleScreen(){
-		Application.LoadLevel ("titleScene");
+		SceneManager.LoadScene("titleScene");
 	}
 
 	void LaunchStatsScreen(){
@@ -282,9 +283,9 @@ public class GameManagerScript : MonoBehaviour {
 		float fadeTime = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
 		yield return new WaitForSeconds (fadeTime);
 		if (!OnePlayerMode) {
-			Application.LoadLevel ("statsScene");
+			SceneManager.LoadScene("statsScene");
 		} else {
-			Application.LoadLevel ("singlePlayerStatsScene");
+			SceneManager.LoadScene("singlePlayerStatsScene");
 		}
 	}
 
@@ -338,7 +339,7 @@ public class GameManagerScript : MonoBehaviour {
 		// if all 4 start buttons are pressed, warp back to title screen
 		if (Input.GetButton (startButton1) && Input.GetButton (startButton2) && Input.GetButton (startButton3) && Input.GetButton (startButton4)) {
 			Debug.Log ("returning to title");
-			Application.LoadLevel ("titleScene");
+			SceneManager.LoadScene("titleScene");
 		}
 
 		// keep track of match time
@@ -409,7 +410,7 @@ public class GameManagerScript : MonoBehaviour {
 		recentlyPaused = false;
 	}
 	public void QuitGame(){
-		Application.LoadLevel ("TitleScene");
+		SceneManager.LoadScene("TitleScene");
 	}
 
 	void ConsiderAPowerup(){
@@ -445,7 +446,7 @@ public class GameManagerScript : MonoBehaviour {
 			background.GetComponent<BackgroundColorScript> ().TurnOnMatchPoint (2);
 			background.GetComponent<BackgroundColorScript> ().TurnOffDeuce();
 			MusicManagerScript.Instance.StartFifth ();
-		} 
+		}
 	}
 
 //	void ComputeStat(int whichTeamScored){
@@ -650,8 +651,8 @@ public class GameManagerScript : MonoBehaviour {
 
 		if (!soloMode) {
 			if (Mathf.Sign (ballPosition) < 0) {
-				teamTwoScore += 1; 
-				ComputeStat (2); 
+				teamTwoScore += 1;
+				ComputeStat (2);
 				if (lastScore != 2) {
 					MusicManagerScript.Instance.SwitchMusic (2);
 				}
@@ -659,12 +660,12 @@ public class GameManagerScript : MonoBehaviour {
 				lastScore = 2;
 			} else {
 				teamOneScore += 1;
-				ComputeStat (1); 
+				ComputeStat (1);
 
 				if (lastScore != 1) {
 					MusicManagerScript.Instance.SwitchMusic (1);
 				}
-					
+
 				lastScore = 1;
 			}
 
@@ -700,7 +701,7 @@ public class GameManagerScript : MonoBehaviour {
 				//Invoke ("GameOver", 5f);
 			}
 		}
-		// If you're in one player mode....	
+		// If you're in one player mode....
 	 	else {
 		// single mode
 		soloModeBalls--;

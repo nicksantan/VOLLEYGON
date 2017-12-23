@@ -45,11 +45,11 @@ public class FakeBallScript : MonoBehaviour {
 	public AudioClip bounceOffPlayerSound1;
 	public AudioClip bounceOffPlayerSound2;
 	public AudioClip bounceOffWallSound;
-	public AudioClip bounceOffScoringBoundarySound; 
+	public AudioClip bounceOffScoringBoundarySound;
 	public AudioClip largeHitSound;
 	private int rallyCount = 12;
 	public Text rallyCountText;
-	private AudioSource audio;
+	private new AudioSource audio;
 	public bool didSirenPlayAlready;
 
 	// Use this for initialization
@@ -65,8 +65,8 @@ public class FakeBallScript : MonoBehaviour {
 
 		rb.isKinematic = true;
         Invoke ("LaunchBall", 1f);
-		
-		timer = baseTimeBetweenGravChanges ; 
+
+		timer = baseTimeBetweenGravChanges ;
 		rb.gravityScale = gravScale;
 		originalGrav = gravScale;
 	}
@@ -116,7 +116,7 @@ public class FakeBallScript : MonoBehaviour {
 			}
 		}
 		CheckForSideChange ();
-		lastXPos = transform.position.x; 
+		lastXPos = transform.position.x;
 	}
 
 	void ResetTimer(){
@@ -125,18 +125,18 @@ public class FakeBallScript : MonoBehaviour {
 		didSirenPlayAlready = false;
 	}
 	void LaunchBall(){
-		
+
 		rb.isKinematic = false;
 		trail.SetActive (true);
-		//Send the ball in a random direction 
+		//Send the ball in a random direction
 		Transform child = gameObject.transform.Find("CircleTrails");
-		child.gameObject.SetActive (true); 
+		child.gameObject.SetActive (true);
 		ResetTimer();
 		//In the future, factor in the gravity factor;
 		if (!neverFire) {
 			rb.velocity = new Vector2 (Random.Range (0f, 0f), Random.Range (15f * rb.gravityScale, 15F * rb.gravityScale));
 		}
-			
+
 	}
 
 	void CheckForSideChange(){
@@ -159,7 +159,7 @@ public class FakeBallScript : MonoBehaviour {
 		bounces = 0;
 		timer = 10; // arbitrary high number
 		Transform child = gameObject.transform.Find("CircleTrails");
-		child.gameObject.SetActive (false); 
+		child.gameObject.SetActive (false);
 		// Reset last touch information
 		lastTouch = 0;
 		secondToLastTouch = 0;
@@ -208,12 +208,12 @@ public class FakeBallScript : MonoBehaviour {
 		//Application.LoadLevel ("titleScene");
 	}
 	void ComputeStat(int whichTeamScored){
-		
+
 
 	}
 
 	void CreateBounceImpact (Collision2D coll, int whichType, int whichNum){
-		
+
 	}
 
 	Color HexToColor(string hex)
@@ -224,7 +224,7 @@ public class FakeBallScript : MonoBehaviour {
 		return new Color32(r,g,b, 255);
 	}
 	void CheckForMatchPoint(){
-		
+
 	}
 	void OnCollisionEnter2D(Collision2D coll){
 

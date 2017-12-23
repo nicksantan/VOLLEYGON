@@ -23,7 +23,7 @@ public class FakePlayerScript : MonoBehaviour {
 	public bool readyToPlay;
 	public bool taggedIn = false;
     private bool shouldDeactivate = false;
-	private AudioSource audio;
+	private new AudioSource audio;
 	public AudioClip tickUp;
 	public AudioClip tickDown;
 	public AudioClip tagInSound;

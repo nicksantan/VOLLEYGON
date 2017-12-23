@@ -50,10 +50,10 @@ public class AIControllerScript : MonoBehaviour {
 	private bool penaltyTimerActive = false;
 
 	private float speedPowerupTimer;
-	private bool speedPowerupActive = false; 
+	private bool speedPowerupActive = false;
 
 	private float sizePowerupTimer;
-	private bool sizePowerupActive = false; 
+	private bool sizePowerupActive = false;
 
 	private float pandemoniumTimer;
 	private bool pandemoniumPowerupActive = false;
@@ -83,7 +83,6 @@ public class AIControllerScript : MonoBehaviour {
 
 		moveHorizontal = 0f;
 		rb = GetComponent<Rigidbody2D>();
-		PolygonCollider2D pg = GetComponent<PolygonCollider2D> ();
 		rb.gravityScale = startingGrav;
 		startMass = rb.mass;
 		canMove = true;
@@ -92,10 +91,7 @@ public class AIControllerScript : MonoBehaviour {
 
 		if (playerType == 0) {
 			gameObject.GetComponent<BoxCollider2D> ().enabled = true;
-			//gameObject.GetComponent<CircleCollider2D> ().enabled = true;
-			//gameObject.GetComponent<MeshFilter> ().mesh = meshTypeOne;
 			gameObject.GetComponent<SpriteRenderer> ().sprite = squareSprite;
-
 			jumpPower = squareJumpPower;
 			speed = squareSpeed;
 			spinPower = squareSpinRate;
@@ -103,7 +99,6 @@ public class AIControllerScript : MonoBehaviour {
 
 		if (playerType == 1) {
 			gameObject.GetComponent<CircleCollider2D> ().enabled = true;
-			//	gameObject.GetComponent<MeshFilter> ().mesh = meshTypeTwo;
 			gameObject.GetComponent<SpriteRenderer> ().sprite = circleSprite;
 			jumpPower = circleJumpPower;
 			speed = circleSpeed;
@@ -112,7 +107,6 @@ public class AIControllerScript : MonoBehaviour {
 
 		if (playerType == 2) {
 			trianglePC.enabled = true;
-			//gameObject.GetComponent<MeshFilter> ().mesh = meshTypeTwo;
 			gameObject.GetComponent<SpriteRenderer> ().sprite = triangleSprite;
 			jumpPower = triangleJumpPower;
 			speed = triangleSpeed;
@@ -121,7 +115,6 @@ public class AIControllerScript : MonoBehaviour {
 
 		if (playerType == 3) {
 			trapezoidPC.enabled = true;
-			//gameObject.GetComponent<MeshFilter> ().mesh = meshTypeTwo;
 			gameObject.GetComponent<SpriteRenderer> ().sprite = trapezoidSprite;
 			jumpPower = trapezoidJumpPower;
 			speed = trapezoidSpeed;
@@ -129,29 +122,8 @@ public class AIControllerScript : MonoBehaviour {
 		}
 
 		startJumpPower = jumpPower;
-		startSpeed = speed; 
+		startSpeed = speed;
 
-		//polygon collider
-
-		//Vector2[] thePoints = pg.points;
-		// do stuff with myPoints array
-		//		Vector2[] thePoints = new Vector2[] {
-		//			new Vector2 (0f, -1f),
-		//			new Vector2 (1f, -1f),
-		//			new Vector2 (-1f, -1f)
-		//
-		//		};
-		//		pg.pathCount = 3;
-		//		pg.points = thePoints;
-
-	}
-
-
-
-	void FixedUpdate () {
-
-	
-	
 	}
 
 	void Update(){
@@ -179,7 +151,7 @@ public class AIControllerScript : MonoBehaviour {
 				moveHorizontal = -1f;
 			} else if (ball.transform.position.x > transform.position.x) {
 				moveHorizontal = 1f;
-			} 
+			}
 		} else {
 			moveHorizontal = 0;
 		}
@@ -191,12 +163,10 @@ public class AIControllerScript : MonoBehaviour {
 		v3.x = moveHorizontal * speed;
 
 		GetComponent<Rigidbody2D> ().velocity = v3;
-
-		float f = Mathf.Clamp(GetComponent<Rigidbody2D> ().velocity.x, -speed, speed);
 	}
 
 	void CheckForJump(){
-		
+
 		if (isJumping == false && Mathf.Abs (ball.transform.position.x - transform.position.x) <= 2f && Mathf.Abs (ball.transform.position.y - transform.position.y) <= 4f){
 			Vector3 jumpForce = new Vector3(0f,jumpPower * rb.gravityScale,0f);
 			rb.AddForce(jumpForce);
@@ -306,7 +276,7 @@ public class AIControllerScript : MonoBehaviour {
 		if (coll.gameObject.tag == "ScoringBoundary" || coll.gameObject.tag == "Player") {
 			//Debug.Log ("a collision ended!");
 			if (!isJumping) {
-				//isJumping = true;   
+				//isJumping = true;
 			}
 			//Debug.Log (isJumping);
 		}
@@ -416,7 +386,7 @@ public class AIControllerScript : MonoBehaviour {
 		case 1:
 			speedPowerupActive = true;
 			speed = 22f;
-			speedPowerupTimer = 20f; 
+			speedPowerupTimer = 20f;
 
 			break;
 
@@ -436,7 +406,7 @@ public class AIControllerScript : MonoBehaviour {
 			break;
 
 		case 4:
-			Camera.main.GetComponent<ManageWiggleScript> ().ActivateWiggle (); 
+			Camera.main.GetComponent<ManageWiggleScript> ().ActivateWiggle ();
 			break;
 		default:
 

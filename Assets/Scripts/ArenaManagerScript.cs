@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -41,7 +42,7 @@ public class ArenaManagerScript : MonoBehaviour {
     public AudioClip tickUp;
     public AudioClip tickDown;
 
-    private AudioSource audio;
+    private new AudioSource audio;
 
     Axis va1;
     Axis va2;
@@ -250,7 +251,7 @@ public class ArenaManagerScript : MonoBehaviour {
         locked = true;
         float fadeTime = GameObject.Find("FadeCurtain").GetComponent<FadingScript>().BeginFade(1);
         yield return new WaitForSeconds(fadeTime);
-        Application.LoadLevel("proTipScene");
+        SceneManager.LoadScene("proTipScene");
     }
 
     void updateMarkerPos()

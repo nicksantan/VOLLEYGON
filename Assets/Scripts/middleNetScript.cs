@@ -10,8 +10,8 @@ public class middleNetScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+        rb = gameObject.GetComponent<Rigidbody2D>();
         if (rb != null) {
-            rb = gameObject.GetComponent<Rigidbody2D>();
             rb.velocity = new Vector2(0, directionModifier * speed);
         }
 	}

@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class GamepadController : MonoBehaviour {
@@ -147,7 +147,19 @@ public class GamepadController : MonoBehaviour {
 
         // Gamepad has been assigned
         slotSelected = true;
+
+		// Kick any other gamepads out of this slot
+		transform.parent.BroadcastMessage("leaveOccupiedSlot", slot);
     }
+
+	void leaveOccupiedSlot(int slotToLeave){
+		if (!playerTagged && !playerReady && !slotSelected && slot == slotToLeave) {
+			// Get new slot
+			iterateSlot (true);
+			// Move the icon
+			moveIcon (true);
+		}
+	}
 
     void activateFakePlayer() {
         selectedSlotPlayer.GetComponent<FakePlayerScript>().checkForJoystick();

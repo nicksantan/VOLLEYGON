@@ -89,6 +89,7 @@ public class DataManagerScript : MonoBehaviour {
 	public static int TM_TeamTwoWins;
 
 	public static string version;
+	public static bool gamepadMode = true;
 	public static bool xboxMode = true;
 	public static bool demoMode = true;
 
@@ -112,7 +113,9 @@ public class DataManagerScript : MonoBehaviour {
 
         // Determine if on Xbox
         xboxMode = Application.platform == RuntimePlatform.XboxOne;
-
+		if (xboxMode) {
+			gamepadMode = true;
+		}
 	}
 
     // Reset all player shape choices

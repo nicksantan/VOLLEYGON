@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Users;
+
+#if UNITY_XBOXONE
+	using Users;
+#endif
 
 public class DataManagerScript : MonoBehaviour {
 
@@ -87,6 +90,7 @@ public class DataManagerScript : MonoBehaviour {
 
 	public static string version;
 	public static bool xboxMode = true;
+	public static bool demoMode = true;
 
     // Save instance of self over scene loads
 	void Awake() {

@@ -1,3 +1,5 @@
+#if UNITY_XBOXONE
+
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -105,3 +107,5 @@ public class UserUtility : MonoBehaviour {
 
 	}
 }
+
+#endif

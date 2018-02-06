@@ -3,7 +3,9 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.UI;
 
-using Users;
+#if UNITY_XBOXONE
+	using Users;
+#endif
 
 public class ChoosePlayerScript : MonoBehaviour {
 
@@ -283,9 +285,11 @@ public class ChoosePlayerScript : MonoBehaviour {
 		int slotIndex = slotId - 1;
 
 		// Get user and print name
-    	if (userId != 0) {
-    		User u = UsersManager.FindUserById(userId);
-    	}
+		#if UNITY_XBOXONE
+			if (userId != 0) {
+				User u = UsersManager.FindUserById(userId);
+			}
+		#endif
 
 		// Attempted fix for canvas not re-rendering with new value
 		Canvas.ForceUpdateCanvases();

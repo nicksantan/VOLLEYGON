@@ -155,7 +155,7 @@ public class StatsPlayerScript : MonoBehaviour {
 	}
 
 	void BackToTitle(){
-		SceneManager.LoadSceneAsync("titleScene");
+		Application.LoadLevel("titleScene");
 	}
 	// Update is called once per frame
 	void Update () {

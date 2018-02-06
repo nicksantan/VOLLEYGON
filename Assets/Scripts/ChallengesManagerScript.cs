@@ -125,7 +125,7 @@ public class ChallengesManagerScript : MonoBehaviour {
             locked = true;
             float fadeTime = GameObject.Find("FadeCurtain").GetComponent<FadingScript>().BeginFade(1);
             yield return new WaitForSeconds(fadeTime);
-            SceneManager.LoadSceneAsync("challengeScene");
+            Application.LoadLevel("challengeScene");
         }
     }
 

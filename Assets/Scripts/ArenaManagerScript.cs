@@ -251,7 +251,7 @@ public class ArenaManagerScript : MonoBehaviour {
             locked = true;
             float fadeTime = GameObject.Find("FadeCurtain").GetComponent<FadingScript>().BeginFade(1);
             yield return new WaitForSeconds(fadeTime);
-            SceneManager.LoadSceneAsync("proTipScene");
+            Application.LoadLevel("proTipScene");
         }
     }
 

@@ -187,7 +187,7 @@ public class ChoosePlayerScript : MonoBehaviour {
 			locked = true;
 			float fadeTime = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
 			yield return new WaitForSeconds (fadeTime);
-			SceneManager.LoadSceneAsync ("chooseArenaScene");
+			Application.LoadLevel ("chooseArenaScene");
 		}
 	}
 
@@ -209,7 +209,7 @@ public class ChoosePlayerScript : MonoBehaviour {
 			locked = true;
 			float fadeTime = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
 			yield return new WaitForSeconds (fadeTime);
-			SceneManager.LoadSceneAsync ("titleScene");
+			Application.LoadLevel ("titleScene");
 		}
 	}
 
@@ -226,7 +226,7 @@ public class ChoosePlayerScript : MonoBehaviour {
 				if (gameIsStartable && gamepadIcons[i].GetComponent<GamepadController>().enabled) {
 
                 	// Load arena picker
-					SceneManager.LoadSceneAsync ("chooseArenaScene");
+					Application.LoadLevel ("chooseArenaScene");
 
 				}
 				else if (!gamepadIcons[i].GetComponent<GamepadController>().enabled) {

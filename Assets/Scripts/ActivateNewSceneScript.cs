@@ -6,6 +6,6 @@ using UnityEngine.SceneManagement;
 public class ActivateNewSceneScript : MonoBehaviour {
 
 	public void LoadByString(string sceneName){
-		SceneManager.LoadSceneAsync (sceneName);
+		Application.LoadLevel (sceneName);
 	}
 }

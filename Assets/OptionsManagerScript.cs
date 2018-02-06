@@ -25,7 +25,7 @@ public class OptionsManagerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetButtonDown (joyButts.grav)) {
-			SceneManager.LoadSceneAsync ("titleScene");
+			Application.LoadLevel ("titleScene");
 		}
 
 		// Check for cancel button to go to previous scene

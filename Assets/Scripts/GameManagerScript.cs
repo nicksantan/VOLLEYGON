@@ -276,7 +276,7 @@ public class GameManagerScript : MonoBehaviour {
 	}
 
 	// void LaunchTitleScreen(){
-	// 	SceneManager.LoadSceneAsync("titleScene");
+	// 	Application.LoadLevel("titleScene");
 	// }
 
 	void LaunchStatsScreen(){
@@ -289,9 +289,9 @@ public class GameManagerScript : MonoBehaviour {
 			float fadeTime = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
 			yield return new WaitForSeconds (fadeTime);
 			if (!OnePlayerMode) {
-				SceneManager.LoadSceneAsync("statsScene");
+				Application.LoadLevel("statsScene");
 			} else {
-				SceneManager.LoadSceneAsync("singlePlayerStatsScene");
+				Application.LoadLevel("singlePlayerStatsScene");
 			}
 		}
 	}
@@ -345,7 +345,7 @@ public class GameManagerScript : MonoBehaviour {
 		// if all 4 start buttons are pressed, warp back to title screen
 		if (Input.GetButton (startButton1) && Input.GetButton (startButton2) && Input.GetButton (startButton3) && Input.GetButton (startButton4)) {
 			Debug.Log ("returning to title");
-			SceneManager.LoadSceneAsync("titleScene");
+			Application.LoadLevel("titleScene");
 		}
 
 		// keep track of match time
@@ -416,7 +416,7 @@ public class GameManagerScript : MonoBehaviour {
 		recentlyPaused = false;
 	}
 	public void QuitGame(){
-		SceneManager.LoadSceneAsync("TitleScene");
+		Application.LoadLevel("TitleScene");
 	}
 
 	void ConsiderAPowerup(){

@@ -136,6 +136,7 @@ public class FakePlayerScript : MonoBehaviour {
 			triangle.SetActive (false);
 			trapezoid.SetActive (false);
 			rectangle.SetActive (false);
+            transform.Find("Triangles").gameObject.SetActive(true);
 			star.SetActive (false);
 
 			switch (thisType) {
@@ -210,7 +211,7 @@ public class FakePlayerScript : MonoBehaviour {
                     break;
             }
 
-            // Revert from tagged in to nothingness
+        // Revert from tagged in to nothingness
         } else if (taggedIn) {
 
             joystickIdentifier = -1;
@@ -223,9 +224,11 @@ public class FakePlayerScript : MonoBehaviour {
 			triangle.SetActive (false);
 			trapezoid.SetActive (false);
 			rectangle.SetActive (false);
+            transform.Find("Triangles").gameObject.SetActive(false);
 			star.SetActive (false);
 			playerDescription.enabled = false;
 			playerDifficulty.enabled = false;
+
 
 			switch(playerIdentifier){
 

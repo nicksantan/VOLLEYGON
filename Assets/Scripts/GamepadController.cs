@@ -1,4 +1,5 @@
 ﻿﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class GamepadController : MonoBehaviour {
 
@@ -8,13 +9,27 @@ public class GamepadController : MonoBehaviour {
     private GameObject selectedSlotPlayer;
     private Axis horizontalAxis;
     private bool slotSelected = false;
+    public bool enabled = false;
     private bool readiedUp = false;
     private bool playerReady = false;
     private bool playerTagged = false;
     private bool shouldActivate = false;
 
+    private GameObject outline;
+    private GameObject icon;
+    private GameObject playerText;
+    private GameObject prompt;
+
+    private Color32 gray = new Color32(40, 40, 40, 255);
+    private Color32 white = new Color32(255, 255, 255, 255);
+
     // Use this for initialization
     void Start () {
+
+        outline = transform.Find("Outline").gameObject;
+        icon = transform.Find("Icon").gameObject;
+        playerText = transform.Find("Text").gameObject;
+        prompt = transform.Find("Prompt").gameObject;
 
         // Get button strings from joystick number
         buttons = new JoystickButtons(joystick);
@@ -24,8 +39,6 @@ public class GamepadController : MonoBehaviour {
 
         // Start at slot to match joystick int
         slot = joystick;
-
-        moveIcon(false);
     }
 
     // Update is called once per frame
@@ -57,19 +70,48 @@ public class GamepadController : MonoBehaviour {
 
         // Select slot
         if (Input.GetButtonDown(buttons.jump)) {
-            if (!slotSelected && !playerTagged) {
+            if (enabled && !slotSelected && !playerTagged) {
                 selectSlotForJoystick();
+                HideIcon();
             }
         }
 
         // Unselect slot
         if (Input.GetButtonDown(buttons.grav)) {
         	if (!slotSelected) {
-        		gameObject.SetActive(false);
+        		ToggleIcon(false);
         	} else if (!playerReady) {
+                ToggleIcon(true);
                 unselectSlotForJoystick();
             }
         }
+    }
+
+    public void HideIcon()
+    {
+        if (icon) icon.SetActive(false);
+        if (playerText) prompt.SetActive(false);
+        if (prompt) playerText.SetActive(false);
+        if (outline) outline.SetActive(false);
+    }
+
+    public void ToggleIcon(bool turnOn)
+    {
+        enabled = turnOn;
+
+        if (icon)
+        {
+            Image image = icon.GetComponent<Image>();
+            icon.SetActive(true);
+            image.color = turnOn ? white : gray;
+        }
+        if (playerText) prompt.SetActive(!turnOn);
+        if (prompt) playerText.SetActive(turnOn);
+
+        // TODO: show outline if inactive and game ready
+        if (outline) outline.SetActive(false);
+
+        moveIcon(false);
     }
 
     private void FixedUpdate()
@@ -98,8 +140,6 @@ public class GamepadController : MonoBehaviour {
                 DataManagerScript.playerFourJoystick = joystick;
                 break;
         }
-
-        // Debug.Log("Slot assigned: " + joystick);
 
         // Tell fake player it has a joystick now, and activate
         selectedSlotPlayer = GameObject.Find("Fake Player " + slot);
@@ -212,19 +252,25 @@ public class GamepadController : MonoBehaviour {
 
     void moveIcon(bool playSound)
     {
-        // Get selected slot coordinates
-        selectedSlotPlayer = GameObject.Find("Fake Player " + slot);
-        float x = selectedSlotPlayer.transform.position.x + ((joystick * 2f) - 5f);
+        if (!enabled) {
+            gameObject.transform.position = new Vector3(0f, gameObject.transform.position.y, 0f);
+        }
+        else {
 
-        // Move icon
-        float y = gameObject.transform.position.y;
-        gameObject.transform.position = new Vector3(x, y, 0f);
+            // Get selected slot coordinates
+            selectedSlotPlayer = GameObject.Find("Fake Player " + slot);
+            float slotX = selectedSlotPlayer.transform.position.x;
 
-        if (playSound)
-        {
-            // TODO: Play sound effect
-            // AudioClip tick = (goingUp) ? tickUp : tickDown;
-            // audio.PlayOneShot(tick);
+            // Move icon
+            float y = gameObject.transform.position.y;
+            gameObject.transform.position = new Vector3(slotX, y, 0f);
+
+            if (playSound)
+            {
+                // TODO: Play sound effect
+                // AudioClip tick = (goingUp) ? tickUp : tickDown;
+                // audio.PlayOneShot(tick);
+            }
         }
     }
 }

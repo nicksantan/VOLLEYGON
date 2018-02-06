@@ -92,9 +92,8 @@ public class ChoosePlayerScript : MonoBehaviour {
 			int gamepadId = i + 1;
 
 			// Activate gamepad for player who selected the game mode
-			if (DataManagerScript.gamepadControllingMenus == gamepadId) {
-				gamepadIcons[i].SetActive(true);
-			}
+			bool isActive = DataManagerScript.gamepadControllingMenus == gamepadId;
+			gamepadIcons[i].GetComponent<GamepadController>().ToggleIcon(isActive);
 		}
 	}
 
@@ -196,7 +195,7 @@ public class ChoosePlayerScript : MonoBehaviour {
 
 		// See if any gamepads besides this one are active
 		for ( int i = 0; i < gamepadIcons.Length; i++) {
-			if (gamepadIcons[i].activeSelf) {
+			if (gamepadIcons[i].GetComponent<GamepadController>().enabled) {
 				return;
 			}
 		}
@@ -221,19 +220,19 @@ public class ChoosePlayerScript : MonoBehaviour {
 			int slotId = i + 1;
 			JoystickButtons joystick = joysticks[i];
 
-			if (Input.GetButtonDown(joystick.start) || (Input.GetButtonDown(joystick.jump) && !gamepadIcons[i].activeSelf)) {
+			if (Input.GetButtonDown(joystick.start) || (Input.GetButtonDown(joystick.jump) && !gamepadIcons[i].GetComponent<GamepadController>().enabled)) {
 
 				// Start game if startable and gamepad not tagged in
-				if (gameIsStartable && gamepadIcons[i].activeSelf) {
+				if (gameIsStartable && gamepadIcons[i].GetComponent<GamepadController>().enabled) {
 
                 	// Load arena picker
 					SceneManager.LoadSceneAsync ("chooseArenaScene");
 
 				}
-				else if (!gamepadIcons[i].activeSelf) {
+				else if (!gamepadIcons[i].GetComponent<GamepadController>().enabled) {
 
 					// Tag in gamepad if not
-					gamepadIcons[i].SetActive(true);
+					gamepadIcons[i].GetComponent<GamepadController>().ToggleIcon(true);
 
 				}
 			}

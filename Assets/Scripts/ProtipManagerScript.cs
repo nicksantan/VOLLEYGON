@@ -58,8 +58,8 @@ public class ProtipManagerScript : MonoBehaviour {
 	IEnumerator NextScene(){
 		if (!locked) {
 			locked = true;
-			float fadeTime = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
-			yield return new WaitForSeconds (fadeTime);
+//			float 1f = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
+			yield return new WaitForSeconds (1f);
 			SceneManager.LoadSceneAsync("GameScene");
 		}
 	}

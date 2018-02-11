@@ -280,17 +280,20 @@ public class GameManagerScript : MonoBehaviour {
 	// }
 
 	void LaunchStatsScreen(){
-		StartCoroutine ("FadeToStats");
+		//StartCoroutine ("FadeToStats");
+		SceneManager.LoadSceneAsync("statsScene");
 	}
 
 	IEnumerator FadeToStats(){
 		if (!locked) {
 			locked = true;
-			float fadeTime = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
-			yield return new WaitForSeconds (fadeTime);
+			//float 1f = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
+			yield return new WaitForSeconds (1f);
 			if (!OnePlayerMode) {
+				Debug.Log ("HAPPENIN!");
 				SceneManager.LoadSceneAsync("statsScene");
 			} else {
+				Debug.Log ("HAPPENIN!");
 				SceneManager.LoadSceneAsync("singlePlayerStatsScene");
 			}
 		}
@@ -364,9 +367,9 @@ public class GameManagerScript : MonoBehaviour {
 		}
 
 		// Team wins
-		if (teamOneScore >= scorePlayedTo && teamOneScore > teamTwoScore + 1) {
+		if (teamOneScore >= scorePlayedTo && teamOneScore > teamTwoScore + 1 && !isGameOver) {
 			teamWins (1);
-		} else if (teamTwoScore >= scorePlayedTo && teamTwoScore > teamOneScore + 1) {
+		} else if (teamTwoScore >= scorePlayedTo && teamTwoScore > teamOneScore + 1 && !isGameOver) {
 			teamWins (2);
 		}
 

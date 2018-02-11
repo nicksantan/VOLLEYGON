@@ -185,8 +185,8 @@ public class ChoosePlayerScript : MonoBehaviour {
 	IEnumerator StartGame(){
 		if (!locked) {
 			locked = true;
-			float fadeTime = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
-			yield return new WaitForSeconds (fadeTime);
+			//float 1f = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
+			yield return new WaitForSeconds (1f);
 			SceneManager.LoadSceneAsync ("chooseArenaScene");
 		}
 	}
@@ -207,8 +207,8 @@ public class ChoosePlayerScript : MonoBehaviour {
 	IEnumerator BackToTitle(){
 		if (!locked) {
 			locked = true;
-			float fadeTime = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
-			yield return new WaitForSeconds (fadeTime);
+			//float 1f = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
+			yield return new WaitForSeconds (1f);
 			SceneManager.LoadSceneAsync ("titleScene");
 		}
 	}

@@ -97,8 +97,8 @@ public class SingleStatManagerScript : MonoBehaviour {
 	IEnumerator BackToTitle(){
 		if (!locked) {
 			locked = true;
-            float fadeTime = GameObject.Find("FadeCurtain").GetComponent<FadingScript>().BeginFade(1);
-            yield return new WaitForSeconds(fadeTime);
+            // insert new fancy fade here
+            yield return new WaitForSeconds(1f);
             SceneManager.LoadSceneAsync("titleScene");
 		}
 	}

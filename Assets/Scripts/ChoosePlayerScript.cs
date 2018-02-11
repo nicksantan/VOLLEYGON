@@ -9,6 +9,8 @@ using UnityEngine.UI;
 
 public class ChoosePlayerScript : MonoBehaviour {
 
+	public Image gutterBG;
+
 	public GameObject fakePlayer1;
 	public GameObject fakePlayer2;
 	public GameObject fakePlayer3;
@@ -59,7 +61,7 @@ public class ChoosePlayerScript : MonoBehaviour {
 	}
 
 	void Start(){
-
+		gutterBG.GetComponent<CanvasRenderer> ().SetAlpha(0.0f);
 		// Reset slots
     	DataManagerScript.playerOneJoystick = -1;
     	DataManagerScript.playerTwoJoystick = -1;
@@ -152,13 +154,14 @@ public class ChoosePlayerScript : MonoBehaviour {
 			gameIsStartable = true;
             msgBG.enabled = true;
             msgBG2.enabled = true;
-
+			gutterBG.GetComponent<CanvasRenderer> ().SetAlpha(1.0f);
             if (playersOnLeft == 2 && playersOnRight == 1 || playersOnLeft == 1 && playersOnRight == 2) {
 
 				// Display 2v1 message
 				twoOnOneMessage.enabled = true;
                 oneOnOneMessage.enabled = false;
                 onePlayerMessage.enabled = false;
+				gutterBG.GetComponent<CanvasRenderer> ().SetAlpha(1.0f);
 
 			} else if (playersOnLeft == 1 && playersOnRight == 1){
 
@@ -166,6 +169,7 @@ public class ChoosePlayerScript : MonoBehaviour {
 				oneOnOneMessage.enabled = true;
 				twoOnOneMessage.enabled = false;
 				onePlayerMessage.enabled = false;
+				gutterBG.GetComponent<CanvasRenderer> ().SetAlpha(1.0f);
 
 			}
 
@@ -178,6 +182,7 @@ public class ChoosePlayerScript : MonoBehaviour {
 			msgBG.enabled = false;
 			msgBG2.enabled = false;
 			gameIsStartable = false;
+			gutterBG.GetComponent<CanvasRenderer> ().SetAlpha(0f);
 
 		}
 	}

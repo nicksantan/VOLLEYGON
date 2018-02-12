@@ -21,6 +21,24 @@ public class MusicManagerScript : MonoBehaviour {
 	public AudioSource fourthSourceSetTwo;
 	public AudioSource fifthSourceSetTwo;
 
+	private float stored_introSourceVolume; 
+	private float stored_rootSourceVolume; 
+	private float stored_secondSourceVolume; 
+	private float stored_fourthSourceVolume; 
+	private float stored_fifthSourceVolume; 
+
+	private float stored_introSourceSetOneVolume; 
+	private float stored_rootSourceSetOneVolume; 
+	private float stored_secondSourceSetOneVolume; 
+	private float stored_fourthSourceSetOneVolume; 
+	private float stored_fifthSourceSetOneVolume; 
+
+	private float stored_introSourceSetTwoVolume; 
+	private float stored_rootSourceSetTwoVolume; 
+	private float stored_secondSourceSetTwoVolume; 
+	private float stored_fourthSourceSetTwoVolume; 
+	private float stored_fifthSourceSetTwoVolume; 
+
 	public int whichSource;
 	public float masterVolume;
 	private int whichTrack;
@@ -67,7 +85,48 @@ public class MusicManagerScript : MonoBehaviour {
 	
 	}
 
+	public void RestoreFromPause(){
+		introSource.volume = stored_introSourceVolume;
+		rootSource.volume = stored_rootSourceVolume;
+		secondSource.volume = stored_secondSourceVolume;
+		fourthSource.volume = stored_fourthSourceVolume;
+		fifthSource.volume = stored_fifthSourceVolume;
+
+		introSourceSetOne.volume = stored_introSourceSetOneVolume;
+		rootSourceSetOne.volume = stored_rootSourceSetOneVolume;
+		secondSourceSetOne.volume = stored_secondSourceSetOneVolume;
+		fourthSourceSetOne.volume = stored_fourthSourceSetOneVolume;
+		fifthSourceSetOne.volume = stored_fifthSourceSetOneVolume;
+
+		introSourceSetTwo.volume = stored_introSourceSetTwoVolume;
+		rootSourceSetTwo.volume = stored_rootSourceSetTwoVolume;
+		secondSourceSetTwo.volume = stored_secondSourceSetTwoVolume;
+		fourthSourceSetTwo.volume = stored_fourthSourceSetTwoVolume;
+		fifthSourceSetTwo.volume = stored_fifthSourceSetTwoVolume;
+	}
+
+	public void storeVolumes(){
+		stored_introSourceVolume = introSource.volume; 
+		stored_rootSourceVolume = rootSource.volume;
+		stored_secondSourceVolume = secondSource.volume; 
+		stored_fourthSourceVolume = fourthSource.volume;
+		stored_fifthSourceVolume = fifthSource.volume;
+
+		stored_introSourceSetOneVolume = introSourceSetOne.volume;
+		stored_rootSourceSetOneVolume = rootSourceSetOne.volume;
+		stored_secondSourceSetOneVolume = secondSourceSetOne.volume; 
+		stored_fourthSourceSetOneVolume = fourthSourceSetOne.volume;
+		stored_fifthSourceSetOneVolume = fifthSourceSetOne.volume;
+
+		stored_introSourceSetTwoVolume = introSourceSetTwo.volume;
+		stored_rootSourceSetTwoVolume = rootSourceSetTwo.volume;
+		stored_secondSourceSetTwoVolume = secondSourceSetTwo.volume; 
+		stored_fourthSourceSetTwoVolume = fourthSourceSetTwo.volume;
+		stored_fifthSourceSetTwoVolume = fifthSourceSetTwo.volume;
+	}
+
 	public void TurnOffEverything(){
+		storeVolumes ();
 		introSource.volume = 0;
 		rootSource.volume = 0;
 		secondSource.volume = 0;

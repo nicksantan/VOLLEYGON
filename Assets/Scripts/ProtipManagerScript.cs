@@ -14,6 +14,7 @@ public class ProtipManagerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		GameObject.Find ("FadeCurtainCanvas").GetComponent<NewFadeScript> ().Fade (0f);
 		MusicManagerScript.Instance.StartIntro ();
 		Invoke ("StartGame", proTipTime);
 		// make this a common shared function somehow
@@ -56,13 +57,12 @@ public class ProtipManagerScript : MonoBehaviour {
 		
 	void Update(){
 		if (Input.GetButton (startButton1) && Input.GetButton (startButton2) && Input.GetButton (startButton3) && Input.GetButton (startButton4)) {
-			Debug.Log ("Skipping protip");
 			StartCoroutine ("NextScene");
 		}	
 	}
 
 	IEnumerator NextScene(){
-		float fadeTime = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
+		float fadeTime = GameObject.Find ("FadeCurtainCanvas").GetComponent<NewFadeScript> ().Fade (1f);
 		yield return new WaitForSeconds (fadeTime);
 		Application.LoadLevel ("GameScene");
 	}

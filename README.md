@@ -6,7 +6,7 @@ v1.5.3 -- Added 'how to' video during attract mode.
 v1.5.2 -- Removed unnecessary features from arenas and altered 'netless' arena.
 v1.5.1 -- Made spinning propellor frame-rate independent.
 v1.5 -- Changed ball to continuous collision detection and adjusted settings for better kiosk performance.
-v1.4.8 -- Implemented potential fix for 'star gets stuck on other star / ball' issue.  
+v1.4.8 -- Implemented potential fix for 'star gets stuck on other star / ball' issue.
 v1.4.7 -- Added analog stick / Xbox controller support  
 v1.4.6 -- Fixed bug with single player protip.  
 v1.4.4 -- Improved stat and playlogging. Fixed bug with net prefab.  

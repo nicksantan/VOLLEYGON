@@ -27,6 +27,14 @@ public class SoundManagerScript : MonoBehaviour {
 		sfxSource.PlayOneShot (clip);
 	}
 
+	public void muteSFX(){
+		sfxSource.volume = 0;
+	}
+
+	public void unMuteSFX(){
+		sfxSource.volume = 1f;
+	}
+
 	public void RandomizeSfx(params AudioClip[] clips){
 		int randomIndex = Random.Range (0, clips.Length);
 		float randomPitch = Random.Range (lowPitchRange, highPitchRange);

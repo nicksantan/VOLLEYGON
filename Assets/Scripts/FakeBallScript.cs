@@ -51,6 +51,7 @@ public class FakeBallScript : MonoBehaviour {
 	public Text rallyCountText;
 	private AudioSource audio;
 	public bool didSirenPlayAlready;
+
 	// Use this for initialization
 	void Start () {
 		audio = GetComponent<AudioSource> ();
@@ -63,15 +64,11 @@ public class FakeBallScript : MonoBehaviour {
 		rb = GetComponent<Rigidbody2D>();
 
 		rb.isKinematic = true;
-
-			
-			Invoke ("LaunchBall", 1f);
+        Invoke ("LaunchBall", 1f);
 		
 		timer = baseTimeBetweenGravChanges ; 
 		rb.gravityScale = gravScale;
 		originalGrav = gravScale;
-
-
 	}
 
 	// Update is called once per frame
@@ -87,8 +84,8 @@ public class FakeBallScript : MonoBehaviour {
 			if (timer <= 3 && timeSinceLastFlash >= .25f) {
 
 				if (!didSirenPlayAlready) {
-					//SoundManagerScript.instance.PlaySingle (gravityIsAboutToChangeSound);
-					//	audio.Play();
+					// SoundManagerScript.instance.PlaySingle (gravityIsAboutToChangeSound);
+					// audio.Play();
 					didSirenPlayAlready = true;
 				}
 				if (redball.activeSelf) {
@@ -111,11 +108,11 @@ public class FakeBallScript : MonoBehaviour {
 				//				GetComponent<SpriteRenderer> ().sprite = reverseGravSprite;
 				//			};
 			}
+
 			if (timer <= 0) {
+
 				GravChange ();
 				ResetTimer ();
-
-				//Debug.Log (timer);
 			}
 		}
 		CheckForSideChange ();

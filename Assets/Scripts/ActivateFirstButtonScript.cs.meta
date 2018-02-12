@@ -1,10 +1,6 @@
 fileFormatVersion: 2
-guid: 358f60f7bf2073242bfd7d16eb909be7
-<<<<<<< 20454ab6f5f17a52fac7ee5ef2d78b1adbbf62cc
-timeCreated: 1500422224
-=======
-timeCreated: 1501867781
->>>>>>> use joystickbutton class for choose player axis
+guid: 2e6973a1a9f0c406bb464643d02fa9a2
+timeCreated: 1502664975
 licenseType: Free
 MonoImporter:
   serializedVersion: 2

@@ -72,7 +72,6 @@ public class GameManagerScript : MonoBehaviour {
 	{
 		// Save a reference to the AudioHandler component as our singleton instance
 		Instance = this;
-
 		Player1.GetComponent<PlayerController>().playerType = DataManagerScript.playerOneType;
 		Player2.GetComponent<PlayerController>().playerType = DataManagerScript.playerTwoType;
 		Player3.GetComponent<PlayerController>().playerType = DataManagerScript.playerThreeType;
@@ -185,9 +184,13 @@ public class GameManagerScript : MonoBehaviour {
 		}
 
 	}
+
+	void Start(){
+		GameObject.Find ("FadeCurtainCanvas").GetComponent<NewFadeScript> ().Fade (0f);
+	}
+
 	void launchTimer(){
 		timerRunning = true;
-
 	}
 
 	void IncreasePlayCount(string whichType){
@@ -269,7 +272,7 @@ public class GameManagerScript : MonoBehaviour {
 	}
 
 	IEnumerator FadeToStats(){
-		float fadeTime = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
+		float fadeTime = GameObject.Find ("FadeCurtainCanvas").GetComponent<NewFadeScript> ().Fade (1f);
 		yield return new WaitForSeconds (fadeTime);
 		if (!OnePlayerMode) {
 			Application.LoadLevel ("statsScene");

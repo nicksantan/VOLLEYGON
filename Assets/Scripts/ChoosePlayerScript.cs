@@ -50,7 +50,7 @@ public class ChoosePlayerScript : MonoBehaviour {
 	}
 
 	void Start(){
-
+		GameObject.Find ("FadeCurtainCanvas").GetComponent<NewFadeScript> ().Fade (0f);
 		MusicManagerScript.Instance.StartRoot ();
 		oneOnOneMessage.enabled = false;
 		twoOnOneMessage.enabled = false;
@@ -154,7 +154,7 @@ public class ChoosePlayerScript : MonoBehaviour {
 	}
 
 	IEnumerator StartGame(){
-		float fadeTime = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
+		float fadeTime = GameObject.Find ("FadeCurtainCanvas").GetComponent<NewFadeScript> ().Fade (1f);
 		yield return new WaitForSeconds (fadeTime);
 		Application.LoadLevel ("chooseArenaScene");
 	}

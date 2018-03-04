@@ -70,6 +70,7 @@ public class ArenaManagerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		GameObject.Find ("FadeCurtainCanvas").GetComponent<NewFadeScript> ().Fade (0f);
 		audio = GetComponent<AudioSource> ();
 		locked = false;
 
@@ -221,7 +222,7 @@ public class ArenaManagerScript : MonoBehaviour {
 
 	IEnumerator NextScene(){
 		locked = true;
-		float fadeTime = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
+		float fadeTime = GameObject.Find ("FadeCurtainCanvas").GetComponent<NewFadeScript> ().Fade (1f);
 		yield return new WaitForSeconds (fadeTime);
 		Application.LoadLevel ("proTipScene");
 	}

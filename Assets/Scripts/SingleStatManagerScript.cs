@@ -34,6 +34,7 @@ public class SingleStatManagerScript : MonoBehaviour {
 		
 
 	void Start () {
+		GameObject.Find ("FadeCurtainCanvas").GetComponent<NewFadeScript> ().Fade (0f);
 		MusicManagerScript.Instance.StartIntro ();
 
 
@@ -98,7 +99,7 @@ public class SingleStatManagerScript : MonoBehaviour {
 
 
 	IEnumerator BackToTitle(){
-		float fadeTime = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
+		float fadeTime = GameObject.Find ("FadeCurtainCanvas").GetComponent<NewFadeScript> ().Fade (1f);
 		yield return new WaitForSeconds (fadeTime);
 		Application.LoadLevel ("titleScene");
 	}

@@ -38,6 +38,7 @@ public class TitleManagerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		GameObject.Find ("FadeCurtainCanvas").GetComponent<NewFadeScript> ().Fade (0f);	
 		MusicManagerScript.Instance.FadeOutEverything ();
 		versionText.text = DataManagerScript.version;
 

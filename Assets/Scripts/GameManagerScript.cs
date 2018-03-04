@@ -70,9 +70,9 @@ public class GameManagerScript : MonoBehaviour {
 		//EZReplayManager.get.record();
 	}
 	void Start () {
-		
-
+		GameObject.Find ("FadeCurtainCanvas").GetComponent<NewFadeScript> ().Fade (0f);	
 	}
+	
 	void Awake()
 	{
 		// Save a reference to the AudioHandler component as our singleton instance
@@ -279,7 +279,7 @@ public class GameManagerScript : MonoBehaviour {
 		StartCoroutine ("FadeToStats");
 	}
 	IEnumerator FadeToStats(){
-		float fadeTime = GameObject.Find ("FadeCurtain").GetComponent<FadingScript> ().BeginFade (1);
+		float fadeTime = GameObject.Find ("FadeCurtainCanvas").GetComponent<NewFadeScript> ().Fade (1f);
 		yield return new WaitForSeconds (fadeTime);
 		if (!OnePlayerMode) {
 			Application.LoadLevel ("statsScene");

@@ -70,9 +70,13 @@ public class GameManagerScript : MonoBehaviour {
 		//EZReplayManager.get.record();
 	}
 	void Start () {
+		//WHY DO WE NEED THIS??
+		Invoke ("FadeInScreen", 0.5f);
+
+	}
+	void FadeInScreen(){
 		GameObject.Find ("FadeCurtainCanvas").GetComponent<NewFadeScript> ().Fade (0f);	
 	}
-	
 	void Awake()
 	{
 		// Save a reference to the AudioHandler component as our singleton instance

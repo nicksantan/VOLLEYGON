@@ -38,9 +38,10 @@ public class TitleManagerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		GameObject.Find ("FadeCurtainCanvas").GetComponent<NewFadeScript> ().Fade (0f);	
+		Invoke ("FadeInScreen", 0.5f);
 		MusicManagerScript.Instance.FadeOutEverything ();
 		versionText.text = DataManagerScript.version;
+
 
 		UpdateCredits ();
 
@@ -49,7 +50,12 @@ public class TitleManagerScript : MonoBehaviour {
 
 		//Cursor.visible = false;
 		//Cursor.lockState = CursorLockMode.Locked;
+		//WHY DO WE NEED THIS??
+	
 
+	}
+	void FadeInScreen(){
+		GameObject.Find ("FadeCurtainCanvas").GetComponent<NewFadeScript> ().Fade (0f);	
 	}
 	
 	// Update is called once per frame

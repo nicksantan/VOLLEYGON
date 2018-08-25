@@ -99,10 +99,10 @@ public class PlayerController : MonoBehaviour {
 		horiz_Xbox = horiz + "_Xbox";
 
         // Particle system?
-        if ( GetComponent<ParticleSystem>() != null) {
+//        if ( GetComponent<ParticleSystem>() != null) {
             ps = transform.Find("ssps").GetComponent<ParticleSystem>();
             ps.Stop();
-        }
+//        }
 
         // Rigidbody, mesh
 		rb = GetComponent<Rigidbody2D>();

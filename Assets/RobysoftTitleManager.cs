@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class TitleManagerScript : MonoBehaviour {
-
+public class RobysoftTitleManager : MonoBehaviour
+{
+  
 	static public string jumpButton1 = "Jump_P1";
 	static public string gravButton1 = "Grav_P1";
 	static public string jumpButton2 = "Jump_P2";
@@ -35,19 +37,19 @@ public class TitleManagerScript : MonoBehaviour {
 	public Text versionText;
 	public Text creditsText;
 
-	public GameObject fcc;
+
 
 	// Use this for initialization
 	void Start () {
-		Invoke ("FadeInScreen", 0.5f);
-		MusicManagerScript.Instance.FadeOutEverything ();
-		versionText.text = DataManagerScript.version;
+		// Invoke ("FadeInScreen", 0.5f);
+		// MusicManagerScript.Instance.FadeOutEverything ();
+		// //versionText.text = DataManagerScript.version;
 
 
-		UpdateCredits ();
+		// UpdateCredits ();
 
-		DataManagerScript.ResetStats ();
-		DataManagerScript.ResetPlayerTypes ();
+		// DataManagerScript.ResetStats ();
+		// DataManagerScript.ResetPlayerTypes ();
 
 		//Cursor.visible = false;
 		//Cursor.lockState = CursorLockMode.Locked;
@@ -55,14 +57,11 @@ public class TitleManagerScript : MonoBehaviour {
 	
 
 	}
-	void FadeInScreen(){
-		fcc.GetComponent<NewFadeScript> ().Fade (0f);	
-	}
-	
+
 	// Update is called once per frame
 
 	void Update () {
-		MusicManagerScript.Instance.FadeOutEverything ();
+		//MusicManagerScript.Instance.FadeOutEverything ();
 
 		for (int i = 0; i < buttons.Length; i++) {
 			if (Input.GetButtonDown (buttons [i])) {
@@ -83,7 +82,7 @@ public class TitleManagerScript : MonoBehaviour {
 		if (DataManagerScript.creditMode) {
 			creditsText.text = "CREDITS: " + DataManagerScript.credits;
 		} else {
-			creditsText.text = "FREE PLAY";
+			//creditsText.text = "FREE PLAY";
 		}
 	}
 }

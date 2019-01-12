@@ -118,7 +118,7 @@ public class FakeBallScript : MonoBehaviour {
 				//Debug.Log (timer);
 			}
 		}
-		CheckForSideChange ();
+		//CheckForSideChange ();
 		lastXPos = transform.position.x; 
 	}
 
@@ -143,10 +143,10 @@ public class FakeBallScript : MonoBehaviour {
 	}
 
 	void CheckForSideChange(){
-		if (Mathf.Sign (transform.position.x) != Mathf.Sign (lastXPos) && lastXPos != 0 && transform.position.x != 0) {
-			rallyCount++;
-			rallyCountText.text = rallyCount.ToString();
-		}
+		// if (Mathf.Sign (transform.position.x) != Mathf.Sign (lastXPos) && lastXPos != 0 && transform.position.x != 0) {
+		// 	rallyCount++;
+		// 	rallyCountText.text = rallyCount.ToString();
+		// }
 	}
 
 	void FadeOutScore(){

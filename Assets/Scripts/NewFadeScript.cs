@@ -8,7 +8,7 @@ public class NewFadeScript : MonoBehaviour {
 	private Image Image;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		Image = gameObject.GetComponentInChildren<Image>();
 
 	}

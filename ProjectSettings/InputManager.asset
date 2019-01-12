@@ -35,7 +35,7 @@ InputManager:
     snap: 1
     invert: 0
     type: 2
-    axis: 0
+    axis: 5
     joyNum: 1
   - serializedVersion: 3
     m_Name: Vertical_P1
@@ -65,9 +65,9 @@ InputManager:
     dead: 0.25
     sensitivity: 1
     snap: 0
-    invert: 1
+    invert: 0
     type: 2
-    axis: 1
+    axis: 6
     joyNum: 1
   - serializedVersion: 3
     m_Name: Horizontal_P3
@@ -99,7 +99,7 @@ InputManager:
     snap: 0
     invert: 0
     type: 2
-    axis: 0
+    axis: 5
     joyNum: 3
   - serializedVersion: 3
     m_Name: Vertical_P3
@@ -129,9 +129,9 @@ InputManager:
     dead: 0.25
     sensitivity: 1
     snap: 0
-    invert: 1
+    invert: 0
     type: 2
-    axis: 1
+    axis: 6
     joyNum: 3
   - serializedVersion: 3
     m_Name: Horizontal_P4
@@ -163,7 +163,7 @@ InputManager:
     snap: 0
     invert: 0
     type: 2
-    axis: 0
+    axis: 5
     joyNum: 4
   - serializedVersion: 3
     m_Name: Vertical_P4
@@ -193,9 +193,9 @@ InputManager:
     dead: 0.25
     sensitivity: 1
     snap: 0
-    invert: 1
+    invert: 0
     type: 2
-    axis: 1
+    axis: 6
     joyNum: 4
   - serializedVersion: 3
     m_Name: Jump_P1
@@ -483,7 +483,7 @@ InputManager:
     snap: 0
     invert: 0
     type: 2
-    axis: 0
+    axis: 5
     joyNum: 2
   - serializedVersion: 3
     m_Name: Vertical_P2
@@ -513,9 +513,9 @@ InputManager:
     dead: 0.25
     sensitivity: 1
     snap: 0
-    invert: 1
+    invert: 0
     type: 2
-    axis: 1
+    axis: 6
     joyNum: 2
   - serializedVersion: 3
     m_Name: Start_P1

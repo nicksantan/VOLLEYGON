@@ -123,7 +123,7 @@ namespace com.FDT.EasySpritesAnimation.EditorInternal
 						currentEvent.Use();
 					}
 					break;
-				case EventType.mouseUp:
+				case EventType.MouseUp:
 					if (isDragginKeyframe)
 					{
 						DragAndDrop.paths = null;
@@ -290,7 +290,7 @@ namespace com.FDT.EasySpritesAnimation.EditorInternal
 
 				int mouseOverIDx = -1;
 
-				if (currentEvent.type == EventType.dragUpdated || currentEvent.isMouse)
+				if (currentEvent.type == EventType.DragUpdated || currentEvent.isMouse)
 					mousePosition = currentEvent.mousePosition;
 
 				for (; idx < max; idx++)

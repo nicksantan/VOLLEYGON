@@ -6,7 +6,7 @@ public class ArenaManagerScript : MonoBehaviour {
 
 
 	private int markerPos = 0;
-	private float[] markerYPositions  = {7.4f, 3.7f, 0f, -3.7f, -7.4f};
+	private float[] markerYPositions  = {7.4f, 7.4f, 3.7f, 3.7f, 0f, 0f, -3.7f, -3.7f, -7.4f,-7.4f};
 	private float[] markerXPositions = { -17.58f, -1.81f };
 	private string jumpButton1 = "Jump_P1";
 	private string gravButton1 = "Grav_P1";
@@ -149,38 +149,38 @@ public class ArenaManagerScript : MonoBehaviour {
 	void Update () {
 		
 		if (!locked) {
-			foreach (Axis va in verticalAxes) {
-				if (Input.GetAxisRaw (va.axisName) < 0) {
-					if (va.axisInUse == false) {
-						// Call your event function here.
-						va.axisInUse = true;
-						markerPos++;
-						updateMarkerPos ();
-						audio.PlayOneShot (tickUp);
-					}
-				}
+			// foreach (Axis va in verticalAxes) {
+			// 	if (Input.GetAxisRaw (va.axisName) < 0) {
+			// 		if (va.axisInUse == false) {
+			// 			// Call your event function here.
+			// 			va.axisInUse = true;
+			// 			markerPos++;
+			// 			updateMarkerPos ();
+			// 			audio.PlayOneShot (tickUp);
+			// 		}
+			// 	}
 
-				if (Input.GetAxisRaw (va.axisName) > 0) {
-					if (va.axisInUse == false) {
-						// Call your event function here.
-						va.axisInUse = true;
-						markerPos--;
-						audio.PlayOneShot (tickDown);
-						updateMarkerPos ();
-					}
-				}
+			// 	if (Input.GetAxisRaw (va.axisName) > 0) {
+			// 		if (va.axisInUse == false) {
+			// 			// Call your event function here.
+			// 			va.axisInUse = true;
+			// 			markerPos--;
+			// 			audio.PlayOneShot (tickDown);
+			// 			updateMarkerPos ();
+			// 		}
+			// 	}
 
-				if (Input.GetAxisRaw (va.axisName) == 0) {
-					va.axisInUse = false;
-				}
-			}
+			// 	if (Input.GetAxisRaw (va.axisName) == 0) {
+			// 		va.axisInUse = false;
+			// 	}
+			// }
 
 			foreach (Axis va in horizontalAxes) {
 				if (Input.GetAxisRaw (va.axisName) < 0) {
 					if (va.axisInUse == false) {
 						// Call your event function here.
 						va.axisInUse = true;
-						markerPos += 5;
+						markerPos -=1;
 						updateMarkerPos ();
 						audio.PlayOneShot (tickUp);
 
@@ -191,7 +191,7 @@ public class ArenaManagerScript : MonoBehaviour {
 					if (va.axisInUse == false) {
 						// Call your event function here.
 						va.axisInUse = true;
-						markerPos += 5;
+						markerPos += 1;
 						audio.PlayOneShot (tickDown);
 						updateMarkerPos ();
 					}
@@ -235,20 +235,25 @@ public class ArenaManagerScript : MonoBehaviour {
 		markerPos = markerPos % (numberOfArenas + 1);
 		float posX;
 		float posY;
-
-		if (markerPos > 4) {
+		Debug.Log("marker pos is");
+		Debug.Log(markerPos);
+		if (markerPos % 2 == 1) {
 			posX = markerXPositions [1];
 			marker.transform.localScale = new Vector3(-3f, marker.transform.localScale.y, marker.transform.localScale.z) ;
-			posY = markerYPositions [markerPos - 5];
+			posY = markerYPositions [markerPos];
+			Vector3 tempPos = new Vector3(posX, posY, 1f);
+			marker.transform.position = tempPos;
 
-		} else {
+		} else if (markerPos % 2 == 0){
 			posX = markerXPositions [0];
 			marker.transform.localScale = new Vector3(3f, marker.transform.localScale.y, marker.transform.localScale.z) ;
 			posY = markerYPositions [markerPos];
+			Vector3 tempPos = new Vector3(posX, posY, 1f);
+			marker.transform.position = tempPos;
 		}
-		Vector3 tempPos = new Vector3(posX, posY, 1f);
+		
 //		
-		marker.transform.position = tempPos;
+		
 		Debug.Log (markerPos);
 	}
 }

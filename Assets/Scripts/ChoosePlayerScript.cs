@@ -65,6 +65,8 @@ public class ChoosePlayerScript : MonoBehaviour {
 	private int playersOnRight = 0;
 
 	private GameObject[] fakePlayers;
+
+	public GameObject fcc;
 	public static ChoosePlayerScript Instance { get; private set; }
 	// Use this for initialization
 
@@ -76,7 +78,7 @@ public class ChoosePlayerScript : MonoBehaviour {
 
 	}
 	void Start(){
-		GameObject.Find ("FadeCurtainCanvas").GetComponent<NewFadeScript> ().Fade (0f);
+		fcc.GetComponent<NewFadeScript> ().Fade (0f);
 		MusicManagerScript.Instance.StartRoot ();
 		oneOnOneMessage.enabled = false;
 		twoOnOneMessage.enabled = false;

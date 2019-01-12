@@ -40,6 +40,8 @@ public class FakePlayerScript : MonoBehaviour {
 	public GameObject rectangle;
 	public GameObject star;
 
+	public GameObject ui_triangles;
+
 
 	private int numberOfPlayerTypes = 6;
 
@@ -122,6 +124,7 @@ public class FakePlayerScript : MonoBehaviour {
 				audio.PlayOneShot (readySound);
 			}
 			readyToPlay = true;
+			ui_triangles.SetActive(false);
 			playerDescription.enabled = false;
 			playerDifficulty.enabled = false;
 
@@ -136,6 +139,7 @@ public class FakePlayerScript : MonoBehaviour {
 			}
 		} else {
 			taggedIn = true;
+
 			audio.PlayOneShot (tagInSound);
 			toJoinText.GetComponent<CanvasRenderer> ().SetAlpha (0.0f);
 			playerDescription.enabled = true;
@@ -147,6 +151,8 @@ public class FakePlayerScript : MonoBehaviour {
 			trapezoid.SetActive (false);
 			rectangle.SetActive (false);
 			star.SetActive (false);
+
+			ui_triangles.SetActive(true);
 
 			switch (thisType) {
 			case 0:
@@ -197,6 +203,7 @@ public class FakePlayerScript : MonoBehaviour {
 			readyBG.GetComponent<CanvasRenderer> ().SetAlpha (0.0f);
 			playerDescription.enabled = true;
 			playerDifficulty.enabled = true;
+			ui_triangles.SetActive(true);
 		} else if (taggedIn) {
 			taggedIn = false;
 			toJoinText.GetComponent<CanvasRenderer> ().SetAlpha (1.0f);
@@ -209,6 +216,8 @@ public class FakePlayerScript : MonoBehaviour {
 			star.SetActive (false);
 			playerDescription.enabled = false;
 			playerDifficulty.enabled = false;
+			ui_triangles.SetActive(false);
+
 			switch(playerIdentifier){
 
 			case 1:
@@ -255,6 +264,8 @@ public class FakePlayerScript : MonoBehaviour {
 		trapezoid = transform.Find ("Trapezoid").gameObject;
 		rectangle = transform.Find ("Rectangle").gameObject;
 		star = transform.Find ("Star").gameObject;
+
+		ui_triangles = transform.Find("Triangles").gameObject;
 
 		square.SetActive (false);
 		circle.SetActive (false);

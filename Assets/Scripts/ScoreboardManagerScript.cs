@@ -16,14 +16,14 @@ public class ScoreboardManagerScript : MonoBehaviour {
 		
 
 		scoreBoardShowing = false;
-		for (int i = 0; i < Team1Scores.transform.GetChildCount (); i++) {
+		for (int i = 0; i < Team1Scores.transform.childCount; i++) {
 			Transform child = Team1Scores.transform.GetChild (i);
 			//child.gameObject.SetActive (false);
 			iTween.FadeTo (child.gameObject, 0f, .1f);
 		
 		}
 
-		for (int j = 0; j < Team2Scores.transform.GetChildCount (); j++) {
+		for (int j = 0; j < Team2Scores.transform.childCount; j++) {
 			//	Debug.Log ("trying to hide");
 			Transform childTwo = Team2Scores.transform.GetChild (j);
 		
@@ -110,13 +110,13 @@ public class ScoreboardManagerScript : MonoBehaviour {
 
 
 	public void cleanUp(){
-		for (int i = 0; i < Team1Scores.transform.GetChildCount (); i++) {
+		for (int i = 0; i < Team1Scores.transform.childCount; i++) {
 			Transform child = Team1Scores.transform.GetChild (i);
 			child.gameObject.SetActive (false);
 		//	iTween.FadeTo (child.gameObject, 0f, .1f);
 		}
 
-		for (int j = 0; j < Team2Scores.transform.GetChildCount (); j++) {
+		for (int j = 0; j < Team2Scores.transform.childCount; j++) {
 		//	Debug.Log ("trying to hide");
 			Transform childTwo = Team2Scores.transform.GetChild (j);
 			childTwo.gameObject.SetActive (false);
@@ -127,14 +127,14 @@ public class ScoreboardManagerScript : MonoBehaviour {
 	public void disableEverything(){
 		iTween.FadeTo (dash, 0f, .25f);
 		iTween.FadeTo (deuce, 0f, .25f);
-		for (int i = 0; i < Team1Scores.transform.GetChildCount (); i++) {
+		for (int i = 0; i < Team1Scores.transform.childCount; i++) {
 			Transform child = Team1Scores.transform.GetChild (i);
 			//if (child.gameObject.activeSelf) {
 				iTween.FadeTo (child.gameObject, 0f, .25f);
 			//}
 			//child.gameObject.SetActive (false);
 		}
-		for (int j = 0; j < Team2Scores.transform.GetChildCount (); j++) {
+		for (int j = 0; j < Team2Scores.transform.childCount; j++) {
 		//	Debug.Log ("trying to hide");
 			Transform childTwo = Team2Scores.transform.GetChild (j);
 

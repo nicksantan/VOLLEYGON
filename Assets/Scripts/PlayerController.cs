@@ -90,9 +90,12 @@ public class PlayerController : MonoBehaviour {
         "star"
     };
 
+    private GameObject innerShape;
+
     // Use this for initialization
     void Start () {
 
+         
         // Input strings for Xbox
 		gravButton_Xbox = gravButton + "_Xbox";
 		jumpButton_Xbox = jumpButton + "_Xbox";
@@ -138,6 +141,18 @@ public class PlayerController : MonoBehaviour {
             rb.gravityScale = startingGrav;
             startMass = rb.mass;
             pandemoniumCounter.GetComponent<TextMesh>().color = new Vector4(0f, 0f, 0f, 0f);
+            innerShape = transform.Find("InnerShape").gameObject;
+            if (innerShape)
+            {
+                if (rb.gravityScale < 0)
+                {
+                    innerShape.SetActive(true);
+                }
+                else
+                {
+                    innerShape.SetActive(false);
+                }
+            }
         }
 
 		// Assign player color
@@ -220,7 +235,19 @@ public class PlayerController : MonoBehaviour {
 			if (Input.GetButtonDown (gravButton) || Input.GetButtonDown(gravButton_Xbox)) {
 				rb.gravityScale *= -1f;
 				SoundManagerScript.instance.RandomizeSfx (changeGravSound1, changeGravSound2);
-			}
+
+                if (innerShape)
+                {
+                    if (rb.gravityScale < 0)
+                    {
+                        innerShape.SetActive(true);
+                    }
+                    else
+                    {
+                        innerShape.SetActive(false);
+                    }
+                }
+            }
 		}
 
 		ClampPosition ();

@@ -75,14 +75,14 @@ public class RobysoftTitleManager : MonoBehaviour
 			}
 		}
 
-		UpdateCredits ();
+		//UpdateCredits ();
 	}
 
-	void UpdateCredits(){
-		if (DataManagerScript.creditMode) {
-			creditsText.text = "CREDITS: " + DataManagerScript.credits;
-		} else {
-			//creditsText.text = "FREE PLAY";
-		}
-	}
+	//void UpdateCredits(){
+	//	if (DataManagerScript.creditMode) {
+	//		creditsText.text = "CREDITS: " + DataManagerScript.credits;
+	//	} else {
+	//		//creditsText.text = "FREE PLAY";
+	//	}
+	//}
 }

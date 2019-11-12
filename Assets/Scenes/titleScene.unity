@@ -1781,7 +1781,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 76.65306
+  Phase: 77.64486
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5
@@ -1911,8 +1911,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b96f2c93da25a4e75ad9390ec2331d62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  versionText: {fileID: 1713721987}
-  creditsText: {fileID: 402566590}
+  versionText: {fileID: 1713721984}
+  creditsText: {fileID: 402566587}
   fcc: {fileID: 75885254}
 --- !u!4 &2126456561
 Transform:

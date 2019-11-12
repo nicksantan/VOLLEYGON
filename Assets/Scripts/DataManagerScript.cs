@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class DataManagerScript : MonoBehaviour {
 
@@ -21,7 +22,7 @@ public class DataManagerScript : MonoBehaviour {
 	public static int arenaType;
 
 	// Arcade / credit-mode variables
-	public static bool creditMode = false;
+	public static bool creditMode = true;
 	public static int credits;
 	private static string coinInsertButton = "Coin_Insert";
 	public static AudioClip coinInsertSFX;
@@ -71,10 +72,18 @@ public class DataManagerScript : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
-		version = "V1.7a";
+		version = "V1.7da";
 		//xboxMode = true;
 		credits = 0;
-	}
+        string[] arguments = Environment.GetCommandLineArgs();
+        for (int i = 0; i < arguments.Length; i++)
+        {
+            if (arguments[i] == "-freeplay" && i < arguments.Length - 1)
+            {
+                creditMode = arguments[i + 1].ToLower() != "true";
+            }
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {

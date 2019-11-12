@@ -32,8 +32,8 @@ public class TitleManagerScript : MonoBehaviour {
 	static private string startButton4_Xbox = "Start_P4_Xbox";
 
 	private string[] buttons = {jumpButton1, jumpButton2, jumpButton3, jumpButton4, gravButton1, gravButton2, gravButton3, gravButton4, startButton1, startButton2, startButton3, startButton4, jumpButton1_Xbox, jumpButton2_Xbox, jumpButton3_Xbox, jumpButton4_Xbox, gravButton1_Xbox, gravButton2_Xbox, gravButton3_Xbox, gravButton4_Xbox, startButton1_Xbox, startButton2_Xbox, startButton3_Xbox, startButton4_Xbox};
-	public Text versionText;
-	public Text creditsText;
+	public GameObject versionText;
+	public GameObject creditsText;
 
 	public GameObject fcc;
 
@@ -41,7 +41,7 @@ public class TitleManagerScript : MonoBehaviour {
 	void Start () {
 		Invoke ("FadeInScreen", 0.5f);
 		MusicManagerScript.Instance.FadeOutEverything ();
-		versionText.text = DataManagerScript.version;
+		versionText.GetComponent<Text>().text = DataManagerScript.version;
 
 
 		UpdateCredits ();
@@ -81,9 +81,9 @@ public class TitleManagerScript : MonoBehaviour {
 
 	void UpdateCredits(){
 		if (DataManagerScript.creditMode) {
-			creditsText.text = "CREDITS: " + DataManagerScript.credits;
+			creditsText.GetComponent<Text>().text = "CREDITS: " + DataManagerScript.credits;
 		} else {
-			creditsText.text = "FREE PLAY";
+			creditsText.GetComponent<Text>().text = "FREE PLAY";
 		}
 	}
 }

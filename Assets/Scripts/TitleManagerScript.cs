@@ -75,8 +75,10 @@ public class TitleManagerScript : MonoBehaviour {
 					
 			}
 		}
-
-		UpdateCredits ();
+        if (DataManagerScript.creditMode)
+        {
+            UpdateCredits();
+        }
 	}
 
 	void UpdateCredits(){

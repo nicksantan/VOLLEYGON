@@ -37,7 +37,6 @@ public class OptionScript : MonoBehaviour
     IEnumerator SlideTo(float newValue) {
 		isSliding = true;
 		slider.value = newValue;
-		Debug.Log(slider.value);
         yield return new WaitForSeconds(slideDurationSeconds);
 		isSliding = false;
     }

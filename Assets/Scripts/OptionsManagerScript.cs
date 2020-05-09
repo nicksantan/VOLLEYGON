@@ -1,17 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
-public class OptionsManagerScript : MonoBehaviour {
+public class OptionsManagerScript : MonoBehaviour
+{
 
 	public GameObject curtain;
 	public CarouselScript carousel;
 	public GameObject options;
 	public GameObject breadcrumb;
 	public GameObject optionBreadcrumb;
+	public GameObject optionEditButton;
 	public GameObject leftBackground;
 	public GameObject rightBackground;
 
@@ -23,32 +26,46 @@ public class OptionsManagerScript : MonoBehaviour {
 
 	private EventSystem es;
 
-	void Start () {
+	static private int[] validIndexes = { 0, 1, 2 };
+
+	void Start()
+	{
 		curtain.SetActive(true);
 		curtain.GetComponent<NewFadeScript>().Fade(0f);
 
 		es = EventSystem.current;
-		if (es && es.currentSelectedGameObject) {
+		if (es && es.currentSelectedGameObject)
+		{
 			selectedIndex = es.currentSelectedGameObject.transform.GetSiblingIndex();
 		}
 
 		// determine which controller is 'in control'.
 		whichPlayerIsControlling = DataManagerScript.gamepadControllingMenus;
-		joyButts = new JoystickButtons (whichPlayerIsControlling);
+		joyButts = new JoystickButtons(whichPlayerIsControlling);
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void Update()
+	{
+		// Check for selection to enable selectable option
+		bool inputSelecting = Input.GetButtonDown(joyButts.jump) || Input.GetButtonDown(joyButts.jump);
+		bool optionIsSelectable = OptionsManagerScript.CheckSelectableOptionIndex(selectedIndex);
+		optionEditButton.SetActive(optionIsSelectable && !optionIsOpen);
+
 		// Show options based on carousel slide selected
-		if (es.currentSelectedGameObject) {
+		if (es.currentSelectedGameObject)
+		{
 			int selectedSlideIndex = es.currentSelectedGameObject.transform.GetSiblingIndex();
-			if (selectedIndex != selectedSlideIndex) {
+			if (selectedIndex != selectedSlideIndex)
+			{
 				ShowOption(selectedSlideIndex);
+
 			}
 		}
 
 		// Check for cancel button
-		if (Input.GetButtonDown(joyButts.grav)) {
+		if (Input.GetButtonDown(joyButts.grav))
+		{
 
 			// Show/hide UI
 			optionBreadcrumb.SetActive(false);
@@ -56,7 +73,8 @@ public class OptionsManagerScript : MonoBehaviour {
 			leftBackground.SetActive(false);
 			rightBackground.SetActive(true);
 
-			if (optionIsOpen) {
+			if (optionIsOpen)
+			{
 				// Disable currently selected option
 				Transform selectedOption = options.transform.GetChild(selectedIndex);
 				selectedOption.GetComponent<OptionScript>().disable();
@@ -64,14 +82,15 @@ public class OptionsManagerScript : MonoBehaviour {
 				// Go back to carousel controls
 				optionIsOpen = false;
 			}
-			else {
+			else
+			{
 				// Go to previous scene
-				SceneManager.LoadSceneAsync ("titleScene");
+				SceneManager.LoadSceneAsync("titleScene");
 			}
 		}
 
-		// Check for selection to enable option
-		if (Input.GetButtonDown(joyButts.jump) && !optionIsOpen) {
+		if (inputSelecting && !optionIsOpen && optionIsSelectable)
+		{
 
 			// Show/hide UI
 			optionBreadcrumb.SetActive(true);
@@ -86,16 +105,27 @@ public class OptionsManagerScript : MonoBehaviour {
 
 		// Disable carousel when we have an option open
 		es.enabled = !optionIsOpen;
-		if (es.enabled) {
+		if (es.enabled)
+		{
 			// Reset selected item on re-enable
 			es.SetSelectedGameObject(carousel.slides[selectedIndex].gameObject);
 		}
 	}
 
-	void ShowOption(int newIndex) {
+	// TODO: move this to a property on the slides
+	static bool CheckSelectableOptionIndex(int index)
+	{
+		int pos = Array.IndexOf(OptionsManagerScript.validIndexes, index);
+		return pos > -1;
+	}
+
+	void ShowOption(int newIndex)
+	{
 		// Hide all other options
-		foreach (Transform child in options.transform) {
-			if (child.gameObject.activeSelf) {
+		foreach (Transform child in options.transform)
+		{
+			if (child.gameObject.activeSelf)
+			{
 				StartCoroutine(FadeOption(child, false));
 			}
 		}
@@ -108,15 +138,14 @@ public class OptionsManagerScript : MonoBehaviour {
 		selectedIndex = newIndex;
 	}
 
-	void SelectShownOption() {
+	void SelectShownOption()
+	{
 		Transform selectedOption = options.transform.GetChild(selectedIndex);
-		Debug.Log(selectedOption);
 		selectedOption.GetComponent<OptionScript>().enable();
 	}
 
-	// TODO: WHY AINT THIS WORK
-
-	IEnumerator FadeOption(Transform option, bool isAppearing) {
+	IEnumerator FadeOption(Transform option, bool isAppearing)
+	{
 		CanvasGroup optionCanvasGroup = option.GetComponent<CanvasGroup>();
 		float approxNoOfFrames = 20;
 

@@ -125,6 +125,7 @@ public class GameManagerScript : MonoBehaviour {
         }
 
         if (handleArenas) {
+            Debug.Log("what is the arena type?");
             Debug.Log(DataManagerScript.arenaType);
             Arenas[arenaType - 1].SetActive(true);
 		}

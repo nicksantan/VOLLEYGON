@@ -162,6 +162,8 @@ public class ArenaManagerScript : MonoBehaviour {
     {
         if (!locked && es.currentSelectedGameObject) {
 			int selectedIndex = es.currentSelectedGameObject.transform.GetSiblingIndex();
+            Debug.Log("selected index is");
+            Debug.Log(selectedIndex);
 
             foreach (string butt in buttons) {
                 if (Input.GetButtonDown(butt)) {
@@ -175,6 +177,8 @@ public class ArenaManagerScript : MonoBehaviour {
                     } else {
 
                         // Set and log chosen arena type
+                        Debug.Log("selected index is");
+                        Debug.Log(selectedIndex);
                         DataManagerScript.arenaType = selectedIndex;
                         IncreasePlayCount("arena" + selectedIndex + "Plays"); // log which arena
 

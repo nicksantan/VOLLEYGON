@@ -12,7 +12,7 @@ public class DataManagerScript : MonoBehaviour {
     //public static string version;
 
     // Universal game variables
-    public static bool easyMode = true;
+    public static bool easyMode = false;
 	public int teamOneWins;
 	public int teamTwoWins;
 	public static bool playerOnePlaying = true;
@@ -21,6 +21,7 @@ public class DataManagerScript : MonoBehaviour {
 	public static bool playerFourPlaying = true;
 	public static bool CRTMode = true;
 	public static bool isChallengeMode = false;
+    public static bool isSinglePlayerMode = false;
 
 	// Flags for user login events
 

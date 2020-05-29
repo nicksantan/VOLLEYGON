@@ -160,11 +160,13 @@ public class TitleManagerScript : MonoBehaviour {
     public void StartSoloModeGame()
     {
         //TODO: This should be a different scene, specifically for choosing ONE shape.
-        SceneManager.LoadSceneAsync("ChooseSinglePlayerScene");
+        DataManagerScript.isSinglePlayerMode = true;
+        SceneManager.LoadSceneAsync("ChoosePlayerScene");
     }
 
     public void StartMultiplayerGame(){
-		SceneManager.LoadSceneAsync ("ChoosePlayerScene");
+        DataManagerScript.isSinglePlayerMode = false;
+        SceneManager.LoadSceneAsync ("ChoosePlayerScene");
 	}
 	public void StartChallengesGame(){
 		DataManagerScript.isChallengeMode = true;

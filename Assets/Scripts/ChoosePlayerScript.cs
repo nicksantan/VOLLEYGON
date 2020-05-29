@@ -324,7 +324,16 @@ public class ChoosePlayerScript : MonoBehaviour {
 			StartCoroutine ("StartGame");
 
 		}
-	}
+
+        // go ahead and start if this is a single player game and any player is ready
+        if (DataManagerScript.isSinglePlayerMode && (fakePlayer1.GetComponent<FakePlayerScript>().readyToPlay
+            || fakePlayer2.GetComponent<FakePlayerScript>().readyToPlay
+            || fakePlayer3.GetComponent<FakePlayerScript>().readyToPlay
+            || fakePlayer4.GetComponent<FakePlayerScript>().readyToPlay)){
+            StartCoroutine("StartGame");
+        }
+
+    }
 
 	void FixedUpdate() {
 		// Back out if no gamepads

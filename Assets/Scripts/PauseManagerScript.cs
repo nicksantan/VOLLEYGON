@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseManagerScript : MonoBehaviour
 {
@@ -40,10 +41,25 @@ public class PauseManagerScript : MonoBehaviour
             MusicManagerScript.Instance.TurnOffEverything();
             SoundManagerScript.instance.muteSFX();
             //TODO: Move the ball's SFX to sound manager script. Also, will this work with multiple balls? Maybe broadcast pause to everything?
-            GameObject.FindWithTag("Ball").GetComponent<BallScript>().Pause();
+            GameObject ball = GameObject.FindWithTag("Ball");
+            if (ball != null) { 
+            ball.GetComponent<BallScript>().Pause();
+            }
             Time.timeScale = 0;
             paused = true;
         }
+    }
+
+    public void UnpauseAndQuit()
+    {
+        StartCoroutine("UnpauseAndQuitRoutine");
+    }
+    public IEnumerator UnpauseAndQuitRoutine()
+    {
+        Unpause();
+        GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadSceneAsync("titleScene");
     }
     public void Unpause()
     {
@@ -56,7 +72,11 @@ public class PauseManagerScript : MonoBehaviour
             MusicManagerScript.Instance.RestoreFromPause();
             //TODO: Move the ball's SFX to sound manager script
             SoundManagerScript.instance.unMuteSFX();
-            GameObject.FindWithTag("Ball").GetComponent<BallScript>().UnPause();
+            GameObject ball = GameObject.FindWithTag("Ball");
+            if (ball != null)
+            {
+                ball.GetComponent<BallScript>().UnPause();
+            }
             Invoke("CancelRecentlyPaused", 0.1f);
         }
     }

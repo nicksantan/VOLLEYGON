@@ -308,7 +308,7 @@ public class PlayerController : MonoBehaviour {
             		&& GameManagerScript.Instance != null
 	                && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused)
 	                {
-                   // GameManagerScript.Instance.GetComponent<PauseManagerScript>().Pause(buttons);
+                    GameManagerScript.Instance.GetComponent<PauseManagerScript>().Pause(buttons);
                 }
 
 	            ClampPosition();

@@ -26,7 +26,7 @@ public class SliderChangeScript : MonoBehaviour
             case 1:
                  val = PlayerPrefs.GetFloat("musicVolume");
                 VolumeSlider.value = PlayerPrefs.HasKey("musicVolume") ? val : 10;
-                float masterVolume = PlayerPrefs.HasKey("masterVolume") ? PlayerPrefs.GetFloat("masterVolume") : 10f;
+               
            //     MusicManagerScript.Instance.masterVolume = baseMasterVolume * (VolumeSlider.value / 10f);
                 break;
             case 2:
@@ -40,15 +40,15 @@ public class SliderChangeScript : MonoBehaviour
     public void OnChangeMasterVolume(float value)
     {
         PlayerPrefs.SetFloat("masterVolume", VolumeSlider.value);
-        float test = PlayerPrefs.GetFloat("masterVolume");
-        MusicManagerScript.Instance.masterVolume = baseMasterVolume * (VolumeSlider.value / 10f);
-        Debug.Log(test);
+        float musicVolume = PlayerPrefs.HasKey("musicVolume") ? PlayerPrefs.GetFloat("musicVolume") : 10f;
+        MusicManagerScript.Instance.masterVolume = baseMasterVolume * (musicVolume / 10f) * (VolumeSlider.value / 10f);
     }
 
     public void OnChangeMusicVolume(float value)
     {
         PlayerPrefs.SetFloat("musicVolume", VolumeSlider.value);
-        MusicManagerScript.Instance.masterVolume = baseMasterVolume * (VolumeSlider.value / 10f);
+        float masterVolume = PlayerPrefs.HasKey("masterVolume") ? PlayerPrefs.GetFloat("masterVolume") : 10f;
+        MusicManagerScript.Instance.masterVolume = baseMasterVolume * (masterVolume/10f) * (VolumeSlider.value / 10f);
     }
 
     public void OnChangeSFXVolume(float value)

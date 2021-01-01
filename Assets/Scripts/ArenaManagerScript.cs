@@ -80,6 +80,9 @@ public class ArenaManagerScript : MonoBehaviour {
     void Start()
     {
         audio = GetComponent<AudioSource>();
+        float sfxVolume = PlayerPrefs.HasKey("sfxVolume") ? PlayerPrefs.GetFloat("sfxVolume") : 10f;
+        float masterVolume = PlayerPrefs.HasKey("masterVolume") ? PlayerPrefs.GetFloat("masterVolume") : 10f;
+        audio.volume = audio.volume * masterVolume / 10f * sfxVolume / 10f;
         locked = false;
 
         va1 = new Axis("Vertical_P1");

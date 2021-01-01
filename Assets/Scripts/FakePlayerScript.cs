@@ -262,7 +262,9 @@ public class FakePlayerScript : MonoBehaviour {
 		if (playerDifficulty) playerDifficulty.enabled = false;
 
 		audio = GetComponent<AudioSource> ();
-
+        float sfxVolume = PlayerPrefs.HasKey("sfxVolume") ? PlayerPrefs.GetFloat("sfxVolume") : 10f;
+        float masterVolume = PlayerPrefs.HasKey("masterVolume") ? PlayerPrefs.GetFloat("masterVolume") : 10f;
+        audio.volume = audio.volume * masterVolume / 10f * sfxVolume / 10f;
 		square = transform.Find ("Square").gameObject;
 		circle = transform.Find ("Circle").gameObject;
 		triangle = transform.Find ("Triangle").gameObject;

@@ -14,6 +14,8 @@ public class TitleManagerScript : MonoBehaviour {
 	private JoystickButtons controllingGamepad;
 	private JoystickButtons[] gamepads = new JoystickButtons[4];
 
+    public GameObject pressStartAnimation;
+
 	public Text versionText;
 	public GameObject mainMenuPanel;
 	public GameObject singlePlayerPanel;
@@ -67,7 +69,7 @@ public class TitleManagerScript : MonoBehaviour {
 					}
 					else {
 
-						#if UNITY_XBOXONE
+#if UNITY_XBOXONE
 							// Sign in if active player is not associated with this controller
 							if (DataManagerScript.xboxMode && XboxOneInput.GetUserIdForGamepad((uint)gamepadIndex) == 0) {
 
@@ -79,9 +81,12 @@ public class TitleManagerScript : MonoBehaviour {
 								// Open main menu with this controller
 								activateMainMenu(gamepadIndex);
 							}
-						#else
-                            // Open main menu with this controller
-                            activateMainMenu(gamepadIndex);
+#else
+                        // Open main menu with this controller
+                        // remove press start animation
+                        pressStartAnimation.SetActive(false);
+                        LeanTween.move(Camera.main.gameObject, new Vector3(0f, -3.3f, -10f), 0.5f).setOnComplete(()=>activateMainMenu(gamepadIndex)).setEase(LeanTweenType.easeOutQuad);
+                      // activateMainMenu(gamepadIndex);
 						#endif
 					}
 				}
@@ -115,7 +120,10 @@ public class TitleManagerScript : MonoBehaviour {
 			mainMenuActive = false;
 			mainMenuPanel.SetActive (false);
 			singlePlayerPanel.SetActive (false);
-		} else {
+            LeanTween.move(Camera.main.gameObject, new Vector3(0f, 0f, -10f), 0.5f).setEase(LeanTweenType.easeOutQuad);
+            pressStartAnimation.SetActive(true);
+            pressStartAnimation.GetComponent<PlayAnimationScript>().PlayAnimation();
+        } else {
 			// Cancelling out of single player menu
 			es1.SetSelectedGameObject(null);
 			es1.SetSelectedGameObject(es1.firstSelectedGameObject);
@@ -141,8 +149,9 @@ public class TitleManagerScript : MonoBehaviour {
 		mainMenuActive = true;
 		mainMenuPanel.SetActive (true);
 
+    
 
-		es1.SetSelectedGameObject(null);
+        es1.SetSelectedGameObject(null);
 		es1.SetSelectedGameObject(es1.firstSelectedGameObject);
 
 		// depending on which controller was tagged in, set the input stringes here

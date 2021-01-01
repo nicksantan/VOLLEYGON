@@ -15,7 +15,8 @@ public class OptionsManagerScript : MonoBehaviour
 	public GameObject breadcrumb;
 	public GameObject optionBreadcrumb;
 	public GameObject optionEditButton;
-	public GameObject leftBackground;
+    public GameObject optionPlayButton;
+    public GameObject leftBackground;
 	public GameObject rightBackground;
 
 	private int whichPlayerIsControlling;
@@ -26,7 +27,7 @@ public class OptionsManagerScript : MonoBehaviour
 
 	private EventSystem es;
 
-	static private int[] validIndexes = { 0, 1, 2 };
+	static private int[] validIndexes = { 0, 1, 2, 5 };
 
 	void Start()
 	{
@@ -50,8 +51,10 @@ public class OptionsManagerScript : MonoBehaviour
 		// Check for selection to enable selectable option
 		bool inputSelecting = Input.GetButtonDown(joyButts.jump) || Input.GetButtonDown(joyButts.jump);
 		bool optionIsSelectable = OptionsManagerScript.CheckSelectableOptionIndex(selectedIndex);
-		optionEditButton.SetActive(optionIsSelectable && !optionIsOpen);
-
+        // special case for how-to video
+        bool optionIsPlayable = selectedIndex == 5;
+		optionEditButton.SetActive(optionIsSelectable && !optionIsOpen && !optionIsPlayable);
+        optionPlayButton.SetActive(optionIsSelectable && !optionIsOpen && optionIsPlayable);
 		// Show options based on carousel slide selected
 		if (es.currentSelectedGameObject)
 		{
@@ -89,7 +92,7 @@ public class OptionsManagerScript : MonoBehaviour
 			}
 		}
 
-		if (inputSelecting && !optionIsOpen && optionIsSelectable)
+		if (inputSelecting && !optionIsOpen && optionIsSelectable && !optionIsPlayable)
 		{
 
 			// Show/hide UI
@@ -103,8 +106,14 @@ public class OptionsManagerScript : MonoBehaviour
 			optionIsOpen = true;
 		}
 
-		// Disable carousel when we have an option open
-		es.enabled = !optionIsOpen;
+        if (inputSelecting && !optionIsOpen && optionIsSelectable && optionIsPlayable)
+        {
+            // Load how to video
+            SceneManager.LoadSceneAsync("howToVideoScene");
+
+        }
+            // Disable carousel when we have an option open
+            es.enabled = !optionIsOpen;
 		if (es.enabled)
 		{
 			// Reset selected item on re-enable
@@ -143,6 +152,13 @@ public class OptionsManagerScript : MonoBehaviour
 		Transform selectedOption = options.transform.GetChild(selectedIndex);
 		selectedOption.GetComponent<OptionScript>().enable();
 	}
+
+    public void SaveOption(float val)
+    {
+        // need to identify the option with the pref;
+        PlayerPrefs.SetFloat("masterVolume", val);
+
+    }
 
 	IEnumerator FadeOption(Transform option, bool isAppearing)
 	{

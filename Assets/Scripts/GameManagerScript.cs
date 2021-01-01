@@ -88,10 +88,13 @@ public class GameManagerScript : MonoBehaviour {
 
         easyMode = DataManagerScript.easyMode;
 
-		Player1.GetComponent<PlayerController>().playerType = DataManagerScript.playerOneType;
-		Player2.GetComponent<PlayerController>().playerType = DataManagerScript.playerTwoType;
-		Player3.GetComponent<PlayerController>().playerType = DataManagerScript.playerThreeType;
-		Player4.GetComponent<PlayerController>().playerType = DataManagerScript.playerFourType;
+        if (!DataManagerScript.isSinglePlayerMode)
+        {
+            Player1.GetComponent<PlayerController>().playerType = DataManagerScript.playerOneType;
+            Player2.GetComponent<PlayerController>().playerType = DataManagerScript.playerTwoType;
+            Player3.GetComponent<PlayerController>().playerType = DataManagerScript.playerThreeType;
+            Player4.GetComponent<PlayerController>().playerType = DataManagerScript.playerFourType;
+        }
 
 		MusicManagerScript.Instance.StartRoot ();
 		launchTimer ();
@@ -139,21 +142,27 @@ public class GameManagerScript : MonoBehaviour {
 			playersActive++;
 			whichSoloPlayer = 1;
 		}
-		if (DataManagerScript.playerTwoPlaying == true) {
-			Player2.SetActive (true);
-			playersActive++;
-			whichSoloPlayer = 2;
-		}
-		if (DataManagerScript.playerThreePlaying == true) {
-			Player3.SetActive (true);
-			playersActive++;
-			whichSoloPlayer = 3;
-		}
-		if (DataManagerScript.playerFourPlaying == true) {
-			Player4.SetActive (true);
-			playersActive++;
-			whichSoloPlayer = 4;
-		}
+        if (!DataManagerScript.isSinglePlayerMode)
+        {
+            if (DataManagerScript.playerTwoPlaying == true)
+            {
+                Player2.SetActive(true);
+                playersActive++;
+                whichSoloPlayer = 2;
+            }
+            if (DataManagerScript.playerThreePlaying == true)
+            {
+                Player3.SetActive(true);
+                playersActive++;
+                whichSoloPlayer = 3;
+            }
+            if (DataManagerScript.playerFourPlaying == true)
+            {
+                Player4.SetActive(true);
+                playersActive++;
+                whichSoloPlayer = 4;
+            }
+        }
 
 		if (playersActive == 1) {
 

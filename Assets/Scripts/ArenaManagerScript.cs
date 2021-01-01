@@ -162,11 +162,13 @@ public class ArenaManagerScript : MonoBehaviour {
     {
         if (!locked && es.currentSelectedGameObject) {
 			int selectedIndex = es.currentSelectedGameObject.transform.GetSiblingIndex();
-            Debug.Log("selected index is");
-            Debug.Log(selectedIndex);
+            // Debug.Log("selected index is");
+            //Debug.Log(selectedIndex);
 
-            foreach (string butt in buttons) {
-                if (Input.GetButtonDown(butt)) {
+            int whichPlayerIsControlling = DataManagerScript.gamepadControllingMenus;
+            JoystickButtons joystick = new JoystickButtons(whichPlayerIsControlling);
+            //foreach (string butt in buttons) {
+            if (Input.GetButtonDown(joystick.jump)) {
 
                     if (selectedIndex == 0) {
 
@@ -187,7 +189,7 @@ public class ArenaManagerScript : MonoBehaviour {
                     // Start fade to next scene
                     StartCoroutine("NextScene");
                 }
-            }
+
         }
     }
 

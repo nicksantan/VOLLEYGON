@@ -11,6 +11,7 @@ public class CarouselScript : MonoBehaviour {
 	public float axisSlideDuration = 0.3f;
 	public Text indexText;
 	public bool infinite = false;
+    bool stickDownLast;
 
 	private JoystickButtons[] joysticks = new JoystickButtons[4] {
 		new JoystickButtons(1),
@@ -52,7 +53,7 @@ public class CarouselScript : MonoBehaviour {
 
 		// Move to pre-selected first item in event system
 		shouldAnimate = false;
-		MoveToSelected();
+		MoveToSelected(true);
 	}
 
 	//
@@ -66,17 +67,35 @@ public class CarouselScript : MonoBehaviour {
 			return;
 		}
 
-		// Iterate over controllers
-		for (int i = 0; i < joysticks.Length; i++) {
-			JoystickButtons joystick = joysticks[i];
+        // Iterate over controllers
+        //for (int i = 0; i < joysticks.Length; i++) {
 
-			if (Input.GetAxis(joystick.vertical) < 0) {
-				Next();
-			}
-			if (Input.GetAxis(joystick.vertical) > 0) {
-				Previous();
-			}
-		}
+        //Just respect the joystick controlling menus.
+        int whichPlayerIsControlling = DataManagerScript.gamepadControllingMenus;
+        JoystickButtons joystick  = new JoystickButtons(whichPlayerIsControlling);
+       
+
+        if (Input.GetAxis(joystick.vertical) < 0)
+        {
+            if (!stickDownLast)
+            {
+                Next();
+                stickDownLast = true;
+            }
+        }
+        else if (Input.GetAxis(joystick.vertical) > 0)
+        {
+            if (!stickDownLast)
+            {
+                Previous();
+                stickDownLast = true;
+            }
+        }
+        else
+        {
+            stickDownLast = false;
+        }
+		//}
 	}
 
 	//
@@ -152,11 +171,11 @@ public class CarouselScript : MonoBehaviour {
 	// Animation between slides
 	//
 
-	public void MoveToSelected() {
-		// Set animation options, reset property
+	public void MoveToSelected(bool moveImmediately = false) {
+        // Set animation options, reset property
 		float duration = shouldAnimate ? axisSlideDuration : 0;
 		scrolling = duration > 0;
-
+        if (moveImmediately) { duration = 0; }
 		// Get selected
 		// TODO - resolve race condition where this runs before es is loaded
 		int index = es.currentSelectedGameObject ? es.currentSelectedGameObject.transform.GetSiblingIndex() : 0;
@@ -165,7 +184,8 @@ public class CarouselScript : MonoBehaviour {
 		// Update index text
 		indexText.text = (index + 1).ToString() + "/" + contentRect.childCount.ToString();
 
-		// Animate to destination
+        // Animate to destination
+        Debug.Log(duration);
 		snapper = StartCoroutine(
 			Tween(
 				contentRect,
@@ -180,10 +200,12 @@ public class CarouselScript : MonoBehaviour {
 
 	IEnumerator Tween(RectTransform item, Vector2 destination, float duration) {
 		isSnapping = true;
-		int approxNoOfFrames = Mathf.RoundToInt(duration / Time.deltaTime);
+        //int approxNoOfFrames = Mathf.RoundToInt(duration);
+        int approxNoOfFrames = 20;
+        if (duration == 0f) { approxNoOfFrames = 0; };
 		float posDiff = destination.y - item.localPosition.y;
 		float eachFrameProgress = posDiff / approxNoOfFrames;
-
+        Debug.Log(approxNoOfFrames);
 		for (int i = 0; i < approxNoOfFrames; i++) {
 			yield return new WaitForEndOfFrame();
 			item.localPosition = new Vector2(destination.x, item.localPosition.y + eachFrameProgress);

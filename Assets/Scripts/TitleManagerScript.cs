@@ -159,9 +159,9 @@ public class TitleManagerScript : MonoBehaviour {
 
     public void StartSoloModeGame()
     {
-        //TODO: This should be a different scene, specifically for choosing ONE shape.
+        //TODO: This should be a different scene, specifically for choosing ONE shape. For now, just start the game with Square
         DataManagerScript.isSinglePlayerMode = true;
-        SceneManager.LoadSceneAsync("ChoosePlayerScene");
+        SceneManager.LoadSceneAsync("soloGameScene");
     }
 
     public void StartMultiplayerGame(){

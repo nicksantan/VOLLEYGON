@@ -10,7 +10,9 @@ public class PlayHowToMovieScript : MonoBehaviour {
 		fadedOut = false;
 		//QualitySettings.vSyncCount = 0;
 		GetComponent<Renderer>().material.mainTexture = movTexture;
-		movTexture.Play();
+        movTexture.Stop();
+        movTexture.Play();
+        //movTexture.Play();
 	}
 
 	// Update is called once per frame

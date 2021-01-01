@@ -208,13 +208,16 @@ public class ChoosePlayerScript : MonoBehaviour {
 			locked = true;
             yield return new WaitForSeconds (GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f));
             Debug.Log("Solo mode?");
-            Debug.Log(soloMode);
-            if (!soloMode)
+            Debug.Log(DataManagerScript.isSinglePlayerMode);
+            if (!DataManagerScript.isSinglePlayerMode)
             {
                 SceneManager.LoadSceneAsync("chooseArenaScene");
             }
             else
             {
+                DataManagerScript.playerTwoPlaying = false;
+                DataManagerScript.playerThreePlaying = false;
+                DataManagerScript.playerFourPlaying = false;
                 SceneManager.LoadSceneAsync("soloGameScene");
             }
         }

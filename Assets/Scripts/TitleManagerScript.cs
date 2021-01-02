@@ -13,7 +13,7 @@ public class TitleManagerScript : MonoBehaviour {
 
 	private JoystickButtons controllingGamepad;
 	private JoystickButtons[] gamepads = new JoystickButtons[4];
-
+    private bool inputAllowed = false;
     public GameObject pressStartAnimation;
 
 	public Text versionText;
@@ -29,23 +29,38 @@ public class TitleManagerScript : MonoBehaviour {
 
 	public Button firstButton;
 
-	void Start () {
-		curtain.SetActive(true);
-		curtain.GetComponent<NewFadeScript>().Fade(0f);
+    void Start() {
+        curtain.SetActive(true);
+        curtain.GetComponent<NewFadeScript>().Fade(0f);
 
-		MusicManagerScript.Instance.FadeOutEverything ();
-		versionText.text = DataManagerScript.version;
-		DataManagerScript.ResetStats ();
-		DataManagerScript.ResetPlayerTypes ();
-		DataManagerScript.isChallengeMode = false;
+        MusicManagerScript.Instance.FadeOutEverything();
+        versionText.text = DataManagerScript.version;
+        DataManagerScript.ResetStats();
+        DataManagerScript.ResetPlayerTypes();
+        DataManagerScript.isChallengeMode = false;
 
-		// Init controller maps
-		for (int i = 0; i < 4; i++) {
-			gamepads[i] = new JoystickButtons(i+1);
-		}
-	}
+        // Init controller maps
+        for (int i = 0; i < 4; i++) {
+            gamepads[i] = new JoystickButtons(i + 1);
+        }
 
-	void Update () {
+        if (DataManagerScript.isFirstPlay)
+        {
+            Invoke("AllowInput", 9f);
+            DataManagerScript.isFirstPlay = false;
+        }
+        else
+        {
+            AllowInput();
+
+        }
+    }
+
+    void AllowInput()
+    {
+        inputAllowed = true;
+    }
+    void Update () {
 		MusicManagerScript.Instance.FadeOutEverything ();
 
 		// Iterate over all inputs for actions
@@ -57,7 +72,7 @@ public class TitleManagerScript : MonoBehaviour {
 			// Listen for activation
 			if (!mainMenuActive) {
 
-				if (Input.GetButtonDown(gamepads[i].jump) || Input.GetButtonDown(gamepads[i].start)) {
+				if (inputAllowed && (Input.GetButtonDown(gamepads[i].jump) || Input.GetButtonDown(gamepads[i].start))) {
 
 					if (DataManagerScript.demoMode) {
 

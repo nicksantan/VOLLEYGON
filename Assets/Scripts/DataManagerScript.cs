@@ -22,6 +22,7 @@ public class DataManagerScript : MonoBehaviour {
 	public static bool CRTMode = true;
 	public static bool isChallengeMode = false;
     public static bool isSinglePlayerMode = false;
+    public static bool isFirstPlay = true;
 
 	// Flags for user login events
 
@@ -114,7 +115,7 @@ public class DataManagerScript : MonoBehaviour {
 
         // Version number
         // TODO: Uncomment public property instead?
-		version = "V1.7";
+		version = "V1.8";
 
         // Determine if on Xbox
         xboxMode = Application.platform == RuntimePlatform.XboxOne;

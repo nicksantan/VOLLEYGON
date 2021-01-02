@@ -13,11 +13,24 @@ public class PlayMovieScript : MonoBehaviour {
 	void Start () {
 		fadedOut = false;
 		vidPlayer = GetComponent<VideoPlayer> ();
-		//GetComponent<Renderer>().material.mainTexture = movTexture;
-		//movTexture.Play();
-		Invoke("FadeOutVideo", 8f);
-		Invoke ("StartColorCycling", 1f);
-	}
+        //GetComponent<Renderer>().material.mainTexture = movTexture;
+        //movTexture.Play();
+        Debug.Log("is first play?");
+        Debug.Log(DataManagerScript.isFirstPlay);
+        if (DataManagerScript.isFirstPlay)
+        {
+            Invoke("FadeOutVideo", 8f);
+            Invoke("StartColorCycling", 1f);
+        }
+        else
+        {
+            StartColorCycling();
+            stillLogo.SetActive(true);
+
+            iTween.FadeTo(gameObject, 0f, 0f);
+            Invoke("FireAnimation", 1f);
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {

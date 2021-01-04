@@ -163,6 +163,10 @@ public class GameManagerScript : MonoBehaviour {
                 whichSoloPlayer = 4;
             }
         }
+        Debug.Log("how many players active?");
+        Debug.Log(playersActive);
+        Debug.Log("Does data manager tyhink this is single player mode?");
+        Debug.Log(DataManagerScript.isSinglePlayerMode);
 
 		if (playersActive == 1) {
 
@@ -232,6 +236,7 @@ public class GameManagerScript : MonoBehaviour {
             else
             {
                 Debug.Log("setting gravchange mode to true");
+                newBall.GetComponent<BallScript>().gravChangeMode = true;
             }
 
             //TODO: Is there a better way to store these settins, which will be different for each mode?
@@ -418,6 +423,8 @@ public class GameManagerScript : MonoBehaviour {
 	}
 
 	public void Unpause(){
+        Debug.Log("trying to unpause");
+        Debug.Log(paused);
 		if (paused){
             Debug.Log("unpausing");
 			Time.timeScale = 1;

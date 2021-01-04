@@ -20,6 +20,8 @@ public class Challenge_Script_Multiball : MonoBehaviour
 
     public float startingPolarity = 1f;
 
+    public bool canDie = true;
+
     void Awake()
     {
 
@@ -61,7 +63,7 @@ public class Challenge_Script_Multiball : MonoBehaviour
            
             if (!challengeOver)
             {   
-                if (GameObject.FindGameObjectsWithTag("Ball").Length == 0 && gameUnderway)
+                if (GameObject.FindGameObjectsWithTag("Ball").Length == 0 && gameUnderway && canDie)
                 {
                    ChallengeManagerScript.Instance.ChallengeFail();
                 }
@@ -108,14 +110,13 @@ public class Challenge_Script_Multiball : MonoBehaviour
         Debug.Log("setting gravchange mode to true");
         // TODO: There has to be a more scalable way to set these settings
         ball_1.GetComponent<BallScript>().gravScale = gravScale;
-        ball_1.GetComponent<BallScript>().startWithRandomGrav = false;
+        ball_1.GetComponent<BallScript>().startWithRandomGrav = true;
         ball_1.GetComponent<BallScript>().gravChangeMode = true;
-        ball_1.GetComponent<BallScript>().baseTimeBetweenGravChanges = 5f;
+        ball_1.GetComponent<BallScript>().baseTimeBetweenGravChanges = 7f;
         ball_1.GetComponent<BallScript>().gravTimeRange = 4f;
         ball_1.GetComponent<BallScript>().playSoundOnGravChange = false;
-    }
 
-    public void LaunchBall(float x, float y, float z)
+        public void LaunchBall(float x, float y, float z)
     {
         GameObject ball_1 = Instantiate(ballPrefab, new Vector3(x, y, z), Quaternion.identity);
         ball_1.transform.parent = gameObject.transform.parent;
@@ -125,7 +126,7 @@ public class Challenge_Script_Multiball : MonoBehaviour
         Debug.Log("setting gravchange mode to true");
 
         ball_1.GetComponent<BallScript>().gravScale = gravScale;
-        ball_1.GetComponent<BallScript>().startWithRandomGrav = false;
+        ball_1.GetComponent<BallScript>().startWithRandomGrav = true;
         ball_1.GetComponent<BallScript>().gravChangeMode = true;
         ball_1.GetComponent<BallScript>().baseTimeBetweenGravChanges = 7f;
         ball_1.GetComponent<BallScript>().gravTimeRange = 4f;

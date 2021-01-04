@@ -276,22 +276,37 @@ public class PlayerController : MonoBehaviour {
             {
 
                 // Handle jumping
-                if (Input.GetButtonDown(buttons.jump))
+                if (Input.GetButton(buttons.jump))
                 {
 
                     if (isJumping == false && rb != null)
                     {
                         Vector3 jumpForce = new Vector3(0f, jumpPower * rb.gravityScale, 0f);
-                        rb.AddForce(jumpForce);
+                        // rb.AddForce(jumpForce);
+                        Vector3 v3 = GetComponent<Rigidbody2D>().velocity;
+                        v3.y = 25f * rb.gravityScale; //TODO: Replace with shape-specific var
+                        GetComponent<Rigidbody2D>().velocity = v3;
                         SoundManagerScript.instance.RandomizeSfx(jumpSound1, jumpSound2);
                         isJumping = true;
                     }
+                } else
+                {
+                    // Fast fall!
+                    if (isJumping && rb != null)
+                    {
+                     //  Debug.Log("fast fall!");
+
+                        Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -30f, 0f);
+                        rb.AddForce(fastFallForce);
+                    }
+
                 }
 
                 // Handle gravity switch
                 if (Input.GetButtonDown(buttons.grav) && rb != null && !easyMode && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused)
                 {
                     rb.gravityScale *= -1f;
+                    isJumping = true;
                     SoundManagerScript.instance.RandomizeSfx(changeGravSound1, changeGravSound2);
                     if (rb.gravityScale < 0)
                     {

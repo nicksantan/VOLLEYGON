@@ -7,7 +7,7 @@ public class LauncherManagerScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Cursor.visible = false;
-		SceneManager.LoadSceneAsync("TitleScene");
+		SceneManager.LoadSceneAsync("robysoftScene");
 	}
 
 	// Update is called once per frame

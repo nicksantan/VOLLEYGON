@@ -135,7 +135,7 @@ public class AIControllerScript : MonoBehaviour {
 	}
 
 	void Update(){
-        Debug.Log(moveHorizontal);
+//        Debug.Log(moveHorizontal);
 
         if (ball == null)
         {

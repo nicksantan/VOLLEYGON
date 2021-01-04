@@ -13,6 +13,9 @@ public class SoloModeManager : MonoBehaviour {
     public int goalScore = 10;
     private bool challengeOver = false;
     public String challengeTitle;
+    public bool canDie = true;
+    public float baseTimeBetweenGravChanges = 5f;
+    public float gravTimeRange = 4f;
 
     private bool challengeStarted = false;
 
@@ -63,7 +66,12 @@ public class SoloModeManager : MonoBehaviour {
 
     void BallDied(int whichSide){
         Debug.Log ("the ball has died");
-        deadBalls += 1;
+        // Only count dead balls if flag is set
+        if (canDie)
+        {
+            deadBalls += 1;
+        }
+        //TODO: Perhaps a flag here to allow for continuous counting?
         returnedBalls = 0;
         returnCountText.text = returnedBalls.ToString();
 
@@ -82,8 +90,8 @@ public class SoloModeManager : MonoBehaviour {
         // set ball's gravChangeMode to true;
         Debug.Log("setting gravchange mode to true");
         ball_1.GetComponent<BallScript>().gravChangeMode = true;
-        ball_1.GetComponent<BallScript>().baseTimeBetweenGravChanges = 5f;
-        ball_1.GetComponent<BallScript>().gravTimeRange = 4f;
+        ball_1.GetComponent<BallScript>().baseTimeBetweenGravChanges = baseTimeBetweenGravChanges;
+        ball_1.GetComponent<BallScript>().gravTimeRange = gravTimeRange;
         ball_1.GetComponent<BallScript>().startWithRandomGrav = true;
     }
 

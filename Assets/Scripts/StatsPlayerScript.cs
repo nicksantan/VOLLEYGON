@@ -176,15 +176,20 @@ public class StatsPlayerScript : MonoBehaviour {
 	void BackToTitle(){
 		SceneManager.LoadSceneAsync("titleScene");
 	}
-	// Update is called once per frame
-	void Update () {
-
-
-		if (Input.GetButtonDown (confirmKey)){
-			activateReadyState ();
-		}
-		if (Input.GetButtonDown (cancelKey)){
-			cancelReadyState ();
+    // Update is called once per frame
+    void Update() {
+        if (confirmKey != null)
+        {
+            if (Input.GetButtonDown(confirmKey))
+            {
+                activateReadyState();
+            }
+        }
+        if (cancelKey != null) {
+            if (Input.GetButtonDown(cancelKey))
+            {
+                cancelReadyState();
+            }
 		}
 	}
 }

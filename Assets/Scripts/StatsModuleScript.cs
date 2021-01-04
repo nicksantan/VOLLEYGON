@@ -48,6 +48,7 @@ public class StatsModuleScript : MonoBehaviour
 
     // Listen for ball died to compute stats
     public void OnBallDied(int whichSide){
+        Debug.Log("on ball died fired");
         if (whichSide == 1)
         {
             ComputeStat(2);

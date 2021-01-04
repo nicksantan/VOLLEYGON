@@ -25,6 +25,7 @@ TagManager:
   - Background
   - GameManager
   - FakePlayer
+  - StatsModule
   layers:
   - Default
   - TransparentFX

@@ -50,6 +50,7 @@ public class BallScript : MonoBehaviour {
 	public bool scoringMode = false;
     public bool startWithRandomGrav = false;
     public bool playSoundOnGravChange = true;
+    public float bonusBoost = 250f;
 
 	GameObject CurrentArena;
 
@@ -321,10 +322,17 @@ public class BallScript : MonoBehaviour {
        
 
         //TODO: Factor this down once Game Manager has been parted out. this is primarily aimed toward scoreboardmanager.
+
         moduleContainer.BroadcastMessage("OnBallDied", whichSide);
 
-        // If this is an individual challenge, broadcast to that manager. Otherwise, broadcast to the broader moduleContainer. TODO: This could be bad. This is a stopgap until we get rid of GameManager.
-        if (GameObject.FindWithTag("IndividualChallengeManager"))
+        // If stat manager exists, give it some touch info
+        if (GameObject.FindWithTag("StatsModule"))
+        {
+            GameObject.FindWithTag("StatsModule").GetComponent<StatsModuleScript>().lastTouch = lastTouch;
+            GameObject.FindWithTag("StatsModule").GetComponent<StatsModuleScript>().secondToLastTouch = secondToLastTouch;
+        }
+            // If this is an individual challenge, broadcast to that manager. Otherwise, broadcast to the broader moduleContainer. TODO: This could be bad. This is a stopgap until we get rid of GameManager.
+            if (GameObject.FindWithTag("IndividualChallengeManager"))
         {
             GameObject.FindWithTag("IndividualChallengeManager").BroadcastMessage("BallDied", whichSide);
         }
@@ -490,9 +498,39 @@ public class BallScript : MonoBehaviour {
 				}
 		} else if (coll.gameObject.tag == "Player"){
 			//SoundManagerScript.Instance.RandomizeSfx (bounceOffPlayerSound1, bounceOffPlayerSound2);
-		} else if (coll.gameObject.tag == "Playfield"){
+
+        if (transform.position.y < -7.0f)
+            {
+                rb.AddForce(new Vector3(0f, bonusBoost, 0f));
+                Debug.Log("bonus boost");
+            }
+            if (transform.position.y > -7.0f)
+            {
+                rb.AddForce(new Vector3(0f, bonusBoost * -1, 0f));
+                Debug.Log("bonus boost");
+            }
+        } else if (coll.gameObject.tag == "Playfield"){
 			SoundManagerScript.instance.PlaySingle (bounceOffWallSound);
 
 		}
 	}
+
+    private void OnCollisionStay2D(Collision2D coll)
+    {
+        if (coll.gameObject.tag == "Player")
+        {
+            //SoundManagerScript.Instance.RandomizeSfx (bounceOffPlayerSound1, bounceOffPlayerSound2);
+
+            if (transform.position.y < -7.0f)
+            {
+                rb.AddForce(new Vector3(0f, bonusBoost/2, 0f));
+                Debug.Log("bonus boost");
+            }
+            if (transform.position.y > -7.0f)
+            {
+                rb.AddForce(new Vector3(0f, bonusBoost * -1/2, 0f));
+                Debug.Log("bonus boost");
+            }
+        }
+    }
 }

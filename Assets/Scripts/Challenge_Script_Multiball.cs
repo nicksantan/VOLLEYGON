@@ -115,7 +115,7 @@ public class Challenge_Script_Multiball : MonoBehaviour
         ball_1.GetComponent<BallScript>().baseTimeBetweenGravChanges = 7f;
         ball_1.GetComponent<BallScript>().gravTimeRange = 4f;
         ball_1.GetComponent<BallScript>().playSoundOnGravChange = false;
-
+    }
         public void LaunchBall(float x, float y, float z)
     {
         GameObject ball_1 = Instantiate(ballPrefab, new Vector3(x, y, z), Quaternion.identity);

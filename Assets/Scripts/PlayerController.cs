@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour {
 	// Switch player behavior based on mode
 
 	public bool isChallengeMode;
+    private ChallengeManagerScript challengeManager;
+
     // Core shape stats, public for tesitng
     public float jumpPower;
     public float speed;
@@ -103,7 +105,8 @@ public class PlayerController : MonoBehaviour {
 
         //check for challenge mode
         isChallengeMode = DataManagerScript.isChallengeMode;
-
+        // Is the aboe still used?
+        challengeManager = GameObject.FindWithTag("ChallengeManager").GetComponent<ChallengeManagerScript>();
         // Particle system?
         if ( GetComponent<ParticleSystem>() != null) {
             ps = transform.Find("ssps").GetComponent<ParticleSystem>();
@@ -233,24 +236,27 @@ public class PlayerController : MonoBehaviour {
     {
         if (transform.parent.tag != "FakePlayer")
         {
-            // Get horizontal input
-            if (buttons != null && buttons.horizontal != null)
+            if (!challengeManager || challengeManager.challengeRunning)
             {
-                float moveHorizontal = Input.GetAxis(buttons.horizontal);
-
-                // Clamp input
-                moveHorizontal = Mathf.Clamp(moveHorizontal, -1f, 1f);
-
-                if (isJumping)
+                // Get horizontal input
+                if (buttons != null && buttons.horizontal != null)
                 {
-                    GetComponent<Rigidbody2D>().angularVelocity = (moveHorizontal * spinPower * rb.gravityScale);
-                }
+                    float moveHorizontal = Input.GetAxis(buttons.horizontal);
 
-                if (GetComponent<Rigidbody2D>() != null)
-                {
-                    Vector3 v3 = GetComponent<Rigidbody2D>().velocity;
-                    v3.x = moveHorizontal * speed;
-                    GetComponent<Rigidbody2D>().velocity = v3;
+                    // Clamp input
+                    moveHorizontal = Mathf.Clamp(moveHorizontal, -1f, 1f);
+
+                    if (isJumping)
+                    {
+                        GetComponent<Rigidbody2D>().angularVelocity = (moveHorizontal * spinPower * rb.gravityScale);
+                    }
+
+                    if (GetComponent<Rigidbody2D>() != null)
+                    {
+                        Vector3 v3 = GetComponent<Rigidbody2D>().velocity;
+                        v3.x = moveHorizontal * speed;
+                        GetComponent<Rigidbody2D>().velocity = v3;
+                    }
                 }
             }
         }
@@ -272,58 +278,84 @@ public class PlayerController : MonoBehaviour {
                 && buttons.jump != null
                 && GameManagerScript.Instance != null
                 && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused
-                && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().recentlyPaused)
+                && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().recentlyPaused
+                && (!challengeManager || challengeManager.challengeRunning)
+                )
             {
 
-                // Handle jumping
-                if (Input.GetButton(buttons.jump))
                 {
 
-                    if (isJumping == false && rb != null)
+                    // Handle jumping
+                    if (Input.GetButton(buttons.jump))
                     {
-                        Vector3 jumpForce = new Vector3(0f, jumpPower * rb.gravityScale, 0f);
-                        // rb.AddForce(jumpForce);
-                        Vector3 v3 = GetComponent<Rigidbody2D>().velocity;
-                        v3.y = 25f * rb.gravityScale; //TODO: Replace with shape-specific var
-                        GetComponent<Rigidbody2D>().velocity = v3;
-                        SoundManagerScript.instance.RandomizeSfx(jumpSound1, jumpSound2);
-                        isJumping = true;
-                    }
-                } else
-                {
-                    // Fast fall!
-                    if (isJumping && rb != null)
-                    {
-                     //  Debug.Log("fast fall!");
 
-                        Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -30f, 0f);
-                        rb.AddForce(fastFallForce);
-                    }
-
-                }
-
-                // Handle gravity switch
-                if (Input.GetButtonDown(buttons.grav) && rb != null && !easyMode && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused)
-                {
-                    rb.gravityScale *= -1f;
-                    isJumping = true;
-                    SoundManagerScript.instance.RandomizeSfx(changeGravSound1, changeGravSound2);
-                    if (rb.gravityScale < 0)
-                    {
-                        innerShape.SetActive(true);
+                        if (isJumping == false && rb != null)
+                        {
+                            Vector3 jumpForce = new Vector3(0f, jumpPower * rb.gravityScale, 0f);
+                            // rb.AddForce(jumpForce);
+                            Vector3 v3 = GetComponent<Rigidbody2D>().velocity;
+                            v3.y = 25f * rb.gravityScale; //TODO: Replace with shape-specific var
+                            GetComponent<Rigidbody2D>().velocity = v3;
+                            SoundManagerScript.instance.RandomizeSfx(jumpSound1, jumpSound2);
+                            isJumping = true;
+                        }
                     }
                     else
                     {
-                        innerShape.SetActive(false);
-                    }
-                }
+                        // Fast fall!
+                        if (isJumping && rb != null)
+                        {
+                            //  Debug.Log("fast fall!");
 
-            	// Handle start button
-            	if (Input.GetButtonDown(buttons.start)
-            		&& GameManagerScript.Instance != null
-	                && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused)
-	                {
-                    GameManagerScript.Instance.GetComponent<PauseManagerScript>().Pause(buttons);
+                            Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -30f, 0f);
+                            rb.AddForce(fastFallForce);
+                        }
+
+                    }
+
+                    // Handle gravity switch
+                    if (Input.GetButtonDown(buttons.grav) && rb != null && !easyMode && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused)
+                    {
+                        rb.gravityScale *= -1f;
+                        isJumping = true;
+                        SoundManagerScript.instance.RandomizeSfx(changeGravSound1, changeGravSound2);
+                        if (rb.gravityScale < 0)
+                        {
+                            innerShape.SetActive(true);
+                        }
+                        else
+                        {
+                            innerShape.SetActive(false);
+                        }
+                    }
+
+                    // Handle start button
+                    if (Input.GetButtonDown(buttons.start)
+                        && GameManagerScript.Instance != null
+                        && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused)
+                    {
+
+                        bool allowedToPause = true;
+                        // make sure user is allowed to pause right now in pause mode
+                        Debug.Log("challenge manager exist?");
+                        Debug.Log(GameObject.FindWithTag("ChallengeManager"));
+                        if (GameObject.FindWithTag("ChallengeManager"))
+                        {
+                            GameObject cm = GameObject.FindWithTag("ChallengeManager");
+                            Debug.Log(cm.GetComponent<ChallengeManagerScript>().challengeRunning);
+                            if (!cm.GetComponent<ChallengeManagerScript>().challengeRunning)
+                            {
+                                allowedToPause = false;
+                                Debug.Log("setting allowed to pause to false");
+                            }
+                        }
+                        Debug.Log("allowed to pause?");
+                        Debug.Log(allowedToPause);
+                        if (allowedToPause)
+                        {
+                            GameManagerScript.Instance.GetComponent<PauseManagerScript>().Pause(buttons);
+                        }
+                    }
                 }
 
 	            ClampPosition();

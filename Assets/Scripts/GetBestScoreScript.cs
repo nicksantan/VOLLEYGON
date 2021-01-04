@@ -20,11 +20,11 @@ public class GetBestScoreScript : MonoBehaviour
         // Get the text component connected to this object and update the string to the high score, if there is one.
         if (highScore == 9999f)
         {
-            gameObject.GetComponent<Text>().text = "BEST: NONE";
+            gameObject.GetComponent<Text>().text = "BEST TIME: NONE";
         }
         else
         {
-            gameObject.GetComponent<Text>().text = "BEST: " + FormatTime(highScore);
+            gameObject.GetComponent<Text>().text = "BEST TIME: " + FormatTime(highScore);
         }
 
     }

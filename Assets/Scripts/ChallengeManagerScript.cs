@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ChallengeManagerScript : MonoBehaviour {
 
@@ -21,8 +22,11 @@ public class ChallengeManagerScript : MonoBehaviour {
     private Text timerTextObj;
     private Text bestTextObj;
 
-	// Store a flag the individual challenge can reference to know whether to start or stop the challenge
-	public bool challengeRunning = false;
+    public GameObject losePlayAgain;
+    public GameObject winNextChallenge;
+
+    // Store a flag the individual challenge can reference to know whether to start or stop the challenge
+    public bool challengeRunning = false;
 
 	// Store a reference to the challenges container so we can activate the correct challenge
 	public GameObject challengesContainer;
@@ -33,8 +37,9 @@ public class ChallengeManagerScript : MonoBehaviour {
 	// Static singleton property
 	public static ChallengeManagerScript Instance { get; private set; }
 
+    private EventSystem es;
 
-	void Awake(){
+    void Awake(){
 		Instance = this;
 		// Load the challenge the user requested
 		Debug.Log("Switching to challenge " + DataManagerScript.challengeType);
@@ -48,6 +53,8 @@ public class ChallengeManagerScript : MonoBehaviour {
 	void Start () {
 		// Display instruction panel
 		DisplayChallengeInstructions();
+
+        es = EventSystem.current;
 
         // Load the best time for this challenge
         GameObject ICM = GameObject.FindWithTag("IndividualChallengeManager");
@@ -116,8 +123,11 @@ public class ChallengeManagerScript : MonoBehaviour {
 		losePanel.SetActive(true);
         challengeRunning = false;
 
+        // set the next option to play again
+        es.SetSelectedGameObject(losePlayAgain);
+
         //For now, restart the challenge
-        Invoke("RestartChallenge", 5f);
+     //   Invoke("RestartChallenge", 5f);
     }
 
     public void RestartChallenge()
@@ -155,6 +165,9 @@ public class ChallengeManagerScript : MonoBehaviour {
 		winPanel.SetActive(true);
         challengeRunning = false;
 
+        // set the next option to play again
+        es.SetSelectedGameObject(winNextChallenge);
+
         // Find the ICM and log the time of the challenge
         GameObject ICM = GameObject.FindWithTag("IndividualChallengeManager");
         if (ICM)
@@ -167,7 +180,7 @@ public class ChallengeManagerScript : MonoBehaviour {
             Debug.Log("Couldn't find ICM");
         }
         //For now, try playing the next challenge
-        Invoke("PlayNextChallenge", 5f);
+        //Invoke("PlayNextChallenge", 5f);
   
 
     }

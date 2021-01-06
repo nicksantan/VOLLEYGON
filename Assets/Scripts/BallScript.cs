@@ -104,10 +104,10 @@ public class BallScript : MonoBehaviour {
        
         // For now, always have the first serve be normal grav.
 
-         //if (startWithRandomGrav)
-        //{
-            //ChooseRandomGrav();
-        //}
+         if (startWithRandomGrav)
+        {
+            ChooseRandomGrav();
+        }
 	}
 
     public void ChooseRandomGrav()

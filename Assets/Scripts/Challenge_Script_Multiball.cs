@@ -21,6 +21,7 @@ public class Challenge_Script_Multiball : MonoBehaviour
     public float startingPolarity = 1f;
 
     public bool canDie = true;
+    public bool randomGravOnStart = false;
 
     void Awake()
     {
@@ -123,10 +124,10 @@ public class Challenge_Script_Multiball : MonoBehaviour
         IEnumerator coroutine_1 = ball_1.GetComponent<BallScript>().CustomLaunchBallWithDelay(2f, -6f, 10f);
         StartCoroutine(coroutine_1);
         // set ball's gravChangeMode to true;
-        Debug.Log("setting gravchange mode to true");
+      
 
         ball_1.GetComponent<BallScript>().gravScale = gravScale;
-        ball_1.GetComponent<BallScript>().startWithRandomGrav = true;
+        ball_1.GetComponent<BallScript>().startWithRandomGrav = randomGravOnStart;
         ball_1.GetComponent<BallScript>().gravChangeMode = true;
         ball_1.GetComponent<BallScript>().baseTimeBetweenGravChanges = 7f;
         ball_1.GetComponent<BallScript>().gravTimeRange = 4f;

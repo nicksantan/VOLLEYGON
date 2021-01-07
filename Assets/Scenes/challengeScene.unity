@@ -5966,8 +5966,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 685068965}
-        m_MethodName: UnpauseAndQuit
+      - m_Target: {fileID: 1977507253}
+        m_MethodName: ReturnToChallengeMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9536,8 +9536,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 685068965}
-        m_MethodName: UnpauseAndQuit
+      - m_Target: {fileID: 1977507253}
+        m_MethodName: ReturnToChallengeMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10632,7 +10632,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 985.7573
+  Phase: 986.13
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5
@@ -10670,7 +10670,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 22fe62a5d4de91a4995c1363cbc2492e, type: 3}
   Mode: 1
-  Timer: 320.94882
+  Timer: 322.14127
   Speed: 0.8
   Frequency: 12
   Amplitude: 0

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class ChallengeManagerScript : MonoBehaviour {
 
@@ -55,7 +56,15 @@ public class ChallengeManagerScript : MonoBehaviour {
 		DisplayChallengeInstructions();
 
         es = EventSystem.current;
-
+        // Assign joystick to player
+        int joystickIdentifier = DataManagerScript.gamepadControllingMenus;
+        JoystickButtons buttons = new JoystickButtons(joystickIdentifier);
+        Debug.Log("what is button horiz");
+        Debug.Log(buttons.horizontal);
+        es.GetComponent<StandaloneInputModule>().horizontalAxis = buttons.horizontal;
+        es.GetComponent<StandaloneInputModule>().verticalAxis = buttons.vertical;
+        es.GetComponent<StandaloneInputModule>().submitButton = buttons.jump;
+        es.GetComponent<StandaloneInputModule>().cancelButton = buttons.grav;
         // Load the best time for this challenge
         GameObject ICM = GameObject.FindWithTag("IndividualChallengeManager");
         if (ICM)
@@ -99,6 +108,18 @@ public class ChallengeManagerScript : MonoBehaviour {
 		Transform challenge = challengesContainer.transform.GetChild (whichChallenge);
 		challenge.gameObject.SetActive (true);
 	}
+
+    public void ReturnToChallengeMenu()
+    {
+        StartCoroutine("ReturnToChallengeMenuRoutine");
+    }
+    public IEnumerator ReturnToChallengeMenuRoutine()
+    {
+      
+        GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadSceneAsync("chooseChallengeScene");
+    }
 
     public string FormatTime(float rawTimer)
     {
@@ -166,6 +187,7 @@ public class ChallengeManagerScript : MonoBehaviour {
         challengeRunning = false;
 
         // set the next option to play again
+        Debug.Log("Setting next challenge");
         es.SetSelectedGameObject(winNextChallenge);
 
         // Find the ICM and log the time of the challenge

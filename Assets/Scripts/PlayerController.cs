@@ -106,7 +106,10 @@ public class PlayerController : MonoBehaviour {
         //check for challenge mode
         isChallengeMode = DataManagerScript.isChallengeMode;
         // Is the aboe still used?
-        challengeManager = GameObject.FindWithTag("ChallengeManager").GetComponent<ChallengeManagerScript>();
+        if (GameObject.FindWithTag("ChallengeManager"))
+        {
+            challengeManager = GameObject.FindWithTag("ChallengeManager").GetComponent<ChallengeManagerScript>();
+        }
         // Particle system?
         if ( GetComponent<ParticleSystem>() != null) {
             ps = transform.Find("ssps").GetComponent<ParticleSystem>();

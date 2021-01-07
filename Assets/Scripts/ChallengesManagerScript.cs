@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class ChallengesManagerScript : MonoBehaviour {
 
@@ -23,8 +24,8 @@ public class ChallengesManagerScript : MonoBehaviour {
 
 	Axis verticalAxis;
 	Axis horizontalAxis;
-
-	public JoystickButtons buttons;
+    private EventSystem es;
+    public JoystickButtons buttons;
 
     // Use this for initialization
     void Start()
@@ -45,6 +46,14 @@ public class ChallengesManagerScript : MonoBehaviour {
 
         Vector3 tempPos = new Vector3(markerXPositions[0], markerYPositions[0], 1f);
         marker.transform.position = tempPos;
+        // Get current event system and null out
+        es = EventSystem.current;
+        Debug.Log("what is button horiz");
+        Debug.Log(buttons.horizontal);
+        es.GetComponent<StandaloneInputModule>().horizontalAxis = buttons.horizontal;
+        es.GetComponent<StandaloneInputModule>().verticalAxis = buttons.vertical;
+        es.GetComponent<StandaloneInputModule>().submitButton = buttons.jump;
+        es.GetComponent<StandaloneInputModule>().cancelButton = buttons.grav;
     }
 
     void Update()

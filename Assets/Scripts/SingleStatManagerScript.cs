@@ -16,6 +16,8 @@ public class SingleStatManagerScript : MonoBehaviour {
 	private string jumpButton4 = "Jump_P4";
 	private string gravButton4 = "Grav_P4";
 
+
+
 	public Text rallyCountText;
 	public Text highScoreText;
 	public Text newText;
@@ -35,9 +37,15 @@ public class SingleStatManagerScript : MonoBehaviour {
 		GameObject.Find ("FadeCurtainCanvas").GetComponent<NewFadeScript> ().Fade (0f);
 		MusicManagerScript.Instance.StartIntro ();
 
+        JoystickButtons jb = new JoystickButtons(DataManagerScript.gamepadControllingMenus);
+
 		locked = false;
 
-		buttons.Add (jumpButton1);
+        buttons.Add(jb.grav);
+        buttons.Add(jb.jump);
+        buttons.Add(jb.start);
+
+        buttons.Add (jumpButton1);
 		buttons.Add (jumpButton2);
 		buttons.Add (jumpButton3);
 		buttons.Add (jumpButton4);

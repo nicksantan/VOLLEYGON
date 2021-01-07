@@ -297,7 +297,7 @@ public class PlayerController : MonoBehaviour {
                             Vector3 jumpForce = new Vector3(0f, jumpPower * rb.gravityScale, 0f);
                             // rb.AddForce(jumpForce);
                             Vector3 v3 = GetComponent<Rigidbody2D>().velocity;
-                            v3.y = 25f * rb.gravityScale; //TODO: Replace with shape-specific var
+                            v3.y = 22f * rb.gravityScale; //TODO: Replace with shape-specific var
                             GetComponent<Rigidbody2D>().velocity = v3;
                             SoundManagerScript.instance.RandomizeSfx(jumpSound1, jumpSound2);
                             isJumping = true;

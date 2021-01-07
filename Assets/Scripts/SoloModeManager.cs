@@ -41,19 +41,19 @@ public class SoloModeManager : MonoBehaviour {
             }
         }
 
-        if (challengeStarted){
+        //if (challengeStarted){
 
-            if (deadBalls >= 3 && !challengeOver)
-            {
-                ChallengeManagerScript.Instance.ChallengeFail();
-            }
+        //    if (deadBalls >= 3 && !challengeOver)
+        //    {
+        //        ChallengeManagerScript.Instance.ChallengeFail();
+        //    }
 
-            if (returnedBalls == goalScore && !challengeOver)
-            {
-                ChallengeManagerScript.Instance.ChallengeSucceed();
-                challengeOver = true;
-            }
-        }
+        //    if (returnedBalls == goalScore && !challengeOver)
+        //    {
+        //        ChallengeManagerScript.Instance.ChallengeSucceed();
+        //        challengeOver = true;
+        //    }
+        //}
     }
 
     public void OnBallReturned()
@@ -62,6 +62,12 @@ public class SoloModeManager : MonoBehaviour {
         returnedBalls += 1;
         // Update UI here.
         returnCountText.text = returnedBalls.ToString();
+
+        if (returnedBalls == goalScore && !challengeOver)
+        {
+            ChallengeManagerScript.Instance.ChallengeSucceed();
+            challengeOver = true;
+        }
     }
 
     void BallDied(int whichSide){
@@ -76,16 +82,21 @@ public class SoloModeManager : MonoBehaviour {
         returnCountText.text = returnedBalls.ToString();
 
         // Launch a replacement ball
-        if (ChallengeManagerScript.Instance.challengeRunning)
+        Debug.Log("is this challenge running?");
+        Debug.Log(ChallengeManagerScript.Instance.challengeRunning);
+        if (ChallengeManagerScript.Instance.challengeRunning && deadBalls < 3)
         {
             LaunchBall(0f, 0f, 0f);
+        } else if (ChallengeManagerScript.Instance.challengeRunning)
+        {
+            ChallengeManagerScript.Instance.ChallengeFail();
         }
     }
 
     public void LaunchBall(float x, float y, float z){
         GameObject ball_1 = Instantiate(ballPrefab, new Vector3(x, y, z), Quaternion.identity);
         ball_1.transform.parent = gameObject.transform.parent;
-        IEnumerator coroutine_1 = ball_1.GetComponent<BallScript> ().CustomLaunchBallWithDelay (2f, -6f, 10f);
+        IEnumerator coroutine_1 = ball_1.GetComponent<BallScript> ().LaunchBallWithDelay (2f);
         StartCoroutine(coroutine_1);
         // set ball's gravChangeMode to true;
         Debug.Log("setting gravchange mode to true");

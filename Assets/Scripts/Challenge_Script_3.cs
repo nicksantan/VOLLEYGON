@@ -16,6 +16,8 @@ public class Challenge_Script_3 : MonoBehaviour
     private bool challengeStarted = false;
     private bool challengeOver = false;
 
+    public bool startWithRandomGrav = false;
+
     void Awake()
     {
 
@@ -68,19 +70,29 @@ public class Challenge_Script_3 : MonoBehaviour
         Debug.Log("the ball has died");
         deadBalls += 1;
 
-        // Launch a replacement ball
-        LaunchBall(0f, 0f, 0f);
+        // Launch a replacement ball if game is running
+        if (!challengeOver)
+        {
+            LaunchBall(0f, 0f, 0f);
+        }
     }
 
     public void LaunchBall(float x, float y, float z)
     {
         GameObject ball_1 = Instantiate(ballPrefab, new Vector3(x, y, z), Quaternion.identity);
         ball_1.transform.parent = gameObject.transform.parent;
-        IEnumerator coroutine_1 = ball_1.GetComponent<BallScript>().CustomLaunchBallWithDelay(2f, -6f, 10f);
+        int gravScale = 1;
+        if (startWithRandomGrav)
+        {
+            gravScale = UnityEngine.Random.Range(0, 2) == 0 ? -1 : 1;
+        }
+        IEnumerator coroutine_1 = ball_1.GetComponent<BallScript>().CustomLaunchBallWithDelay(2f, -6f, 10f*gravScale);
         StartCoroutine(coroutine_1);
         // set ball's gravChangeMode to true;
-        Debug.Log("setting gravchange mode to true");
-        ball_1.GetComponent<BallScript>().startWithRandomGrav = true;
+        Debug.Log("setting gravchange mode");
+        ball_1.GetComponent<BallScript>().startWithRandomGrav = false;
+        ball_1.GetComponent<BallScript>().gravScale = gravScale;
+        ball_1.GetComponent<BallScript>().setAppropriateGravSprite(gravScale);
         ball_1.GetComponent<BallScript>().gravChangeMode = true;
     }
 

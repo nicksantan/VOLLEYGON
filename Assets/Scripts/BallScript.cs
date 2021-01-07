@@ -129,6 +129,22 @@ public class BallScript : MonoBehaviour {
         }
     }
 
+    public void setAppropriateGravSprite(int gravScale)
+    {
+        if (Mathf.Sign(gravScale) < 0)
+        {
+            GetComponent<SpriteRenderer>().sprite = reverseGravSprite;
+            redball.SetActive(true);
+            //blueball.SetActive (false);
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().sprite = originalSprite;
+            blueball.SetActive(true);
+            redball.SetActive(false);
+        }
+    }
+
     void Update () {
 
 		if(rb.velocity.magnitude > maxSpeed)

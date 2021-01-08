@@ -35,9 +35,9 @@ public class ChallengesManagerScript : MonoBehaviour {
 
         audio = GetComponent<AudioSource>();
         locked = false;
-
+        MusicManagerScript.Instance.FadeOutEverything();
         // Assign joystick to player
-		joystickIdentifier = DataManagerScript.gamepadControllingMenus;
+        joystickIdentifier = DataManagerScript.gamepadControllingMenus;
         buttons = new JoystickButtons(joystickIdentifier);
 
         // Get axis string from joystick class

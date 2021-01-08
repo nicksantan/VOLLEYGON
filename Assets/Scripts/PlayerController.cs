@@ -87,6 +87,9 @@ public class PlayerController : MonoBehaviour {
 
     private GameObject innerShape;
 
+    public float jumpVel = 21f;
+    public bool holdingButtonDown = false;
+
     // Map shape numbers to names for use in stat fetching, etc (index == playerType)
     private string[] shapeNames = new string[] {
         "square",
@@ -289,15 +292,17 @@ public class PlayerController : MonoBehaviour {
                 {
 
                     // Handle jumping
+                    Debug.Log(Input.GetButton(buttons.jump));
                     if (Input.GetButton(buttons.jump))
                     {
 
-                        if (isJumping == false && rb != null)
+                        if (isJumping == false && rb != null && !holdingButtonDown)
                         {
                             Vector3 jumpForce = new Vector3(0f, jumpPower * rb.gravityScale, 0f);
                             // rb.AddForce(jumpForce);
+                            holdingButtonDown = true;
                             Vector3 v3 = GetComponent<Rigidbody2D>().velocity;
-                            v3.y = 22f * rb.gravityScale; //TODO: Replace with shape-specific var
+                            v3.y = jumpVel* rb.gravityScale; //TODO: Replace with shape-specific var
                             GetComponent<Rigidbody2D>().velocity = v3;
                             SoundManagerScript.instance.RandomizeSfx(jumpSound1, jumpSound2);
                             isJumping = true;
@@ -306,6 +311,7 @@ public class PlayerController : MonoBehaviour {
                     else
                     {
                         // Fast fall!
+                        holdingButtonDown = false;
                         if (isJumping && rb != null)
                         {
                             //  Debug.Log("fast fall!");

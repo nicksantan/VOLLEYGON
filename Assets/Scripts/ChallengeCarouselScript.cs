@@ -33,7 +33,7 @@ public class ChallengeCarouselScript : MonoBehaviour
     {
         curtain.SetActive(true);
         curtain.GetComponent<NewFadeScript>().Fade(0f);
-
+        MusicManagerScript.Instance.FadeOutEverything();
         es = EventSystem.current;
         if (es && es.currentSelectedGameObject)
         {
@@ -48,6 +48,7 @@ public class ChallengeCarouselScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        MusicManagerScript.Instance.FadeOutEverything();
         // Check for selection to enable selectable option
         bool inputSelecting = Input.GetButtonDown(joyButts.jump) || Input.GetButtonDown(joyButts.jump);
         bool optionIsSelectable = ChallengeCarouselScript.CheckSelectableOptionIndex(selectedIndex);

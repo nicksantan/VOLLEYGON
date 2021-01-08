@@ -59,7 +59,15 @@ public class PauseManagerScript : MonoBehaviour
         Unpause();
         GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
         yield return new WaitForSeconds(0.5f);
-        SceneManager.LoadSceneAsync("titleScene");
+        //If this is a challenge, go back to the challenge menu, not the main menu.
+        if (GameObject.Find("ChallengeManager"))
+        {
+            SceneManager.LoadSceneAsync("chooseChallengeScene");
+        }
+        else
+        {
+            SceneManager.LoadSceneAsync("titleScene");
+        }
     }
     public void Unpause()
     {

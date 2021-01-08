@@ -26,6 +26,8 @@ TagManager:
   - GameManager
   - FakePlayer
   - StatsModule
+  - BestTimeWinText
+  - BestTimeLoseText
   layers:
   - Default
   - TransparentFX

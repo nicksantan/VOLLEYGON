@@ -38,11 +38,19 @@ public class ChallengeCarouselScript : MonoBehaviour
         if (es && es.currentSelectedGameObject)
         {
             selectedIndex = es.currentSelectedGameObject.transform.GetSiblingIndex();
+            Debug.Log("selected index");
+            Debug.Log(es.currentSelectedGameObject.transform.GetSiblingIndex());
+           
         }
 
         // determine which controller is 'in control'.
         whichPlayerIsControlling = DataManagerScript.gamepadControllingMenus;
         joyButts = new JoystickButtons(whichPlayerIsControlling);
+
+        if (DataManagerScript.lastViewedChallenge == 0)
+        {
+            ShowOption(0);
+        }
     }
 
     // Update is called once per frame

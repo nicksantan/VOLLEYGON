@@ -53,8 +53,11 @@ public class CarouselScript : MonoBehaviour {
 
 		// Move to pre-selected first item in event system
 		shouldAnimate = false;
-		MoveToSelected(true);
-	}
+		//MoveToSelected(true);
+
+        JumpTo(DataManagerScript.lastViewedChallenge, false);
+        MoveToSelected(true);
+    }
 
 	//
 	// Listening for updates
@@ -185,7 +188,7 @@ public class CarouselScript : MonoBehaviour {
 		indexText.text = (index + 1).ToString() + "/" + contentRect.childCount.ToString();
 
         // Animate to destination
-        Debug.Log(duration);
+      //  Debug.Log(duration);
 		snapper = StartCoroutine(
 			Tween(
 				contentRect,
@@ -205,7 +208,7 @@ public class CarouselScript : MonoBehaviour {
         if (duration == 0f) { approxNoOfFrames = 0; };
 		float posDiff = destination.y - item.localPosition.y;
 		float eachFrameProgress = posDiff / approxNoOfFrames;
-        Debug.Log(approxNoOfFrames);
+     //   Debug.Log(approxNoOfFrames);
 		for (int i = 0; i < approxNoOfFrames; i++) {
 			yield return new WaitForEndOfFrame();
 			item.localPosition = new Vector2(destination.x, item.localPosition.y + eachFrameProgress);

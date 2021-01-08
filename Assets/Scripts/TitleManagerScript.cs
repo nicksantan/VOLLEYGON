@@ -54,6 +54,8 @@ public class TitleManagerScript : MonoBehaviour {
             AllowInput();
 
         }
+
+        DataManagerScript.lastViewedChallenge = 0;
     }
 
     void AllowInput()

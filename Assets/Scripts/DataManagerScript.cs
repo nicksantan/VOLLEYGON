@@ -99,6 +99,7 @@ public class DataManagerScript : MonoBehaviour {
 	public static bool xboxMode = false;
 	public static bool demoMode = false;
 
+    public static int lastViewedChallenge = 0;
     // Save instance of self over scene loads
 	void Awake() {
 

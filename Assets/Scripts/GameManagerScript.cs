@@ -96,7 +96,10 @@ public class GameManagerScript : MonoBehaviour {
             Player4.GetComponent<PlayerController>().playerType = DataManagerScript.playerFourType;
         }
 
-		MusicManagerScript.Instance.StartRoot ();
+        if (!GameObject.Find("ChallengeManager"))
+        {
+            MusicManagerScript.Instance.StartRoot();
+        }
 		launchTimer ();
 		timeSinceLastPowerup = 0f;
 		soloModeBalls = 3;

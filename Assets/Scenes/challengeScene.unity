@@ -1940,7 +1940,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &420668648
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5222,7 +5222,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'BEST TIME: 00:05:11'
+  m_Text: 'BEST TIME: 00:00:00'
 --- !u!222 &843984591
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10296,7 +10296,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -58.899933, y: -1.2999992}
+  m_AnchoredPosition: {x: -41.3, y: -1.2999992}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1798388547
@@ -11114,7 +11114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 102.148636
+  Phase: 127.1084
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5
@@ -11152,7 +11152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 22fe62a5d4de91a4995c1363cbc2492e, type: 3}
   Mode: 1
-  Timer: 661.55707
+  Timer: 741.4263
   Speed: 0.8
   Frequency: 12
   Amplitude: 0
@@ -11382,7 +11382,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -59, y: -1.2999992}
+  m_AnchoredPosition: {x: -41.3, y: -1.2999992}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1943904762
@@ -11705,7 +11705,7 @@ MonoBehaviour:
   bronzeMedalImage: {fileID: 21300000, guid: 344c1af049d614aa7840defea613f68e, type: 3}
   silverMedalImage: {fileID: 21300000, guid: ed53f58d2db0e4666bdd28ed86531a0d, type: 3}
   goldMedalImage: {fileID: 21300000, guid: 38e76d5d66afa4b2495d901f73a446c8, type: 3}
-  noMedalImage: {fileID: 21300000, guid: 708a788fa22df468491f82316b373926, type: 3}
+  noMedalImage: {fileID: 21300000, guid: 57edda3b4994242b3b13726a14f62af0, type: 3}
   challengeRunning: 0
   challengesContainer: {fileID: 2029533169}
 --- !u!4 &1977507254
@@ -12607,7 +12607,7 @@ PrefabInstance:
     - target: {fileID: 637601223635399144, guid: 06b922f310a3e418ab87dddbebba7f79,
         type: 3}
       propertyPath: randomGravOnStart
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 637601223635399144, guid: 06b922f310a3e418ab87dddbebba7f79,
         type: 3}

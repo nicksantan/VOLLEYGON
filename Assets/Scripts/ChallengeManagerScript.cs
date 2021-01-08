@@ -204,7 +204,7 @@ public class ChallengeManagerScript : MonoBehaviour {
         float bestTime = ICM.GetComponent<SaveChallengeTimeScript>().challengeTime;
         Debug.Log("What was the best time?");
         Debug.Log(bestTime);
-        if (bestTime <= 99999f)
+        if (bestTime <= 9998f || bestTime == 99999f)
         {
             bestTimeLoseText.SetActive(true);
             bestTimeLoseText.GetComponent<Text>().text = "BEST TIME: " + FormatTime(bestTime);

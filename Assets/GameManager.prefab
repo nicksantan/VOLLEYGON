@@ -1,0 +1,136 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3999124773001654003
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3999124773001654005}
+  - component: {fileID: 3999124773001654002}
+  - component: {fileID: 3999124773001654004}
+  - component: {fileID: 3999124773001654007}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: GameManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3999124773001654005
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3999124773001654003}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -8, y: -4.67, z: -0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3999124773001654002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3999124773001654003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 454e1ee76d23745b7afcc900467c20e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ballPrefab: {fileID: 111420, guid: 0cbc1f0ef1ba1441e854e84e911cfe46, type: 3}
+  scoreboard: {fileID: 0}
+  background: {fileID: 0}
+  gravTimer: 0
+  gameTimer: 0
+  teamOneScore: 0
+  teamTwoScore: 0
+  winText: {fileID: 0}
+  rallyCount: 0
+  rallyCountText: {fileID: 0}
+  isGameOver: 0
+  scorePlayedTo: 11
+  arenaType: 0
+  paused: 0
+  recentlyPaused: 0
+  gravityIndicator: {fileID: 0}
+  playerClonePrefab: {fileID: 103506, guid: f1f0da2e2f4204fccb420a80b6585ce7, type: 3}
+  pausePanel: {fileID: 0}
+  lastScore: 0
+  bouncesOnBottom: 0
+  bouncesOnTopLeft: 0
+  bouncesOnTopRight: 0
+  bouncesOnBottomRight: 0
+  bouncesOnBottomLeft: 0
+  bounces: 0
+  soloMode: 0
+  soloModeBalls: 0
+  ball: {fileID: 0}
+  handleBalls: 1
+  handleArenas: 1
+  handleScore: 0
+  easyMode: 1
+  Player1: {fileID: 0}
+  Player2: {fileID: 0}
+  Player3: {fileID: 0}
+  Player4: {fileID: 0}
+  Player1Material: {fileID: 2100000, guid: 9b5598fb09f9e4265ab421416b3cfbc3, type: 2}
+  Player2Material: {fileID: 2100000, guid: e83bc0752e39846e8bad56f347f67541, type: 2}
+  Player3Material: {fileID: 2100000, guid: 891c6e8167fe043f4bcf7a8bd0ce7e85, type: 2}
+  Player4Material: {fileID: 2100000, guid: 714222d34b50443f59662c66d2468bc3, type: 2}
+  Arenas:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  CurrentArena: {fileID: 0}
+  startButton1: Start_P1
+  startButton2: Start_P2
+  startButton3: Start_P3
+  startButton4: Start_P4
+  es: {fileID: 0}
+--- !u!114 &3999124773001654004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3999124773001654003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b7f259d3ec1b45d1a42d11162a8d322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerupsModuleOn: 1
+  gravChangeModuleOn: 1
+  scoreboardModuleOn: 1
+  statsModuleOn: 1
+  livesModuleOn: 0
+--- !u!114 &3999124773001654007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3999124773001654003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7d62972ede7c47ecbe384b2f1ee72cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  paused: 0
+  recentlyPaused: 0
+  pausePanel: {fileID: 0}
+  es: {fileID: 0}

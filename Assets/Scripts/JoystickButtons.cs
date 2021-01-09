@@ -53,3 +53,20 @@ public class JoystickButtons {
         }
     }
 }
+
+public class VirtualJoystickButtons
+{
+
+    // All input types
+    public float horizontal;
+    public bool jump;
+    public bool grav;
+
+    // Get explicit strings from player number
+    public VirtualJoystickButtons()
+    {
+        this.horizontal = 0;
+        this.jump = false;
+        this.grav = false;
+    }
+}

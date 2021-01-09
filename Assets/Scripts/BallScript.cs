@@ -16,7 +16,7 @@ public class BallScript : MonoBehaviour {
 	public GameObject background;
 	public bool isOnePlayer;
 	Rigidbody2D rb;
-	float timer;
+	public float timer;
 	float timeSinceLastFlash;
 	float flashTime;
 	private bool isTimerRunning;
@@ -68,8 +68,9 @@ public class BallScript : MonoBehaviour {
 	private float maxSpeed = 68f;
 	private new AudioSource audio;
 	public bool didSirenPlayAlready;
-	// Use this for initialization
+    // Use this for initialization
 
+    
 	void Awake(){
         // Debug.Log (GameManagerScript.Instance.CurrentArena);
         // CurrentArena = GameManagerScript.Instance.CurrentArena;

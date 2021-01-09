@@ -4,7 +4,12 @@ using System.Collections;
 using PigeonCoopToolkit.Effects.Trails;
 
 public class PlayerController : MonoBehaviour {
-	// Switch player behavior based on mode
+    // Switch player behavior based on mode
+    public bool isAI = false;
+    public int AILeft;
+    public int AIRight;
+    public int AIJump;
+    public int AIGrav;
 
 	public bool isChallengeMode;
     private ChallengeManagerScript challengeManager;
@@ -21,7 +26,8 @@ public class PlayerController : MonoBehaviour {
     private Vector3 startingScale = new Vector3(1f,1f,1f);
 
     // Button names
-    private JoystickButtons buttons;
+    public JoystickButtons buttons;
+    public VirtualJoystickButtons virtualButtons;
 
     // Properties of player by ID
     public int playerID;
@@ -108,7 +114,8 @@ public class PlayerController : MonoBehaviour {
 
         //check for challenge mode
         isChallengeMode = DataManagerScript.isChallengeMode;
-        // Is the aboe still used?
+        // Is the above still used?
+
         if (GameObject.FindWithTag("ChallengeManager"))
         {
             challengeManager = GameObject.FindWithTag("ChallengeManager").GetComponent<ChallengeManagerScript>();
@@ -201,11 +208,26 @@ public class PlayerController : MonoBehaviour {
 					playerColor = "D97A7B";
 					joystick = DataManagerScript.playerFourJoystick;
 					break;
+
+                case 5:
+                    playerColor = "D63236";
+                    break;
+
+                case 6:
+                    playerColor = "D97A7B";
+                    break;
+
 			}
 		}
 
         // Get player input names
-        buttons = new JoystickButtons(joystick);
+        if (!isAI)
+        {
+            buttons = new JoystickButtons(joystick);
+        } else
+        {
+            virtualButtons = new VirtualJoystickButtons();
+        }
 
         // Get stats for chosen shape
         string playerShape = shapeNames[playerType];
@@ -240,7 +262,7 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (transform.parent.tag != "FakePlayer")
+        if (transform.parent && transform.parent.tag != "FakePlayer")
         {
             if (!challengeManager || challengeManager.challengeRunning)
             {
@@ -266,17 +288,92 @@ public class PlayerController : MonoBehaviour {
                 }
             }
         }
+
+        if (isAI)
+        {
+            // Get horizontal input
+
+            float moveHorizontal = virtualButtons.horizontal;
+            Debug.Log(moveHorizontal);
+                // Clamp input
+                moveHorizontal = Mathf.Clamp(moveHorizontal, -1f, 1f);
+
+                if (isJumping)
+                {
+                    GetComponent<Rigidbody2D>().angularVelocity = (moveHorizontal * spinPower * rb.gravityScale);
+                }
+
+                if (GetComponent<Rigidbody2D>() != null)
+                {
+                    Vector3 v3 = GetComponent<Rigidbody2D>().velocity;
+                    v3.x = moveHorizontal * speed;
+                    GetComponent<Rigidbody2D>().velocity = v3;
+                }
+        }
     }
 
 	void Update() {
         //TODO: Oof, can this be changed?
-        if (transform.parent.tag != "FakePlayer")
+        Debug.Log("virtual kump");
+        Debug.Log(virtualButtons.jump);
+        if (transform.parent && transform.parent.tag != "FakePlayer")
         {
             if (inPenalty && GameManagerScript.Instance != null
                 && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused
                 && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().recentlyPaused)
             {
                 ManagePenalty();
+                }
+            Debug.Log(isAI);
+            if (isAI)
+            {
+                // Handle jumping
+                Debug.Log("is ai");
+                if (virtualButtons.jump)
+                {
+                    Debug.Log("VIRTUAL JUMP!");
+                    if (isJumping == false && rb != null && !holdingButtonDown)
+                    {
+                        Vector3 jumpForce = new Vector3(0f, jumpPower * rb.gravityScale, 0f);
+                        // rb.AddForce(jumpForce);
+                        holdingButtonDown = true;
+                        Vector3 v3 = GetComponent<Rigidbody2D>().velocity;
+                        v3.y = jumpVel * rb.gravityScale; //TODO: Replace with shape-specific var
+                        GetComponent<Rigidbody2D>().velocity = v3;
+                        SoundManagerScript.instance.RandomizeSfx(jumpSound1, jumpSound2);
+                        isJumping = true;
+                    }
+                }
+                else
+                {
+                    // Fast fall!
+                    holdingButtonDown = false;
+                    if (isJumping && rb != null)
+                    {
+                        //  Debug.Log("fast fall!");
+
+                        Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -30f, 0f);
+                        rb.AddForce(fastFallForce);
+                    }
+
+                }
+
+                // Handle gravity switch
+                if (virtualButtons.grav && rb != null && !easyMode) //TODO: will need a puse switch //!GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused
+                {
+                    rb.gravityScale *= -1f;
+                    isJumping = true;
+                    virtualButtons.grav = false;
+                    SoundManagerScript.instance.RandomizeSfx(changeGravSound1, changeGravSound2);
+                    if (rb.gravityScale < 0)
+                    {
+                        innerShape.SetActive(true);
+                    }
+                    else
+                    {
+                        innerShape.SetActive(false);
+                    }
+                }
             }
 
             if (!inPenalty
@@ -286,6 +383,7 @@ public class PlayerController : MonoBehaviour {
                 && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused
                 && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().recentlyPaused
                 && (!challengeManager || challengeManager.challengeRunning)
+                && !isAI
                 )
             {
 
@@ -365,9 +463,11 @@ public class PlayerController : MonoBehaviour {
                             GameManagerScript.Instance.GetComponent<PauseManagerScript>().Pause(buttons);
                         }
                     }
+
+
                 }
 
-	            ClampPosition();
+                ClampPosition();
 	            ManagePowerups();
 
 	        }

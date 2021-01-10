@@ -65,7 +65,7 @@ public class GameManagerScript : MonoBehaviour {
 
     public GameObject[] Arenas;
 
-
+    public bool TrainingMode = false;
 	public GameObject CurrentArena;
 
 	public string startButton1 = "Start_P1";
@@ -88,7 +88,7 @@ public class GameManagerScript : MonoBehaviour {
 
         easyMode = DataManagerScript.easyMode;
 
-        if (!DataManagerScript.isSinglePlayerMode)
+        if (!DataManagerScript.isSinglePlayerMode && !TrainingMode)
         {
             Player1.GetComponent<PlayerController>().playerType = DataManagerScript.playerOneType;
             Player2.GetComponent<PlayerController>().playerType = DataManagerScript.playerTwoType;
@@ -96,7 +96,7 @@ public class GameManagerScript : MonoBehaviour {
             Player4.GetComponent<PlayerController>().playerType = DataManagerScript.playerFourType;
         }
 
-        if (!GameObject.Find("ChallengeManager"))
+        if (!GameObject.Find("ChallengeManager") && !TrainingMode)
         {
             MusicManagerScript.Instance.StartRoot();
         }
@@ -139,50 +139,56 @@ public class GameManagerScript : MonoBehaviour {
 		int playersActive = 0;
 		int whichSoloPlayer = 0;
 
-		// make this a common function in a class
-		if (DataManagerScript.playerOnePlaying == true) {
-			Player1.SetActive (true);
-			playersActive++;
-			whichSoloPlayer = 1;
-		}
-        if (!DataManagerScript.isSinglePlayerMode)
+        if (!TrainingMode)
         {
-            if (DataManagerScript.playerTwoPlaying == true)
+            // make this a common function in a class
+            if (DataManagerScript.playerOnePlaying == true)
             {
-                Player2.SetActive(true);
+                Player1.SetActive(true);
                 playersActive++;
-                whichSoloPlayer = 2;
+                whichSoloPlayer = 1;
             }
-            if (DataManagerScript.playerThreePlaying == true)
+            if (!DataManagerScript.isSinglePlayerMode)
             {
-                Player3.SetActive(true);
-                playersActive++;
-                whichSoloPlayer = 3;
+                if (DataManagerScript.playerTwoPlaying == true)
+                {
+                    Player2.SetActive(true);
+                    playersActive++;
+                    whichSoloPlayer = 2;
+                }
+                if (DataManagerScript.playerThreePlaying == true)
+                {
+                    Player3.SetActive(true);
+                    playersActive++;
+                    whichSoloPlayer = 3;
+                }
+                if (DataManagerScript.playerFourPlaying == true)
+                {
+                    Player4.SetActive(true);
+                    playersActive++;
+                    whichSoloPlayer = 4;
+                }
             }
-            if (DataManagerScript.playerFourPlaying == true)
+            Debug.Log("how many players active?");
+            Debug.Log(playersActive);
+            Debug.Log("Does data manager tyhink this is single player mode?");
+            Debug.Log(DataManagerScript.isSinglePlayerMode);
+
+            if (playersActive == 1)
             {
-                Player4.SetActive(true);
-                playersActive++;
-                whichSoloPlayer = 4;
+
+                OnePlayerMode = true;
+                InstantiateClone(whichSoloPlayer);
+                // set this somewhere else
+                soloMode = true;
+                rallyCountText.gameObject.SetActive(true);
+
+            }
+            else
+            {
+                OnePlayerMode = false;
             }
         }
-        Debug.Log("how many players active?");
-        Debug.Log(playersActive);
-        Debug.Log("Does data manager tyhink this is single player mode?");
-        Debug.Log(DataManagerScript.isSinglePlayerMode);
-
-		if (playersActive == 1) {
-
-			OnePlayerMode = true;
-			InstantiateClone (whichSoloPlayer);
-			// set this somewhere else
-			soloMode = true;
-			rallyCountText.gameObject.SetActive (true);
-
-        }
-   		else {
-			OnePlayerMode = false;
-		}
 
 	}
     void Start()

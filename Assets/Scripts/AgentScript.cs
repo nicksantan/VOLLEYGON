@@ -24,7 +24,10 @@ public class AgentScript : Agent
     {
         if (Target == null)
         {
-            Target = GameObject.FindWithTag("Ball").transform;
+            if (GameObject.FindWithTag("Ball"))
+            {
+                Target = GameObject.FindWithTag("Ball").transform;
+            }
         }
         //RequestDecision();
         AddReward(.001f);
@@ -123,14 +126,15 @@ public class AgentScript : Agent
 
     public override void OnEpisodeBegin()
     {
-
+        Debug.Log("Episode BEGIN!");
         if (playerBeingControlled.GetComponent<PlayerController>().team == 2) {
       
         ball = Instantiate(ballPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity);
             ball.GetComponent<BallScript>().startWithRandomGrav = true;
-        ball.GetComponent<BallScript>().LaunchBall();
+            // ball.GetComponent<BallScript>().LaunchBall();
             //IEnumerator coroutine_1 = ball.GetComponent<BallScript>().CustomLaunchBallWithDelay(.1f, 15f * Random.Range(.5f, 1.5f), -5f * Random.Range(-1.5f, 1.5f));
-          //  StartCoroutine(coroutine_1);
+            IEnumerator coroutine_1 = ball.GetComponent<BallScript>().LaunchBallWithDelay(.1f);
+            StartCoroutine(coroutine_1);
             Target = ball.transform;
         } else
         {
@@ -194,6 +198,7 @@ public class AgentScript : Agent
 
     public override void Heuristic(float[] actionsOut)
     {
+        Debug.Log("is this fucking happening?");
         actionsOut[0] = 0;
         actionsOut[1] = 0;
         actionsOut[2] = 0;

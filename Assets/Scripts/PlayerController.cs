@@ -297,7 +297,7 @@ public class PlayerController : MonoBehaviour {
             // Get horizontal input
 
             float moveHorizontal = virtualButtons.horizontal;
-            Debug.Log(moveHorizontal);
+//            Debug.Log(moveHorizontal);
                 // Clamp input
                 moveHorizontal = Mathf.Clamp(moveHorizontal, -1f, 1f);
 
@@ -326,12 +326,12 @@ public class PlayerController : MonoBehaviour {
             {
                 ManagePenalty();
                 }
-            Debug.Log(isAI);
+//            Debug.Log(isAI);
             if (isAI)
             {
                 framesSinceLastGravChange += 1;
                 // Handle jumping
-                Debug.Log("is ai");
+//                Debug.Log("is ai");
                 if (virtualButtons.jump)
                 {
                     Debug.Log("VIRTUAL JUMP!");

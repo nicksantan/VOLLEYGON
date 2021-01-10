@@ -9,6 +9,8 @@ public class AgentScript : Agent
 {
     Rigidbody2D rBody;
     public GameObject playerBeingControlled;
+    public GameObject ballPrefab;
+    public GameObject ball;
 
 
     public override void Initialize()
@@ -20,7 +22,14 @@ public class AgentScript : Agent
 
     public void FixedUpdate()
     {
-        RequestDecision();
+        if (Target == null)
+        {
+            Target = GameObject.FindWithTag("Ball").transform;
+        }
+        //RequestDecision();
+        AddReward(.001f);
+
+
     }
     public Transform Target;
 
@@ -98,6 +107,8 @@ public class AgentScript : Agent
     {
         if (playerBeingControlled != null)
         {
+            Debug.Log("GRAV ON?");
+            Debug.Log(isPressed);
             playerBeingControlled.GetComponent<PlayerController>().virtualButtons.grav = isPressed;
         }
     }
@@ -113,15 +124,48 @@ public class AgentScript : Agent
     public override void OnEpisodeBegin()
     {
 
-
-        // Move the target to a new spot
-        Target.localPosition = new Vector3(-4f,
-                                           0f,
-                                           0f);
+        if (playerBeingControlled.GetComponent<PlayerController>().team == 2) {
+      
+        ball = Instantiate(ballPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity);
+            ball.GetComponent<BallScript>().startWithRandomGrav = true;
+        ball.GetComponent<BallScript>().LaunchBall();
+            //IEnumerator coroutine_1 = ball.GetComponent<BallScript>().CustomLaunchBallWithDelay(.1f, 15f * Random.Range(.5f, 1.5f), -5f * Random.Range(-1.5f, 1.5f));
+          //  StartCoroutine(coroutine_1);
+            Target = ball.transform;
+        } else
+        {
+            if (GameObject.FindWithTag("Ball"))
+            {
+                Target = GameObject.FindWithTag("Ball").transform;
+            }
+        }
+        //// Move the target to a new spot
+        //ball.transform.localPosition = new Vector3(-4f,
+                                           //0f,
+                                           //0f);
 
         /// move ai back to a new spot
+        float startingPos = 9.76f;
+        if (playerBeingControlled.GetComponent<PlayerController>().team == 1)
+        {
+            startingPos = -9.76f;
+        }
+        gameObject.transform.localPosition = new Vector3(startingPos * Random.Range(.75f, 1.25f), Random.Range(-8.55f,8.55f), 0f);
+        rBody.velocity = Vector3.zero;
+        rBody.gravityScale = 1;
+        if (rBody.gravityScale < 0)
+        {
+            gameObject.GetComponent<PlayerController>().innerShape.SetActive(true);
+        }
+        else
+        {
+            gameObject.GetComponent<PlayerController>().innerShape.SetActive(false);
+        }
 
-        gameObject.transform.localPosition = new Vector3(9.76f, -8.42f, 0f);
+        // launch the ball
+        Debug.Log("trying to launch ball");
+        
+      
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -133,6 +177,11 @@ public class AgentScript : Agent
         // Agent velocity
         sensor.AddObservation(rBody.velocity.x);
         sensor.AddObservation(rBody.velocity.y);
+
+        // Agent is jumping status
+        sensor.AddObservation(playerBeingControlled.GetComponent<PlayerController>().isJumping);
+        sensor.AddObservation(playerBeingControlled.GetComponent<PlayerController>().team);
+        sensor.AddObservation(playerBeingControlled.GetComponent<PlayerController>().framesSinceLastGravChange);
 
         // target velocity
         sensor.AddObservation(Target.GetComponent<Rigidbody2D>().velocity.x);
@@ -155,7 +204,7 @@ public class AgentScript : Agent
             actionsOut[0] = 1;
         }
 
-        if (Input.GetKeyDown("up"))
+        if (Input.GetKey("up"))
         {
             actionsOut[1] = 1;
         }
@@ -181,9 +230,26 @@ public class AgentScript : Agent
         }
     }
 
-    public void OnBallDied()
+    public void OnBallDied(int whichSide)
     {
-        AddReward(-0.5f);
+        int whichSideToCareAbout;
+        int ownSide;
+        if (playerBeingControlled.GetComponent<PlayerController>().team == 1)
+        {
+            whichSideToCareAbout = 2;
+            ownSide = 1;
+        } else
+        {
+            whichSideToCareAbout = 1;
+            ownSide = 2;
+        }
+        if (whichSide == ownSide)
+        {
+            Debug.Log("Till the next episode...");
+            AddReward(-0.5f);
+        } else if (whichSide == whichSideToCareAbout){
+            AddReward(1f);
+        }
         EndEpisode();
     }
 }

@@ -91,10 +91,13 @@ public class PlayerController : MonoBehaviour {
 	public AudioClip pandemoniumSFX1;
     public AudioClip pandemoniumSFX2;
 
-    private GameObject innerShape;
+    public GameObject innerShape;
 
     public float jumpVel = 21f;
     public bool holdingButtonDown = false;
+    // Note: for AI players.
+    public bool holdingGravButtonDown = false;
+    public int framesSinceLastGravChange = 0;
 
     // Map shape numbers to names for use in stat fetching, etc (index == playerType)
     private string[] shapeNames = new string[] {
@@ -314,8 +317,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Update() {
         //TODO: Oof, can this be changed?
-        Debug.Log("virtual kump");
-        Debug.Log(virtualButtons.jump);
+      
         if (transform.parent && transform.parent.tag != "FakePlayer")
         {
             if (inPenalty && GameManagerScript.Instance != null
@@ -327,6 +329,7 @@ public class PlayerController : MonoBehaviour {
             Debug.Log(isAI);
             if (isAI)
             {
+                framesSinceLastGravChange += 1;
                 // Handle jumping
                 Debug.Log("is ai");
                 if (virtualButtons.jump)
@@ -359,11 +362,13 @@ public class PlayerController : MonoBehaviour {
                 }
 
                 // Handle gravity switch
-                if (virtualButtons.grav && rb != null && !easyMode) //TODO: will need a puse switch //!GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused
+                if (virtualButtons.grav && rb != null && !easyMode && !holdingGravButtonDown && framesSinceLastGravChange > 10 ) //TODO: will need a puse switch //!GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused
                 {
                     rb.gravityScale *= -1f;
+                    framesSinceLastGravChange = 0;
                     isJumping = true;
-                    virtualButtons.grav = false;
+                
+                    holdingGravButtonDown = true;
                     SoundManagerScript.instance.RandomizeSfx(changeGravSound1, changeGravSound2);
                     if (rb.gravityScale < 0)
                     {
@@ -373,7 +378,12 @@ public class PlayerController : MonoBehaviour {
                     {
                         innerShape.SetActive(false);
                     }
+                } else if (!virtualButtons.grav)
+                {
+                    holdingGravButtonDown = false;
                 }
+                ClampPosition();
+                ManagePowerups();
             }
 
             if (!inPenalty
@@ -382,8 +392,8 @@ public class PlayerController : MonoBehaviour {
                 && GameManagerScript.Instance != null
                 && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused
                 && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().recentlyPaused
-                && (!challengeManager || challengeManager.challengeRunning)
-                && !isAI
+                && (!challengeManager || challengeManager.challengeRunning) && isAI == false
+              
                 )
             {
 

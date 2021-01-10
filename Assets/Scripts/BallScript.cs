@@ -342,6 +342,8 @@ public class BallScript : MonoBehaviour {
 
         moduleContainer.BroadcastMessage("OnBallDied", whichSide);
 
+        // Broadcast to the arena in case this a training scene.
+        CurrentArena.BroadcastMessage("OnBallDied", whichSide);
         // If stat manager exists, give it some touch info
         if (GameObject.FindWithTag("StatsModule"))
         {

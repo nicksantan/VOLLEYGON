@@ -11,13 +11,15 @@ public class AgentScript : Agent
     public GameObject playerBeingControlled;
     public GameObject ballPrefab;
     public GameObject ball;
-
+    public Transform Target;
+    private GameObject mpm;
 
     public override void Initialize()
     {
         rBody = GetComponent<Rigidbody2D>();
         //playerBeingControlled.GetComponent<PlayerController>().virtualButtons.horizontal = -1;
         //startingPosition = transform.position;
+        mpm = GameObject.FindWithTag("MidpointMarker");
     }
 
     public void FixedUpdate()
@@ -30,11 +32,12 @@ public class AgentScript : Agent
             }
         }
         //RequestDecision();
+      
         AddReward(.001f);
 
 
     }
-    public Transform Target;
+  
 
     public override void OnActionReceived(float[] vectorAction)
     {
@@ -132,8 +135,8 @@ public class AgentScript : Agent
         ball = Instantiate(ballPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity);
             ball.GetComponent<BallScript>().startWithRandomGrav = true;
             // ball.GetComponent<BallScript>().LaunchBall();
-            //IEnumerator coroutine_1 = ball.GetComponent<BallScript>().CustomLaunchBallWithDelay(.1f, 15f * Random.Range(.5f, 1.5f), -5f * Random.Range(-1.5f, 1.5f));
-            IEnumerator coroutine_1 = ball.GetComponent<BallScript>().LaunchBallWithDelay(.1f);
+            IEnumerator coroutine_1 = ball.GetComponent<BallScript>().CustomLaunchBallWithDelay(.1f, 15f * Random.Range(.5f, 1.5f), -5f * Random.Range(-1.5f, 1.5f));
+            //IEnumerator coroutine_1 = ball.GetComponent<BallScript>().LaunchBallWithDelay(.1f);
             StartCoroutine(coroutine_1);
             Target = ball.transform;
         } else
@@ -167,7 +170,7 @@ public class AgentScript : Agent
         }
 
         // launch the ball
-        Debug.Log("trying to launch ball");
+       // Debug.Log("trying to launch ball");
         
       
     }
@@ -175,9 +178,12 @@ public class AgentScript : Agent
     public override void CollectObservations(VectorSensor sensor)
     {
         // Target and Agent positions
-        sensor.AddObservation(Target.localPosition);
-        sensor.AddObservation(this.transform.localPosition);
+        if (Target != null)
 
+        {
+            sensor.AddObservation(Target.localPosition);
+        }
+        sensor.AddObservation(this.transform.localPosition);
         // Agent velocity
         sensor.AddObservation(rBody.velocity.x);
         sensor.AddObservation(rBody.velocity.y);
@@ -187,13 +193,15 @@ public class AgentScript : Agent
         sensor.AddObservation(playerBeingControlled.GetComponent<PlayerController>().team);
         sensor.AddObservation(playerBeingControlled.GetComponent<PlayerController>().framesSinceLastGravChange);
 
-        // target velocity
+        //// target velocity
         sensor.AddObservation(Target.GetComponent<Rigidbody2D>().velocity.x);
         sensor.AddObservation(Target.GetComponent<Rigidbody2D>().velocity.y);
 
-        // target (ball) grav scale
+        //// target (ball) grav scale
         sensor.AddObservation(Target.GetComponent<BallScript>().gravScale);
         sensor.AddObservation(Target.GetComponent<BallScript>().timer);
+        sensor.AddObservation(mpm.transform.position.x);
+
     }
 
     public override void Heuristic(float[] actionsOut)

@@ -48,7 +48,7 @@ public class StatsModuleScript : MonoBehaviour
 
     // Listen for ball died to compute stats
     public void OnBallDied(int whichSide){
-        Debug.Log("on ball died fired");
+//        Debug.Log("on ball died fired");
         if (whichSide == 1)
         {
             ComputeStat(2);
@@ -60,16 +60,26 @@ public class StatsModuleScript : MonoBehaviour
 
     public void ComputeStat(int whichTeamScored)
     {
+        Debug.Log(whichTeamScored);
+        Debug.Log("...team scored");
+
+        Debug.Log(lastTouch);
+        Debug.Log("...was last touch");
+
+        Debug.Log(secondToLastTouch);
+        Debug.Log("...was second to last touch");
         if (whichTeamScored == 1)
         {
             if (lastTouch == 1)
             {
                 DataManagerScript.playerOneAces += 1;
+                AchievementManagerScript.Instance.Achievements[0].Unlock();
                 DataManagerScript.playerOneScores += 1;
             }
             if (lastTouch == 2)
             {
                 DataManagerScript.playerTwoAces += 1;
+                AchievementManagerScript.Instance.Achievements[0].Unlock();
                 DataManagerScript.playerTwoScores += 1;
             }
 
@@ -117,11 +127,13 @@ public class StatsModuleScript : MonoBehaviour
             if (lastTouch == 3)
             {
                 DataManagerScript.playerThreeAces += 1;
+                AchievementManagerScript.Instance.Achievements[0].Unlock();
                 DataManagerScript.playerThreeScores += 1;
             }
             if (lastTouch == 4)
             {
                 DataManagerScript.playerFourAces += 1;
+                AchievementManagerScript.Instance.Achievements[0].Unlock();
                 DataManagerScript.playerFourScores += 1;
             }
 

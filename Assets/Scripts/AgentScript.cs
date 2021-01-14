@@ -43,21 +43,23 @@ public class AgentScript : Agent
     {
         if (Mathf.FloorToInt(vectorAction[0]) == 1)
         {
-            Debug.Log("trying to jump");
+          //  Debug.Log("trying to jump");
             Jump(true);
         }
         if (Mathf.FloorToInt(vectorAction[0]) == 0)
         {
-            Debug.Log("trying to stop jump");
+           // Debug.Log("trying to stop jump");
             Jump(false);
         }
 
         if (Mathf.FloorToInt(vectorAction[1]) == 1)
         {
+            Debug.Log("Setting grav change to true;");
             GravChange(true);
         }
         if (Mathf.FloorToInt(vectorAction[1]) == 0)
         {
+            Debug.Log("Setting grav change to false;");
             GravChange(false);
         }
 
@@ -113,8 +115,9 @@ public class AgentScript : Agent
     {
         if (playerBeingControlled != null)
         {
-            Debug.Log("GRAV ON?");
-            Debug.Log(isPressed);
+            //Debug.Log("GRAV ON?");
+            //Debug.Log(isPressed);
+            Debug.Log("ACTUALLY setting to " + isPressed);
             playerBeingControlled.GetComponent<PlayerController>().virtualButtons.grav = isPressed;
         }
     }
@@ -129,7 +132,7 @@ public class AgentScript : Agent
 
     public override void OnEpisodeBegin()
     {
-        Debug.Log("Episode BEGIN!");
+      // Debug.Log("Episode BEGIN!");
         if (playerBeingControlled.GetComponent<PlayerController>().team == 2) {
       
         ball = Instantiate(ballPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity);
@@ -182,8 +185,42 @@ public class AgentScript : Agent
 
         {
             sensor.AddObservation(Target.localPosition);
+            //// target velocity
+            sensor.AddObservation(Target.GetComponent<Rigidbody2D>().velocity.x);
+            sensor.AddObservation(Target.GetComponent<Rigidbody2D>().velocity.y);
+            //// target (ball) grav scale
+            sensor.AddObservation(Target.GetComponent<BallScript>().gravScale);
+            sensor.AddObservation(Target.GetComponent<BallScript>().timer);
+        } else
+        {
+            sensor.AddObservation(new Vector3(0, 0, 0));
+            sensor.AddObservation(0f);
+            sensor.AddObservation(0f);
+            sensor.AddObservation(0f);
+            sensor.AddObservation(0f);
         }
+
+        GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
+
+        if (walls[0] != null)
+        {
+            sensor.AddObservation(walls[0].transform.localPosition);
+        } else
+        {
+            sensor.AddObservation(new Vector3(0f,0f,0f));
+        }
+
+        if (walls[1] != null)
+        {
+            sensor.AddObservation(walls[1].transform.localPosition);
+        }
+        else
+        {
+            sensor.AddObservation(new Vector3(0f, 0f, 0f));
+        }
+
         sensor.AddObservation(this.transform.localPosition);
+
         // Agent velocity
         sensor.AddObservation(rBody.velocity.x);
         sensor.AddObservation(rBody.velocity.y);
@@ -192,21 +229,13 @@ public class AgentScript : Agent
         sensor.AddObservation(playerBeingControlled.GetComponent<PlayerController>().isJumping);
         sensor.AddObservation(playerBeingControlled.GetComponent<PlayerController>().team);
         sensor.AddObservation(playerBeingControlled.GetComponent<PlayerController>().framesSinceLastGravChange);
-
-        //// target velocity
-        sensor.AddObservation(Target.GetComponent<Rigidbody2D>().velocity.x);
-        sensor.AddObservation(Target.GetComponent<Rigidbody2D>().velocity.y);
-
-        //// target (ball) grav scale
-        sensor.AddObservation(Target.GetComponent<BallScript>().gravScale);
-        sensor.AddObservation(Target.GetComponent<BallScript>().timer);
         sensor.AddObservation(mpm.transform.position.x);
 
     }
 
     public override void Heuristic(float[] actionsOut)
     {
-        Debug.Log("is this fucking happening?");
+      //  Debug.Log("is this fucking happening?");
         actionsOut[0] = 0;
         actionsOut[1] = 0;
         actionsOut[2] = 0;
@@ -258,7 +287,7 @@ public class AgentScript : Agent
         }
         if (whichSide == ownSide)
         {
-            Debug.Log("Till the next episode...");
+          //  Debug.Log("Till the next episode...");
             AddReward(-0.5f);
         } else if (whichSide == whichSideToCareAbout){
             AddReward(1f);

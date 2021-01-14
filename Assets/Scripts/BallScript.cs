@@ -115,7 +115,7 @@ public class BallScript : MonoBehaviour {
     {
         int signValue = Random.Range(0, 2) * 2 - 1;
         rb.gravityScale = originalGrav * signValue;
-        Debug.Log(originalGrav);
+    //    Debug.Log(originalGrav);
         if (Mathf.Sign(rb.gravityScale) < 0)
         {
             GetComponent<SpriteRenderer>().sprite = reverseGravSprite;
@@ -230,7 +230,7 @@ public class BallScript : MonoBehaviour {
 	}
 
 	void CustomLaunchBall(float velX, float velY){
-		Debug.Log ("custom launch!");
+//		Debug.Log ("custom launch!");
 		rb.isKinematic = false;
 		trail.SetActive (true);
 		Transform child = gameObject.transform.Find("CircleTrails");
@@ -323,7 +323,7 @@ public class BallScript : MonoBehaviour {
 		GameManagerScript.Instance.bouncesOnBottomRight = 0;
 		GameManagerScript.Instance.bouncesOnTopLeft = 0;
 		GameManagerScript.Instance.bouncesOnTopRight = 0;
-        Debug.Log("ball broadcasts that ball has died");
+      //  Debug.Log("ball broadcasts that ball has died");
         // Tell all other sibling objects that the ball has died (includes challenge manager)
         //if (transform.parent != null)
         //{

@@ -362,7 +362,7 @@ public class PlayerController : MonoBehaviour {
                 }
 
                 // Handle gravity switch
-                if (virtualButtons.grav && rb != null && !easyMode && !holdingGravButtonDown && framesSinceLastGravChange > 10 ) //TODO: will need a puse switch //!GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused
+                if (virtualButtons.grav && rb != null && !easyMode && framesSinceLastGravChange > 10 ) //TODO: will need a puse switch //!GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused
                 {
                     rb.gravityScale *= -1f;
                     framesSinceLastGravChange = 0;
@@ -400,7 +400,7 @@ public class PlayerController : MonoBehaviour {
                 {
 
                     // Handle jumping
-                    Debug.Log(Input.GetButton(buttons.jump));
+                //    Debug.Log(Input.GetButton(buttons.jump));
                     if (Input.GetButton(buttons.jump))
                     {
 
@@ -565,13 +565,19 @@ public class PlayerController : MonoBehaviour {
             coll.gameObject.GetComponent<BallScript>().secondToLastTouch = coll.gameObject.GetComponent<BallScript>().lastTouch;
             coll.gameObject.GetComponent<BallScript>().lastTouch = playerID;
 
-			// check relative velocity of collision
-//			if (coll.relativeVelocity.magnitude > 40) {
-//				SoundManagerScript.instance.PlaySingle (collideWithBallSoundBig);
-//			} else {
-//				SoundManagerScript.instance.RandomizeSfx (collideWithBallSound1, collideWithBallSound2);
-//			}
-		}
+            if (GameObject.FindWithTag("StatsModule"))
+            {
+                GameObject.FindWithTag("StatsModule").GetComponent<StatsModuleScript>().secondToLastTouch = coll.gameObject.GetComponent<BallScript>().lastTouch;
+                GameObject.FindWithTag("StatsModule").GetComponent<StatsModuleScript>().lastTouch = playerID;
+
+            }
+            // check relative velocity of collision
+            //			if (coll.relativeVelocity.magnitude > 40) {
+            //				SoundManagerScript.instance.PlaySingle (collideWithBallSoundBig);
+            //			} else {
+            //				SoundManagerScript.instance.RandomizeSfx (collideWithBallSound1, collideWithBallSound2);
+            //			}
+        }
 
 	}
 

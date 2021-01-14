@@ -95,7 +95,7 @@ public class DataManagerScript : MonoBehaviour {
 	public static int TM_TeamTwoWins;
 
 	public static string version;
-	public static bool gamepadMode = true;
+	public static bool gamepadMode = false;
 	public static bool xboxMode = false;
 	public static bool demoMode = false;
 

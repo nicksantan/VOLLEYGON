@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using Steamworks;
 using System.Collections.Generic;
 
 public class AchievementManagerScript : MonoBehaviour
@@ -11,7 +11,7 @@ public class AchievementManagerScript : MonoBehaviour
 
     // Static singleton property
     public static AchievementManagerScript Instance { get; private set; }
-
+    public string[] AchievementNames = { "First Achievement", "Second Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement" };
 
     void Awake()
     {
@@ -24,11 +24,62 @@ public class AchievementManagerScript : MonoBehaviour
     {
 
         // load achievement status from playerprefs or other source (Steam cloud save?)
+
+        // Are we on steam?
+        if (SteamManager.Initialized)
+        {
+            string steamname = SteamFriends.GetPersonaName();
+            Debug.Log(steamname);
+        } else {
+            Debug.Log("Not on steam");
+        }
+
+
+
+        // Populate local achievement status
         for (int i = 0; i < numberOfAchievements; i++)
         {
 
-            Achievements.Add(new Achievement("Sample Achievement", false));
+            int thisAchievementUnlocked = 0;
+            int thisAchievementUsesProgress = 0;
+            int thisAchievementProgress = 0;
+
+            // Assuming local pc build for now
+            if (PlayerPrefs.HasKey("a-" + i + "-unlocked"))
+            {
+                thisAchievementUnlocked = PlayerPrefs.GetInt("a-" + i + "-unlocked");
+            } else
+            {
+                PlayerPrefs.SetInt("a-" + i + "-unlocked", 0);
+            }
+
+            if (PlayerPrefs.HasKey("a-" + i + "-usesProgress"))
+            {
+                thisAchievementUsesProgress = PlayerPrefs.GetInt("a-" + i + "-usesProgress");
+            }
+            else
+            {
+                PlayerPrefs.SetInt("a-" + i + "-usesProgress", 0);
+            }
+
+            if (PlayerPrefs.HasKey("a-" + i + "-progress"))
+            {
+                thisAchievementProgress = PlayerPrefs.GetInt("a-" + i + "-progress");
+            } else
+            {
+                PlayerPrefs.SetInt("a-" + i + "-progress", 0);
+            }
+
+          
+
+
+                Achievements.Add(new Achievement(AchievementNames[i], thisAchievementUnlocked == 1, thisAchievementUsesProgress == 1, i, thisAchievementProgress));
         }
+    }
+
+    public void SaveAchievements()
+    {
+        Debug.Log("Will save all achievements here");
     }
 
 
@@ -42,18 +93,20 @@ public class Achievement
     public bool unlocked;
     public bool usesProgress;
     public int progress;
+    public int id;
 
     //List<List<float>> medalRanges = new List<List<float>>();
 
 
     // List of List<int>
 
-    public Achievement(string achivementName, bool achievementUnlocked, bool usesProgress, int progress = 0)
+    public Achievement(string achievementName, bool achievementUnlocked, bool usesProgress, int id, int progress = 0)
     {
-        this.name = achivementName;
+        this.name = achievementName;
         this.unlocked = achievementUnlocked;
         this.usesProgress = usesProgress;
         this.progress = progress;
+        this.id = id;
 
     }
 
@@ -62,7 +115,21 @@ public class Achievement
         // trigger any animations
         // call steam to save this if applicable
         // call playerpref to save it
-        this.unlocked = true;
+
+        if (!this.unlocked)
+        {
+            this.unlocked = true;
+
+            // Switch per platform here maybe. For now, save playerprefs
+            PlayerPrefs.SetInt("a-" + this.id + "-unlocked", 1);
+
+
+            // Save all status
+            AchievementManagerScript.Instance.SaveAchievements();
+        } else
+        {
+            Debug.Log("Achievement already unlocked!");
+        }
 
     }
 }

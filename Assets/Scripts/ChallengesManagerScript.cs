@@ -54,6 +54,18 @@ public class ChallengesManagerScript : MonoBehaviour {
         es.GetComponent<StandaloneInputModule>().verticalAxis = buttons.vertical;
         es.GetComponent<StandaloneInputModule>().submitButton = buttons.jump;
         es.GetComponent<StandaloneInputModule>().cancelButton = buttons.grav;
+
+        if (AchievementManagerScript.Instance !== null)
+        {
+            if (IsAllMedals())
+            {
+                AchievementManagerScript.Instance.Achievements[8].Unlock();
+            }
+            if (IsAllGoldMedals())
+            {
+                AchievementManagerScript.Instance.Achievements[7].Unlock();
+            }
+        }
     }
 
     void Update()
@@ -177,5 +189,39 @@ public class ChallengesManagerScript : MonoBehaviour {
 
         Vector3 tempPos = new Vector3(posX, posY, 1f);
         marker.transform.position = tempPos;
+    }
+
+    public bool IsAllMedals()
+    {
+
+        for (int i = 0; i < 10; i++)
+        {
+            float bestTime = PlayerPrefs.GetFloat((i + 1).ToString());
+            MedalProvider mp = new MedalProvider(bestTime, i);
+            medalTypes whichMedal = mp.GetMedal();
+            if (whichMedal == medalTypes.none)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public bool IsAllGoldMedals()
+    {
+
+        for (int i = 0; i < 10; i++)
+        {
+            float bestTime = PlayerPrefs.GetFloat((i + 1).ToString());
+            MedalProvider mp = new MedalProvider(bestTime, i);
+            medalTypes whichMedal = mp.GetMedal();
+            if (whichMedal !== medalTypes.gold)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

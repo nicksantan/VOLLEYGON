@@ -170,12 +170,14 @@ public class ScoreboardManagerScript : MonoBehaviour {
                 background.GetComponent<BackgroundColorScript>().whoWon = 1;
                 background.GetComponent<BackgroundColorScript>().matchOver = true;
                 background.GetComponent<BackgroundColorScript>().TurnOffMatchPoint();
+                DataManagerScript.whichTeamWon = 1;
 
                 break;
             case 2:
                 TeamTwoWin();
                 background.GetComponent<BackgroundColorScript>().whoWon = 2;
                 background.GetComponent<BackgroundColorScript>().matchOver = true;
+                DataManagerScript.whichTeamWon = 2;
                 break;
         }
 

@@ -32,7 +32,7 @@ public class TitleManagerScript : MonoBehaviour {
     void Start() {
         curtain.SetActive(true);
         curtain.GetComponent<NewFadeScript>().Fade(0f);
-
+        DataManagerScript.whichTeamWon = 0;
         MusicManagerScript.Instance.FadeOutEverything();
         versionText.text = DataManagerScript.version;
         DataManagerScript.ResetStats();

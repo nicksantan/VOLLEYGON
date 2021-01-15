@@ -269,9 +269,48 @@ public class StatManagerScript : MonoBehaviour {
 		longestRallyText.text = "LONGEST RALLY: " + DataManagerScript.longestRallyCount.ToString ();
 		matchTimeText.text = "MATCH TIME: " + formattedMatchTime;
 
+        // check for no bumble achievement
+        if (DataManagerScript.whichTeamWon == 1)
+        {
+            bool unlockAchievement = true;
+            if (DataManagerScript.playerOnePlaying && DataManagerScript.playerOneBumbles > 0)
+            {
+                unlockAchievement = false;
+            }
+            if (DataManagerScript.playerTwoPlaying && DataManagerScript.playerTwoBumbles > 0)
+            {
+                unlockAchievement = false;
+            }
 
-		// if player active...
-		if (DataManagerScript.playerOnePlaying) {
+            if (unlockAchievement && AchievementManagerScript.Instance != null)
+            {
+                AchievementManagerScript.Instance.Achievements[2].Unlock();
+            }
+
+        }
+
+        if (DataManagerScript.whichTeamWon == 2)
+        {
+            bool unlockAchievement = true;
+            if (DataManagerScript.playerThreePlaying && DataManagerScript.playerThreeBumbles > 0)
+            {
+                unlockAchievement = false;
+            }
+            if (DataManagerScript.playerFourPlaying && DataManagerScript.playerFourBumbles > 0)
+            {
+                unlockAchievement = false;
+            }
+
+            if (unlockAchievement && AchievementManagerScript.Instance != null)
+            {
+                AchievementManagerScript.Instance.Achievements[2].Unlock();
+            }
+
+        }
+
+
+        // if player active...
+        if (DataManagerScript.playerOnePlaying) {
 			player1Aces.text = "ACES: " + DataManagerScript.playerOneAces.ToString ();
 			player1Scores.text = "SCORES: " + DataManagerScript.playerOneScores.ToString ();
 			player1Returns.text = "RETURNS: " + DataManagerScript.playerOneReturns.ToString ();

@@ -88,6 +88,7 @@ public class DataManagerScript : MonoBehaviour {
 
 	public static float gameTime;
 
+    public static int whichTeamWon = 0;
 	// Tournament mode variables
 
 	public bool tournamentMode;

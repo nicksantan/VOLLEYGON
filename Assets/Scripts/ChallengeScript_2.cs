@@ -12,6 +12,7 @@ public class ChallengeScript_2 : MonoBehaviour
     public String challengeTitle;
 
     private bool challengeStarted = false;
+    private float startTime = 0f;
 
     void Awake()
     {
@@ -37,6 +38,7 @@ public class ChallengeScript_2 : MonoBehaviour
             {
                 challengeStarted = true;
                 LaunchBall(0f, 0f, 0f);
+                startTime = Time.time;
             }
         }
 
@@ -57,6 +59,14 @@ public class ChallengeScript_2 : MonoBehaviour
 
             case 2:
                 ChallengeManagerScript.Instance.ChallengeSucceed();
+                if (AchievementManagerScript.Instance != null)
+                {
+                    float endTime = Time.time;
+                    if (endTime - startTime <= 5f)
+                    {
+                        AchievementManagerScript.Instance.Achievements[10].Unlock();
+                    }
+                }
                 break;
         }
     }

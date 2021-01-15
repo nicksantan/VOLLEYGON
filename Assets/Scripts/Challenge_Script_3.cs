@@ -18,6 +18,8 @@ public class Challenge_Script_3 : MonoBehaviour
 
     public bool startWithRandomGrav = false;
 
+    private float startTime = 0;
+
     void Awake()
     {
 
@@ -42,6 +44,7 @@ public class Challenge_Script_3 : MonoBehaviour
             {
                 challengeStarted = true;
                 LaunchBall(0f, 0f, 0f);
+                startTime = Time.time;
             }
         }
 
@@ -63,6 +66,14 @@ public class Challenge_Script_3 : MonoBehaviour
     {
         basketsScored += 1;
         Debug.Log("basket scored");
+        if (AchievementManagerScript.Instance != null)
+        {
+            float endTime = Time.time;
+            if (endTime - startTime <= 5f)
+            {
+                AchievementManagerScript.Instance.Achievements[10].Unlock();
+            }
+        }
     }
 
     void BallDied(int whichSide)

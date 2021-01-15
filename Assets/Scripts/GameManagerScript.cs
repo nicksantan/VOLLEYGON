@@ -390,8 +390,11 @@ public class GameManagerScript : MonoBehaviour {
 
 	void Update () {
 
-		if (OnePlayerMode) {
-			rallyCountText.text = rallyCount.ToString();
+        if (OnePlayerMode) {
+            rallyCountText.text = rallyCount.ToString();
+            if (rallyCount >= 50) { 
+                AchievementManagerScript.Instance.Achievements[6].Unlock();
+            }
 		}
 		// if all 4 start buttons are pressed, warp back to title screen
 		if (Input.GetButton (startButton1) && Input.GetButton (startButton2) && Input.GetButton (startButton3) && Input.GetButton (startButton4)) {

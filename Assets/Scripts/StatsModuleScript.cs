@@ -25,6 +25,13 @@ public class StatsModuleScript : MonoBehaviour
         if (DataManagerScript.currentRallyCount > DataManagerScript.longestRallyCount)
         {
             DataManagerScript.longestRallyCount = DataManagerScript.currentRallyCount;
+            if (DataManagerScript.longestRallyCount >= 20)
+            {
+                if (AchievementManagerScript.Instance != null)
+                {
+                    AchievementManagerScript.Instance.Achievements[3].Unlock();
+                }
+            }
             // Debug.Log ("longest rally count is now " + DataManagerScript.longestRallyCount);
         }
 

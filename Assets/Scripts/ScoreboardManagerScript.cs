@@ -16,6 +16,8 @@ public class ScoreboardManagerScript : MonoBehaviour {
     public int scorePlayedTo = 11;
     public int team1Score = 0;
     public int team2Score = 0;
+
+    public int numberOfDeuces = 0;
 	// Use this for initialization
 	void Start () {
 
@@ -111,6 +113,7 @@ public class ScoreboardManagerScript : MonoBehaviour {
                 Debug.Log("Both scores are 1 below the scoreplayed to... this is a deuce");
                 enableNumbers(team1Score, team2Score, true);
                 background.GetComponent<BackgroundColorScript>().TurnOnDeuce();
+              
             }
             else
             {
@@ -239,7 +242,15 @@ public class ScoreboardManagerScript : MonoBehaviour {
 			} else if (team1Score == team2Score) {
 
 				deuce.SetActive (true);
-				iTween.FadeTo (deuce, 0.8f, .25f);
+                numberOfDeuces++;
+                if (numberOfDeuces >= 5)
+                {
+                    if (AchievementManagerScript.Instance != null && !GameObject.FindWithTag("ChallengeManager"))
+                    {
+                        AchievementManagerScript.Instance.Achievements[4].Unlock();
+                    }
+                }
+                iTween.FadeTo (deuce, 0.8f, .25f);
 				MusicManagerScript.Instance.StartFourth ();
 			}
 		}

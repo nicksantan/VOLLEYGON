@@ -2,6 +2,7 @@
 using System.Collections;
 using Steamworks;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class AchievementManagerScript : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class AchievementManagerScript : MonoBehaviour
     public int numberOfAchievements = 12;
 
     public int totalReturns = 0;
-
+    public List<Sprite> icons = new List<Sprite>();
     // Static singleton property
     public static AchievementManagerScript Instance { get; private set; }
     public string[] AchievementNames = { "First Achievement", "Second Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement" };

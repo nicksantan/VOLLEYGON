@@ -1441,6 +1441,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Achievements: []
   numberOfAchievements: 12
+  totalReturns: 0
+  icons:
+  - {fileID: 21300000, guid: f75c5ad3af6394a77a44a80e7a9c8671, type: 3}
+  - {fileID: 21300000, guid: 478b5129045c4438492e0c490ce0ea0f, type: 3}
+  - {fileID: 21300000, guid: 360d64dde497f4af38624b1420128ddf, type: 3}
+  - {fileID: 21300000, guid: b261b5e8ef4744ee6b1431bddd74fe1d, type: 3}
+  - {fileID: 21300000, guid: 8e68f3ef039e8485b9499b7841fd8213, type: 3}
+  - {fileID: 21300000, guid: 743f5a320b637458b8c4f58d1e6f7ec3, type: 3}
+  - {fileID: 21300000, guid: 616096ae132af4a39b633f82fca68d4e, type: 3}
+  - {fileID: 21300000, guid: b0fa1c23c83af4010ba64c786d6cf6e1, type: 3}
+  - {fileID: 21300000, guid: 31f609dc962f744168bdf21163a237be, type: 3}
+  - {fileID: 21300000, guid: 18d21addfef6d47b2bc379df9283689b, type: 3}
+  - {fileID: 21300000, guid: 5285e9028d34147989cbfa7885dd7f4b, type: 3}
+  - {fileID: 21300000, guid: 6e33e8a15772c42388d34e0254c0e7ae, type: 3}
   AchievementNames:
   - Prodigy
   - Second Achievement

@@ -16,9 +16,12 @@ public class AchievementStatusIconScript : MonoBehaviour
     void Start()
     {
         // Look up the appropriate icon for this achievement
+        activeSprite = AchievementManagerScript.Instance.icons[achievementID];
+        // Assign it to bg.
         BG.GetComponent<Image>().sprite = activeSprite;
         // Check achievement manager for this achievement's status
         status = AchievementManagerScript.Instance.Achievements[achievementID].unlocked;
+
 
         // either show false or achievement icon depending on status
         if (status == true)

@@ -9,6 +9,8 @@ public class AchievementManagerScript : MonoBehaviour
     public List<Achievement> Achievements = new List<Achievement>();
     public int numberOfAchievements = 12;
 
+    public int totalReturns = 0;
+
     // Static singleton property
     public static AchievementManagerScript Instance { get; private set; }
     public string[] AchievementNames = { "First Achievement", "Second Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement" };
@@ -34,7 +36,15 @@ public class AchievementManagerScript : MonoBehaviour
             Debug.Log("Not on steam");
         }
 
-
+        // Check for achievements that have 'progress'
+        if (PlayerPrefs.HasKey("totalReturns"))
+        {
+            totalReturns = PlayerPrefs.GetInt("totalReturns");
+        }
+        else
+        {
+            PlayerPrefs.SetInt("totalReturns", 0);
+        }
 
         // Populate local achievement status
         for (int i = 0; i < numberOfAchievements; i++)
@@ -82,8 +92,16 @@ public class AchievementManagerScript : MonoBehaviour
         Debug.Log("Will save all achievements here");
     }
 
+    public void LogReturn()
+    {
+        this.totalReturns += 1;
+        PlayerPrefs.SetInt("totalReturns", this.totalReturns);
 
-
+        if (this.totalReturns >= 100)
+        {
+            this.Achievements[1].Unlock();
+        }
+    }
 }
 
 [System.Serializable]

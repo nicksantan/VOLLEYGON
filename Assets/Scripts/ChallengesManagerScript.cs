@@ -55,7 +55,7 @@ public class ChallengesManagerScript : MonoBehaviour {
         es.GetComponent<StandaloneInputModule>().submitButton = buttons.jump;
         es.GetComponent<StandaloneInputModule>().cancelButton = buttons.grav;
 
-        if (AchievementManagerScript.Instance !== null)
+        if (AchievementManagerScript.Instance != null)
         {
             if (IsAllMedals())
             {
@@ -216,7 +216,7 @@ public class ChallengesManagerScript : MonoBehaviour {
             float bestTime = PlayerPrefs.GetFloat((i + 1).ToString());
             MedalProvider mp = new MedalProvider(bestTime, i);
             medalTypes whichMedal = mp.GetMedal();
-            if (whichMedal !== medalTypes.gold)
+            if (whichMedal != medalTypes.gold)
             {
                 return false;
             }

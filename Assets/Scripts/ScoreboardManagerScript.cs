@@ -172,12 +172,33 @@ public class ScoreboardManagerScript : MonoBehaviour {
                 background.GetComponent<BackgroundColorScript>().TurnOffMatchPoint();
                 DataManagerScript.whichTeamWon = 1;
 
+                // check for achievement
+                if (AchievementManagerScript.Instance != null)
+                {
+                    if (((DataManagerScript.playerOnePlaying && !DataManagerScript.playerTwoPlaying) || (DataManagerScript.playerTwoPlaying && !DataManagerScript.playerOnePlaying)) && (DataManagerScript.playerThreePlaying && DataManagerScript.playerFourPlaying))
+                    {
+                        AchievementManagerScript.Instance.Achievements[5].Unlock();
+                    }
+
+                }
+
                 break;
             case 2:
                 TeamTwoWin();
                 background.GetComponent<BackgroundColorScript>().whoWon = 2;
                 background.GetComponent<BackgroundColorScript>().matchOver = true;
                 DataManagerScript.whichTeamWon = 2;
+
+                // check for achievement
+                if (AchievementManagerScript.Instance != null)
+                {
+                    if (((DataManagerScript.playerThreePlaying && !DataManagerScript.playerFourPlaying) || (DataManagerScript.playerFourPlaying && !DataManagerScript.playerThreePlaying)) && (DataManagerScript.playerOnePlaying && DataManagerScript.playerTwoPlaying))
+                    {
+                        AchievementManagerScript.Instance.Achievements[5].Unlock();
+                    }
+
+                }
+
                 break;
         }
 

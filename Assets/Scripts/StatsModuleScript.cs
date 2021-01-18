@@ -35,9 +35,14 @@ public class StatsModuleScript : MonoBehaviour
             // Debug.Log ("longest rally count is now " + DataManagerScript.longestRallyCount);
         }
 
+        // If achievements, then add to return count and check for unlock.
+        if (AchievementManagerScript.Instance != null)
+        {
+            AchievementManagerScript.Instance.LogReturn();
+        }
         // Credit a return to the last touch player
         switch (lastTouch)
-        {
+        { 
             case 1:
                 DataManagerScript.playerOneReturns += 1;
                 break;

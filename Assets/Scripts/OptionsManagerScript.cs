@@ -14,20 +14,23 @@ public class OptionsManagerScript : MonoBehaviour
 	public GameObject options;
 	public GameObject breadcrumb;
 	public GameObject optionBreadcrumb;
-	public GameObject optionEditButton;
+    public GameObject optionBackBreadcrumb;
+    public GameObject optionEditButton;
     public GameObject optionPlayButton;
+    public GameObject optionViewButton;
     public GameObject leftBackground;
 	public GameObject rightBackground;
 
 	private int whichPlayerIsControlling;
 	private JoystickButtons joyButts;
 
+    public bool inAchievementsMenu = false;
 	private int selectedIndex = 0;
 	private bool optionIsOpen = false;
 
 	private EventSystem es;
 
-	static private int[] validIndexes = { 0, 1, 2, 5 };
+	static private int[] validIndexes = { 0, 1, 2, 5, 6 };
 
 	void Start()
 	{
@@ -53,10 +56,13 @@ public class OptionsManagerScript : MonoBehaviour
 		bool optionIsSelectable = OptionsManagerScript.CheckSelectableOptionIndex(selectedIndex);
         // special case for how-to video
         bool optionIsPlayable = selectedIndex == 5;
-		optionEditButton.SetActive(optionIsSelectable && !optionIsOpen && !optionIsPlayable);
+        bool optionIsViewable = selectedIndex == 6; 
+
+		optionEditButton.SetActive(optionIsSelectable && !optionIsOpen && !optionIsPlayable && !optionIsViewable);
         optionPlayButton.SetActive(optionIsSelectable && !optionIsOpen && optionIsPlayable);
-		// Show options based on carousel slide selected
-		if (es.currentSelectedGameObject)
+        optionViewButton.SetActive(optionIsSelectable && !optionIsOpen && !optionIsPlayable && optionIsViewable);
+        // Show options based on carousel slide selected
+        if (es.currentSelectedGameObject && !inAchievementsMenu)
 		{
 			int selectedSlideIndex = es.currentSelectedGameObject.transform.GetSiblingIndex();
 			if (selectedIndex != selectedSlideIndex)
@@ -72,10 +78,12 @@ public class OptionsManagerScript : MonoBehaviour
 
 			// Show/hide UI
 			optionBreadcrumb.SetActive(false);
-			breadcrumb.SetActive(true);
+            optionBackBreadcrumb.SetActive(false);
+            breadcrumb.SetActive(true);
 			leftBackground.SetActive(false);
 			rightBackground.SetActive(true);
 
+            inAchievementsMenu = false;
 			if (optionIsOpen)
 			{
 				// Disable currently selected option
@@ -92,11 +100,18 @@ public class OptionsManagerScript : MonoBehaviour
 			}
 		}
 
-		if (inputSelecting && !optionIsOpen && optionIsSelectable && !optionIsPlayable)
+		if (inputSelecting && !optionIsOpen && optionIsSelectable && !optionIsPlayable && !inAchievementsMenu)
 		{
 
-			// Show/hide UI
-			optionBreadcrumb.SetActive(true);
+            // Show/hide UI
+            if (selectedIndex != 6)
+            {
+                optionBreadcrumb.SetActive(true);
+            } else
+            {
+                inAchievementsMenu = true;
+                optionBackBreadcrumb.SetActive(true);
+            }
 			breadcrumb.SetActive(false);
 			leftBackground.SetActive(true);
 			rightBackground.SetActive(false);
@@ -112,9 +127,10 @@ public class OptionsManagerScript : MonoBehaviour
             SceneManager.LoadSceneAsync("howToVideoScene");
 
         }
-            // Disable carousel when we have an option open
-            es.enabled = !optionIsOpen;
-		if (es.enabled)
+        // Disable carousel when we have an option open... unless it's achievements
+        es.enabled = (!optionIsOpen || selectedIndex == 6);
+		
+        if (es.enabled && selectedIndex!=6)
 		{
 			// Reset selected item on re-enable
 			es.SetSelectedGameObject(carousel.slides[selectedIndex].gameObject);

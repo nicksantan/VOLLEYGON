@@ -13,6 +13,8 @@ public class CarouselScript : MonoBehaviour {
 	public bool infinite = false;
     bool stickDownLast;
 
+    public bool disabled = false;
+
 	private JoystickButtons[] joysticks = new JoystickButtons[4] {
 		new JoystickButtons(1),
 		new JoystickButtons(2),
@@ -66,7 +68,7 @@ public class CarouselScript : MonoBehaviour {
 	void OnGUI() {
 
 		// Don't listen for events if we're animating or disabled
-		if (isSnapping || !es.isFocused) {
+		if (isSnapping || !es.isFocused || disabled) {
 			return;
 		}
 

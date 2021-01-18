@@ -1457,14 +1457,27 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6e33e8a15772c42388d34e0254c0e7ae, type: 3}
   AchievementNames:
   - Prodigy
-  - Second Achievement
-  - Another Achievement
-  - Another Achievement
+  - Volley Veteran
+  - Flawless Victory
+  - And the Crowd Goes Wild!
   - Extra Innings
-  - Me Against The World
+  - There Can Be Only One
   - Solo Savant
-  - Another Achievement
-  - A New Challenger
+  - Perfectionist
+  - A New Challenger!
   - Giantslayer
-  - Jus Hoopin'
-  - Another Achievement
+  - Hoopin'
+  - Bring It On!
+  AchievementDescriptions:
+  - Score an Ace
+  - Make 100 total returns in Multiplayer
+  - Win a game with 0 bumbles in Multiplayer
+  - Have a rally over 20 in Multiplayer
+  - Go to deuce 5 times in one Multiplayer Game
+  - Win a game alone against two opponents in Multiplayer
+  - Score over 50 in Solo Mode
+  - Get a gold medal in every challenge
+  - Get a medal in every challenge
+  - Defeat Giant Square in under 5 seconds
+  - Score a basket in under 5 seconds
+  - Defeat two AI bots on hard difficulty

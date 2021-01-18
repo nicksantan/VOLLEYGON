@@ -15,6 +15,7 @@ public class AchievementManagerScript : MonoBehaviour
     // Static singleton property
     public static AchievementManagerScript Instance { get; private set; }
     public string[] AchievementNames = { "First Achievement", "Second Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement" };
+    public string[] AchievementDescriptions = { "First Achievement", "Second Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement" };
 
     void Awake()
     {
@@ -84,7 +85,7 @@ public class AchievementManagerScript : MonoBehaviour
           
 
 
-                Achievements.Add(new Achievement(AchievementNames[i], thisAchievementUnlocked == 1, thisAchievementUsesProgress == 1, i, thisAchievementProgress));
+                Achievements.Add(new Achievement(AchievementNames[i], AchievementDescriptions[i], thisAchievementUnlocked == 1, thisAchievementUsesProgress == 1, i, thisAchievementProgress));
         }
     }
 
@@ -109,6 +110,7 @@ public class AchievementManagerScript : MonoBehaviour
 public class Achievement
 {
     public string name;
+    public string description;
     public bool unlocked;
     public bool usesProgress;
     public int progress;
@@ -119,9 +121,10 @@ public class Achievement
 
     // List of List<int>
 
-    public Achievement(string achievementName, bool achievementUnlocked, bool usesProgress, int id, int progress = 0)
+    public Achievement(string achievementName, string achievementDescription, bool achievementUnlocked, bool usesProgress, int id, int progress = 0)
     {
         this.name = achievementName;
+        this.description = achievementDescription;
         this.unlocked = achievementUnlocked;
         this.usesProgress = usesProgress;
         this.progress = progress;

@@ -18,6 +18,7 @@ public class AchievementStatusIconScript : MonoBehaviour
     public Text a_title;
     public Text a_desc;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,7 +46,7 @@ public class AchievementStatusIconScript : MonoBehaviour
 
 
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -58,6 +59,14 @@ public class AchievementStatusIconScript : MonoBehaviour
             if (!a_desc.gameObject.active) { a_desc.gameObject.SetActive(true); };
             a_title.text = achievementName.ToUpper();
             a_desc.text = achievementDescription.ToUpper();
+
+            borderFrame.GetComponent<Image>().color = new Color(1f, 1f, 1f);
+        } else
+        {
+            if (!status)
+            {
+                borderFrame.GetComponent<Image>().color = new Color(.3f, .3f, .3f);
+            }
         }
     }
 }

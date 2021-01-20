@@ -6,6 +6,7 @@ public class SpinningNetScript : MonoBehaviour {
 	public float acceleration;
 	public float accelerationFactor;
 	public float vel = 20f;
+    public float maxSpeed = 500f;
 	// Use this for initialization
 	void Start () {
 		rb = gameObject.GetComponent<Rigidbody2D>();
@@ -20,12 +21,12 @@ public class SpinningNetScript : MonoBehaviour {
 		vel += acceleration * Time.deltaTime;
 		rb.angularVelocity = vel;
 
-		if (vel > 500) {
-			acceleration = -1 * accelerationFactor;
+		if (vel > maxSpeed) {
+			acceleration = -1 * Mathf.Abs(accelerationFactor);
 		}
 
-		if (vel < -500) {
-			acceleration = 1 * accelerationFactor;
+		if (vel < -1 * maxSpeed) {
+			acceleration = 1 * Mathf.Abs(accelerationFactor);
 		}
 		
 	}

@@ -27,18 +27,18 @@ public class AchievementManagerScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        QueueToPop(0);
-        QueueToPop(1);
-        QueueToPop(2);
-        QueueToPop(3);
-        QueueToPop(4);
-        QueueToPop(5);
-        QueueToPop(6);
-        QueueToPop(7);
-        QueueToPop(8);
-        QueueToPop(9);
-        QueueToPop(10);
-        QueueToPop(11);
+        //QueueToPop(0);
+        //QueueToPop(1);
+        //QueueToPop(2);
+        //QueueToPop(3);
+        //QueueToPop(4);
+        //QueueToPop(5);
+        //QueueToPop(6);
+        //QueueToPop(7);
+        //QueueToPop(8);
+        //QueueToPop(9);
+        //QueueToPop(10);
+        //QueueToPop(11);
         // load achievement status from playerprefs or other source (Steam cloud save?)
 
         // Are we on steam?

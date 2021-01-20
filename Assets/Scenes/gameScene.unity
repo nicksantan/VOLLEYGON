@@ -551,8 +551,11 @@ MonoBehaviour:
   sizeUpSFX2: {fileID: 0}
   pandemoniumSFX1: {fileID: 0}
   pandemoniumSFX2: {fileID: 0}
+  innerShape: {fileID: 0}
   jumpVel: 21
   holdingButtonDown: 0
+  holdingGravButtonDown: 0
+  framesSinceLastGravChange: 0
 --- !u!61 &16993502
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -877,6 +880,147 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e241f0b08689e4d8b8c81984d26532ac, type: 3}
+--- !u!1001 &119984554
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1918613082}
+    m_Modifications:
+    - target: {fileID: 6593947736366938723, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6593995561022293145, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6594403110138671123, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6594567997262592863, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604104460738629413, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604214740640691147, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604273357628562125, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604391052802482267, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611698940303488481, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611698940303488481, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611698940303488481, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611698940303488481, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611698940303488481, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611698940303488481, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611698940303488481, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611698940303488481, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611698940303488481, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611698940303488481, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611698940303488481, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611698940303488481, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611698940303488481, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6617124329692880261, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_Name
+      value: MultispinArena
+      objectReference: {fileID: 0}
+    - target: {fileID: 6617124329692880261, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6617124329692880261, guid: e33c48485d392443a955d36efe4a6525,
+        type: 3}
+      propertyPath: m_TagString
+      value: Arena
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e33c48485d392443a955d36efe4a6525, type: 3}
+--- !u!4 &119984555 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6611698940303488481, guid: e33c48485d392443a955d36efe4a6525,
+    type: 3}
+  m_PrefabInstance: {fileID: 119984554}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &119984556 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6617124329692880261, guid: e33c48485d392443a955d36efe4a6525,
+    type: 3}
+  m_PrefabInstance: {fileID: 119984554}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &153996290 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1405436038614070, guid: 4e3513839121447d9b89cb8126ce3434,
@@ -2632,8 +2776,11 @@ MonoBehaviour:
   sizeUpSFX2: {fileID: 8300000, guid: a4a1f8078117f44c3b1370eff1b867b3, type: 3}
   pandemoniumSFX1: {fileID: 0}
   pandemoniumSFX2: {fileID: 0}
+  innerShape: {fileID: 0}
   jumpVel: 21
   holdingButtonDown: 0
+  holdingGravButtonDown: 0
+  framesSinceLastGravChange: 0
 --- !u!61 &410775739
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3974,8 +4121,11 @@ MonoBehaviour:
   sizeUpSFX2: {fileID: 0}
   pandemoniumSFX1: {fileID: 0}
   pandemoniumSFX2: {fileID: 0}
+  innerShape: {fileID: 0}
   jumpVel: 21
   holdingButtonDown: 0
+  holdingGravButtonDown: 0
+  framesSinceLastGravChange: 0
 --- !u!61 &655527191
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7946,8 +8096,11 @@ MonoBehaviour:
   sizeUpSFX2: {fileID: 0}
   pandemoniumSFX1: {fileID: 0}
   pandemoniumSFX2: {fileID: 0}
+  innerShape: {fileID: 0}
   jumpVel: 21
   holdingButtonDown: 0
+  holdingGravButtonDown: 0
+  framesSinceLastGravChange: 0
 --- !u!61 &1067319491
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8517,8 +8670,11 @@ MonoBehaviour:
   sizeUpSFX2: {fileID: 8300000, guid: a4a1f8078117f44c3b1370eff1b867b3, type: 3}
   pandemoniumSFX1: {fileID: 0}
   pandemoniumSFX2: {fileID: 0}
+  innerShape: {fileID: 0}
   jumpVel: 21
   holdingButtonDown: 0
+  holdingGravButtonDown: 0
+  framesSinceLastGravChange: 0
 --- !u!61 &1094186023
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10376,8 +10532,11 @@ MonoBehaviour:
   sizeUpSFX2: {fileID: 8300000, guid: a4a1f8078117f44c3b1370eff1b867b3, type: 3}
   pandemoniumSFX1: {fileID: 0}
   pandemoniumSFX2: {fileID: 0}
+  innerShape: {fileID: 0}
   jumpVel: 21
   holdingButtonDown: 0
+  holdingGravButtonDown: 0
+  framesSinceLastGravChange: 0
 --- !u!61 &1468053648
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12552,6 +12711,7 @@ Transform:
   - {fileID: 1829488415}
   - {fileID: 907943518}
   - {fileID: 153996291}
+  - {fileID: 119984555}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12989,8 +13149,11 @@ MonoBehaviour:
   sizeUpSFX2: {fileID: 0}
   pandemoniumSFX1: {fileID: 0}
   pandemoniumSFX2: {fileID: 0}
+  innerShape: {fileID: 0}
   jumpVel: 21
   holdingButtonDown: 0
+  holdingGravButtonDown: 0
+  framesSinceLastGravChange: 0
 --- !u!61 &1944651243
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -15525,6 +15688,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3999124773001654002, guid: b197b3aa00ed74d36a7bc60c111c1672,
         type: 3}
+      propertyPath: Arenas.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999124773001654002, guid: b197b3aa00ed74d36a7bc60c111c1672,
+        type: 3}
       propertyPath: scoreboard
       value: 
       objectReference: {fileID: 1240258874}
@@ -15613,6 +15781,11 @@ PrefabInstance:
       propertyPath: Arenas.Array.data[8]
       value: 
       objectReference: {fileID: 153996290}
+    - target: {fileID: 3999124773001654002, guid: b197b3aa00ed74d36a7bc60c111c1672,
+        type: 3}
+      propertyPath: Arenas.Array.data[9]
+      value: 
+      objectReference: {fileID: 119984556}
     - target: {fileID: 3999124773001654003, guid: b197b3aa00ed74d36a7bc60c111c1672,
         type: 3}
       propertyPath: m_Name

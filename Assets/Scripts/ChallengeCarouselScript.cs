@@ -77,7 +77,10 @@ public class ChallengeCarouselScript : MonoBehaviour
         {
 
             // Show/hide UI
-            optionBreadcrumb.SetActive(false);
+            if (optionBreadcrumb)
+            {
+                optionBreadcrumb.SetActive(false);
+            }
             breadcrumb.SetActive(true);
      
       
@@ -90,7 +93,10 @@ public class ChallengeCarouselScript : MonoBehaviour
         {
 
             // Show/hide UI
-            optionBreadcrumb.SetActive(true);
+            if (optionBreadcrumb)
+            {
+                optionBreadcrumb.SetActive(true);
+            }
             breadcrumb.SetActive(false);
             leftBackground.SetActive(true);
             rightBackground.SetActive(false);

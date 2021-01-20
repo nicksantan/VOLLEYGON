@@ -64,7 +64,7 @@ public class ChallengeScript_2 : MonoBehaviour
                     float endTime = Time.time;
                     if (endTime - startTime <= 5f)
                     {
-                        AchievementManagerScript.Instance.Achievements[10].Unlock();
+                        AchievementManagerScript.Instance.Achievements[9].Unlock();
                     }
                 }
                 break;

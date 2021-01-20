@@ -8,15 +8,16 @@ public class AchievementManagerScript : MonoBehaviour
 {
     [SerializeField]
     public List<Achievement> Achievements = new List<Achievement>();
+    public List<GameObject> AchievementsToPop = new List<GameObject>();
     public int numberOfAchievements = 12;
-
+    public Canvas a_canvas;
     public int totalReturns = 0;
     public List<Sprite> icons = new List<Sprite>();
     // Static singleton property
     public static AchievementManagerScript Instance { get; private set; }
     public string[] AchievementNames = { "First Achievement", "Second Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement" };
     public string[] AchievementDescriptions = { "First Achievement", "Second Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement", "Another Achievement" };
-
+    public GameObject popupPrefab;
     void Awake()
     {
         Instance = this;
@@ -26,7 +27,18 @@ public class AchievementManagerScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        QueueToPop(0);
+        QueueToPop(1);
+        QueueToPop(2);
+        QueueToPop(3);
+        QueueToPop(4);
+        QueueToPop(5);
+        QueueToPop(6);
+        QueueToPop(7);
+        QueueToPop(8);
+        QueueToPop(9);
+        QueueToPop(10);
+        QueueToPop(11);
         // load achievement status from playerprefs or other source (Steam cloud save?)
 
         // Are we on steam?
@@ -89,6 +101,10 @@ public class AchievementManagerScript : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        PopNextAchievement();
+    }
     public void SaveAchievements()
     {
         Debug.Log("Will save all achievements here");
@@ -102,6 +118,30 @@ public class AchievementManagerScript : MonoBehaviour
         if (this.totalReturns >= 100)
         {
             this.Achievements[1].Unlock();
+        }
+    }
+
+    public void QueueToPop(int whichAchievement)
+    {
+        // create a new achievement popup
+        GameObject newPopup = Instantiate(popupPrefab, a_canvas.transform);
+        newPopup.GetComponent<AchivementPopupScript>().whichAchievement = whichAchievement;
+        AchievementsToPop.Add(newPopup);
+    }
+
+    public void PopNextAchievement()
+    {
+        // make sure there are achievements in the list
+        if (AchievementsToPop.Count == 0) { return; }
+        // get the first in a list
+        GameObject nextInLine = AchievementsToPop[0];
+        if (!nextInLine.GetComponent<AchivementPopupScript>().isMoving && !nextInLine.GetComponent<AchivementPopupScript>().isDone)
+        {
+            nextInLine.GetComponent<AchivementPopupScript>().BeginPop();
+        } else if (!nextInLine.GetComponent<AchivementPopupScript>().isMoving && nextInLine.GetComponent<AchivementPopupScript>().isDone)
+        {
+            // remove this finished achievement from the list.
+            AchievementsToPop.RemoveAt(0);
         }
     }
 }
@@ -148,10 +188,14 @@ public class Achievement
 
             // Save all status
             AchievementManagerScript.Instance.SaveAchievements();
-        } else
+
+            // Queue the achievement to be popped
+            AchievementManagerScript.Instance.QueueToPop(this.id);
+        }
+        else
         {
             Debug.Log("Achievement already unlocked!");
         }
-
     }
 }
+

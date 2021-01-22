@@ -15,11 +15,15 @@ public class TitleManagerScript : MonoBehaviour {
 	private JoystickButtons[] gamepads = new JoystickButtons[4];
     private bool inputAllowed = false;
     public GameObject pressStartAnimation;
+    public bool allowQuit = false;
 
 	public Text versionText;
 	public GameObject mainMenuPanel;
 	public GameObject singlePlayerPanel;
 	public GameObject soloModeButton;
+    public GameObject quitPanel;
+    public GameObject quitButton;
+    public GameObject resumeButton;
 
 	public GameObject curtain;
 
@@ -73,10 +77,14 @@ public class TitleManagerScript : MonoBehaviour {
 
 			// Listen for activation
 			if (!mainMenuActive) {
+                if (inputAllowed && Input.GetButtonDown(gamepads[i].grav) && allowQuit)
+                {
+                    showQuitAppPanel();
+                }
 
-				if (inputAllowed && (Input.GetButtonDown(gamepads[i].jump) || Input.GetButtonDown(gamepads[i].start))) {
-
-					if (DataManagerScript.demoMode) {
+                if (inputAllowed && (Input.GetButtonDown(gamepads[i].jump) || Input.GetButtonDown(gamepads[i].start))) {
+                  
+                    if (DataManagerScript.demoMode) {
 
                         // Jump right into lobby if in demo mode
                         DataManagerScript.gamepadControllingMenus = gamepadIndex;
@@ -126,12 +134,38 @@ public class TitleManagerScript : MonoBehaviour {
 				// Listen for cancel
 				if (controllingGamepad != null && Input.GetButtonDown(controllingGamepad.grav)) {
 					cancelCurrentMenu(false);
-				}
+				} 
 			}
 		}
 	}
 
-	void cancelCurrentMenu(bool cancelAll) {
+    void showQuitAppPanel()
+    {
+        es1.SetSelectedGameObject(null);
+        quitPanel.SetActive(true);
+        inputAllowed = false;
+        es1.SetSelectedGameObject(quitButton);
+        resumeButton.GetComponent<ChangeButtonTextColorScript>().ChangeToWhite();
+    }
+
+    public void allowInputSoon()
+    {
+        Invoke("AllowInput", .25f);
+    }
+    public void hideQuitAppPanel()
+    {
+       
+        quitPanel.SetActive(false); 
+        es1.SetSelectedGameObject(null);
+        allowInputSoon();
+    }
+
+    public void quitApp()
+    {
+        Application.Quit();
+    }
+
+    void cancelCurrentMenu(bool cancelAll) {
 		if (!singlePlayerPanel.activeSelf || cancelAll) {
 			// Canceling out of main menu
 			mainMenuActive = false;
@@ -140,6 +174,7 @@ public class TitleManagerScript : MonoBehaviour {
             LeanTween.move(Camera.main.gameObject, new Vector3(0f, 0f, -10f), 0.5f).setEase(LeanTweenType.easeOutQuad);
             pressStartAnimation.SetActive(true);
             pressStartAnimation.GetComponent<PlayAnimationScript>().PlayAnimation();
+            controllingGamepad = null;
         } else {
 			// Cancelling out of single player menu
 			es1.SetSelectedGameObject(null);

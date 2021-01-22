@@ -191,7 +191,10 @@ public class ArenaManagerScript : MonoBehaviour {
 
                     // Start fade to next scene
                     StartCoroutine("NextScene");
-                }
+                } else if (Input.GetButtonDown(joystick.grav))
+            {
+                StartCoroutine("PrevScene");
+            }
 
         }
     }
@@ -203,6 +206,17 @@ public class ArenaManagerScript : MonoBehaviour {
             GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
             yield return new WaitForSeconds(1f);
             SceneManager.LoadSceneAsync("proTipScene");
+        }
+    }
+
+    IEnumerator PrevScene()
+    {
+        if (!locked)
+        {
+            locked = true;
+            GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
+            yield return new WaitForSeconds(1f);
+            SceneManager.LoadSceneAsync("choosePlayerScene");
         }
     }
 }

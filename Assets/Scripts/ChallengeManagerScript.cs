@@ -226,6 +226,9 @@ public class ChallengeManagerScript : MonoBehaviour {
                     loseMedal.GetComponent<Image>().sprite = goldMedalImage;
                     break;
             }
+            // Nudge over medal based on length of best time message.
+            int widthOfBestTime = CalculateLengthOfMessage(bestTimeLoseText.GetComponent<Text>().text, bestTimeLoseText);
+           loseMedal.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(-593 + widthOfBestTime + 20, -1.299999f, 0f); //Get rid of the magic numbers!
         }
         //For now, restart the challenge
      //   Invoke("RestartChallenge", 5f);
@@ -290,6 +293,8 @@ public class ChallengeManagerScript : MonoBehaviour {
             if (theResults.wasBestTime)
             {
                 newText.SetActive(true);
+                // Nudge over the whole text object slightly
+                newText.transform.parent.parent.GetComponent<RectTransform>().localPosition = new Vector3(50f, 257.3f, 0f);
             }
 
             MedalProvider mp = new MedalProvider(theResults.challengeTime, currentChallenge);
@@ -309,6 +314,10 @@ public class ChallengeManagerScript : MonoBehaviour {
                     winMedal.GetComponent<Image>().sprite = goldMedalImage;
                     break;
             }
+
+            // Nudge over medal based on length of best time message.
+            int widthOfBestTime = CalculateLengthOfMessage(bestTimeWinText.GetComponent<Text>().text, bestTimeWinText);
+            winMedal.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(-593 + widthOfBestTime + 20, -1.299999f, 0f); //Get rid of the magic numbers!
         }
         else
         {
@@ -319,7 +328,27 @@ public class ChallengeManagerScript : MonoBehaviour {
   
 
     }
+    int CalculateLengthOfMessage(string message, GameObject textObj)
+    {
+        int totalLength = 0;
+
+        Font myFont = textObj.GetComponent<Text>().font;  //chatText is my Text component
+        CharacterInfo characterInfo = new CharacterInfo();
+
+        char[] arr = message.ToCharArray();
+
+        foreach (char c in arr)
+        {
+            myFont.GetCharacterInfo(c, out characterInfo, textObj.GetComponent<Text>().fontSize);
+
+            totalLength += characterInfo.advance;
+        }
+
+        return totalLength;
+    }
 }
+
+
 
 public class MedalProvider
 {

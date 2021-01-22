@@ -13,7 +13,15 @@ public class ChangeButtonTextColorScript : MonoBehaviour, ISelectHandler, IDesel
 		t.color = whichColor;
 	}
 //
+    void Start()
+    { 
+        //ChangeColor(Color.white);
+    }
 
+    public void ChangeToWhite()
+    {
+        ChangeColor(Color.white);
+    }
 	public void OnDeselect(BaseEventData eventData){
 		ChangeColor (Color.white);
 //		Debug.Log ("DISABLED!");

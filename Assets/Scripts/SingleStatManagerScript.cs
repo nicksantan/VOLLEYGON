@@ -73,7 +73,7 @@ public class SingleStatManagerScript : MonoBehaviour {
 		StartCoroutine ("BackToTitle");
 	}
 	void Update () {
-		if (playersReady == playersPlaying) {
+		if (playersReady >= playersPlaying) {
 			StartCoroutine ("BackToTitle");
 		}
 

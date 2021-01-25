@@ -256,6 +256,10 @@ public class BallScript : MonoBehaviour {
             DataManagerScript.soloRallyCount = DataManagerScript.soloRallyCount + 1;
 
             moduleContainer.BroadcastMessage("OnBallReturned", lastTouch);
+
+            // get rid of this when not training
+            CurrentArena.BroadcastMessage("OnBallReturned", lastTouch);
+
             // TODO: Get Rid of this and use the modules instead
             GameManagerScript.Instance.SideChange ();
 

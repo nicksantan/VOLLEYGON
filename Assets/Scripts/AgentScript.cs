@@ -35,6 +35,10 @@ public class AgentScript : Agent
       
         AddReward(.001f);
 
+        if (!playerBeingControlled.GetComponent<PlayerController>().isJumping)
+        {
+            AddReward(.001f);
+        }
 
     }
   
@@ -270,6 +274,11 @@ public class AgentScript : Agent
         {
             AddReward(0.25f);
         }
+    }
+
+    public void OnBallReturned(int lastTouch)
+    {
+        AddReward(0.5f);
     }
 
     public void OnBallDied(int whichSide)

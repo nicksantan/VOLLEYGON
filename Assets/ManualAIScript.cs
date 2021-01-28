@@ -17,6 +17,10 @@ public class ManualAIScript : MonoBehaviour
     private float ballSpeedToTriggerJump = 7f;
     float maxBallSpeedToTriggerJump = 20f;
     public bool allowGravityChanges = true;
+    public bool allowJumps = true;
+    public float distanceTolerance = 1.15f;
+    public float randomXSpot;
+    public float randomXRate;
 
     public void Start()
     {
@@ -24,6 +28,8 @@ public class ManualAIScript : MonoBehaviour
         rBody = playerBeingControlled.GetComponent<Rigidbody2D>();
         mpm = GameObject.FindWithTag("MidpointMarker");
         nextSwitchTime = Random.Range(.4f, .8f);
+        randomXSpot = Random.Range(3f,16f);
+        randomXRate = Random.Range(.1f, .5f);
     }
 
     public void FixedUpdate()
@@ -38,6 +44,23 @@ public class ManualAIScript : MonoBehaviour
         directionFactor = 1f;
     }
 
+    public void GoBackToNeutral()
+    {
+        if (rBody.position.x > randomXSpot + .2f)
+        {
+            pc.virtualButtons.horizontal = -randomXRate;
+
+        }
+
+        else if (rBody.position.x < randomXSpot - .2f)
+        {
+            pc.virtualButtons.horizontal = randomXRate;
+        } else
+        {
+            randomXSpot = Random.Range(3f, 16f);
+            randomXRate = Random.Range(.1f, .5f);
+        }
+    }
     public void Update()
     {
         if (!pc.isJumping)
@@ -46,6 +69,7 @@ public class ManualAIScript : MonoBehaviour
         }
         if (Target == null)
         {
+            GoBackToNeutral();
             if (GameObject.FindWithTag("Ball"))
             {
                 Target = GameObject.FindWithTag("Ball").transform;
@@ -54,7 +78,7 @@ public class ManualAIScript : MonoBehaviour
         else
         {
             float distanceToBall = Mathf.Abs(Target.transform.position.x - rBody.position.x);
-            if (distanceToBall > 1.15f)
+            if (distanceToBall > distanceTolerance)
             {
                 // Move toward the ball.
                 if (Target.transform.position.x < rBody.position.x)
@@ -101,19 +125,22 @@ public class ManualAIScript : MonoBehaviour
                 if (Target.transform.position.x > .5f && pc.team == 1) // TODO: sign based on which team.
                 {
                     //behavior to move to center here.
-                    playerBeingControlled.GetComponent<PlayerController>().virtualButtons.horizontal = 0f;
+                    GoBackToNeutral();
+                    //playerBeingControlled.GetComponent<PlayerController>().virtualButtons.horizontal = 0f;
                 }
 
                 if (Target.transform.position.x < -.5f && pc.team == 2) // TODO: sign based on which team.
                 {
                     //behavior to move to center here.
-                    playerBeingControlled.GetComponent<PlayerController>().virtualButtons.horizontal = 0f;
+                    //playerBeingControlled.GetComponent<PlayerController>().virtualButtons.horizontal = 0f;
+                    GoBackToNeutral();
                 }
 
                 if (Target.GetComponent<Rigidbody2D>().isKinematic)
                 {
                     //behavior to move to center here.
-                    playerBeingControlled.GetComponent<PlayerController>().virtualButtons.horizontal = 0f;
+                    GoBackToNeutral();
+                    //playerBeingControlled.GetComponent<PlayerController>().virtualButtons.horizontal = 0f;
                 }
             }
             else
@@ -166,7 +193,7 @@ public class ManualAIScript : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Ball")
+        if (other.gameObject.tag == "Ball" && allowJumps)
         {
             float ballSpeed = other.gameObject.GetComponent<Rigidbody2D>().velocity.x;
             float ballYSpeed = other.gameObject.GetComponent<Rigidbody2D>().velocity.y;

@@ -73,6 +73,8 @@ public class GameManagerScript : MonoBehaviour {
 	public string startButton3 = "Start_P3";
 	public string startButton4 = "Start_P4";
 
+    public GameObject AIControllerPrefab;
+
 	public EventSystem es;
 
 	// Static singleton property
@@ -206,6 +208,27 @@ public class GameManagerScript : MonoBehaviour {
             Debug.Log(CurrentArena);
             //GameObject.FindWithTag("Arena");
         }
+
+        // Assign AI to bot players.
+        //TODO: Read from datamanger. for now, test player 3
+
+        Player2.GetComponent<PlayerController>().isAI = true;
+        GameObject ai = Instantiate(AIControllerPrefab);
+        ai.transform.Find("AIManager").GetComponent<ManualAIScript>().playerBeingControlled = Player2;
+        ai.transform.Find("AIManager").GetComponent<ManualAIScript>().allowGravityChanges = true;
+
+        Player3.GetComponent<PlayerController>().isAI = true;
+        GameObject aic = Instantiate(AIControllerPrefab);
+        aic.transform.Find("AIManager").GetComponent<ManualAIScript>().playerBeingControlled = Player3;
+        aic.transform.Find("AIManager").GetComponent<ManualAIScript>().allowGravityChanges = false;
+
+        //TODO: Read from datamanger. for now, test player 3
+        Player4.GetComponent<PlayerController>().isAI = true;
+        GameObject aic_two = Instantiate(AIControllerPrefab);
+        aic_two.transform.Find("AIManager").GetComponent<ManualAIScript>().playerBeingControlled = Player4;
+        aic_two.transform.Find("AIManager").GetComponent<ManualAIScript>().allowGravityChanges = false;
+        // set other options here
+
     }
 
     void OnBallDied(int whichSide)

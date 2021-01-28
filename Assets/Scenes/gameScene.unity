@@ -15786,6 +15786,12 @@ PrefabInstance:
       propertyPath: Arenas.Array.data[9]
       value: 
       objectReference: {fileID: 119984556}
+    - target: {fileID: 3999124773001654002, guid: b197b3aa00ed74d36a7bc60c111c1672,
+        type: 3}
+      propertyPath: AIControllerPrefab
+      value: 
+      objectReference: {fileID: 163366207120065375, guid: 35d94a9d557ba48a892b853956296c78,
+        type: 3}
     - target: {fileID: 3999124773001654003, guid: b197b3aa00ed74d36a7bc60c111c1672,
         type: 3}
       propertyPath: m_Name

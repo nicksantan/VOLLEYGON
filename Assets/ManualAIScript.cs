@@ -21,14 +21,22 @@ public class ManualAIScript : MonoBehaviour
     public float distanceTolerance = 1.15f;
     public float randomXSpot;
     public float randomXRate;
+    private int whichTeam;
 
     public void Start()
     {
         pc = playerBeingControlled.GetComponent<PlayerController>();
+        whichTeam = playerBeingControlled.GetComponent<PlayerController>().team;
         rBody = playerBeingControlled.GetComponent<Rigidbody2D>();
         mpm = GameObject.FindWithTag("MidpointMarker");
         nextSwitchTime = Random.Range(.4f, .8f);
-        randomXSpot = Random.Range(3f,16f);
+
+        if (whichTeam == 2)
+        {
+            randomXSpot = Random.Range(3f, 16f);
+        } else if (whichTeam == 1){
+            randomXSpot = Random.Range(-3f, -16f);
+        }
         randomXRate = Random.Range(.1f, .5f);
     }
 
@@ -57,8 +65,14 @@ public class ManualAIScript : MonoBehaviour
             pc.virtualButtons.horizontal = randomXRate;
         } else
         {
-            randomXSpot = Random.Range(3f, 16f);
-            randomXRate = Random.Range(.1f, .5f);
+            if (whichTeam == 2)
+            {
+                randomXSpot = Random.Range(3f, 16f);
+            }
+            else if (whichTeam == 1)
+            {
+                randomXSpot = Random.Range(-3f, -16f);
+            }
         }
     }
     public void Update()

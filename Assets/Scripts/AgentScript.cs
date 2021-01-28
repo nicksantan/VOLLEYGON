@@ -33,11 +33,16 @@ public class AgentScript : Agent
         }
         //RequestDecision();
       
-        AddReward(.001f);
+        //AddReward(.001f);
 
         if (!playerBeingControlled.GetComponent<PlayerController>().isJumping)
         {
-            AddReward(.001f);
+        //    AddReward(.001f);
+        }
+
+        if (rBody.position.x < 3f)
+        {
+            AddReward(-.001f);
         }
 
     }
@@ -58,12 +63,12 @@ public class AgentScript : Agent
 
         if (Mathf.FloorToInt(vectorAction[1]) == 1)
         {
-            Debug.Log("Setting grav change to true;");
+        //    Debug.Log("Setting grav change to true;");
             GravChange(true);
         }
         if (Mathf.FloorToInt(vectorAction[1]) == 0)
         {
-            Debug.Log("Setting grav change to false;");
+        //    Debug.Log("Setting grav change to false;");
             GravChange(false);
         }
 
@@ -121,7 +126,7 @@ public class AgentScript : Agent
         {
             //Debug.Log("GRAV ON?");
             //Debug.Log(isPressed);
-            Debug.Log("ACTUALLY setting to " + isPressed);
+        //   Debug.Log("ACTUALLY setting to " + isPressed);
             playerBeingControlled.GetComponent<PlayerController>().virtualButtons.grav = isPressed;
         }
     }
@@ -142,8 +147,8 @@ public class AgentScript : Agent
         ball = Instantiate(ballPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity);
             ball.GetComponent<BallScript>().startWithRandomGrav = true;
             // ball.GetComponent<BallScript>().LaunchBall();
-            IEnumerator coroutine_1 = ball.GetComponent<BallScript>().CustomLaunchBallWithDelay(.1f, 15f * Random.Range(.5f, 1.5f), -5f * Random.Range(-1.5f, 1.5f));
-            //IEnumerator coroutine_1 = ball.GetComponent<BallScript>().LaunchBallWithDelay(.1f);
+            //IEnumerator coroutine_1 = ball.GetComponent<BallScript>().CustomLaunchBallWithDelay(.1f, 15f * Random.Range(.5f, 1.5f), -5f * Random.Range(-1.5f, 1.5f));
+            IEnumerator coroutine_1 = ball.GetComponent<BallScript>().LaunchBallWithDelay(.1f);
             StartCoroutine(coroutine_1);
             Target = ball.transform;
         } else
@@ -258,7 +263,7 @@ public class AgentScript : Agent
         if (Input.GetKey("left"))
         {
             actionsOut[2] = 1;
-            Debug.Log("left test");
+            //Debug.Log("left test");
         }
 
         if (Input.GetKey("right"))
@@ -272,7 +277,7 @@ public class AgentScript : Agent
 
         if (coll.gameObject.tag == "Ball")
         {
-            AddReward(0.25f);
+            AddReward(0.05f);
         }
     }
 

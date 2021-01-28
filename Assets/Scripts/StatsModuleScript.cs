@@ -72,14 +72,14 @@ public class StatsModuleScript : MonoBehaviour
 
     public void ComputeStat(int whichTeamScored)
     {
-        Debug.Log(whichTeamScored);
-        Debug.Log("...team scored");
+     //   Debug.Log(whichTeamScored);
+     //   Debug.Log("...team scored");
 
-        Debug.Log(lastTouch);
-        Debug.Log("...was last touch");
+     //   Debug.Log(lastTouch);
+     // //  Debug.Log("...was last touch");
 
-        Debug.Log(secondToLastTouch);
-        Debug.Log("...was second to last touch");
+//        Debug.Log(secondToLastTouch);
+//Debug.Log("...was second to last touch");
         if (whichTeamScored == 1)
         {
             if (lastTouch == 1)

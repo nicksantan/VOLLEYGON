@@ -525,12 +525,12 @@ public class BallScript : MonoBehaviour {
         if (transform.position.y < -7.0f)
             {
                 rb.AddForce(new Vector3(0f, bonusBoost, 0f));
-                Debug.Log("bonus boost");
+        //        Debug.Log("bonus boost");
             }
             if (transform.position.y > -7.0f)
             {
                 rb.AddForce(new Vector3(0f, bonusBoost * -1, 0f));
-                Debug.Log("bonus boost");
+        //        Debug.Log("bonus boost");
             }
         } else if (coll.gameObject.tag == "Playfield"){
 			SoundManagerScript.instance.PlaySingle (bounceOffWallSound);
@@ -547,12 +547,12 @@ public class BallScript : MonoBehaviour {
             if (transform.position.y < -7.0f)
             {
                 rb.AddForce(new Vector3(0f, bonusBoost/2, 0f));
-                Debug.Log("bonus boost");
+         //       Debug.Log("bonus boost");
             }
             if (transform.position.y > -7.0f)
             {
                 rb.AddForce(new Vector3(0f, bonusBoost * -1/2, 0f));
-                Debug.Log("bonus boost");
+         //       Debug.Log("bonus boost");
             }
         }
     }

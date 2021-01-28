@@ -334,7 +334,7 @@ public class PlayerController : MonoBehaviour {
 //                Debug.Log("is ai");
                 if (virtualButtons.jump)
                 {
-                    Debug.Log("VIRTUAL JUMP!");
+//                    Debug.Log("VIRTUAL JUMP!");
                     if (isJumping == false && rb != null && !holdingButtonDown)
                     {
                         Vector3 jumpForce = new Vector3(0f, jumpPower * rb.gravityScale, 0f);
@@ -362,7 +362,7 @@ public class PlayerController : MonoBehaviour {
                 }
 
                 // Handle gravity switch
-                if (virtualButtons.grav && rb != null && !easyMode && framesSinceLastGravChange > 10 ) //TODO: will need a puse switch //!GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused
+                if (virtualButtons.grav && rb != null && !easyMode && framesSinceLastGravChange > 100 ) //TODO: will need a puse switch //!GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused
                 {
                     rb.gravityScale *= -1f;
                     framesSinceLastGravChange = 0;

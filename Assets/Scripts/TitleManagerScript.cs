@@ -222,16 +222,25 @@ public class TitleManagerScript : MonoBehaviour {
     {
         //TODO: This should be a different scene, specifically for choosing ONE shape. For now, just start the game with Square
         DataManagerScript.isSinglePlayerMode = true;
+        DataManagerScript.isBotsMode = false;
         SceneManager.LoadSceneAsync("soloGameScene");
     }
 
     public void StartMultiplayerGame(){
         DataManagerScript.isSinglePlayerMode = false;
+        DataManagerScript.isBotsMode = false;
         SceneManager.LoadSceneAsync ("ChoosePlayerScene");
 	}
-	public void StartChallengesGame(){
+    public void StartBotsGame()
+    {
+        DataManagerScript.isSinglePlayerMode = false;
+        DataManagerScript.isBotsMode = true;
+        SceneManager.LoadSceneAsync("ChoosePlayerScene");
+    }
+    public void StartChallengesGame(){
 		DataManagerScript.isChallengeMode = true;
-		SceneManager.LoadSceneAsync ("ChooseChallengeScene");
+        DataManagerScript.isBotsMode = false;
+        SceneManager.LoadSceneAsync ("ChooseChallengeScene");
 
 	}
 	public void StartOptionsMenu(){

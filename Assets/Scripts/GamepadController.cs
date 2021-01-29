@@ -23,6 +23,8 @@ public class GamepadController : MonoBehaviour {
     private Color32 gray = new Color32(40, 40, 40, 255);
     private Color32 white = new Color32(255, 255, 255, 255);
 
+    public bool botMode = false;
+
     // Use this for initialization
     void Start () {
 
@@ -39,11 +41,20 @@ public class GamepadController : MonoBehaviour {
 
         // Start at slot to match joystick int
         slot = joystick;
+
+        if (botMode)
+        {
+            slot = 99;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log("I'm enabled?");
+        //Debug.Log(enabled);
+        //Debug.Log("I'm in slot");
+        //Debug.Log(slot);
         // Get ready state from manager
         switch (slot)
         {
@@ -111,6 +122,25 @@ public class GamepadController : MonoBehaviour {
         // TODO: show outline if inactive and game ready
         if (outline) outline.SetActive(false);
 
+         //If bot mode, don't start at predetermined slot, just find the next available of the two.
+        if (botMode && enabled && !slotSelected)
+        {
+            //iterateSlot(true);
+            if (DataManagerScript.playerOnePlaying)
+            {
+                slot = 2;
+                Debug.Log("Choosing slot 2");
+            } else if (DataManagerScript.playerTwoPlaying)
+            {
+                slot = 1;
+                Debug.Log("Choosing slot 1");
+            } else
+            {
+                slot = 1;
+                Debug.Log("Default. Choosing slot 1");
+            }
+
+        }
         moveIcon(false);
     }
 
@@ -123,7 +153,7 @@ public class GamepadController : MonoBehaviour {
     }
 
     void selectSlotForJoystick() {
-        // Set joystick for player slot
+       //  Set joystick for player slot
         switch (slot)
         {
 
@@ -154,8 +184,21 @@ public class GamepadController : MonoBehaviour {
 
 	void leaveOccupiedSlot(int slotToLeave){
 		if (!playerTagged && !playerReady && !slotSelected && slot == slotToLeave) {
-			// Get new slot
-			iterateSlot (true);
+            // Get new slot
+            if (!botMode)
+            {
+                iterateSlot(true);
+            } else
+            {
+                if (slotToLeave == 1)
+                {
+                    slot = 2;
+                } else if(slotToLeave == 2){
+                    slot = 1;
+                }
+            }
+            Debug.Log("I'm in this slot");
+            Debug.Log(joystick);
 			// Move the icon
 			moveIcon (true);
 		}
@@ -231,10 +274,11 @@ public class GamepadController : MonoBehaviour {
         int difference = (goingRight) ? 1 : -1;
 
         // Look for next slot based on input direction
-        int numberOfSlots = 4;
+
+        int numberOfSlots = botMode ? 2 : 4;
         int nextSlot = (slot + difference) % numberOfSlots;
         if (nextSlot == 0) nextSlot = numberOfSlots;
-
+        Debug.Log(nextSlot);
         // See if desired slot is taken
         bool slotTaken = false;
         switch (nextSlot)

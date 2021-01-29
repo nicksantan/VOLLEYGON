@@ -56,7 +56,13 @@ public class ChoosePlayerScript : MonoBehaviour {
 
     private string defaultText = "Y: LOG IN";
 
-	void Awake() {
+    public bool isBotsMode = false;
+
+    // Labels for CPU/Bot mode
+    public GameObject CPULabels;
+    public GameObject RightPlayerLabels;
+
+    void Awake() {
 
 		Instance = this;
 		MusicManagerScript.Instance.whichSource += 1;
@@ -66,6 +72,71 @@ public class ChoosePlayerScript : MonoBehaviour {
 	}
 
 	void Start(){
+        isBotsMode = DataManagerScript.isBotsMode;
+
+        // Activate certain labels if this is bots mode
+        if (isBotsMode)
+        {
+            // TODO: Choose how many CPUs
+            CPULabels.SetActive(true);
+            RightPlayerLabels.SetActive(false);
+        
+            //Randomly choose bots.
+            int whichShapeOne = Mathf.FloorToInt(Random.Range(0, 6));
+            DataManagerScript.botOneType = whichShapeOne;
+            switch (whichShapeOne)
+            {
+                case 0:
+                    fakePlayer3.transform.Find("Square").gameObject.SetActive(true);
+                  
+                    break;
+                case 1:
+                    fakePlayer3.transform.Find("Circle").gameObject.SetActive(true);
+                    break;
+                case 2:
+                    fakePlayer3.transform.Find("Triangle").gameObject.SetActive(true);
+                    break;
+                case 3:
+                    fakePlayer3.transform.Find("Trapezoid").gameObject.SetActive(true);
+                    break;
+                case 4:
+                    fakePlayer3.transform.Find("Rectangle").gameObject.SetActive(true);
+                    break;
+                case 5:
+                    fakePlayer3.transform.Find("Star").gameObject.SetActive(true);
+                    break;
+            }
+
+            //Randomly choose bots.
+            int whichShapeTwo = Mathf.FloorToInt(Random.Range(0, 6));
+            DataManagerScript.botTwoType = whichShapeTwo;
+            switch (whichShapeTwo)
+            {
+                case 0:
+                    fakePlayer4.transform.Find("Square").gameObject.SetActive(true);
+
+                    break;
+                case 1:
+                    fakePlayer4.transform.Find("Circle").gameObject.SetActive(true);
+                    break;
+                case 2:
+                    fakePlayer4.transform.Find("Triangle").gameObject.SetActive(true);
+                    break;
+                case 3:
+                    fakePlayer4.transform.Find("Trapezoid").gameObject.SetActive(true);
+                    break;
+                case 4:
+                    fakePlayer4.transform.Find("Rectangle").gameObject.SetActive(true);
+                    break;
+                case 5:
+                    fakePlayer4.transform.Find("Star").gameObject.SetActive(true);
+                    break;
+            }
+
+            //fakePlayer3.transform.Find("Star").gameObject.SetActive(true);
+            //fakePlayer4.transform.Find("Square").gameObject.SetActive(true);
+        }
+
 		gutterBG.GetComponent<CanvasRenderer> ().SetAlpha(0.0f);
 		// Reset slots
     	DataManagerScript.playerOneJoystick = -1;
@@ -91,6 +162,14 @@ public class ChoosePlayerScript : MonoBehaviour {
 		DataManagerScript.playerThreeType = 0;
 		DataManagerScript.playerFourType = 0;
 
+        if (isBotsMode)
+        {
+            DataManagerScript.playerThreePlaying = true;
+            DataManagerScript.playerFourPlaying = true;
+            DataManagerScript.playerThreeType = DataManagerScript.botOneType;
+            DataManagerScript.playerFourType = DataManagerScript.botTwoType;
+        }
+
 		// Fade in
 		curtain.SetActive(true);
 		curtain.GetComponent<NewFadeScript>().Fade(0f);
@@ -99,15 +178,19 @@ public class ChoosePlayerScript : MonoBehaviour {
 		gamepadIcons = new GameObject[4] { gamepadIcon1, gamepadIcon2, gamepadIcon3, gamepadIcon4 };
         usernames = new GameObject[4] { userText1, userText2, userText3, userText4 };
 
-		// Loop over icons and activate any already active in menu
-		for ( int i = 0; i < gamepadIcons.Length; i++) {
-			int gamepadId = i + 1;
+        // Loop over icons and activate any already active in menu
+        for (int i = 0; i < gamepadIcons.Length; i++)
+        {
+            int gamepadId = i + 1;
 
-			// Activate gamepad for player who selected the game mode
-			bool isActive = DataManagerScript.gamepadControllingMenus == gamepadId;
-			gamepadIcons[i].GetComponent<GamepadController>().ToggleIcon(isActive);
-		}
-	}
+            // Activate gamepad for player who selected the game mode
+            bool isActive = DataManagerScript.gamepadControllingMenus == gamepadId;
+            gamepadIcons[i].GetComponent<GamepadController>().ToggleIcon(isActive);
+
+            gamepadIcons[i].GetComponent<GamepadController>().botMode = isBotsMode;
+        }
+
+    }
 
     // See if all players that are tagged in have also readied up
 	bool noUnreadyPlayers(){
@@ -125,6 +208,24 @@ public class ChoosePlayerScript : MonoBehaviour {
 		}
 
 	}
+
+    int numberOfTaggedInPlayers()
+    {
+        int num = 0; ;
+
+        for (int i = 0; i < gamepadIcons.Length; i++)
+        {
+            int gamepadId = i + 1;
+
+
+            if (gamepadIcons[i].GetComponent<GamepadController>().enabled == true)
+            {
+                num++;
+            }
+        }
+
+        return num;
+    }
 
     // See if chosen slots and player ready statuses are ok to start the game
 	public void CheckStartable(){
@@ -145,6 +246,13 @@ public class ChoosePlayerScript : MonoBehaviour {
 		if (fakePlayer4.GetComponent<FakePlayerScript> ().readyToPlay) {
 			playersOnRight++;
 		}
+
+
+        if (isBotsMode)
+        {
+            //TODO: switch for num of bots
+            playersOnRight++;
+        }
 
 		if ((playersOnLeft == 1 && playersOnRight == 0) && noUnreadyPlayers () || (playersOnLeft == 0 && playersOnRight == 1) && noUnreadyPlayers ()) {
 
@@ -260,8 +368,18 @@ public class ChoosePlayerScript : MonoBehaviour {
                 }
 				else if (!gamepadIcons[i].GetComponent<GamepadController>().enabled) {
 
-					// Tag in gamepad if not
-					gamepadIcons[i].GetComponent<GamepadController>().ToggleIcon(true);
+                    // Tag in gamepad if not
+                    if (isBotsMode) // Check if max slots have been exceeded first
+                    {
+                        if (numberOfTaggedInPlayers() < 2)
+                        {
+                            gamepadIcons[i].GetComponent<GamepadController>().ToggleIcon(true);
+                        }
+                    }
+                    else
+                    {
+                        gamepadIcons[i].GetComponent<GamepadController>().ToggleIcon(true);
+                    }
 
 				}
 			}

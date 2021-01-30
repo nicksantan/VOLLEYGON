@@ -85,7 +85,7 @@ public class StatsModuleScript : MonoBehaviour
             if (lastTouch == 1)
             {
                 DataManagerScript.playerOneAces += 1;
-
+                    
                     AchievementManagerScript.Instance.Achievements[0].Unlock();
                
                 DataManagerScript.playerOneScores += 1;
@@ -143,17 +143,20 @@ public class StatsModuleScript : MonoBehaviour
             if (lastTouch == 3)
             {
                 DataManagerScript.playerThreeAces += 1;
-           
+                if (!DataManagerScript.isBotsMode)
+                {
                     AchievementManagerScript.Instance.Achievements[0].Unlock();
+                }
            
                 DataManagerScript.playerThreeScores += 1;
             }
             if (lastTouch == 4)
             {
                 DataManagerScript.playerFourAces += 1;
-               
+                if (!DataManagerScript.isBotsMode)
+                {
                     AchievementManagerScript.Instance.Achievements[0].Unlock();
-            
+                }
                 DataManagerScript.playerFourScores += 1;
             }
 

@@ -171,6 +171,26 @@ public class PlayerController : MonoBehaviour {
 
             // Set default innershape
             innerShape = transform.Find("InnerShape").gameObject;
+
+            //Special case for Star innershape:
+            //0.06 y
+            //.6 scale
+            if (innerShape)
+            {
+                if (shapeNames[playerType] == "star")
+                {
+                    innerShape.transform.localScale = new Vector3(.6f, .6f, .6f);
+                    innerShape.transform.localPosition = new Vector3(0f, 0.06f, -1f);
+                }
+
+                //Special case for flange innershape:
+                if (shapeNames[playerType] == "rectangle")
+                {
+                    innerShape.transform.localScale = new Vector3(.85f, .5f, .8f);
+                    //scale 0.85 .5 .8
+                }
+            }
+
             if (innerShape)
             {
                 if (rb.gravityScale < 0)

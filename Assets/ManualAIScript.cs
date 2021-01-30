@@ -23,6 +23,9 @@ public class ManualAIScript : MonoBehaviour
     public float randomXRate;
     private int whichTeam;
 
+    public float ballSpeedXTolerance = 3f;
+    public float ballSpeedYTolerance = 2f;
+
     public void Start()
     {
         pc = playerBeingControlled.GetComponent<PlayerController>();
@@ -215,7 +218,7 @@ public class ManualAIScript : MonoBehaviour
             Debug.Log(Mathf.Abs(ballSpeed));
             //TODO: Need a way to deal with this for both gravities
             float distanceToBall = Mathf.Abs(Target.transform.position.x - rBody.position.x);
-            if (distanceToBall < .65f && ballSpeed < 3f && ballYSpeed < 2.5f)
+            if (distanceToBall < .65f && ballSpeed < ballSpeedXTolerance && ballYSpeed < ballSpeedYTolerance)
             {
                 Debug.Log("ball seems to be stuck, let's get it out");
                 // choose a direction to move toward the Net

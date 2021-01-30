@@ -220,18 +220,18 @@ public class GameManagerScript : MonoBehaviour {
 
             Player3.GetComponent<PlayerController>().isAI = true;
             GameObject aic = Instantiate(AIControllerPrefab);
-            aic.transform.Find("AIManager").GetComponent<ManualAIScript>().playerBeingControlled = Player3;
+            aic.transform.Find("AIManager-default").GetComponent<ManualAIScript>().playerBeingControlled = Player3;
 
-            aic.transform.Find("AIManager").GetComponent<ManualAIScript>().allowGravityChanges = true;
+            aic.transform.Find("AIManager-default").GetComponent<ManualAIScript>().allowGravityChanges = true;
 
 
             if (DataManagerScript.numBots == 2)
             {
-                aic.transform.Find("AIManager").GetComponent<ManualAIScript>().allowGravityChanges = false;
+                aic.transform.Find("AIManager-default").GetComponent<ManualAIScript>().allowGravityChanges = false;
                 Player4.GetComponent<PlayerController>().isAI = true;
                 GameObject aic_two = Instantiate(AIControllerPrefab);
-                aic_two.transform.Find("AIManager").GetComponent<ManualAIScript>().playerBeingControlled = Player4;
-                aic_two.transform.Find("AIManager").GetComponent<ManualAIScript>().allowGravityChanges = false;
+                aic_two.transform.Find("AIManager-default").GetComponent<ManualAIScript>().playerBeingControlled = Player4;
+                aic_two.transform.Find("AIManager-default").GetComponent<ManualAIScript>().allowGravityChanges = false;
             }
         }
         // set other options here

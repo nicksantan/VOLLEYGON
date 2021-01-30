@@ -177,7 +177,10 @@ public class ScoreboardManagerScript : MonoBehaviour {
                 {
                     if (((DataManagerScript.playerOnePlaying && !DataManagerScript.playerTwoPlaying) || (DataManagerScript.playerTwoPlaying && !DataManagerScript.playerOnePlaying)) && (DataManagerScript.playerThreePlaying && DataManagerScript.playerFourPlaying))
                     {
-                        AchievementManagerScript.Instance.Achievements[5].Unlock();
+                        if (!DataManagerScript.isBotsMode)
+                        {
+                            AchievementManagerScript.Instance.Achievements[5].Unlock();
+                        }
                     }
 
                 }
@@ -194,7 +197,10 @@ public class ScoreboardManagerScript : MonoBehaviour {
                 {
                     if (((DataManagerScript.playerThreePlaying && !DataManagerScript.playerFourPlaying) || (DataManagerScript.playerFourPlaying && !DataManagerScript.playerThreePlaying)) && (DataManagerScript.playerOnePlaying && DataManagerScript.playerTwoPlaying))
                     {
-                        AchievementManagerScript.Instance.Achievements[5].Unlock();
+                        if (!DataManagerScript.isBotsMode)
+                        {
+                            AchievementManagerScript.Instance.Achievements[5].Unlock();
+                        }
                     }
 
                 }

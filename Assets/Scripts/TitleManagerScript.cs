@@ -20,7 +20,9 @@ public class TitleManagerScript : MonoBehaviour {
 	public Text versionText;
 	public GameObject mainMenuPanel;
 	public GameObject singlePlayerPanel;
-	public GameObject soloModeButton;
+    public GameObject AIBotPanel;
+    public GameObject soloModeButton;
+    public GameObject oneBotButton;
     public GameObject quitPanel;
     public GameObject quitButton;
     public GameObject resumeButton;
@@ -71,7 +73,7 @@ public class TitleManagerScript : MonoBehaviour {
 
 		// Iterate over all inputs for actions
 		for (int i = 0; i < gamepads.Length; i++) {
-
+          
             // Xbox numbering
             int gamepadIndex = i + 1;
 
@@ -131,13 +133,16 @@ public class TitleManagerScript : MonoBehaviour {
 					}
 				#endif
 
-				// Listen for cancel
-				if (controllingGamepad != null && Input.GetButtonDown(controllingGamepad.grav)) {
-					cancelCurrentMenu(false);
-				} 
+				
 			}
 		}
-	}
+        // Listen for cancel
+        if (controllingGamepad != null && Input.GetButtonDown(controllingGamepad.grav))
+        {
+            Debug.Log("cancelling current menu");
+            cancelCurrentMenu(false);
+        }
+    }
 
     void showQuitAppPanel()
     {
@@ -166,7 +171,10 @@ public class TitleManagerScript : MonoBehaviour {
     }
 
     void cancelCurrentMenu(bool cancelAll) {
-		if (!singlePlayerPanel.activeSelf || cancelAll) {
+        Debug.Log("is ai bot panel active?");
+        Debug.Log(AIBotPanel.activeSelf);
+
+        if (!singlePlayerPanel.activeSelf && !AIBotPanel.activeSelf || cancelAll) {
 			// Canceling out of main menu
 			mainMenuActive = false;
 			mainMenuPanel.SetActive (false);
@@ -176,11 +184,28 @@ public class TitleManagerScript : MonoBehaviour {
             pressStartAnimation.GetComponent<PlayAnimationScript>().PlayAnimation();
             controllingGamepad = null;
         } else {
-			// Cancelling out of single player menu
-			es1.SetSelectedGameObject(null);
-			es1.SetSelectedGameObject(es1.firstSelectedGameObject);
-			singlePlayerPanel.SetActive (false);
-			mainMenuPanel.SetActive (true);
+            if (AIBotPanel.activeSelf)
+            {
+             
+                es1.SetSelectedGameObject(null);
+
+                AIBotPanel.SetActive(false);
+                singlePlayerPanel.SetActive(true);
+                SetUpSinglePlayerMenu();
+
+                // SO stupid but I can't figure out why this button won't turn off otherwise.
+                singlePlayerPanel.transform.Find("AIButton").GetComponent<ChangeButtonTextColorScript>().ChangeToWhite();
+
+
+            }
+            else
+            {
+                // Cancelling out of single player menu
+                es1.SetSelectedGameObject(null);
+                es1.SetSelectedGameObject(es1.firstSelectedGameObject);
+                singlePlayerPanel.SetActive(false);
+                mainMenuPanel.SetActive(true);
+            }
 		}
 	}
 
@@ -218,6 +243,11 @@ public class TitleManagerScript : MonoBehaviour {
 		es1.SetSelectedGameObject(soloModeButton);
 	}
 
+    public void SetUpAIMenu()
+    {
+        es1.SetSelectedGameObject(oneBotButton);
+    }
+
     public void StartSoloModeGame()
     {
         //TODO: This should be a different scene, specifically for choosing ONE shape. For now, just start the game with Square
@@ -231,10 +261,18 @@ public class TitleManagerScript : MonoBehaviour {
         DataManagerScript.isBotsMode = false;
         SceneManager.LoadSceneAsync ("ChoosePlayerScene");
 	}
-    public void StartBotsGame()
+    public void StartOneBotGame()
     {
         DataManagerScript.isSinglePlayerMode = false;
         DataManagerScript.isBotsMode = true;
+        DataManagerScript.numBots = 1;
+        SceneManager.LoadSceneAsync("ChoosePlayerScene");
+    }
+    public void StartTwoBotGame()
+    {
+        DataManagerScript.isSinglePlayerMode = false;
+        DataManagerScript.isBotsMode = true;
+        DataManagerScript.numBots = 2;
         SceneManager.LoadSceneAsync("ChoosePlayerScene");
     }
     public void StartChallengesGame(){

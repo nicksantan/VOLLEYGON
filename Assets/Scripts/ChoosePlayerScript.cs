@@ -58,9 +58,13 @@ public class ChoosePlayerScript : MonoBehaviour {
 
     public bool isBotsMode = false;
 
+    public GameObject CPUFourLabel;
+
     // Labels for CPU/Bot mode
     public GameObject CPULabels;
     public GameObject RightPlayerLabels;
+    public GameObject CPU3BG;
+    public GameObject CPU4BG;
 
     void Awake() {
 
@@ -80,7 +84,8 @@ public class ChoosePlayerScript : MonoBehaviour {
             // TODO: Choose how many CPUs
             CPULabels.SetActive(true);
             RightPlayerLabels.SetActive(false);
-        
+            CPU3BG.SetActive(true);
+           
             //Randomly choose bots.
             int whichShapeOne = Mathf.FloorToInt(Random.Range(0, 6));
             DataManagerScript.botOneType = whichShapeOne;
@@ -108,29 +113,35 @@ public class ChoosePlayerScript : MonoBehaviour {
             }
 
             //Randomly choose bots.
-            int whichShapeTwo = Mathf.FloorToInt(Random.Range(0, 6));
-            DataManagerScript.botTwoType = whichShapeTwo;
-            switch (whichShapeTwo)
-            {
-                case 0:
-                    fakePlayer4.transform.Find("Square").gameObject.SetActive(true);
 
-                    break;
-                case 1:
-                    fakePlayer4.transform.Find("Circle").gameObject.SetActive(true);
-                    break;
-                case 2:
-                    fakePlayer4.transform.Find("Triangle").gameObject.SetActive(true);
-                    break;
-                case 3:
-                    fakePlayer4.transform.Find("Trapezoid").gameObject.SetActive(true);
-                    break;
-                case 4:
-                    fakePlayer4.transform.Find("Rectangle").gameObject.SetActive(true);
-                    break;
-                case 5:
-                    fakePlayer4.transform.Find("Star").gameObject.SetActive(true);
-                    break;
+            if (DataManagerScript.numBots == 2)
+            {
+                // Add CPU4 BG
+                CPU4BG.SetActive(true);
+                int whichShapeTwo = Mathf.FloorToInt(Random.Range(0, 6));
+                DataManagerScript.botTwoType = whichShapeTwo;
+                switch (whichShapeTwo)
+                {
+                    case 0:
+                        fakePlayer4.transform.Find("Square").gameObject.SetActive(true);
+
+                        break;
+                    case 1:
+                        fakePlayer4.transform.Find("Circle").gameObject.SetActive(true);
+                        break;
+                    case 2:
+                        fakePlayer4.transform.Find("Triangle").gameObject.SetActive(true);
+                        break;
+                    case 3:
+                        fakePlayer4.transform.Find("Trapezoid").gameObject.SetActive(true);
+                        break;
+                    case 4:
+                        fakePlayer4.transform.Find("Rectangle").gameObject.SetActive(true);
+                        break;
+                    case 5:
+                        fakePlayer4.transform.Find("Star").gameObject.SetActive(true);
+                        break;
+                }
             }
 
             //fakePlayer3.transform.Find("Star").gameObject.SetActive(true);
@@ -165,9 +176,16 @@ public class ChoosePlayerScript : MonoBehaviour {
         if (isBotsMode)
         {
             DataManagerScript.playerThreePlaying = true;
-            DataManagerScript.playerFourPlaying = true;
             DataManagerScript.playerThreeType = DataManagerScript.botOneType;
-            DataManagerScript.playerFourType = DataManagerScript.botTwoType;
+
+            if (DataManagerScript.numBots == 2)
+            {
+                DataManagerScript.playerFourPlaying = true;
+                DataManagerScript.playerFourType = DataManagerScript.botTwoType;
+            } else
+            {
+                CPUFourLabel.GetComponent<Text>().color = new Color(0f, 0f,0f,0f);
+            }
         }
 
 		// Fade in
@@ -194,6 +212,23 @@ public class ChoosePlayerScript : MonoBehaviour {
 
     // See if all players that are tagged in have also readied up
 	bool noUnreadyPlayers(){
+
+        // Only need two humans for bots mode.
+        if (isBotsMode)
+        {
+            if (fakePlayer1.GetComponent<FakePlayerScript>().taggedIn && !fakePlayer1.GetComponent<FakePlayerScript>().readyToPlay)
+            {
+                return false;
+            }
+            else if (fakePlayer2.GetComponent<FakePlayerScript>().taggedIn && !fakePlayer2.GetComponent<FakePlayerScript>().readyToPlay)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
 
 		if (fakePlayer1.GetComponent<FakePlayerScript> ().taggedIn && !fakePlayer1.GetComponent<FakePlayerScript> ().readyToPlay) {
 			return false;
@@ -249,9 +284,13 @@ public class ChoosePlayerScript : MonoBehaviour {
 
 
         if (isBotsMode)
-        {
-            //TODO: switch for num of bots
+        { 
             playersOnRight++;
+
+            if (DataManagerScript.numBots == 2)
+            {
+                playersOnRight++;
+            }
         }
 
 		if ((playersOnLeft == 1 && playersOnRight == 0) && noUnreadyPlayers () || (playersOnLeft == 0 && playersOnRight == 1) && noUnreadyPlayers ()) {
@@ -451,6 +490,13 @@ public class ChoosePlayerScript : MonoBehaviour {
             || fakePlayer2.GetComponent<FakePlayerScript>().readyToPlay
             || fakePlayer3.GetComponent<FakePlayerScript>().readyToPlay
             || fakePlayer4.GetComponent<FakePlayerScript>().readyToPlay)){
+            StartCoroutine("StartGame");
+        }
+
+        // go ahead and start if this is a vs. ai game and both players on left are ready
+        if (DataManagerScript.isBotsMode && (fakePlayer1.GetComponent<FakePlayerScript>().readyToPlay
+            && fakePlayer2.GetComponent<FakePlayerScript>().readyToPlay))
+        {
             StartCoroutine("StartGame");
         }
 

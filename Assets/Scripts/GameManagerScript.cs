@@ -210,23 +210,30 @@ public class GameManagerScript : MonoBehaviour {
         }
 
         // Assign AI to bot players.
-        //TODO: Read from datamanger. for now, test player 3
 
-        Player2.GetComponent<PlayerController>().isAI = true;
-        GameObject ai = Instantiate(AIControllerPrefab);
-        ai.transform.Find("AIManager").GetComponent<ManualAIScript>().playerBeingControlled = Player2;
-        ai.transform.Find("AIManager").GetComponent<ManualAIScript>().allowGravityChanges = true;
+        if (DataManagerScript.isBotsMode)
+        {
+            //Player2.GetComponent<PlayerController>().isAI = true;
+            //GameObject ai = Instantiate(AIControllerPrefab);
+            //ai.transform.Find("AIManager").GetComponent<ManualAIScript>().playerBeingControlled = Player2;
+            //ai.transform.Find("AIManager").GetComponent<ManualAIScript>().allowGravityChanges = true;
 
-        Player3.GetComponent<PlayerController>().isAI = true;
-        GameObject aic = Instantiate(AIControllerPrefab);
-        aic.transform.Find("AIManager").GetComponent<ManualAIScript>().playerBeingControlled = Player3;
-        aic.transform.Find("AIManager").GetComponent<ManualAIScript>().allowGravityChanges = false;
+            Player3.GetComponent<PlayerController>().isAI = true;
+            GameObject aic = Instantiate(AIControllerPrefab);
+            aic.transform.Find("AIManager").GetComponent<ManualAIScript>().playerBeingControlled = Player3;
 
-        //TODO: Read from datamanger. for now, test player 3
-        Player4.GetComponent<PlayerController>().isAI = true;
-        GameObject aic_two = Instantiate(AIControllerPrefab);
-        aic_two.transform.Find("AIManager").GetComponent<ManualAIScript>().playerBeingControlled = Player4;
-        aic_two.transform.Find("AIManager").GetComponent<ManualAIScript>().allowGravityChanges = false;
+            aic.transform.Find("AIManager").GetComponent<ManualAIScript>().allowGravityChanges = true;
+
+
+            if (DataManagerScript.numBots == 2)
+            {
+                aic.transform.Find("AIManager").GetComponent<ManualAIScript>().allowGravityChanges = false;
+                Player4.GetComponent<PlayerController>().isAI = true;
+                GameObject aic_two = Instantiate(AIControllerPrefab);
+                aic_two.transform.Find("AIManager").GetComponent<ManualAIScript>().playerBeingControlled = Player4;
+                aic_two.transform.Find("AIManager").GetComponent<ManualAIScript>().allowGravityChanges = false;
+            }
+        }
         // set other options here
 
     }

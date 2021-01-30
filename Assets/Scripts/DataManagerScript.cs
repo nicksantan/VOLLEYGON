@@ -105,6 +105,7 @@ public class DataManagerScript : MonoBehaviour {
     public static bool isBotsMode = false;
     public static int botOneType = 0;
     public static int botTwoType = 0;
+    public static int numBots = 0;
 
     // Save instance of self over scene loads
 	void Awake() {

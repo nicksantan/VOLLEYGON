@@ -38,7 +38,12 @@ public class StatManagerScript : MonoBehaviour {
 	public Text player3Title;
 	public Text player4Title;
 
-	public Text Player1MVP;
+    public Text CPU3Title;
+    public Text CPU4Title;
+    public GameObject CPU_BG3;
+    public GameObject CPU_BG4;
+   
+    public Text Player1MVP;
 	public Text Player2MVP;
 	public Text Player3MVP;
 	public Text Player4MVP;
@@ -211,15 +216,21 @@ public class StatManagerScript : MonoBehaviour {
 
 			break;
 		case 3:
-			//MVPBackground.transform.position = new Vector3 (6.32f, -0.07f, 100f);
-			Instantiate(MVPBackground, new Vector3 (4.75f, -0.00f, 95f), Quaternion.identity);
-			Instantiate(MVPWreath, new Vector3 (4.83f, 0.41f, -5f), Quaternion.identity);
+                //MVPBackground.transform.position = new Vector3 (6.32f, -0.07f, 100f);
+                if (!DataManagerScript.isBotsMode)
+                {
+                    Instantiate(MVPBackground, new Vector3(4.75f, -0.00f, 95f), Quaternion.identity);
+                }
+			    Instantiate(MVPWreath, new Vector3 (4.83f, 0.41f, -5f), Quaternion.identity);
 			//Player3MVP.GetComponent<CanvasRenderer> ().SetAlpha (1.0f);
 			break;
 		case 4:
-			//MVPBackground.transform.position = new Vector3 (16.32f, -0.07f, 100f);
-			Instantiate(MVPBackground, new Vector3 (14.5f, -0.0f, 95f), Quaternion.identity);
-			Instantiate(MVPWreath, new Vector3 (14.5f, 0.41f, -5f), Quaternion.identity);
+                //MVPBackground.transform.position = new Vector3 (16.32f, -0.07f, 100f);
+                if (!DataManagerScript.isBotsMode)
+                {
+                    Instantiate(MVPBackground, new Vector3(14.5f, -0.0f, 95f), Quaternion.identity);
+                }
+			    Instantiate(MVPWreath, new Vector3 (14.5f, 0.41f, -5f), Quaternion.identity);
 			//Player4MVP.GetComponent<CanvasRenderer> ().SetAlpha (1.0f);
 			break;
 
@@ -404,6 +415,13 @@ public class StatManagerScript : MonoBehaviour {
 				player3Bumbles.color = HexToColor("d82039");
 			}
 
+            if (DataManagerScript.isBotsMode)
+            {
+                CPU3Title.enabled = true;
+                CPU_BG3.SetActive(true);
+                player3Title.color = HexToColor("000000");
+                player3Title.color = new Color(0f, 0f, 0f, 0f); //TODO: Change everything black to this.
+            }
 		} else {
 //			player3Title.enabled = false;
 //			player3Labels.enabled = false;
@@ -442,7 +460,14 @@ public class StatManagerScript : MonoBehaviour {
 				player4Bumbles.color = HexToColor("d82039");
 			}
 
-		} else {
+            if (DataManagerScript.isBotsMode)
+            {
+                CPU4Title.enabled = true;
+                CPU_BG4.SetActive(true);
+                player4Title.color = HexToColor("000000");
+                player4Title.color = new Color(0f, 0f, 0f, 0f); //TODO: Change everything black to this.
+            }
+        } else {
 			//player4Title.enabled = false;
 			//player4Labels.enabled = false;
 			player4Aces.text = "ACES: " + DataManagerScript.playerFourAces.ToString ();

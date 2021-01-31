@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour {
 		rb = GetComponent<Rigidbody2D>();
 		mr = GetComponent<MeshRenderer>();
 
-        // Make single reference for appropriate collider
+        // Make single reference for appropriate collider and set up pandemonium counter 
         switch (shapeNames[playerType]) {
             case "square":
                 shapeCollider = GetComponent<BoxCollider2D>();
@@ -143,18 +143,26 @@ public class PlayerController : MonoBehaviour {
                 // Special case for circle mesh rendering
                 circle.gameObject.SetActive(true);
                 shapeCollider = GetComponent<CircleCollider2D>();
+                pandemoniumCounter.transform.localPosition = new Vector3(0f, 0f, 0f);
+                pandemoniumCounter.GetComponent<TextMesh>().fontSize = 100;
                 break;
             case "triangle":
                 shapeCollider = trianglePC;
+                pandemoniumCounter.transform.localPosition = new Vector3(0f, -0.12f, 0f);
+                pandemoniumCounter.GetComponent<TextMesh>().fontSize = 87;
                 break;
             case "trapezoid":
                 shapeCollider = trapezoidPC;
                 break;
             case "rectangle":
                 shapeCollider = rectanglePC;
+                pandemoniumCounter.transform.localPosition = new Vector3(0f, 0f, 0f);
+                pandemoniumCounter.GetComponent<TextMesh>().fontSize = 30;
                 break;
             case "star":
                 shapeCollider = starPC;
+                pandemoniumCounter.transform.localPosition = new Vector3(0f, 0.15f, 0f);
+                pandemoniumCounter.GetComponent<TextMesh>().fontSize = 52;
                 break;
         }
 
@@ -705,7 +713,7 @@ public class PlayerController : MonoBehaviour {
 
 		if (pandemoniumPowerupActive){
 			pandemoniumTimer -= Time.deltaTime;
-			pandemoniumCounter.GetComponent<TextMesh> ().color = new Vector4(1f, 1f, 1f, .25f);
+			pandemoniumCounter.GetComponent<TextMesh> ().color = new Vector4(1f, 1f, 1f, .75f);
 			pandemoniumCounter.GetComponent<TextMesh> ().text = Mathf.Floor(pandemoniumTimer).ToString();
 			if (pandemoniumTimer <= 0) {
 			    pandemoniumCounter.GetComponent<TextMesh> ().color = new Vector4(0f, 0f, 0f, 0f);

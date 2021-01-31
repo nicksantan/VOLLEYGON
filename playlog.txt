@@ -221,3 +221,7 @@
 2021/01/28 11:18:45 2 played a game and the longest rally was 8 and the match time was 236.4478 seconds. The MVP was Player 4
 2021/01/28 11:26:11 2 played a game and the longest rally was 17 and the match time was 378.5891 seconds. The MVP was Player 2
 2021/01/29 20:23:44 3 played a game and the longest rally was 6 and the match time was 152.9575 seconds. The MVP was Player 2
+2021/01/30 17:50:24 3 played a game and the longest rally was 17 and the match time was 221.8048 seconds. The MVP was Player 1
+2021/01/30 19:17:41 2 played a game and the longest rally was 8 and the match time was 302.8432 seconds. The MVP was Player 1
+2021/01/30 19:39:28 2 played a game and the longest rally was 15 and the match time was 451.8056 seconds. The MVP was Player 3
+2021/01/31 12:07:03 4 played a game and the longest rally was 8 and the match time was 264.5207 seconds. The MVP was Player 4

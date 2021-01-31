@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class ChoosePlayerScript : MonoBehaviour {
 
 	public Image gutterBG;
+    public Text versusText;
 
     public bool soloMode = false;
 	public GameObject fakePlayer1;
@@ -149,8 +150,9 @@ public class ChoosePlayerScript : MonoBehaviour {
         }
 
 		gutterBG.GetComponent<CanvasRenderer> ().SetAlpha(0.0f);
-		// Reset slots
-    	DataManagerScript.playerOneJoystick = -1;
+        versusText.GetComponent<Text>().color = new Color(1f, 1f, 1f, 1f);
+        // Reset slots
+        DataManagerScript.playerOneJoystick = -1;
     	DataManagerScript.playerTwoJoystick = -1;
     	DataManagerScript.playerThreeJoystick = -1;
     	DataManagerScript.playerFourJoystick = -1;
@@ -312,6 +314,7 @@ public class ChoosePlayerScript : MonoBehaviour {
             // Multiplayer game is startable
 			gameIsStartable = true;
 			gutterBG.GetComponent<CanvasRenderer> ().SetAlpha(1.0f);
+            versusText.GetComponent<Text>().color = new Color(0f,0f,0f, 1f);
             if (playersOnLeft == 2 && playersOnRight == 1 || playersOnLeft == 1 && playersOnRight == 2) {
 
 				// Display 2v1 message
@@ -322,8 +325,9 @@ public class ChoosePlayerScript : MonoBehaviour {
                 oneOnOneMessage.enabled = false;
                 onePlayerMessage.enabled = false;
 				gutterBG.GetComponent<CanvasRenderer> ().SetAlpha(1.0f);
+                versusText.GetComponent<Text>().color = new Color(0f, 0f, 0f, 1f);
 
-			} else if (playersOnLeft == 1 && playersOnRight == 1){
+            } else if (playersOnLeft == 1 && playersOnRight == 1){
 
 				// Display 1v1 message
 				// TODO: Msg bg is shown before 4 player start, which it shouldn't. It's dumb that there are two images, they should be a group.
@@ -333,8 +337,9 @@ public class ChoosePlayerScript : MonoBehaviour {
 				twoOnOneMessage.enabled = false;
 				onePlayerMessage.enabled = false;
 				gutterBG.GetComponent<CanvasRenderer> ().SetAlpha(1.0f);
+                versusText.GetComponent<Text>().color = new Color(0f, 0f, 0f, 1f);
 
-			}
+            }
 
 		} else {
 
@@ -346,8 +351,9 @@ public class ChoosePlayerScript : MonoBehaviour {
 			msgBG2.enabled = false;
 			gameIsStartable = false;
 			gutterBG.GetComponent<CanvasRenderer> ().SetAlpha(0f);
+            versusText.GetComponent<Text>().color = new Color(1f,1f,1f, 1f);
 
-		}
+        }
 	}
 
 	IEnumerator StartGame(){

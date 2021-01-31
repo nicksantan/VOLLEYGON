@@ -28,6 +28,7 @@ TagManager:
   - StatsModule
   - BestTimeWinText
   - BestTimeLoseText
+  - ButtSensor
   layers:
   - Default
   - TransparentFX

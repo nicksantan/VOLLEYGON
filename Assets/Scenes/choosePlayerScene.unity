@@ -23010,6 +23010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gutterBG: {fileID: 873934555}
+  versusText: {fileID: 1820631355}
   soloMode: 0
   fakePlayer1: {fileID: 1370663620}
   fakePlayer2: {fileID: 579324261}

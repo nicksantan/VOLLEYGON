@@ -95,7 +95,33 @@ public class ManualAIScript : MonoBehaviour
         else
         {
             float distanceToBall = Mathf.Abs(Target.transform.position.x - rBody.position.x);
-            if (distanceToBall > distanceTolerance)
+
+            bool isBallDirectlyUnderPlayer = false;
+            bool isBallUnderPlayer = false;
+            // determine if ball is UNDER the player.
+            if (Mathf.Sign(rBody.gravityScale) > 0)
+            {
+                if (Target.transform.position.y < rBody.position.y - 1f)
+                {
+                    isBallUnderPlayer = true;
+                    Debug.Log("BALL IS UNDER PLAYER");
+                }
+            } else if (Mathf.Sign(rBody.gravityScale) < 0)
+            {
+                if (Target.transform.position.y > rBody.position.y +1f)
+                {
+                    isBallUnderPlayer = true;
+                    Debug.Log("BALL IS UNDER PLAYER");
+                }
+            }
+
+            if (distanceToBall < 2.75f && isBallUnderPlayer)
+            {
+                isBallDirectlyUnderPlayer = true;
+                Debug.Log("BALL IS DIRECTLY UNDER PLAYER");
+            }
+
+            if (distanceToBall > distanceTolerance && !isBallDirectlyUnderPlayer)
             {
                 // Move toward the ball.
                 if (Target.transform.position.x < rBody.position.x)
@@ -160,8 +186,22 @@ public class ManualAIScript : MonoBehaviour
                     //playerBeingControlled.GetComponent<PlayerController>().virtualButtons.horizontal = 0f;
                 }
             }
-            else
+            else if (isBallDirectlyUnderPlayer)
             {
+                float amountToMove = 0f;
+                // actually move away from the ball
+                if (Target.transform.position.x < rBody.position.x)
+                {
+                    amountToMove = 1f;
+                }
+                else if (Target.transform.position.x > rBody.position.x)
+                {
+                    amountToMove = -1f;
+                }
+                playerBeingControlled.GetComponent<PlayerController>().virtualButtons.horizontal = amountToMove * directionFactor;
+            } else { 
+            
+                    // just slow to a stop
                 playerBeingControlled.GetComponent<PlayerController>().virtualButtons.horizontal *= .95f;
             }
 
@@ -170,7 +210,7 @@ public class ManualAIScript : MonoBehaviour
                 if (Mathf.Sign(Target.GetComponent<Rigidbody2D>().gravityScale) != Mathf.Sign(rBody.gravityScale) || Mathf.Sign(Target.GetComponent<Rigidbody2D>().gravityScale) == Mathf.Sign(rBody.gravityScale) && Target.GetComponent<BallScript>().timer < nextSwitchTime)
                 {
                     playerBeingControlled.GetComponent<PlayerController>().virtualButtons.grav = true;
-                    directionFactor = -3f;
+                    //directionFactor = -3f;
                     Invoke("OriginalDirection", .5f);
                     nextSwitchTime = Random.Range(.4f, .8f);
                 }
@@ -212,13 +252,14 @@ public class ManualAIScript : MonoBehaviour
     {
         if (other.gameObject.tag == "Ball" && allowJumps)
         {
+           
             float ballSpeed = other.gameObject.GetComponent<Rigidbody2D>().velocity.x;
             float ballYSpeed = other.gameObject.GetComponent<Rigidbody2D>().velocity.y;
-            Debug.Log("Ball moving at");
-            Debug.Log(Mathf.Abs(ballSpeed));
+         //   Debug.Log("Ball moving at");
+        //   Debug.Log(Mathf.Abs(ballSpeed));
             //TODO: Need a way to deal with this for both gravities
             float distanceToBall = Mathf.Abs(Target.transform.position.x - rBody.position.x);
-            if (distanceToBall < .65f && ballSpeed < ballSpeedXTolerance && ballYSpeed < ballSpeedYTolerance)
+            if (distanceToBall < .4f && ballSpeed < ballSpeedXTolerance && ballYSpeed < ballSpeedYTolerance) //nTODO: This number is wrong, should be smaller.
             {
                 Debug.Log("ball seems to be stuck, let's get it out");
                 // choose a direction to move toward the Net
@@ -243,6 +284,18 @@ public class ManualAIScript : MonoBehaviour
         {
             playerBeingControlled.GetComponent<PlayerController>().virtualButtons.jump = false;
         }
+    }
+
+    public void buttSensorEntered()
+    {
+        // to prevent the ai from squashing the ball during a mistimed jump, temporarily change the direction the ai is moving
+        directionFactor = -3f;
+    }
+
+    public void buttSensorExited()
+    {
+        // restore movement to normal
+        OriginalDirection();
     }
 }
 

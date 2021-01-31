@@ -29,7 +29,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &403506
 Transform:
   m_ObjectHideFlags: 0
@@ -108,6 +108,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c0c6b1e1a834d5a807d483811a9276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAI: 0
+  AILeft: 0
+  AIRight: 0
+  AIJump: 0
+  AIGrav: 0
   isChallengeMode: 0
   jumpPower: 2000
   speed: 15
@@ -148,6 +153,11 @@ MonoBehaviour:
   sizeUpSFX2: {fileID: 8300000, guid: a4a1f8078117f44c3b1370eff1b867b3, type: 3}
   pandemoniumSFX1: {fileID: 0}
   pandemoniumSFX2: {fileID: 0}
+  innerShape: {fileID: 0}
+  jumpVel: 21
+  holdingButtonDown: 0
+  holdingGravButtonDown: 0
+  framesSinceLastGravChange: 0
 --- !u!58 &5883576
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -481,7 +491,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 142226}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.05, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 403506}
@@ -504,7 +514,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 24299d427e090474eba7f072182ac4b1, type: 3}
+  - {fileID: 2100000, guid: 590c0f9191a6143ec8a20879b785175d, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -537,15 +547,15 @@ TextMesh:
   m_CharacterSize: 1
   m_LineSpacing: 1
   m_Anchor: 4
-  m_Alignment: 0
+  m_Alignment: 1
   m_TabSize: 4
   m_FontSize: 100
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 12800000, guid: 24299d427e090474eba7f072182ac4b1, type: 3}
+  m_Font: {fileID: 12800000, guid: 590c0f9191a6143ec8a20879b785175d, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 1107296255
+    rgba: 2197815295
 --- !u!114 &11439756
 MonoBehaviour:
   m_ObjectHideFlags: 0

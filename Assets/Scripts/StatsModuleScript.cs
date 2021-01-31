@@ -7,6 +7,8 @@ public class StatsModuleScript : MonoBehaviour
 
     public int lastTouch;
     public int secondToLastTouch;
+    public int lastTouchTeamOne;
+    public int lastTouchTeamTwo;
 
     private void Awake()
     {
@@ -40,20 +42,24 @@ public class StatsModuleScript : MonoBehaviour
         {
             AchievementManagerScript.Instance.LogReturn();
         }
-        // Credit a return to the last touch player
+        // Credit a return to the last touch player and store who returned the ball
         switch (lastTouch)
         { 
             case 1:
                 DataManagerScript.playerOneReturns += 1;
+                lastTouchTeamOne = 1;
                 break;
             case 2:
                 DataManagerScript.playerTwoReturns += 1;
+                lastTouchTeamOne = 2;
                 break;
             case 3:
                 DataManagerScript.playerThreeReturns += 1;
+                lastTouchTeamTwo = 3;
                 break;
             case 4:
                 DataManagerScript.playerFourReturns += 1;
+                lastTouchTeamTwo = 4;
                 break;
         }
     }
@@ -68,6 +74,10 @@ public class StatsModuleScript : MonoBehaviour
         {
             ComputeStat(1);
         }
+
+        lastTouch = 0;
+        lastTouchTeamOne = 0;
+        lastTouchTeamTwo = 0;
     }
 
     public void ComputeStat(int whichTeamScored)
@@ -101,11 +111,11 @@ public class StatsModuleScript : MonoBehaviour
 
             if (lastTouch == 3)
             {
-                if (secondToLastTouch == 1)
+                if (lastTouchTeamOne == 1)
                 {
                     DataManagerScript.playerOneScores += 1;
                 }
-                if (secondToLastTouch == 2)
+                if (lastTouchTeamOne == 2)
                 {
                     DataManagerScript.playerTwoScores += 1;
                 }
@@ -120,11 +130,11 @@ public class StatsModuleScript : MonoBehaviour
             }
             if (lastTouch == 4)
             {
-                if (secondToLastTouch == 1)
+                if (lastTouchTeamOne == 1)
                 {
                     DataManagerScript.playerOneScores += 1;
                 }
-                if (secondToLastTouch == 2)
+                if (lastTouchTeamOne == 2)
                 {
                     DataManagerScript.playerTwoScores += 1;
                 }
@@ -170,11 +180,11 @@ public class StatsModuleScript : MonoBehaviour
                 {
                     DataManagerScript.playerOneBumbles += 1;
                 }
-                if (secondToLastTouch == 3)
+                if (lastTouchTeamTwo == 3)
                 {
                     DataManagerScript.playerThreeScores += 1;
                 }
-                if (secondToLastTouch == 4)
+                if (lastTouchTeamTwo == 4)
                 {
                     DataManagerScript.playerFourScores += 1;
                 }
@@ -189,11 +199,11 @@ public class StatsModuleScript : MonoBehaviour
                 {
                     DataManagerScript.playerTwoBumbles += 1;
                 }
-                if (secondToLastTouch == 3)
+                if (lastTouchTeamTwo == 3)
                 {
                     DataManagerScript.playerThreeScores += 1;
                 }
-                if (secondToLastTouch == 4)
+                if (lastTouchTeamTwo == 4)
                 {
                     DataManagerScript.playerFourScores += 1;
                 }

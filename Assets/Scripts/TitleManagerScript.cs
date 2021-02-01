@@ -45,6 +45,7 @@ public class TitleManagerScript : MonoBehaviour {
         DataManagerScript.ResetPlayerTypes();
         DataManagerScript.isChallengeMode = false;
         DataManagerScript.isSinglePlayerMode = false;
+        DataManagerScript.arenaType = -99;
         // Init controller maps
         for (int i = 0; i < 4; i++) {
             gamepads[i] = new JoystickButtons(i + 1);

@@ -97,10 +97,12 @@ public class ScoreboardManagerScript : MonoBehaviour {
         if (whichSide == 1)
         {
             team2Score += 1;
+            MusicManagerScript.Instance.SwitchMusic(2);
         }
         else
         {
             team1Score += 1;
+            MusicManagerScript.Instance.SwitchMusic(1);
         }
 
         //CurrentArena.BroadcastMessage("ReturnColor");

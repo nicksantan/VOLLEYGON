@@ -423,7 +423,7 @@ public class StatManagerScript : MonoBehaviour {
 				player3Bumbles.color = HexToColor("d82039");
 			}
 
-            if (DataManagerScript.isBotsMode)
+            if (DataManagerScript.isBotsMode == true)
             {
                 CPU3Title.enabled = true;
                 CPU_BG3.SetActive(true);

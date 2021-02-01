@@ -22124,7 +22124,7 @@ PrefabInstance:
     - target: {fileID: 3286788877154742621, guid: 5e2d5eec675cd465895acdce96c51111,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3286788877656468601, guid: 5e2d5eec675cd465895acdce96c51111,
         type: 3}
@@ -22155,6 +22155,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 63
+      objectReference: {fileID: 0}
+    - target: {fileID: 3286788877656468606, guid: 5e2d5eec675cd465895acdce96c51111,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e2d5eec675cd465895acdce96c51111, type: 3}
@@ -24263,7 +24268,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 42.42062
+  Phase: 43.093525
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5

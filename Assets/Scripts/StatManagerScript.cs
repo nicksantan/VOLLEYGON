@@ -38,8 +38,8 @@ public class StatManagerScript : MonoBehaviour {
 	public Text player3Title;
 	public Text player4Title;
 
-    public Text CPU3Title;
-    public Text CPU4Title;
+    public GameObject CPU3Title;
+    public GameObject CPU4Title;
     public GameObject CPU_BG3;
     public GameObject CPU_BG4;
    
@@ -425,7 +425,7 @@ public class StatManagerScript : MonoBehaviour {
 
             if (DataManagerScript.isBotsMode == true)
             {
-                CPU3Title.enabled = true;
+                CPU3Title.SetActive(true);
                 CPU_BG3.SetActive(true);
                 player3Title.color = HexToColor("000000");
                 player3Title.color = new Color(0f, 0f, 0f, 0f); //TODO: Change everything black to this.
@@ -470,7 +470,7 @@ public class StatManagerScript : MonoBehaviour {
 
             if (DataManagerScript.isBotsMode)
             {
-                CPU4Title.enabled = true;
+                CPU4Title.SetActive(true);
                 CPU_BG4.SetActive(true);
                 player4Title.color = HexToColor("000000");
                 player4Title.color = new Color(0f, 0f, 0f, 0f); //TODO: Change everything black to this.

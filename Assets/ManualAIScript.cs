@@ -14,8 +14,8 @@ public class ManualAIScript : MonoBehaviour
     private float nextSwitchTime = 2f;
     private float directionFactor = 1f;
     public bool isTeammate = false;
-    private float ballSpeedToTriggerJump = 7f;
-    float maxBallSpeedToTriggerJump = 20f;
+    public float ballSpeedToTriggerJump = 7f;
+    public float maxBallSpeedToTriggerJump = 20f;
     public bool allowGravityChanges = true;
     public bool allowJumps = true;
     public float distanceTolerance = 1.15f;

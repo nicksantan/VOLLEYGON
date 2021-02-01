@@ -295,7 +295,11 @@ public class StatManagerScript : MonoBehaviour {
 
             if (unlockAchievement && AchievementManagerScript.Instance != null)
             {
-                AchievementManagerScript.Instance.Achievements[2].Unlock();
+                // This achievement must be unlocked in multiplayer mode, not bots mode
+                if (!DataManagerScript.isBotsMode)
+                {
+                    AchievementManagerScript.Instance.Achievements[2].Unlock();
+                }
             }
 
         }
@@ -314,7 +318,11 @@ public class StatManagerScript : MonoBehaviour {
 
             if (unlockAchievement && AchievementManagerScript.Instance != null)
             {
-                AchievementManagerScript.Instance.Achievements[2].Unlock();
+                // don't let the bots team unlock this
+                if (!DataManagerScript.isBotsMode)
+                {
+                    AchievementManagerScript.Instance.Achievements[2].Unlock();
+                }
             }
 
         }

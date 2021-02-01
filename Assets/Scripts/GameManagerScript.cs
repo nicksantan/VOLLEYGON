@@ -220,18 +220,35 @@ public class GameManagerScript : MonoBehaviour {
 
             Player3.GetComponent<PlayerController>().isAI = true;
             GameObject aic = Instantiate(AIControllerPrefab);
-            aic.transform.Find("AIManager-default").GetComponent<ManualAIScript>().playerBeingControlled = Player3;
 
-            aic.transform.Find("AIManager-default").GetComponent<ManualAIScript>().allowGravityChanges = true;
+            string whichAIManager = "AIManager-default";
+
+            if (Player3.GetComponent<PlayerController>().playerType == 1)
+            {
+                aic.transform.GetChild(1).gameObject.SetActive(true);
+                aic.transform.GetChild(0).gameObject.SetActive(false);
+                whichAIManager = "AIManager-circle";
+            }
+            aic.transform.Find(whichAIManager).GetComponent<ManualAIScript>().playerBeingControlled = Player3;
+
+            aic.transform.Find(whichAIManager).GetComponent<ManualAIScript>().allowGravityChanges = true;
 
 
             if (DataManagerScript.numBots == 2)
             {
-                aic.transform.Find("AIManager-default").GetComponent<ManualAIScript>().allowGravityChanges = false;
+                string whichAIManagerTwo = "AIManager-default";
+               
+                aic.transform.Find(whichAIManager).GetComponent<ManualAIScript>().allowGravityChanges = false;
                 Player4.GetComponent<PlayerController>().isAI = true;
                 GameObject aic_two = Instantiate(AIControllerPrefab);
-                aic_two.transform.Find("AIManager-default").GetComponent<ManualAIScript>().playerBeingControlled = Player4;
-                aic_two.transform.Find("AIManager-default").GetComponent<ManualAIScript>().allowGravityChanges = false;
+                if (Player4.GetComponent<PlayerController>().playerType == 1)
+                {
+                    aic_two.transform.GetChild(1).gameObject.SetActive(true);
+                    aic_two.transform.GetChild(0).gameObject.SetActive(false);
+                    whichAIManagerTwo = "AIManager-circle";
+                }
+                aic_two.transform.Find(whichAIManagerTwo).GetComponent<ManualAIScript>().playerBeingControlled = Player4;
+                aic_two.transform.Find(whichAIManagerTwo).GetComponent<ManualAIScript>().allowGravityChanges = false;
             }
         }
         // set other options here

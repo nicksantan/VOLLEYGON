@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour {
     private bool speedPowerupActive = false;
 
     private float sizePowerupTimer;
-    private bool sizePowerupActive = false;
+    public bool sizePowerupActive = false;
 
     private float pandemoniumTimer;
     private bool pandemoniumPowerupActive = false;

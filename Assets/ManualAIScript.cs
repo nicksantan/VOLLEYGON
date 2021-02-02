@@ -250,7 +250,7 @@ public class ManualAIScript : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Ball" && allowJumps)
+        if (other.gameObject.tag == "Ball" && allowJumps && !pc.sizePowerupActive)
         {
            
             float ballSpeed = other.gameObject.GetComponent<Rigidbody2D>().velocity.x;

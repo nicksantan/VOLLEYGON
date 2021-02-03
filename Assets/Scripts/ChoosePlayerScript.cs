@@ -12,6 +12,7 @@ public class ChoosePlayerScript : MonoBehaviour {
 	public Image gutterBG;
     public Text versusText;
 
+    public bool fourthBotActive = false;
     public bool soloMode = false;
 	public GameObject fakePlayer1;
 	public GameObject fakePlayer2;
@@ -66,6 +67,8 @@ public class ChoosePlayerScript : MonoBehaviour {
     public GameObject RightPlayerLabels;
     public GameObject CPU3BG;
     public GameObject CPU4BG;
+    public GameObject addBotButton;
+    public GameObject removeBotButton;
 
     void Awake() {
 
@@ -76,12 +79,88 @@ public class ChoosePlayerScript : MonoBehaviour {
 
 	}
 
+    void ToggleFourthBot()
+    {
+        if (!fourthBotActive)
+        {
+            // Add CPU4 BG
+            CPU4BG.SetActive(true);
+            int whichShapeTwo = Mathf.FloorToInt(Random.Range(0, 6));
+            DataManagerScript.botTwoType = whichShapeTwo;
+            switch (whichShapeTwo)
+            {
+                case 0:
+                    fakePlayer4.transform.Find("Square").gameObject.SetActive(true);
+
+                    break;
+                case 1:
+                    fakePlayer4.transform.Find("Circle").gameObject.SetActive(true);
+                    break;
+                case 2:
+                    fakePlayer4.transform.Find("Triangle").gameObject.SetActive(true);
+                    break;
+                case 3:
+                    fakePlayer4.transform.Find("Trapezoid").gameObject.SetActive(true);
+                    break;
+                case 4:
+                    fakePlayer4.transform.Find("Rectangle").gameObject.SetActive(true);
+                    break;
+                case 5:
+                    fakePlayer4.transform.Find("Star").gameObject.SetActive(true);
+                    break;
+            }
+            DataManagerScript.playerFourPlaying = true;
+            DataManagerScript.playerFourType = DataManagerScript.botTwoType;
+            CPUFourLabel.GetComponent<Text>().color = new Color(1f, 1f, 1f, 1f);
+            fourthBotActive = true;
+            addBotButton.SetActive(false);
+            removeBotButton.SetActive(true);
+        } else if (fourthBotActive)
+        {
+            // Add CPU4 BG
+            CPU4BG.SetActive(false);
+            switch (DataManagerScript.botTwoType)
+            {
+                case 0:
+                    fakePlayer4.transform.Find("Square").gameObject.SetActive(false);
+
+                    break;
+                case 1:
+                    fakePlayer4.transform.Find("Circle").gameObject.SetActive(false);
+                    break;
+                case 2:
+                    fakePlayer4.transform.Find("Triangle").gameObject.SetActive(false);
+                    break;
+                case 3:
+                    fakePlayer4.transform.Find("Trapezoid").gameObject.SetActive(false);
+                    break;
+                case 4:
+                    fakePlayer4.transform.Find("Rectangle").gameObject.SetActive(false);
+                    break;
+                case 5:
+                    fakePlayer4.transform.Find("Star").gameObject.SetActive(false);
+                    break;
+            }
+
+
+            DataManagerScript.playerFourPlaying = false;
+           
+            CPUFourLabel.GetComponent<Text>().color = new Color(0f, 0f, 0f, 0f);
+            fourthBotActive = false;
+            addBotButton.SetActive(true);
+            removeBotButton.SetActive(false);
+        }
+        CheckStartable();
+
+}
+
 	void Start(){
         isBotsMode = DataManagerScript.isBotsMode;
 
         // Activate certain labels if this is bots mode
         if (isBotsMode)
         {
+            addBotButton.SetActive(true);
             // TODO: Choose how many CPUs
             CPULabels.SetActive(true);
             RightPlayerLabels.SetActive(false);
@@ -287,12 +366,13 @@ public class ChoosePlayerScript : MonoBehaviour {
 
         if (isBotsMode)
         { 
-            playersOnRight++;
-
-            if (DataManagerScript.numBots == 2)
+        playersOnRight++;
+            if (DataManagerScript.playerFourPlaying)
             {
                 playersOnRight++;
             }
+
+
         }
 
 		if ((playersOnLeft == 1 && playersOnRight == 0) && noUnreadyPlayers () || (playersOnLeft == 0 && playersOnRight == 1) && noUnreadyPlayers ()) {
@@ -317,11 +397,17 @@ public class ChoosePlayerScript : MonoBehaviour {
             versusText.GetComponent<Text>().color = new Color(0f,0f,0f, 1f);
             if (playersOnLeft == 2 && playersOnRight == 1 || playersOnLeft == 1 && playersOnRight == 2) {
 
-				// Display 2v1 message
-				// TODO: Msg bg is shown before 4 player start, which it shouldn't. It's dumb that there are two images, they should be a group.
-				msgBG.enabled = true;
-				msgBG2.enabled = true;
-				twoOnOneMessage.enabled = true;
+                // Display 2v1 message
+                // TODO: Msg bg is shown before 4 player start, which it shouldn't. It's dumb that there are two images, they should be a group.
+                if (playersOnLeft == 2 && isBotsMode)
+                {
+                }
+                else
+                {
+                    msgBG.enabled = true;
+                    msgBG2.enabled = true;
+                    twoOnOneMessage.enabled = true;
+                }
                 oneOnOneMessage.enabled = false;
                 onePlayerMessage.enabled = false;
 				gutterBG.GetComponent<CanvasRenderer> ().SetAlpha(1.0f);
@@ -405,6 +491,13 @@ public class ChoosePlayerScript : MonoBehaviour {
 			int slotId = i + 1;
 			JoystickButtons joystick = joysticks[i];
 
+            // If this is bots mode, let any player toggle the fourth bot
+          
+            if (Input.GetButtonDown(joystick.y) && isBotsMode)
+            {
+                Debug.Log("y hit");
+                ToggleFourthBot();
+            }
 			if (Input.GetButtonDown(joystick.start) || (Input.GetButtonDown(joystick.jump) && !gamepadIcons[i].GetComponent<GamepadController>().enabled)) {
 
 				// Start game if startable and gamepad not tagged in

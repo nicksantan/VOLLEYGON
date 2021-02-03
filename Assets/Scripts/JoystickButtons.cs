@@ -21,7 +21,7 @@ public class JoystickButtons {
 				this.jump = (DataManagerScript.gamepadMode) ? "Jump_P1_Xbox" : "Jump_P1";
 				this.grav = (DataManagerScript.gamepadMode) ? "Grav_P1_Xbox" : "Grav_P1";
 				this.start = (DataManagerScript.gamepadMode) ? "Start_P1_Xbox" : "Start_P1";
-                this.y = "Y_P1_Xbox";
+                this.y = (DataManagerScript.gamepadMode) ? "Y_P1_Xbox" : "Y_P1";
                 break;
 
             case 2:

@@ -242,7 +242,7 @@ public class GameManagerScript : MonoBehaviour {
             aic.transform.Find(whichAIManager).GetComponent<ManualAIScript>().allowGravityChanges = true;
 
 
-            if (DataManagerScript.numBots == 2)
+            if (DataManagerScript.playerFourPlaying)
             {
                 string whichAIManagerTwo = "AIManager-default";
                

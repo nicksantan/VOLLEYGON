@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/Level.unity
+    path: 
     guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/Scenes/gameScene.unity
@@ -59,9 +59,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/chooseChallengeScene.unity
     guid: 642294d8b40354764b3a7d7db6a4ebdf
-  - enabled: 1
-    path: Assets/Scenes/SoloModeScene.unity
-    guid: 5ccdc6d71bb55497abef03c3370f9167
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/chooseSinglePlayerScene.unity
     guid: 2f677790922c64231b58605aa2f47724

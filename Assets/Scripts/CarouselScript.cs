@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Rewired;
 
 public class CarouselScript : MonoBehaviour {
 
 	public Canvas parentCanvas;
-
+    private Player player;
 	public float axisSlideDuration = 0.3f;
 	public Text indexText;
 	public bool infinite = false;
@@ -59,6 +60,9 @@ public class CarouselScript : MonoBehaviour {
 
         JumpTo(DataManagerScript.lastViewedChallenge, false);
         MoveToSelected(true);
+
+        int whichPlayerIsControlling = DataManagerScript.gamepadControllingMenus;
+        player = ReInput.players.GetPlayer(whichPlayerIsControlling);
     }
 
 	//
@@ -76,11 +80,11 @@ public class CarouselScript : MonoBehaviour {
         //for (int i = 0; i < joysticks.Length; i++) {
 
         //Just respect the joystick controlling menus.
-        int whichPlayerIsControlling = DataManagerScript.gamepadControllingMenus;
-        JoystickButtons joystick  = new JoystickButtons(whichPlayerIsControlling);
+        //int whichPlayerIsControlling = DataManagerScript.gamepadControllingMenus;
+        //JoystickButtons joystick  = new JoystickButtons(whichPlayerIsControlling);
        
 
-        if (Input.GetAxis(joystick.vertical) < 0)
+        if (player.GetAxis("MoveY") < 0)
         {
             if (!stickDownLast)
             {
@@ -88,7 +92,7 @@ public class CarouselScript : MonoBehaviour {
                 stickDownLast = true;
             }
         }
-        else if (Input.GetAxis(joystick.vertical) > 0)
+        else if (player.GetAxis("MoveY") > 0)
         {
             if (!stickDownLast)
             {

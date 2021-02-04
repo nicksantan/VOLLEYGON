@@ -132,9 +132,9 @@ public class DataManagerScript : MonoBehaviour {
 		}
 
 	}
-
+ 
     // Reset all player shape choices
-	public static void ResetPlayerTypes(){
+    public static void ResetPlayerTypes(){
 		playerOneType = 0;
 		playerTwoType = 0;
 		playerThreeType = 0;

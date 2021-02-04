@@ -22,8 +22,8 @@ public class ChallengesManagerScript : MonoBehaviour {
 
     private new AudioSource audio;
 
-	Axis verticalAxis;
-	Axis horizontalAxis;
+	vAxis verticalAxis;
+	vAxis horizontalAxis;
     private EventSystem es;
     public JoystickButtons buttons;
 
@@ -41,8 +41,8 @@ public class ChallengesManagerScript : MonoBehaviour {
         buttons = new JoystickButtons(joystickIdentifier);
 
         // Get axis string from joystick class
-        verticalAxis = new Axis(buttons.vertical);
-		horizontalAxis = new Axis(buttons.horizontal);
+        verticalAxis = new vAxis(buttons.vertical);
+		horizontalAxis = new vAxis(buttons.horizontal);
 
         Vector3 tempPos = new Vector3(markerXPositions[0], markerYPositions[0], 1f);
         marker.transform.position = tempPos;

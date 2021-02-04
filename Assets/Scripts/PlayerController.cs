@@ -2,6 +2,7 @@
 using UnityEngine.EventSystems;
 using System.Collections;
 using PigeonCoopToolkit.Effects.Trails;
+using Rewired;
 
 public class PlayerController : MonoBehaviour {
     // Switch player behavior based on mode
@@ -28,6 +29,8 @@ public class PlayerController : MonoBehaviour {
     // Button names
     public JoystickButtons buttons;
     public VirtualJoystickButtons virtualButtons;
+    private Player player;
+    public int joystick = -1;
 
     // Properties of player by ID
     public int playerID;
@@ -212,7 +215,7 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
-        int joystick = -1;
+        joystick = -1;
 
 		// Assign player color and joystick
 		if (isChallengeMode || DataManagerScript.isSinglePlayerMode) {
@@ -254,7 +257,10 @@ public class PlayerController : MonoBehaviour {
         // Get player input names
         if (!isAI)
         {
-            buttons = new JoystickButtons(joystick);
+            //buttons = new JoystickButtons(joystick);
+
+            // Note, convert joystick number to player index requires -1.
+            player = ReInput.players.GetPlayer(joystick - 1);
         } else
         {
             virtualButtons = new VirtualJoystickButtons();
@@ -298,9 +304,9 @@ public class PlayerController : MonoBehaviour {
             if (!challengeManager || challengeManager.challengeRunning)
             {
                 // Get horizontal input
-                if (buttons != null && buttons.horizontal != null)
+                if (player != null)
                 {
-                    float moveHorizontal = Input.GetAxis(buttons.horizontal);
+                    float moveHorizontal = player.GetAxis("MoveX");
 
                     // Clamp input
                     moveHorizontal = Mathf.Clamp(moveHorizontal, -1f, 1f);
@@ -357,7 +363,7 @@ public class PlayerController : MonoBehaviour {
 //            Debug.Log(isAI);
             if (isAI)
             {
-                framesSinceLastGravChange += 1;
+                framesSinceLastGravChange += 1; // TODO: Move to fixed update 
                 // Handle jumping
 //                Debug.Log("is ai");
                 if (virtualButtons.jump)
@@ -383,7 +389,7 @@ public class PlayerController : MonoBehaviour {
                     {
                         //  Debug.Log("fast fall!");
 
-                        Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -30f, 0f);
+                        Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -1900f * Time.deltaTime, 0f);
                         rb.AddForce(fastFallForce);
                     }
 
@@ -415,8 +421,6 @@ public class PlayerController : MonoBehaviour {
             }
 
             if (!inPenalty
-                && buttons != null
-                && buttons.jump != null
                 && GameManagerScript.Instance != null
                 && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused
                 && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().recentlyPaused
@@ -429,7 +433,7 @@ public class PlayerController : MonoBehaviour {
 
                     // Handle jumping
                 //    Debug.Log(Input.GetButton(buttons.jump));
-                    if (Input.GetButton(buttons.jump))
+                    if (player.GetButton("Jump"))
                     {
 
                         if (isJumping == false && rb != null && !holdingButtonDown)
@@ -452,14 +456,14 @@ public class PlayerController : MonoBehaviour {
                         {
                             //  Debug.Log("fast fall!");
 
-                            Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -30f, 0f);
+                            Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -1900f *Time.deltaTime, 0f);
                             rb.AddForce(fastFallForce);
                         }
 
                     }
 
                     // Handle gravity switch
-                    if (Input.GetButtonDown(buttons.grav) && rb != null && !easyMode && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused)
+                    if (player.GetButtonDown("Grav") && rb != null && !easyMode && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused)
                     {
                         rb.gravityScale *= -1f;
                         isJumping = true;
@@ -475,7 +479,7 @@ public class PlayerController : MonoBehaviour {
                     }
 
                     // Handle start button
-                    if (Input.GetButtonDown(buttons.start)
+                    if (player.GetButtonDown("Start")
                         && GameManagerScript.Instance != null
                         && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused)
                     {
@@ -498,7 +502,7 @@ public class PlayerController : MonoBehaviour {
                         Debug.Log(allowedToPause);
                         if (allowedToPause)
                         {
-                            GameManagerScript.Instance.GetComponent<PauseManagerScript>().Pause(buttons);
+                            GameManagerScript.Instance.GetComponent<PauseManagerScript>().Pause(joystick);
                         }
                     }
 

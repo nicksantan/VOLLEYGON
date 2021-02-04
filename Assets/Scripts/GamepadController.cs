@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Rewired;
 
 public class GamepadController : MonoBehaviour {
 
@@ -7,7 +8,7 @@ public class GamepadController : MonoBehaviour {
     public int slot = 0; // default to nonexistent slot
     public JoystickButtons buttons;
     private GameObject selectedSlotPlayer;
-    private Axis horizontalAxis;
+    private vAxis horizontalAxis;
     private bool slotSelected = false;
     public bool enabled = false;
     private bool readiedUp = false;
@@ -23,7 +24,11 @@ public class GamepadController : MonoBehaviour {
     private Color32 gray = new Color32(40, 40, 40, 255);
     private Color32 white = new Color32(255, 255, 255, 255);
 
+    private Player player;
+
     public bool botMode = false;
+
+    private bool axisInUse = false;
 
     // Use this for initialization
     void Start () {
@@ -34,10 +39,11 @@ public class GamepadController : MonoBehaviour {
         prompt = transform.Find("Prompt").gameObject;
 
         // Get button strings from joystick number
-        buttons = new JoystickButtons(joystick);
+        //buttons = new JoystickButtons(joystick);
+        player = ReInput.players.GetPlayer(joystick - 1);
 
         // Get horizontal axis
-        horizontalAxis = new Axis(buttons.horizontal);
+       // horizontalAxis = new vAxis(buttons.horizontal);
 
         // Start at slot to match joystick int
         slot = joystick;
@@ -77,10 +83,10 @@ public class GamepadController : MonoBehaviour {
         }
 
         // Joystick movements
-        checkHorizontalAxis(horizontalAxis);
+        checkHorizontalAxis();
 
         // Select slot
-        if (Input.GetButtonDown(buttons.jump)) {
+        if (player.GetButtonDown("Jump")) {
             if (enabled && !slotSelected && !playerTagged) {
                 selectSlotForJoystick();
                 HideIcon();
@@ -88,7 +94,7 @@ public class GamepadController : MonoBehaviour {
         }
 
         // Unselect slot
-        if (Input.GetButtonDown(buttons.grav)) {
+        if (player.GetButtonDown("Grav")) {
         	if (!slotSelected) {
         		ToggleIcon(false);
         	} else if (!playerReady) {
@@ -156,7 +162,7 @@ public class GamepadController : MonoBehaviour {
        //  Set joystick for player slot
         switch (slot)
         {
-
+            // TODO: With Rewired, should we use player IDs instead? (index 0 instead of 1)
             case 1:
                 DataManagerScript.playerOneJoystick = joystick;
                 break;
@@ -236,21 +242,23 @@ public class GamepadController : MonoBehaviour {
         readiedUp = false;
     }
 
-    void checkHorizontalAxis(Axis axis)
+    void checkHorizontalAxis()
     {
+      
+
         // Left or right pressed
-        if (Input.GetAxisRaw(axis.axisName) > 0 || Input.GetAxisRaw(axis.axisName) < 0)
+        if (player.GetAxisRaw("MoveX") > 0 || player.GetAxisRaw("MoveY") < 0)
         {
 
             // Only proceed if slot is not already selected and joystick not already pressed
-            if (axis.axisInUse == false && !slotSelected )
+            if (axisInUse == false && !slotSelected )
             {
 
                 // Boolean to prevent scrolling more than one tick per press
-                axis.axisInUse = true;
+                axisInUse = true;
 
                 // See if going right or left
-                bool goingRight = Input.GetAxisRaw(axis.axisName) > 0;
+                bool goingRight = player.GetAxisRaw("MoveX") > 0;
 
                 // Get new slot
                 iterateSlot(goingRight);
@@ -260,10 +268,10 @@ public class GamepadController : MonoBehaviour {
             }
 
         }
-        else if (Input.GetAxisRaw(axis.axisName) == 0)
+        else if (player.GetAxisRaw("MoveX") == 0)
         {
             // Reset boolean to prevent scrolling more than one tick per press when joystick returns to 0
-            axis.axisInUse = false;
+            axisInUse = false;
         }
     }
 

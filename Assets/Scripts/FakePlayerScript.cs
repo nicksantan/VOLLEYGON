@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using Rewired;
 
 public class FakePlayerScript : MonoBehaviour {
 
@@ -39,8 +40,12 @@ public class FakePlayerScript : MonoBehaviour {
 
 	private int numberOfPlayerTypes = 6;
 
-	Axis verticalAxis;
+	vAxis verticalAxis;
+
     SpriteRenderer sr;
+
+    private Player player;
+
 
 	void UpdatePlayerType(int whichType){
 		if (!readyToPlay) {
@@ -291,17 +296,17 @@ public class FakePlayerScript : MonoBehaviour {
 
         if (ChoosePlayerScript.Instance != null
         	&& !ChoosePlayerScript.Instance.locked
-        	&& buttons != null) {
+        	&& player != null) {
 
             // Joystick movements
-            checkVerticalAxis(verticalAxis);
+            checkVerticalAxis();
 
-            if (Input.GetButtonDown(buttons.jump) && taggedIn)
+            if (player.GetButtonDown("Jump") && taggedIn)
             {
                 activateReadyState();
             }
 
-            if ( Input.GetButtonDown (buttons.grav ) ) {
+            if ( player.GetButtonDown ("Grav") ) {
                 shouldDeactivate = true;
 			}
 		}
@@ -341,26 +346,28 @@ public class FakePlayerScript : MonoBehaviour {
         if (joystickIdentifier != -1)
         {
             // Assign joystick to player
-            buttons = new JoystickButtons(joystickIdentifier);
+            //buttons = new JoystickButtons(joystickIdentifier);
+            player = ReInput.players.GetPlayer(joystickIdentifier - 1);
 
             // Get axis string from joystick class
-            verticalAxis = new Axis(buttons.vertical);
+            //verticalAxis = new vAxis(buttons.vertical);
         }
     }
 
-    void checkVerticalAxis(Axis whichAxis){
+    void checkVerticalAxis(){
 
         // Up or down pressed
-		if (Input.GetAxisRaw(whichAxis.axisName) > 0 || Input.GetAxisRaw(whichAxis.axisName) < 0) {
+     
+		if (player.GetAxisRaw("MoveY") > 0 || player.GetAxisRaw("MoveY") < 0) {
 
             // Only proceed if player is tagged in but not ready, and joystick not already pressed up/down
-            if (whichAxis.axisInUse == false && !readyToPlay && taggedIn ) {
+            if (axisInUse == false && !readyToPlay && taggedIn) { 
 
                 // Boolean to prevent scrolling more than one tick per press
-                whichAxis.axisInUse = true;
+                axisInUse = true;
 
                 // See if going up or down
-                bool goingUp = Input.GetAxisRaw(whichAxis.axisName) > 0;
+                bool goingUp = player.GetAxisRaw("MoveY") > 0;
 
                 // Move up or down through shape ints
                 int difference = (goingUp) ? 1 : -1;
@@ -392,10 +399,10 @@ public class FakePlayerScript : MonoBehaviour {
             }
 
         }
-        else if (Input.GetAxisRaw(whichAxis.axisName) == 0)
+        else if (player.GetAxisRaw("MoveY") == 0)
         {
             // Reset boolean to prevent scrolling more than one tick per press when joystick returns to 0
-            whichAxis.axisInUse = false;
+            axisInUse = false;
         }
 
 	}

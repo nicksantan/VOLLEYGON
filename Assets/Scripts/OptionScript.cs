@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Rewired;
 
 public class OptionScript : MonoBehaviour
 {
@@ -20,9 +21,11 @@ public class OptionScript : MonoBehaviour
     public GameObject a_text;
     public GameObject a_desc;
 
+    private Player player;
 
     void Start() {
-		joyButts = new JoystickButtons(DataManagerScript.gamepadControllingMenus);
+		//joyButts = new JoystickButtons(DataManagerScript.gamepadControllingMenus);
+        player = ReInput.players.GetPlayer(DataManagerScript.gamepadControllingMenus);
         es = EventSystem.current;
     }
 
@@ -33,7 +36,7 @@ public class OptionScript : MonoBehaviour
         {
             if (slider != null && isEnabled && !isSliding)
             {
-                float horizontal = Input.GetAxis(joyButts.horizontal);
+                float horizontal = player.GetAxis("MoveX");
                 if (horizontal != 0)
                 {
                     float newValue = horizontal > 0 ? slider.value + 1 : slider.value - 1;

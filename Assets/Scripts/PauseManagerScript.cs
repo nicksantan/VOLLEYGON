@@ -36,7 +36,7 @@ public class PauseManagerScript : MonoBehaviour
 
             // Assign butons
             var rsim = EventSystem.current.GetComponent<Rewired.Integration.UnityUI.RewiredStandaloneInputModule>();
-            rsim.UseAllRewiredGamePlayers = false;
+           
             rsim.RewiredPlayerIds = new int[] { gamepadIndex };
 
             // Reset menu

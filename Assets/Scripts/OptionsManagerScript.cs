@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using Rewired;
 
 public class OptionsManagerScript : MonoBehaviour
 {
@@ -32,6 +33,8 @@ public class OptionsManagerScript : MonoBehaviour
 
 	static private int[] validIndexes = { 0, 1, 2, 5, 6 };
 
+    private Player player;
+
 	void Start()
 	{
 		curtain.SetActive(true);
@@ -45,14 +48,18 @@ public class OptionsManagerScript : MonoBehaviour
 
 		// determine which controller is 'in control'.
 		whichPlayerIsControlling = DataManagerScript.gamepadControllingMenus;
-		joyButts = new JoystickButtons(whichPlayerIsControlling);
-	}
+        //joyButts = new JoystickButtons(whichPlayerIsControlling);
+        player = ReInput.players.GetPlayer(whichPlayerIsControlling);
+        var rsim = EventSystem.current.GetComponent<Rewired.Integration.UnityUI.RewiredStandaloneInputModule>();
+        rsim.RewiredPlayerIds = new int[] { whichPlayerIsControlling };
+
+    }
 
 	// Update is called once per frame
 	void Update()
 	{
 		// Check for selection to enable selectable option
-		bool inputSelecting = Input.GetButtonDown(joyButts.jump) || Input.GetButtonDown(joyButts.jump);
+		bool inputSelecting = player.GetButtonDown("Jump");
 		bool optionIsSelectable = OptionsManagerScript.CheckSelectableOptionIndex(selectedIndex);
         // special case for how-to video
         bool optionIsPlayable = selectedIndex == 5;
@@ -73,7 +80,7 @@ public class OptionsManagerScript : MonoBehaviour
 		}
 
 		// Check for cancel button
-		if (Input.GetButtonDown(joyButts.grav))
+		if (player.GetButtonDown("Grav"))
 		{
 
 			// Show/hide UI

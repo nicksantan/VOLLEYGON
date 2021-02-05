@@ -220,7 +220,8 @@ public class PlayerController : MonoBehaviour {
 		// Assign player color and joystick
 		if (isChallengeMode || DataManagerScript.isSinglePlayerMode) {
 
-			joystick = DataManagerScript.gamepadControllingMenus;
+         
+            joystick = DataManagerScript.gamepadControllingMenus + 1;
             playerColor = "1069A8";
 
 		} else {
@@ -260,6 +261,8 @@ public class PlayerController : MonoBehaviour {
             //buttons = new JoystickButtons(joystick);
 
             // Note, convert joystick number to player index requires -1.
+            Debug.Log("This ran");
+            Debug.Log(DataManagerScript.gamepadControllingMenus);
             player = ReInput.players.GetPlayer(joystick - 1);
         } else
         {

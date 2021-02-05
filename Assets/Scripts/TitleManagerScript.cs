@@ -237,9 +237,9 @@ public class TitleManagerScript : MonoBehaviour {
 
 	public void activateMainMenu(int gamepad) {
 
-		// Assign gamepad to menus
-		DataManagerScript.gamepadControllingMenus = gamepad;
-
+        // Assign gamepad to menus
+        // Note: This is a player index (0 index). So 3 means player 4.
+        DataManagerScript.gamepadControllingMenus = gamepad;
         // Save "active" user if on xbox
 		#if UNITY_XBOXONE
 			if (DataManagerScript.xboxMode) {

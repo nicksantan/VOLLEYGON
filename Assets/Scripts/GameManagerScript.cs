@@ -176,7 +176,7 @@ public class GameManagerScript : MonoBehaviour {
             Debug.Log("Does data manager tyhink this is single player mode?");
             Debug.Log(DataManagerScript.isSinglePlayerMode);
 
-            if (playersActive == 1)
+            if (playersActive <= 1)
             {
 
                 OnePlayerMode = true;
@@ -343,7 +343,7 @@ public class GameManagerScript : MonoBehaviour {
 		GameObject playerClone = null;
 		int playerType = 0;
 		Material whichMat = null;
-
+		if (whichSoloPlayer == 0){ whichSoloPlayer = 1; }
 		switch (whichSoloPlayer) {
 
 		    case 1:

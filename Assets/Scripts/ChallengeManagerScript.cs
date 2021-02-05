@@ -13,19 +13,20 @@ public enum medalTypes
     silver,
     gold
 }
-public class ChallengeManagerScript : MonoBehaviour {
+public class ChallengeManagerScript : MonoBehaviour
+{
 
-	public GameObject ballPrefab;
+    public GameObject ballPrefab;
 
     // Store which challenge is being played
     private int currentChallenge;
 
-	// Store reference to challenge-level UI elements
-	public GameObject winPanel;
-	public GameObject losePanel;
-	public GameObject instructionPanel;
-	public GameObject challengeTitle;
-	public GameObject challengeNumber;
+    // Store reference to challenge-level UI elements
+    public GameObject winPanel;
+    public GameObject losePanel;
+    public GameObject instructionPanel;
+    public GameObject challengeTitle;
+    public GameObject challengeNumber;
     public GameObject timerText;
     public GameObject bestText;
     private Text timerTextObj;
@@ -52,37 +53,39 @@ public class ChallengeManagerScript : MonoBehaviour {
     // Store a flag the individual challenge can reference to know whether to start or stop the challenge
     public bool challengeRunning = false;
 
-	// Store a reference to the challenges container so we can activate the correct challenge
-	public GameObject challengesContainer;
+    // Store a reference to the challenges container so we can activate the correct challenge
+    public GameObject challengesContainer;
 
     // Manage the time of the challenge
     private float rawTimer = 0f;
 
-	// Static singleton property
-	public static ChallengeManagerScript Instance { get; private set; }
+    // Static singleton property
+    public static ChallengeManagerScript Instance { get; private set; }
 
     private EventSystem es;
 
     private Player player;
-   
 
-    void Awake(){
-		Instance = this;
-		// Load the challenge the user requested
-		Debug.Log("Switching to challenge " + DataManagerScript.challengeType);
-		SwitchToChallenge(DataManagerScript.challengeType);
+
+    void Awake()
+    {
+        Instance = this;
+        // Load the challenge the user requested
+        Debug.Log("Switching to challenge " + DataManagerScript.challengeType);
+        SwitchToChallenge(DataManagerScript.challengeType);
         currentChallenge = DataManagerScript.challengeType;
         DataManagerScript.lastViewedChallenge = DataManagerScript.challengeType;
         timerTextObj = timerText.GetComponent<Text>();
         bestTextObj = bestText.GetComponent<Text>();
 
-       
+
 
 
     }
 
-    void Start () {
- 
+    void Start()
+    {
+
 
         // Display instruction panel
         DisplayChallengeInstructions();
@@ -125,17 +128,18 @@ public class ChallengeManagerScript : MonoBehaviour {
 
         // For now, just hide the panel in 3 seconds
         Invoke("HideChallengeInstructions", 3f);
-	}
-	
-	void Update () {
+    }
+
+    void Update()
+    {
 
         //Update the challenge timer 
         if (challengeRunning)
         {
             rawTimer += Time.deltaTime;
-           
+
             timerTextObj.text = FormatTime(rawTimer);
-           // Debug.Log(rawTimer);
+            // Debug.Log(rawTimer);
             if (rawTimer > 20 && !musicChanged)
             {
                 Debug.Log("music changed!");
@@ -157,16 +161,18 @@ public class ChallengeManagerScript : MonoBehaviour {
         }
     }
 
-	public void UpdateChallengeText(string newText){
-		challengeTitle.GetComponent<Text>().text = newText;
-		// TODO: Make a helper function to format the challenge number string
-		challengeNumber.GetComponent<Text>().text = "CHALLENGE 0" + (DataManagerScript.challengeType + 1);
-	}
+    public void UpdateChallengeText(string newText)
+    {
+        challengeTitle.GetComponent<Text>().text = newText;
+        // TODO: Make a helper function to format the challenge number string
+        challengeNumber.GetComponent<Text>().text = "CHALLENGE 0" + (DataManagerScript.challengeType + 1);
+    }
 
-	private void SwitchToChallenge(int whichChallenge){
-		Transform challenge = challengesContainer.transform.GetChild (whichChallenge);
-		challenge.gameObject.SetActive (true);
-	}
+    private void SwitchToChallenge(int whichChallenge)
+    {
+        Transform challenge = challengesContainer.transform.GetChild(whichChallenge);
+        challenge.gameObject.SetActive(true);
+    }
 
     public void ReturnToChallengeMenu()
     {
@@ -174,7 +180,7 @@ public class ChallengeManagerScript : MonoBehaviour {
     }
     public IEnumerator ReturnToChallengeMenuRoutine()
     {
-      
+
         GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
         yield return new WaitForSeconds(0.5f);
         SceneManager.LoadSceneAsync("chooseChallengeScene");
@@ -189,18 +195,21 @@ public class ChallengeManagerScript : MonoBehaviour {
         return niceTime;
     }
 
-    public void DisplayChallengeInstructions(){
-		instructionPanel.SetActive(true);
-	}
+    public void DisplayChallengeInstructions()
+    {
+        instructionPanel.SetActive(true);
+    }
 
-	public void HideChallengeInstructions(){
-		instructionPanel.SetActive(false);
-		challengeRunning = true;
-	}
+    public void HideChallengeInstructions()
+    {
+        instructionPanel.SetActive(false);
+        challengeRunning = true;
+    }
 
-	public void ChallengeFail(){
-		// Display fail text
-		losePanel.SetActive(true);
+    public void ChallengeFail()
+    {
+        // Display fail text
+        losePanel.SetActive(true);
         challengeRunning = false;
 
         // set the next option to play again
@@ -234,24 +243,18 @@ public class ChallengeManagerScript : MonoBehaviour {
                     break;
             }
             // Nudge over medal based on length of best time message. Provide a little delay because I think this is not running in time sometimes.
-            Canvas.ForceUpdateCanvases();
-            TextGenerator textGen = new TextGenerator();
-            TextGenerationSettings generationSettings = bestTimeLoseText.GetComponent<Text>().GetGenerationSettings(bestTimeLoseText.GetComponent<RectTransform>().rect.size);
-            float width = textGen.GetPreferredWidth("BEST TIME: " + FormatTime(bestTime), generationSettings);
-            Debug.Log("width is");
-            Debug.Log(width);
-            loseMedal.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(-419 + width, -1.299999f, 0f); //Get rid of the magic numbers!
+            Invoke("NudgeLoseMedal", .25f);
         }
         //For now, restart the challenge
-     //   Invoke("RestartChallenge", 5f);
+        //   Invoke("RestartChallenge", 5f);
     }
 
     public void NudgeLoseMedal()
     {
-        int widthOfBestTime = CalculateLengthOfMessage(bestTimeLoseText.GetComponent<Text>().text, bestTimeLoseText);
-        Debug.Log("width of best time was");
-        Debug.Log(widthOfBestTime);
-        loseMedal.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(-593 + widthOfBestTime + 20, -1.299999f, 0f); //Get rid of the magic numbers!
+        int[] widthOfChars = CalculateLengthOfMessage(bestTimeLoseText.GetComponent<Text>().text, bestTimeLoseText);
+        float widthOfMedChars = widthOfChars[1] * 5f;
+        float widthOfSmallChars = widthOfChars[0] * 10f;
+        loseMedal.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(loseMedal.GetComponent<RectTransform>().localPosition.x - widthOfMedChars-widthOfSmallChars, -1.299999f, 0f); //Get rid of the magic numbers!
     }
 
     public void RestartChallenge()
@@ -261,7 +264,7 @@ public class ChallengeManagerScript : MonoBehaviour {
 
     public void PlayNextChallenge()
     {
-       
+
         DataManagerScript.challengeType = DataManagerScript.challengeType + 1;
         Debug.Log("INCREASED CHALLENGE NUM!");
 
@@ -293,10 +296,11 @@ public class ChallengeManagerScript : MonoBehaviour {
         //Invoke("HideChallengeInstructions", 3f);
     }
 
-    public void ChallengeSucceed(){
+    public void ChallengeSucceed()
+    {
 
-		// Display success text
-		winPanel.SetActive(true);
+        // Display success text
+        winPanel.SetActive(true);
         challengeRunning = false;
 
         // set the next option to play again
@@ -336,14 +340,7 @@ public class ChallengeManagerScript : MonoBehaviour {
             }
 
             // Nudge over medal based on length of best time message.
-            // Invoke("NudgeWinMedal", 1.5f);
-            Canvas.ForceUpdateCanvases();
-            TextGenerator textGen = new TextGenerator();
-            TextGenerationSettings generationSettings = bestTimeWinText.GetComponent<Text>().GetGenerationSettings(bestTimeWinText.GetComponent<RectTransform>().rect.size);
-            float width = textGen.GetPreferredWidth("BEST TIME: " + FormatTime(theResults.challengeTime), generationSettings);
-            Debug.Log("width is");
-            Debug.Log(width);
-            winMedal.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(-419 + width, -1.299999f, 0f); //Get rid of the magic numbers!
+            Invoke("NudgeWinMedal", .25f);
 
         }
         else
@@ -352,41 +349,46 @@ public class ChallengeManagerScript : MonoBehaviour {
         }
         //For now, try playing the next challenge
         //Invoke("PlayNextChallenge", 5f);
-  
+
 
     }
 
     void NudgeWinMedal()
     {
-        int widthOfBestTime = CalculateLengthOfMessage(bestTimeWinText.GetComponent<Text>().text, bestTimeWinText);
-        Debug.Log("width of best time was");
-        Debug.Log(widthOfBestTime);
-        winMedal.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(-593 + widthOfBestTime + 20, -1.299999f, 0f); //Get rid of the magic numbers!
+        int[] widthOfChars = CalculateLengthOfMessage(bestTimeWinText.GetComponent<Text>().text, bestTimeWinText);
+        float widthOfMedChars = widthOfChars[1] * 5f;
+        float widthOfSmallChars = widthOfChars[0] * 10f;
+        winMedal.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(winMedal.GetComponent<RectTransform>().localPosition.x - widthOfSmallChars - widthOfMedChars, -1.299999f, 0f); //Get rid of the magic numbers!
     }
-    int CalculateLengthOfMessage(string message, GameObject textObj)
+
+    int[] CalculateLengthOfMessage(string message, GameObject textObj)
     {
-        int totalLength = 0;
+        int totalSmallChars = 0;
+        int totalMedChars = 0;
 
-        Font myFont = textObj.GetComponent<Text>().font;  
-        CharacterInfo characterInfo = new CharacterInfo();
-
-        char[] arr = message.ToCharArray();
-        Debug.Log(message);
-        Debug.Log(arr);
-        foreach (char c in arr)
+        for (int i = 0; i < message.Length; i++)
         {
-            Debug.Log(c);
-            myFont.GetCharacterInfo(c, out characterInfo, textObj.GetComponent<Text>().fontSize);
-            Debug.Log(characterInfo.advance);
-            totalLength += characterInfo.advance;
+            char letter = message[i];
+
+            if (letter.ToString() == "1")
+            {
+                totalSmallChars++;
+            }
+
+            if (letter.ToString() == "8" || letter.ToString() == "7" || letter.ToString() == "6" || letter.ToString() == "3" || letter.ToString() == "2")
+            {
+                totalMedChars++;
+            }
         }
-        Debug.Log("total length");
-        Debug.Log(totalLength);
-        return totalLength;
+
+        int[] results = new int[2];
+        results[0] = totalSmallChars;
+        results[1] = totalMedChars;
+
+        return results;
     }
+
 }
-
-
 
 public class MedalProvider
 {

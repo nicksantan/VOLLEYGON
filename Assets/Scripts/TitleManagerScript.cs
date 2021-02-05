@@ -107,6 +107,10 @@ public class TitleManagerScript : MonoBehaviour {
                 if (inputAllowed && players[i].GetButtonDown("Grav") && allowQuit)
                 {
                     showQuitAppPanel();
+                    DataManagerScript.gamepadControllingMenus = i;
+                    var rsim = EventSystem.current.GetComponent<Rewired.Integration.UnityUI.RewiredStandaloneInputModule>();
+               
+                    rsim.RewiredPlayerIds = new int[] { i };
                 }
 
                 if (inputAllowed && (players[i].GetButtonDown("Jump") || players[i].GetButtonDown("Start"))) {
@@ -188,6 +192,7 @@ public class TitleManagerScript : MonoBehaviour {
        
         quitPanel.SetActive(false); 
         es1.SetSelectedGameObject(null);
+        controllingGamepad = null;
         allowInputSoon();
     }
 

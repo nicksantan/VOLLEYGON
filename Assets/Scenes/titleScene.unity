@@ -852,7 +852,7 @@ MonoBehaviour:
     type: 3}
   useAllRewiredGamePlayers: 0
   useRewiredSystemPlayer: 1
-  rewiredPlayerIds: 7f969800
+  rewiredPlayerIds: 00000000010000000200000003000000
   usePlayingPlayersOnly: 0
   playerMice: []
   moveOneElementPerAxisPress: 0
@@ -867,11 +867,11 @@ MonoBehaviour:
   m_CancelButton: Grav
   m_InputActionsPerSecond: 10
   m_RepeatDelay: 0.5
-  m_allowMouseInput: 1
-  m_allowMouseInputIfTouchSupported: 1
-  m_allowTouchInput: 1
-  m_deselectIfBackgroundClicked: 1
-  m_deselectBeforeSelecting: 1
+  m_allowMouseInput: 0
+  m_allowMouseInputIfTouchSupported: 0
+  m_allowTouchInput: 0
+  m_deselectIfBackgroundClicked: 0
+  m_deselectBeforeSelecting: 0
   m_ForceModuleActive: 0
 --- !u!114 &452662710
 MonoBehaviour:
@@ -3858,7 +3858,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 379.6178
+  Phase: 380.52292
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5

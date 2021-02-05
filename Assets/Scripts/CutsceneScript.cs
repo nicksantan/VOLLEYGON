@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using Rewired;
 
 public class CutsceneScript : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class CutsceneScript : MonoBehaviour {
     public bool isSkippable = false;
     private int whichPlayerIsControlling;
     private JoystickButtons joyButts;
+    private Player player;
 
     // Use this for initialization
     void Start () {
@@ -21,10 +23,11 @@ public class CutsceneScript : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         whichPlayerIsControlling = DataManagerScript.gamepadControllingMenus;
-        joyButts = new JoystickButtons(whichPlayerIsControlling);
+        player = ReInput.players.GetPlayer(DataManagerScript.gamepadControllingMenus);
+      //  joyButts = new JoystickButtons(whichPlayerIsControlling);
         if (isSkippable)
         {
-            if (Input.GetButtonDown(joyButts.grav) || Input.GetButtonDown(joyButts.jump) || Input.GetButtonDown(joyButts.start))
+            if (player.GetButtonDown("Grav") || player.GetButtonDown("Jump") || player.GetButtonDown("Start"))
             {
                 NextScene();
             }

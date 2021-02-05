@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using Rewired;
 
 public enum medalTypes
 {
@@ -62,6 +63,7 @@ public class ChallengeManagerScript : MonoBehaviour {
 
     private EventSystem es;
 
+    private Player player;
    
 
     void Awake(){
@@ -92,12 +94,17 @@ public class ChallengeManagerScript : MonoBehaviour {
         es = EventSystem.current;
         // Assign joystick to player
         int joystickIdentifier = DataManagerScript.gamepadControllingMenus;
-        JoystickButtons buttons = new JoystickButtons(joystickIdentifier);
-      
-        es.GetComponent<StandaloneInputModule>().horizontalAxis = buttons.horizontal;
-        es.GetComponent<StandaloneInputModule>().verticalAxis = buttons.vertical;
-        es.GetComponent<StandaloneInputModule>().submitButton = buttons.jump;
-        es.GetComponent<StandaloneInputModule>().cancelButton = buttons.grav;
+        player = ReInput.players.GetPlayer(joystickIdentifier);
+        var rsim = EventSystem.current.GetComponent<Rewired.Integration.UnityUI.RewiredStandaloneInputModule>();
+
+        rsim.RewiredPlayerIds = new int[] { joystickIdentifier };
+
+        //JoystickButtons buttons = new JoystickButtons(joystickIdentifier);
+
+        //es.GetComponent<StandaloneInputModule>().horizontalAxis = buttons.horizontal;
+        //es.GetComponent<StandaloneInputModule>().verticalAxis = buttons.vertical;
+        //es.GetComponent<StandaloneInputModule>().submitButton = buttons.jump;
+        //es.GetComponent<StandaloneInputModule>().cancelButton = buttons.grav;
         // Load the best time for this challenge
         GameObject ICM = GameObject.FindWithTag("IndividualChallengeManager");
         if (ICM)
@@ -128,7 +135,7 @@ public class ChallengeManagerScript : MonoBehaviour {
             rawTimer += Time.deltaTime;
            
             timerTextObj.text = FormatTime(rawTimer);
-            Debug.Log(rawTimer);
+           // Debug.Log(rawTimer);
             if (rawTimer > 20 && !musicChanged)
             {
                 Debug.Log("music changed!");
@@ -226,12 +233,25 @@ public class ChallengeManagerScript : MonoBehaviour {
                     loseMedal.GetComponent<Image>().sprite = goldMedalImage;
                     break;
             }
-            // Nudge over medal based on length of best time message.
-            int widthOfBestTime = CalculateLengthOfMessage(bestTimeLoseText.GetComponent<Text>().text, bestTimeLoseText);
-           loseMedal.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(-593 + widthOfBestTime + 20, -1.299999f, 0f); //Get rid of the magic numbers!
+            // Nudge over medal based on length of best time message. Provide a little delay because I think this is not running in time sometimes.
+            Canvas.ForceUpdateCanvases();
+            TextGenerator textGen = new TextGenerator();
+            TextGenerationSettings generationSettings = bestTimeLoseText.GetComponent<Text>().GetGenerationSettings(bestTimeLoseText.GetComponent<RectTransform>().rect.size);
+            float width = textGen.GetPreferredWidth("BEST TIME: " + FormatTime(bestTime), generationSettings);
+            Debug.Log("width is");
+            Debug.Log(width);
+            loseMedal.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(-419 + width, -1.299999f, 0f); //Get rid of the magic numbers!
         }
         //For now, restart the challenge
      //   Invoke("RestartChallenge", 5f);
+    }
+
+    public void NudgeLoseMedal()
+    {
+        int widthOfBestTime = CalculateLengthOfMessage(bestTimeLoseText.GetComponent<Text>().text, bestTimeLoseText);
+        Debug.Log("width of best time was");
+        Debug.Log(widthOfBestTime);
+        loseMedal.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(-593 + widthOfBestTime + 20, -1.299999f, 0f); //Get rid of the magic numbers!
     }
 
     public void RestartChallenge()
@@ -316,8 +336,15 @@ public class ChallengeManagerScript : MonoBehaviour {
             }
 
             // Nudge over medal based on length of best time message.
-            int widthOfBestTime = CalculateLengthOfMessage(bestTimeWinText.GetComponent<Text>().text, bestTimeWinText);
-            winMedal.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(-593 + widthOfBestTime + 20, -1.299999f, 0f); //Get rid of the magic numbers!
+            // Invoke("NudgeWinMedal", 1.5f);
+            Canvas.ForceUpdateCanvases();
+            TextGenerator textGen = new TextGenerator();
+            TextGenerationSettings generationSettings = bestTimeWinText.GetComponent<Text>().GetGenerationSettings(bestTimeWinText.GetComponent<RectTransform>().rect.size);
+            float width = textGen.GetPreferredWidth("BEST TIME: " + FormatTime(theResults.challengeTime), generationSettings);
+            Debug.Log("width is");
+            Debug.Log(width);
+            winMedal.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(-419 + width, -1.299999f, 0f); //Get rid of the magic numbers!
+
         }
         else
         {
@@ -328,22 +355,33 @@ public class ChallengeManagerScript : MonoBehaviour {
   
 
     }
+
+    void NudgeWinMedal()
+    {
+        int widthOfBestTime = CalculateLengthOfMessage(bestTimeWinText.GetComponent<Text>().text, bestTimeWinText);
+        Debug.Log("width of best time was");
+        Debug.Log(widthOfBestTime);
+        winMedal.gameObject.GetComponent<RectTransform>().localPosition = new Vector3(-593 + widthOfBestTime + 20, -1.299999f, 0f); //Get rid of the magic numbers!
+    }
     int CalculateLengthOfMessage(string message, GameObject textObj)
     {
         int totalLength = 0;
 
-        Font myFont = textObj.GetComponent<Text>().font;  //chatText is my Text component
+        Font myFont = textObj.GetComponent<Text>().font;  
         CharacterInfo characterInfo = new CharacterInfo();
 
         char[] arr = message.ToCharArray();
-
+        Debug.Log(message);
+        Debug.Log(arr);
         foreach (char c in arr)
         {
+            Debug.Log(c);
             myFont.GetCharacterInfo(c, out characterInfo, textObj.GetComponent<Text>().fontSize);
-
+            Debug.Log(characterInfo.advance);
             totalLength += characterInfo.advance;
         }
-
+        Debug.Log("total length");
+        Debug.Log(totalLength);
         return totalLength;
     }
 }

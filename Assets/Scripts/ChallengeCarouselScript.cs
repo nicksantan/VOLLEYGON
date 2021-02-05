@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using Rewired;
+
 
 public class ChallengeCarouselScript : MonoBehaviour
 {
@@ -21,6 +23,7 @@ public class ChallengeCarouselScript : MonoBehaviour
 
     private int whichPlayerIsControlling;
     private JoystickButtons joyButts;
+    private Player player;
 
     private int selectedIndex = 0;
     private bool optionIsOpen = false;
@@ -45,7 +48,8 @@ public class ChallengeCarouselScript : MonoBehaviour
 
         // determine which controller is 'in control'.
         whichPlayerIsControlling = DataManagerScript.gamepadControllingMenus;
-        joyButts = new JoystickButtons(whichPlayerIsControlling);
+        //joyButts = new JoystickButtons(whichPlayerIsControlling);
+        player = ReInput.players.GetPlayer(whichPlayerIsControlling);
 
         if (DataManagerScript.lastViewedChallenge == 0)
         {
@@ -58,7 +62,7 @@ public class ChallengeCarouselScript : MonoBehaviour
     {
         MusicManagerScript.Instance.FadeOutEverything();
         // Check for selection to enable selectable option
-        bool inputSelecting = Input.GetButtonDown(joyButts.jump) || Input.GetButtonDown(joyButts.jump);
+        bool inputSelecting = player.GetButtonDown("Jump");
         bool optionIsSelectable = ChallengeCarouselScript.CheckSelectableOptionIndex(selectedIndex);
         optionPlayButton.SetActive(optionIsSelectable && !optionIsOpen);
         // Show options based on carousel slide selected
@@ -73,7 +77,7 @@ public class ChallengeCarouselScript : MonoBehaviour
         }
 
         // Check for cancel button
-        if (Input.GetButtonDown(joyButts.grav))
+        if (player.GetButtonDown("grav"))
         {
 
             // Show/hide UI

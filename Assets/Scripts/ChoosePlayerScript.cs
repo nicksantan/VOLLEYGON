@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.UI;
+using Rewired;
 
 #if UNITY_XBOXONE
 	using Users;
@@ -70,6 +71,14 @@ public class ChoosePlayerScript : MonoBehaviour {
     public GameObject addBotButton;
     public GameObject removeBotButton;
 
+
+    private Player p1;
+    private Player p2;
+    private Player p3;
+    private Player p4;
+    private Player[] players = new Player[4];
+
+
     void Awake() {
 
 		Instance = this;
@@ -77,7 +86,17 @@ public class ChoosePlayerScript : MonoBehaviour {
 		MusicManagerScript.Instance.whichSource = MusicManagerScript.Instance.whichSource % 2;
 		MusicManagerScript.Instance.SwitchToSource();
 
-	}
+        p1 = ReInput.players.GetPlayer(0);
+        p2 = ReInput.players.GetPlayer(1);
+        p3 = ReInput.players.GetPlayer(2);
+        p4 = ReInput.players.GetPlayer(3);
+
+        players[0] = p1;
+        players[1] = p2;
+        players[2] = p3;
+        players[3] = p4;
+
+    }
 
     void ToggleFourthBot()
     {
@@ -280,13 +299,14 @@ public class ChoosePlayerScript : MonoBehaviour {
         // Loop over icons and activate any already active in menu
         for (int i = 0; i < gamepadIcons.Length; i++)
         {
-            int gamepadId = i + 1;
+            int gamepadId = i;
 
             // Activate gamepad for player who selected the game mode
             bool isActive = DataManagerScript.gamepadControllingMenus == gamepadId;
+            gamepadIcons[i].GetComponent<GamepadController>().botMode = isBotsMode;
             gamepadIcons[i].GetComponent<GamepadController>().ToggleIcon(isActive);
 
-            gamepadIcons[i].GetComponent<GamepadController>().botMode = isBotsMode;
+           
         }
 
     }
@@ -487,18 +507,19 @@ public class ChoosePlayerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// Look for start button presses
-		for (int i = 0; i < joysticks.Length; i++) {
+		for (int i = 0; i < players.Length; i++) {
 			int slotId = i + 1;
-			JoystickButtons joystick = joysticks[i];
+			//JoystickButtons joystick = joysticks[i];
 
+           
             // If this is bots mode, let any player toggle the fourth bot
           
-            if (Input.GetButtonDown(joystick.y) && isBotsMode)
+            if (players[i].GetButtonDown("Supplementary") && isBotsMode)
             {
                 Debug.Log("y hit");
                 ToggleFourthBot();
             }
-			if (Input.GetButtonDown(joystick.start) || (Input.GetButtonDown(joystick.jump) && !gamepadIcons[i].GetComponent<GamepadController>().enabled)) {
+			if (players[i].GetButtonDown("Start") || players[i].GetButtonDown("Jump") && !gamepadIcons[i].GetComponent<GamepadController>().enabled) {
 
 				// Start game if startable and gamepad not tagged in
 				if (gameIsStartable && gamepadIcons[i].GetComponent<GamepadController>().enabled) {

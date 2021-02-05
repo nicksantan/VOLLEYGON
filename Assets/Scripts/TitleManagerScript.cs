@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-
+using Rewired;
 
 #if UNITY_XBOXONE
 	using Users;
@@ -11,7 +11,8 @@ using UnityEngine.SceneManagement;
 
 public class TitleManagerScript : MonoBehaviour {
 
-	private JoystickButtons controllingGamepad;
+    private Player controllingGamepad;
+	//private JoystickButtons controllingGamepad;
 	private JoystickButtons[] gamepads = new JoystickButtons[4];
     private bool inputAllowed = false;
     public GameObject pressStartAnimation;
@@ -35,6 +36,26 @@ public class TitleManagerScript : MonoBehaviour {
 
 	public Button firstButton;
 
+    private Player p1;
+    private Player p2;
+    private Player p3;
+    private Player p4;
+    private Player[] players = new Player[4];
+
+
+    private void Awake()
+    {
+        p1 = ReInput.players.GetPlayer(0);
+        p2 = ReInput.players.GetPlayer(1);
+        p3 = ReInput.players.GetPlayer(2);
+        p4 = ReInput.players.GetPlayer(3);
+
+        players[0] = p1;
+        players[1] = p2;
+        players[2] = p3;
+        players[3] = p4;
+
+    }
     void Start() {
         curtain.SetActive(true);
         curtain.GetComponent<NewFadeScript>().Fade(0f);
@@ -43,6 +64,7 @@ public class TitleManagerScript : MonoBehaviour {
         versionText.text = DataManagerScript.version;
         DataManagerScript.ResetStats();
         DataManagerScript.ResetPlayerTypes();
+        DataManagerScript.isChallengeMode = false;
         DataManagerScript.isChallengeMode = false;
         DataManagerScript.isSinglePlayerMode = false;
         DataManagerScript.arenaType = -99;
@@ -72,25 +94,31 @@ public class TitleManagerScript : MonoBehaviour {
     void Update () {
 		MusicManagerScript.Instance.FadeOutEverything ();
 
-		// Iterate over all inputs for actions
-		for (int i = 0; i < gamepads.Length; i++) {
-          
-            // Xbox numbering
-            int gamepadIndex = i + 1;
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (players[i].GetButtonDown("Supplementary"))
+            {
+                Debug.Log("Fire!");
+            }
+        
 
 			// Listen for activation
 			if (!mainMenuActive) {
-                if (inputAllowed && Input.GetButtonDown(gamepads[i].grav) && allowQuit)
+                if (inputAllowed && players[i].GetButtonDown("Grav") && allowQuit)
                 {
                     showQuitAppPanel();
+                    DataManagerScript.gamepadControllingMenus = i;
+                    var rsim = EventSystem.current.GetComponent<Rewired.Integration.UnityUI.RewiredStandaloneInputModule>();
+               
+                    rsim.RewiredPlayerIds = new int[] { i };
                 }
 
-                if (inputAllowed && (Input.GetButtonDown(gamepads[i].jump) || Input.GetButtonDown(gamepads[i].start))) {
+                if (inputAllowed && (players[i].GetButtonDown("Jump") || players[i].GetButtonDown("Start"))) {
                   
                     if (DataManagerScript.demoMode) {
 
                         // Jump right into lobby if in demo mode
-                        DataManagerScript.gamepadControllingMenus = gamepadIndex;
+                        DataManagerScript.gamepadControllingMenus = i;
                         //StartMultiplayerGame();
 						StartChallengesGame();
 
@@ -113,7 +141,8 @@ public class TitleManagerScript : MonoBehaviour {
                         // Open main menu with this controller
                         // remove press start animation
                         pressStartAnimation.SetActive(false);
-                        LeanTween.move(Camera.main.gameObject, new Vector3(0f, -3.3f, -10f), 0.5f).setOnComplete(()=>activateMainMenu(gamepadIndex)).setEase(LeanTweenType.easeOutQuad);
+                        int currentGP = i;
+                        LeanTween.move(Camera.main.gameObject, new Vector3(0f, -3.3f, -10f), 0.5f).setOnComplete(()=>activateMainMenu(currentGP)).setEase(LeanTweenType.easeOutQuad);
                       // activateMainMenu(gamepadIndex);
 						#endif
 					}
@@ -138,7 +167,7 @@ public class TitleManagerScript : MonoBehaviour {
 			}
 		}
         // Listen for cancel
-        if (controllingGamepad != null && Input.GetButtonDown(controllingGamepad.grav))
+        if (controllingGamepad != null && controllingGamepad.GetButtonDown("Grav"))
         {
             Debug.Log("cancelling current menu");
             cancelCurrentMenu(false);
@@ -163,6 +192,7 @@ public class TitleManagerScript : MonoBehaviour {
        
         quitPanel.SetActive(false); 
         es1.SetSelectedGameObject(null);
+        controllingGamepad = null;
         allowInputSoon();
     }
 
@@ -212,9 +242,9 @@ public class TitleManagerScript : MonoBehaviour {
 
 	public void activateMainMenu(int gamepad) {
 
-		// Assign gamepad to menus
-		DataManagerScript.gamepadControllingMenus = gamepad;
-
+        // Assign gamepad to menus
+        // Note: This is a player index (0 index). So 3 means player 4.
+        DataManagerScript.gamepadControllingMenus = gamepad;
         // Save "active" user if on xbox
 		#if UNITY_XBOXONE
 			if (DataManagerScript.xboxMode) {
@@ -232,13 +262,19 @@ public class TitleManagerScript : MonoBehaviour {
         es1.SetSelectedGameObject(null);
 		es1.SetSelectedGameObject(es1.firstSelectedGameObject);
 
-		// depending on which controller was tagged in, set the input stringes here
-		controllingGamepad = new JoystickButtons (gamepad);
-		es1.GetComponent<StandaloneInputModule> ().horizontalAxis = controllingGamepad.horizontal;
-		es1.GetComponent<StandaloneInputModule> ().verticalAxis = controllingGamepad.vertical;
-		es1.GetComponent<StandaloneInputModule> ().submitButton = controllingGamepad.jump;
-		es1.GetComponent<StandaloneInputModule> ().cancelButton = controllingGamepad.grav;
-	}
+        var rsim = EventSystem.current.GetComponent<Rewired.Integration.UnityUI.RewiredStandaloneInputModule>();
+        Debug.Log("gamepad is ");
+        Debug.Log(gamepad);
+        rsim.RewiredPlayerIds = new int[] { gamepad };
+
+        // depending on which controller was tagged in, set the input stringes here
+        controllingGamepad = players[gamepad];
+        //	controllingGamepad = new JoystickButtons (gamepad);
+        //	es1.GetComponent<StandaloneInputModule> ().horizontalAxis = controllingGamepad.horizontal;
+        //	es1.GetComponent<StandaloneInputModule> ().verticalAxis = controllingGamepad.vertical;
+        //	es1.GetComponent<StandaloneInputModule> ().submitButton = controllingGamepad.jump;
+        //	es1.GetComponent<StandaloneInputModule> ().cancelButton = controllingGamepad.grav;
+    }
 
 	public void SetUpSinglePlayerMenu (){
 		es1.SetSelectedGameObject(soloModeButton);

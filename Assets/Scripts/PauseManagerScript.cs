@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Rewired;
 
 public class PauseManagerScript : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PauseManagerScript : MonoBehaviour
     public bool recentlyPaused = false;
     public GameObject pausePanel;
     public EventSystem es;
+    private Player player;
 
     void Start()
     {
@@ -22,18 +24,20 @@ public class PauseManagerScript : MonoBehaviour
         
     }
 
-    public void Pause(JoystickButtons buttons)
+    public void Pause(int joystick)
     {
+        int gamepadIndex = joystick - 1;
+        player = ReInput.players.GetPlayer(gamepadIndex);
+
         if (!paused)
         {
             // Show pause
             pausePanel.SetActive(true);
 
             // Assign butons
-            es.GetComponent<StandaloneInputModule>().horizontalAxis = buttons.horizontal;
-            es.GetComponent<StandaloneInputModule>().verticalAxis = buttons.vertical;
-            es.GetComponent<StandaloneInputModule>().submitButton = buttons.jump;
-            es.GetComponent<StandaloneInputModule>().cancelButton = buttons.grav;
+            var rsim = EventSystem.current.GetComponent<Rewired.Integration.UnityUI.RewiredStandaloneInputModule>();
+           
+            rsim.RewiredPlayerIds = new int[] { gamepadIndex };
 
             // Reset menu
             es.SetSelectedGameObject(null);

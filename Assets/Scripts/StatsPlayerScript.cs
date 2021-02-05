@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.UI;
+using Rewired;
 
 public class StatsPlayerScript : MonoBehaviour {
 
@@ -28,8 +29,9 @@ public class StatsPlayerScript : MonoBehaviour {
 
 	private int whichType;
 
-	// Button names
-	private JoystickButtons buttons;
+    // Button names
+    //private JoystickButtons buttons;
+    private Player player;
 
 	SpriteRenderer sr;
 
@@ -88,11 +90,10 @@ public class StatsPlayerScript : MonoBehaviour {
 			break;
 		}
 
-		// Get player input names
-		buttons = new JoystickButtons(joystick);
-
-		cancelKey = buttons.grav;
-		confirmKey = buttons.jump;
+        // Get player input names
+        //buttons = new JoystickButtons(joystick);
+        int gamepadIndex = joystick - 1;
+        player = ReInput.players.GetPlayer(gamepadIndex);
 
 		sr = GetComponent<SpriteRenderer> ();
 		readyText.GetComponent<CanvasRenderer>().SetAlpha(0.0f);
@@ -178,18 +179,18 @@ public class StatsPlayerScript : MonoBehaviour {
 	}
     // Update is called once per frame
     void Update() {
-        if (confirmKey != null)
+        if (player != null)
         {
-            if (Input.GetButtonDown(confirmKey))
+            if (player.GetButtonDown("Jump"))
             {
                 activateReadyState();
             }
-        }
-        if (cancelKey != null) {
-            if (Input.GetButtonDown(cancelKey))
+
+
+            if (player.GetButtonDown("Grav"))
             {
                 cancelReadyState();
             }
-		}
+        }
 	}
 }

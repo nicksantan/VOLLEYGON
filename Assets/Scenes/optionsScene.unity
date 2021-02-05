@@ -830,6 +830,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5e001b265e073047bc24afaf2e76c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  usingNewCurtain: 0
+  newCurtain: {fileID: 0}
+  arenaName: {fileID: 0}
   useCurtain: 0
 --- !u!114 &114306384
 MonoBehaviour:
@@ -2785,6 +2788,7 @@ GameObject:
   - component: {fileID: 452662711}
   - component: {fileID: 452662710}
   - component: {fileID: 452662712}
+  - component: {fileID: 452662709}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -2792,6 +2796,43 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &452662709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452662708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10efa70eea88e69459c632aac286892d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rewiredInputManager: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
+    type: 3}
+  useAllRewiredGamePlayers: 0
+  useRewiredSystemPlayer: 0
+  rewiredPlayerIds: 
+  usePlayingPlayersOnly: 0
+  playerMice: []
+  moveOneElementPerAxisPress: 0
+  setActionsById: 0
+  horizontalActionId: -1
+  verticalActionId: -1
+  submitActionId: -1
+  cancelActionId: -1
+  m_HorizontalAxis: MoveX
+  m_VerticalAxis: MoveY
+  m_SubmitButton: Jump
+  m_CancelButton: Grav
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_allowMouseInput: 0
+  m_allowMouseInputIfTouchSupported: 0
+  m_allowTouchInput: 0
+  m_deselectIfBackgroundClicked: 0
+  m_deselectBeforeSelecting: 0
+  m_ForceModuleActive: 0
 --- !u!114 &452662710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2828,7 +2869,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 452662708}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -8211,7 +8252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 737.12726
+  Phase: 739.5515
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5

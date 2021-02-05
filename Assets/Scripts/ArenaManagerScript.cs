@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
+using Rewired;
 
 public class ArenaManagerScript : MonoBehaviour {
 
@@ -47,29 +48,31 @@ public class ArenaManagerScript : MonoBehaviour {
 
     private new AudioSource audio;
 
-    Axis va1;
-    Axis va2;
-    Axis va3;
-    Axis va4;
+    private Player player;
 
-    Axis va1_Xbox;
-    Axis va2_Xbox;
-    Axis va3_Xbox;
-    Axis va4_Xbox;
+    vAxis va1;
+    vAxis va2;
+    vAxis va3;
+    vAxis va4;
 
-    Axis ha1;
-    Axis ha2;
-    Axis ha3;
-    Axis ha4;
+    vAxis va1_Xbox;
+    vAxis va2_Xbox;
+    vAxis va3_Xbox;
+    vAxis va4_Xbox;
 
-    Axis ha1_Xbox;
-    Axis ha2_Xbox;
-    Axis ha3_Xbox;
-    Axis ha4_Xbox;
+    vAxis ha1;
+    vAxis ha2;
+    vAxis ha3;
+    vAxis ha4;
+
+    vAxis ha1_Xbox;
+    vAxis ha2_Xbox;
+    vAxis ha3_Xbox;
+    vAxis ha4_Xbox;
 
     //VertAxis[] verticalAxes;
-    List<Axis> verticalAxes = new List<Axis>();
-    List<Axis> horizontalAxes = new List<Axis>();
+    List<vAxis> verticalAxes = new List<vAxis>();
+    List<vAxis> horizontalAxes = new List<vAxis>();
 
     List<string> buttons = new List<string>();
 
@@ -79,69 +82,13 @@ public class ArenaManagerScript : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+
+        player = ReInput.players.GetPlayer(DataManagerScript.gamepadControllingMenus);
         audio = GetComponent<AudioSource>();
         float sfxVolume = PlayerPrefs.HasKey("sfxVolume") ? PlayerPrefs.GetFloat("sfxVolume") : 10f;
         float masterVolume = PlayerPrefs.HasKey("masterVolume") ? PlayerPrefs.GetFloat("masterVolume") : 10f;
         audio.volume = audio.volume * masterVolume / 10f * sfxVolume / 10f;
         locked = false;
-
-        va1 = new Axis("Vertical_P1");
-        va2 = new Axis("Vertical_P2");
-        va3 = new Axis("Vertical_P3");
-        va4 = new Axis("Vertical_P4");
-
-        va1_Xbox = new Axis("Vertical_P1_Xbox");
-        va2_Xbox = new Axis("Vertical_P2_Xbox");
-        va3_Xbox = new Axis("Vertical_P3_Xbox");
-        va4_Xbox = new Axis("Vertical_P4_Xbox");
-
-        verticalAxes.Add(va1);
-        verticalAxes.Add(va2);
-        verticalAxes.Add(va3);
-        verticalAxes.Add(va4);
-
-        verticalAxes.Add(va1_Xbox);
-        verticalAxes.Add(va2_Xbox);
-        verticalAxes.Add(va3_Xbox);
-        verticalAxes.Add(va4_Xbox);
-
-        ha1 = new Axis("Horizontal_P1");
-        ha2 = new Axis("Horizontal_P2");
-        ha3 = new Axis("Horizontal_P3");
-        ha4 = new Axis("Horizontal_P4");
-
-        ha1_Xbox = new Axis("Horizontal_P1_Xbox");
-        ha2_Xbox = new Axis("Horizontal_P2_Xbox");
-        ha3_Xbox = new Axis("Horizontal_P3_Xbox");
-        ha4_Xbox = new Axis("Horizontal_P4_Xbox");
-
-        horizontalAxes.Add(ha1);
-        horizontalAxes.Add(ha2);
-        horizontalAxes.Add(ha3);
-        horizontalAxes.Add(ha4);
-
-        horizontalAxes.Add(ha1_Xbox);
-        horizontalAxes.Add(ha2_Xbox);
-        horizontalAxes.Add(ha3_Xbox);
-        horizontalAxes.Add(ha4_Xbox);
-
-        buttons.Add(jumpButton1);
-        buttons.Add(gravButton1);
-        buttons.Add(jumpButton2);
-        buttons.Add(gravButton2);
-        buttons.Add(jumpButton3);
-        buttons.Add(gravButton3);
-        buttons.Add(jumpButton4);
-        buttons.Add(gravButton4);
-
-        buttons.Add(jumpButton1_Xbox);
-        buttons.Add(gravButton1_Xbox);
-        buttons.Add(jumpButton2_Xbox);
-        buttons.Add(gravButton2_Xbox);
-        buttons.Add(jumpButton3_Xbox);
-        buttons.Add(gravButton3_Xbox);
-        buttons.Add(jumpButton4_Xbox);
-        buttons.Add(gravButton4_Xbox);
 
         Vector3 tempPos = new Vector3(markerXPositions[0], markerYPositions[0], 1f);
         marker.transform.position = tempPos;
@@ -151,6 +98,12 @@ public class ArenaManagerScript : MonoBehaviour {
 		// Fade in
 		curtain.SetActive(true);
         curtain.GetComponent<NewFadeScript>().Fade(0f);
+
+        int whichPlayerIsControlling = DataManagerScript.gamepadControllingMenus;
+        // JoystickButtons joystick = new JoystickButtons(whichPlayerIsControlling);
+
+        var rsim = EventSystem.current.GetComponent<Rewired.Integration.UnityUI.RewiredStandaloneInputModule>();
+        rsim.RewiredPlayerIds = new int[] { whichPlayerIsControlling };
     }
 
     void IncreasePlayCount(string whichType)
@@ -165,13 +118,9 @@ public class ArenaManagerScript : MonoBehaviour {
     {
         if (!locked && es.currentSelectedGameObject) {
 			int selectedIndex = es.currentSelectedGameObject.transform.GetSiblingIndex();
-            // Debug.Log("selected index is");
-            //Debug.Log(selectedIndex);
-
-            int whichPlayerIsControlling = DataManagerScript.gamepadControllingMenus;
-            JoystickButtons joystick = new JoystickButtons(whichPlayerIsControlling);
+     
             //foreach (string butt in buttons) {
-            if (Input.GetButtonDown(joystick.jump)) {
+            if (player.GetButtonDown("Jump")) {
 
                     if (selectedIndex == 0) {
 
@@ -191,7 +140,7 @@ public class ArenaManagerScript : MonoBehaviour {
 
                     // Start fade to next scene
                     StartCoroutine("NextScene");
-                } else if (Input.GetButtonDown(joystick.grav))
+                } else if (player.GetButtonDown("Grav"))
             {
                 StartCoroutine("PrevScene");
             }

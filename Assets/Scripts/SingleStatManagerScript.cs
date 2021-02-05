@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Linq;
 using System.Collections.Generic;
+using Rewired;
 
 public class SingleStatManagerScript : MonoBehaviour {
 
@@ -16,7 +17,7 @@ public class SingleStatManagerScript : MonoBehaviour {
 	private string jumpButton4 = "Jump_P4";
 	private string gravButton4 = "Grav_P4";
 
-
+    private Player player;
 
 	public Text rallyCountText;
 	public Text highScoreText;
@@ -37,23 +38,23 @@ public class SingleStatManagerScript : MonoBehaviour {
 		GameObject.Find ("FadeCurtainCanvas").GetComponent<NewFadeScript> ().Fade (0f);
 		MusicManagerScript.Instance.StartIntro ();
 
-        JoystickButtons jb = new JoystickButtons(DataManagerScript.gamepadControllingMenus);
-
+        // JoystickButtons jb = new JoystickButtons(DataManagerScript.gamepadControllingMenus);
+        player = ReInput.players.GetPlayer(DataManagerScript.gamepadControllingMenus);
 		locked = false;
 
-        buttons.Add(jb.grav);
-        buttons.Add(jb.jump);
-        buttons.Add(jb.start);
+        //buttons.Add(jb.grav);
+        //buttons.Add(jb.jump);
+        //buttons.Add(jb.start);
 
-        buttons.Add (jumpButton1);
-		buttons.Add (jumpButton2);
-		buttons.Add (jumpButton3);
-		buttons.Add (jumpButton4);
+        //buttons.Add (jumpButton1);
+		//buttons.Add (jumpButton2);
+		//buttons.Add (jumpButton3);
+		//buttons.Add (jumpButton4);
 
-		buttons.Add (gravButton1);
-		buttons.Add (gravButton2);
-		buttons.Add (gravButton3);
-		buttons.Add (gravButton4);
+		//buttons.Add (gravButton1);
+		//buttons.Add (gravButton2);
+		//buttons.Add (gravButton3);
+		//buttons.Add (gravButton4);
 
 		// calculate match time
 		int minutes = Mathf.FloorToInt(DataManagerScript.gameTime / 60F);
@@ -77,11 +78,11 @@ public class SingleStatManagerScript : MonoBehaviour {
 			StartCoroutine ("BackToTitle");
 		}
 
-		foreach (string buttonName in buttons) {
-			if (Input.GetButtonDown (buttonName)) {
+		
+			if (player.GetButtonDown ("Jump")) {
 				playersReady++;
 			}
-		}
+		
 	}
 
 	public void increasePlayerReady(){

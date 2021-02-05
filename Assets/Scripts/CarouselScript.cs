@@ -210,7 +210,7 @@ public class CarouselScript : MonoBehaviour {
 	IEnumerator Tween(RectTransform item, Vector2 destination, float duration) {
 		isSnapping = true;
         //int approxNoOfFrames = Mathf.RoundToInt(duration);
-        int approxNoOfFrames = 20;
+        int approxNoOfFrames = 60;
         if (duration == 0f) { approxNoOfFrames = 0; };
 		float posDiff = destination.y - item.localPosition.y;
 		float eachFrameProgress = posDiff / approxNoOfFrames;

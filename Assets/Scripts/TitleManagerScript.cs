@@ -257,7 +257,8 @@ public class TitleManagerScript : MonoBehaviour {
 		mainMenuActive = true;
 		mainMenuPanel.SetActive (true);
 
-    
+        // Test rumble
+        //JoystickLayerManager.Instance.ActivateLargeRumble(gamepad, 15f);
 
         es1.SetSelectedGameObject(null);
 		es1.SetSelectedGameObject(es1.firstSelectedGameObject);

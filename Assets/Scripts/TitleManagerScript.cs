@@ -263,11 +263,8 @@ public class TitleManagerScript : MonoBehaviour {
         es1.SetSelectedGameObject(null);
 		es1.SetSelectedGameObject(es1.firstSelectedGameObject);
 
-        var rsim = EventSystem.current.GetComponent<Rewired.Integration.UnityUI.RewiredStandaloneInputModule>();
-        Debug.Log("gamepad is ");
-        Debug.Log(gamepad);
-        rsim.RewiredPlayerIds = new int[] { gamepad };
-
+        JoystickLayerManager.Instance.AssignPlayerToEventSystem(gamepad);
+     
         // depending on which controller was tagged in, set the input stringes here
         controllingGamepad = players[gamepad];
         //	controllingGamepad = new JoystickButtons (gamepad);

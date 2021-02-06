@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
+using UnityEngine.EventSystems;
 
 public class JoystickLayerManager : MonoBehaviour
 {
@@ -25,7 +26,21 @@ public class JoystickLayerManager : MonoBehaviour
         
     }
 
+    //EventSystem / Menu methods
 
+    public void AssignPlayerToEventSystem(int playerIndex)
+    {
+        switch (currentJoystickProvider)
+        {
+            case JoystickProvider.Rewired:
+                var rsim = EventSystem.current.GetComponent<Rewired.Integration.UnityUI.RewiredStandaloneInputModule>();
+                rsim.RewiredPlayerIds = new int[] { playerIndex };
+                break;
+        }
+    }
+
+
+    // Rumble methods
     public void ActivateLargeRumble(int playerIndex, float duration) // Note: this goes from 0 through 3.
     {
         switch (currentJoystickProvider)

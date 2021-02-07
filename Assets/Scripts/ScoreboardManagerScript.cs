@@ -174,6 +174,7 @@ public class ScoreboardManagerScript : MonoBehaviour {
         // Make gamepads rumble when game is over
         if (playersContainer != null)
         {
+            playersContainer.BroadcastMessage("StopAllRumble", SendMessageOptions.DontRequireReceiver);
             playersContainer.BroadcastMessage("WinRumble", SendMessageOptions.DontRequireReceiver);
         }
         switch (whichTeam)
@@ -231,17 +232,33 @@ public class ScoreboardManagerScript : MonoBehaviour {
         // check for match point
         if (team2Score == team1Score)
         {
+            if (playersContainer != null)
+            {
+                playersContainer.BroadcastMessage("StopAllRumble", SendMessageOptions.DontRequireReceiver);
+            }
             background.GetComponent<BackgroundColorScript>().TurnOffMatchPoint();
           
         }
         else if (team1Score == scorePlayedTo - 1 && team2Score < scorePlayedTo)
         {
+            // Send rumble to players if supported.
+            if (playersContainer != null)
+            {
+                Debug.Log("Trying to start tiny rumble");
+                playersContainer.BroadcastMessage("StartTinyRumble", SendMessageOptions.DontRequireReceiver);
+            }
             background.GetComponent<BackgroundColorScript>().TurnOnMatchPoint(1);
             background.GetComponent<BackgroundColorScript>().TurnOffDeuce();
             MusicManagerScript.Instance.StartFifth();
         }
         else if (team2Score == scorePlayedTo - 1 && team1Score < scorePlayedTo)
         {
+            // Send rumble to players if supported.
+            if (playersContainer != null)
+            {
+                Debug.Log("Trying to start tiny rumble");
+                playersContainer.BroadcastMessage("StartTinyRumble", SendMessageOptions.DontRequireReceiver);
+            }
             background.GetComponent<BackgroundColorScript>().TurnOnMatchPoint(2);
             background.GetComponent<BackgroundColorScript>().TurnOffDeuce();
             MusicManagerScript.Instance.StartFifth();
@@ -271,7 +288,13 @@ public class ScoreboardManagerScript : MonoBehaviour {
 			iTween.FadeTo (theNumTwo.gameObject, 0.8f, .25f);
 			enableDash ();
 		} else {
-			if (team1Score > team2Score) {
+            // Send rumble to players if supported.
+            if (playersContainer != null)
+            {
+                Debug.Log("Trying to start tiny rumble");
+                playersContainer.BroadcastMessage("StartTinyRumble", SendMessageOptions.DontRequireReceiver);
+            }
+            if (team1Score > team2Score) {
 				Transform theNumOne = Team1Scores.transform.Find ("A");
 				theNumOne.gameObject.SetActive (true);
 				iTween.FadeTo (theNumOne.gameObject, 0.8f, .25f);
@@ -290,6 +313,11 @@ public class ScoreboardManagerScript : MonoBehaviour {
 			} else if (team1Score == team2Score) {
 
 				deuce.SetActive (true);
+                if (playersContainer != null)
+                {
+                    
+                    playersContainer.BroadcastMessage("StopAllRumble", SendMessageOptions.DontRequireReceiver);
+                }
                 numberOfDeuces++;
                 if (numberOfDeuces >= 5)
                 {

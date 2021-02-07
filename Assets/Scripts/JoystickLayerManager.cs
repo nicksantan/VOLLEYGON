@@ -9,6 +9,10 @@ public class JoystickLayerManager : MonoBehaviour
     private enum JoystickProvider { Rewired };
     private JoystickProvider currentJoystickProvider;
 
+    // Rumble flags
+    private bool smallRumbleOn = false;
+    private float smallRumbleTimer = 0;
+
     // Static singleton property
     public static JoystickLayerManager Instance { get; private set; }
 
@@ -24,6 +28,20 @@ public class JoystickLayerManager : MonoBehaviour
     void Start()
     {
         
+    }
+
+    void Update()
+    {
+        if (smallRumbleOn)
+        {
+            smallRumbleTimer += Time.deltaTime;
+
+            if (smallRumbleTimer > .2)
+            {
+             //   FireSmallPulse();
+                smallRumbleTimer = 0f;
+            }
+        }
     }
 
     //EventSystem / Menu methods
@@ -70,24 +88,26 @@ public class JoystickLayerManager : MonoBehaviour
 
     public void BeginSmallRumble(int playerIndex)
     {
+        smallRumbleOn = true;
+        Debug.Log(playerIndex);
         switch (currentJoystickProvider)
         {
             case JoystickProvider.Rewired:
-                int motorIndex = 0; // the first motor
+                Debug.Log("Setting tiny rumble");
+                int motorIndex = 1; // the first motor
                 float motorLevel = 0.1f; // low motor speed
                 Player currentPlayer = ReInput.players.GetPlayer(playerIndex);
-                currentPlayer.SetVibration(motorIndex, motorLevel);
+                currentPlayer.SetVibration(motorIndex, motorLevel, true);
                 break;
         }
     }
 
     public void StopRumble(int playerIndex)
     {
+        smallRumbleOn = false;
         switch (currentJoystickProvider)
         {
             case JoystickProvider.Rewired:
-                int motorIndex = 0; // the first motor
-                float motorLevel = 0.1f; // low motor speed
                 Player currentPlayer = ReInput.players.GetPlayer(playerIndex);
                 currentPlayer.StopVibration();
                 break;

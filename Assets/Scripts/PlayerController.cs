@@ -550,7 +550,27 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-	void DisableShapeAndCollider(){
+    public void StartTinyRumble()
+    {
+        Debug.Log("Starting tiny rumble");
+        // This joystick - 1 shit has got to go.
+        if (JoystickLayerManager.Instance != null && !isAI)
+        {
+            JoystickLayerManager.Instance.BeginSmallRumble(joystick - 1);
+        }
+    }
+
+    public void StopAllRumble()
+    {
+        // This joystick - 1 shit has got to go.
+        if (JoystickLayerManager.Instance != null && !isAI)
+        {
+            JoystickLayerManager.Instance.StopRumble(joystick - 1);
+        }
+    }
+
+
+    void DisableShapeAndCollider(){
 
         // Disable trail
         trail.GetComponent<Trail>().ClearSystem(true);

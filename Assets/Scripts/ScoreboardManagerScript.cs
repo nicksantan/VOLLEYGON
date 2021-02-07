@@ -18,6 +18,9 @@ public class ScoreboardManagerScript : MonoBehaviour {
     public int team2Score = 0;
 
     public int numberOfDeuces = 0;
+
+    public GameObject playersContainer;
+
 	// Use this for initialization
 	void Start () {
 
@@ -39,7 +42,9 @@ public class ScoreboardManagerScript : MonoBehaviour {
 		}
 		Invoke ("moveIntoPlace", 1f);
 		Invoke ("cleanUp", 1f);
-		//cleanUp ();
+        //cleanUp ();
+
+        playersContainer = GameObject.FindGameObjectWithTag("PlayersContainer");
 	}
 
 	// Update is called once per frame
@@ -165,6 +170,12 @@ public class ScoreboardManagerScript : MonoBehaviour {
     void teamWins(int whichTeam)
     {
         isGameOver = true;
+        
+        // Make gamepads rumble when game is over
+        if (playersContainer != null)
+        {
+            playersContainer.BroadcastMessage("WinRumble", SendMessageOptions.DontRequireReceiver);
+        }
         switch (whichTeam)
         {
             case 1:

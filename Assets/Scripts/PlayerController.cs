@@ -532,6 +532,15 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+    public void WinRumble()
+    {
+        // This joystick - 1 shit has got to go.
+        if (JoystickLayerManager.Instance != null && !isAI)
+        {
+            JoystickLayerManager.Instance.ActivateLargeRumble(joystick - 1, 3f);
+        }
+    }
+
 	void DisableShapeAndCollider(){
 
         // Disable trail

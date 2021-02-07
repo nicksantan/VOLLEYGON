@@ -313,7 +313,8 @@ public class TitleManagerScript : MonoBehaviour {
         SceneManager.LoadSceneAsync("ChoosePlayerScene");
     }
     public void StartChallengesGame(){
-		DataManagerScript.isChallengeMode = true;
+        DataManagerScript.isSinglePlayerMode = false;
+        DataManagerScript.isChallengeMode = true;
         DataManagerScript.isBotsMode = false;
         SceneManager.LoadSceneAsync ("ChooseChallengeScene");
 

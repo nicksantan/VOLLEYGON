@@ -11268,7 +11268,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 217.12636
+  Phase: 217.63634
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5
@@ -11306,7 +11306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 22fe62a5d4de91a4995c1363cbc2492e, type: 3}
   Mode: 1
-  Timer: 29.492146
+  Timer: 31.124146
   Speed: 0.8
   Frequency: 12
   Amplitude: 0
@@ -12090,9 +12090,9 @@ MonoBehaviour:
   newText: {fileID: 907783705}
   winMedal: {fileID: 1943904760}
   loseMedal: {fileID: 1798388545}
-  bronzeMedalImage: {fileID: 21300000, guid: 64ca26ecbb0c83c4ab23add12054e2ce, type: 3}
-  silverMedalImage: {fileID: 21300000, guid: 4a394909c900cf347b402ced8c5161e8, type: 3}
-  goldMedalImage: {fileID: 21300000, guid: 3f71bbf88ece3c74fb1e4d77629c4ded, type: 3}
+  bronzeMedalImage: {fileID: 21300000, guid: 41e43f19ba8f38943998f1744bd70c8a, type: 3}
+  silverMedalImage: {fileID: 21300000, guid: 4e5ad8cb7e44708439d86b4ae8126d40, type: 3}
+  goldMedalImage: {fileID: 21300000, guid: 9e8f6a23c895eaa4db881af45c12cf8b, type: 3}
   noMedalImage: {fileID: 21300000, guid: 57edda3b4994242b3b13726a14f62af0, type: 3}
   challengeRunning: 0
   challengesContainer: {fileID: 2029533169}

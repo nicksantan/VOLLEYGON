@@ -209,7 +209,7 @@ PrefabInstance:
     - target: {fileID: 8627005924148814867, guid: c15d796be7ee54ab387250e30c89b940,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8627005924148814867, guid: c15d796be7ee54ab387250e30c89b940,
         type: 3}
@@ -11268,7 +11268,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 216.78304
+  Phase: 216.9547
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5
@@ -11306,7 +11306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 22fe62a5d4de91a4995c1363cbc2492e, type: 3}
   Mode: 1
-  Timer: 28.393478
+  Timer: 28.942812
   Speed: 0.8
   Frequency: 12
   Amplitude: 0

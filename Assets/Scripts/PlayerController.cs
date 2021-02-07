@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour {
 	// Eventsystem
 	public EventSystem es;
     // Rigidbody, mesh, colliders
-    Rigidbody2D rb;
+    public Rigidbody2D rb;
     MeshRenderer mr;
     public PolygonCollider2D trianglePC, trapezoidPC, rectanglePC, starPC;
     private Collider2D shapeCollider;

@@ -102,8 +102,10 @@ public class ArenaManagerScript : MonoBehaviour {
         int whichPlayerIsControlling = DataManagerScript.gamepadControllingMenus;
         // JoystickButtons joystick = new JoystickButtons(whichPlayerIsControlling);
 
-        var rsim = EventSystem.current.GetComponent<Rewired.Integration.UnityUI.RewiredStandaloneInputModule>();
-        rsim.RewiredPlayerIds = new int[] { whichPlayerIsControlling };
+        if (JoystickLayerManager.Instance != null){
+            JoystickLayerManager.Instance.AssignPlayerToEventSystem(whichPlayerIsControlling);
+        }
+      
     }
 
     void IncreasePlayCount(string whichType)

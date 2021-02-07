@@ -20,6 +20,12 @@ public class ExpandAndFadeScript : MonoBehaviour {
 
 	void Config(int whichType){
 		iTween.FadeTo (gameObject, 0f, 1.0f);
+
+        // If players object is active, have active players rumble slightly
+        if (GameObject.FindGameObjectWithTag("PlayersContainer") != null)
+        {
+            GameObject.FindGameObjectWithTag("PlayersContainer").BroadcastMessage("SmallRumblePulse", SendMessageOptions.DontRequireReceiver); ;
+        }
 		switch (whichType) {
 
 		case 1:

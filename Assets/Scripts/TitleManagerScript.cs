@@ -108,9 +108,11 @@ public class TitleManagerScript : MonoBehaviour {
                 {
                     showQuitAppPanel();
                     DataManagerScript.gamepadControllingMenus = i;
-                    var rsim = EventSystem.current.GetComponent<Rewired.Integration.UnityUI.RewiredStandaloneInputModule>();
-               
-                    rsim.RewiredPlayerIds = new int[] { i };
+
+                    if (JoystickLayerManager.Instance != null){
+                        JoystickLayerManager.Instance.AssignPlayerToEventSystem(i);
+                    }
+                   
                 }
 
                 if (inputAllowed && (players[i].GetButtonDown("Jump") || players[i].GetButtonDown("Start"))) {

@@ -251,6 +251,12 @@ public class ScoreboardManagerScript : MonoBehaviour {
     public void OnBallDied(int whichSide)
     { 
         ManageScore(whichSide);
+        
+        // Send rumble to players if supported.
+        if (playersContainer != null)
+        {
+            playersContainer.BroadcastMessage("SmallRumblePulse", .5f, SendMessageOptions.DontRequireReceiver);
+        }
     }
 
     public void enableNumbers (int team1Score, int team2Score, bool overtime){

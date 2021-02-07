@@ -27,7 +27,6 @@ public class JoystickLayerManager : MonoBehaviour
     }
 
     //EventSystem / Menu methods
-
     public void AssignPlayerToEventSystem(int playerIndex)
     {
         switch (currentJoystickProvider)
@@ -50,6 +49,20 @@ public class JoystickLayerManager : MonoBehaviour
                 float motorLevel = 1.0f; // full motor speed
                 Player currentPlayer = ReInput.players.GetPlayer(playerIndex);
                 currentPlayer.SetVibration(motorIndex, motorLevel, duration);
+                break;
+
+        }
+    }
+
+    public void SmallRumblePulse(int playerIndex, float strength) // Note: this goes from 0 through 3.
+    {
+        switch (currentJoystickProvider)
+        {
+            case JoystickProvider.Rewired:
+                int motorIndex = 0; // the first motor
+                float motorLevel = strength; // full motor speed
+                Player currentPlayer = ReInput.players.GetPlayer(playerIndex);
+                currentPlayer.SetVibration(motorIndex, motorLevel, .15f);
                 break;
 
         }

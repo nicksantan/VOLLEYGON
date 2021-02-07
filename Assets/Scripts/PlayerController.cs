@@ -541,6 +541,15 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public void SmallRumblePulse()
+    {
+        // This joystick - 1 shit has got to go.
+        if (JoystickLayerManager.Instance != null && !isAI)
+        {
+            JoystickLayerManager.Instance.SmallRumblePulse(joystick - 1, .25f);
+        }
+    }
+
 	void DisableShapeAndCollider(){
 
         // Disable trail

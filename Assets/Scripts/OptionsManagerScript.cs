@@ -50,9 +50,11 @@ public class OptionsManagerScript : MonoBehaviour
 		whichPlayerIsControlling = DataManagerScript.gamepadControllingMenus;
         //joyButts = new JoystickButtons(whichPlayerIsControlling);
         player = ReInput.players.GetPlayer(whichPlayerIsControlling);
-        var rsim = EventSystem.current.GetComponent<Rewired.Integration.UnityUI.RewiredStandaloneInputModule>();
-        rsim.RewiredPlayerIds = new int[] { whichPlayerIsControlling };
 
+		if (JoystickLayerManager.Instance != null){
+            JoystickLayerManager.Instance.AssignPlayerToEventSystem(whichPlayerIsControlling);
+        }
+    
     }
 
 	// Update is called once per frame

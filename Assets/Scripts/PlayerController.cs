@@ -136,10 +136,14 @@ public class PlayerController : MonoBehaviour {
 		rb = GetComponent<Rigidbody2D>();
 		mr = GetComponent<MeshRenderer>();
 
+        //Special case, rectangle needs its own trail.
+        GameObject rect_trail = transform.Find("Trail-Rectangle").gameObject;
+
         // Make single reference for appropriate collider and set up pandemonium counter 
         switch (shapeNames[playerType]) {
             case "square":
                 shapeCollider = GetComponent<BoxCollider2D>();
+                rect_trail.SetActive(false);
                 break;
             case "circle":
                 Transform circle = transform.Find("Circle");
@@ -148,24 +152,31 @@ public class PlayerController : MonoBehaviour {
                 shapeCollider = GetComponent<CircleCollider2D>();
                 pandemoniumCounter.transform.localPosition = new Vector3(0f, 0f, 0f);
                 pandemoniumCounter.GetComponent<TextMesh>().fontSize = 100;
+                rect_trail.SetActive(false);
                 break;
             case "triangle":
                 shapeCollider = trianglePC;
                 pandemoniumCounter.transform.localPosition = new Vector3(0f, -0.12f, 0f);
                 pandemoniumCounter.GetComponent<TextMesh>().fontSize = 87;
+                rect_trail.SetActive(false);
                 break;
             case "trapezoid":
                 shapeCollider = trapezoidPC;
+                rect_trail.SetActive(false);
                 break;
             case "rectangle":
                 shapeCollider = rectanglePC;
                 pandemoniumCounter.transform.localPosition = new Vector3(0f, 0f, 0f);
                 pandemoniumCounter.GetComponent<TextMesh>().fontSize = 30;
+                // Special case, rectangle needs a smaller trail
+                trail.SetActive(false);
+                trail = rect_trail;
                 break;
             case "star":
                 shapeCollider = starPC;
                 pandemoniumCounter.transform.localPosition = new Vector3(0f, 0.15f, 0f);
                 pandemoniumCounter.GetComponent<TextMesh>().fontSize = 52;
+                rect_trail.SetActive(false);
                 break;
         }
 

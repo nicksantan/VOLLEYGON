@@ -137,13 +137,18 @@ public class PlayerController : MonoBehaviour {
 		mr = GetComponent<MeshRenderer>();
 
         //Special case, rectangle needs its own trail.
-        GameObject rect_trail = transform.Find("Trail-Rectangle").gameObject;
+        GameObject rect_trail = null;
+        if (transform.Find("Trail-Rectangle") != null)
+        {
+            rect_trail = transform.Find("Trail-Rectangle").gameObject;
+        }
+      
 
         // Make single reference for appropriate collider and set up pandemonium counter 
         switch (shapeNames[playerType]) {
             case "square":
                 shapeCollider = GetComponent<BoxCollider2D>();
-                rect_trail.SetActive(false);
+                if (rect_trail != null) { rect_trail.SetActive(false); }
                 break;
             case "circle":
                 Transform circle = transform.Find("Circle");
@@ -152,17 +157,17 @@ public class PlayerController : MonoBehaviour {
                 shapeCollider = GetComponent<CircleCollider2D>();
                 pandemoniumCounter.transform.localPosition = new Vector3(0f, 0f, 0f);
                 pandemoniumCounter.GetComponent<TextMesh>().fontSize = 100;
-                rect_trail.SetActive(false);
+                if (rect_trail != null) { rect_trail.SetActive(false); }
                 break;
             case "triangle":
                 shapeCollider = trianglePC;
                 pandemoniumCounter.transform.localPosition = new Vector3(0f, -0.12f, 0f);
                 pandemoniumCounter.GetComponent<TextMesh>().fontSize = 87;
-                rect_trail.SetActive(false);
+                if (rect_trail != null) { rect_trail.SetActive(false); }
                 break;
             case "trapezoid":
                 shapeCollider = trapezoidPC;
-                rect_trail.SetActive(false);
+                if (rect_trail != null) { rect_trail.SetActive(false); }
                 break;
             case "rectangle":
                 shapeCollider = rectanglePC;
@@ -176,7 +181,7 @@ public class PlayerController : MonoBehaviour {
                 shapeCollider = starPC;
                 pandemoniumCounter.transform.localPosition = new Vector3(0f, 0.15f, 0f);
                 pandemoniumCounter.GetComponent<TextMesh>().fontSize = 52;
-                rect_trail.SetActive(false);
+                if (rect_trail != null) { rect_trail.SetActive(false); }
                 break;
         }
 

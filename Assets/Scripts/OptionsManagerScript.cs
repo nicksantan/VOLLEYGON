@@ -19,6 +19,7 @@ public class OptionsManagerScript : MonoBehaviour
     public GameObject optionEditButton;
     public GameObject optionPlayButton;
     public GameObject optionViewButton;
+    public GameObject optionToggleButton;
     public GameObject leftBackground;
 	public GameObject rightBackground;
 
@@ -31,7 +32,8 @@ public class OptionsManagerScript : MonoBehaviour
 
 	private EventSystem es;
 
-	static private int[] validIndexes = { 0, 1, 2, 5, 6 };
+	static private int[] validIndexes = { 0, 1, 2, 5, 6, 7};
+    static private int[] toggleIndexes = { 7 };
 
     private Player player;
 
@@ -64,12 +66,14 @@ public class OptionsManagerScript : MonoBehaviour
 		bool inputSelecting = player.GetButtonDown("Jump");
 		bool optionIsSelectable = OptionsManagerScript.CheckSelectableOptionIndex(selectedIndex);
         // special case for how-to video
+        // TODO: This is stupid.
         bool optionIsPlayable = selectedIndex == 5;
-        bool optionIsViewable = selectedIndex == 6; 
-
-		optionEditButton.SetActive(optionIsSelectable && !optionIsOpen && !optionIsPlayable && !optionIsViewable);
+        bool optionIsViewable = selectedIndex == 6;
+        bool optionIsToggleable = selectedIndex == 7;
+		optionEditButton.SetActive(optionIsSelectable && !optionIsOpen && !optionIsPlayable && !optionIsViewable && !optionIsToggleable);
         optionPlayButton.SetActive(optionIsSelectable && !optionIsOpen && optionIsPlayable);
         optionViewButton.SetActive(optionIsSelectable && !optionIsOpen && !optionIsPlayable && optionIsViewable);
+        optionToggleButton.SetActive(optionIsSelectable && !optionIsOpen && !optionIsPlayable && optionIsToggleable);
         // Show options based on carousel slide selected
         if (es.currentSelectedGameObject && !inAchievementsMenu)
 		{
@@ -109,11 +113,11 @@ public class OptionsManagerScript : MonoBehaviour
 			}
 		}
 
-		if (inputSelecting && !optionIsOpen && optionIsSelectable && !optionIsPlayable && !inAchievementsMenu)
+		if (inputSelecting && !optionIsOpen && optionIsSelectable && !optionIsPlayable && !inAchievementsMenu && !optionIsToggleable)
 		{
 
             // Show/hide UI
-            if (selectedIndex != 6)
+            if (selectedIndex != 6 && selectedIndex != 7)
             {
                 optionBreadcrumb.SetActive(true);
             } else
@@ -136,6 +140,14 @@ public class OptionsManagerScript : MonoBehaviour
             SceneManager.LoadSceneAsync("howToVideoScene");
 
         }
+
+        if (inputSelecting && !optionIsOpen && optionIsSelectable && optionIsToggleable)
+        {
+            // vibration toggle or protip toggle
+            ToggleShownOption();
+
+        }
+
         // Disable carousel when we have an option open... unless it's achievements
         es.enabled = (!optionIsOpen || selectedIndex == 6);
 		
@@ -177,6 +189,12 @@ public class OptionsManagerScript : MonoBehaviour
 		Transform selectedOption = options.transform.GetChild(selectedIndex);
 		selectedOption.GetComponent<OptionScript>().enable();
 	}
+
+    void ToggleShownOption()
+    {
+        Transform selectedOption = options.transform.GetChild(selectedIndex);
+        selectedOption.GetComponent<ToggleScript>().Toggle();
+    }
 
     public void SaveOption(float val)
     {

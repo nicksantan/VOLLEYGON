@@ -109,6 +109,7 @@ public class DataManagerScript : MonoBehaviour {
 
     // Have saved options here
     public static int vibrationOn = 1;
+    public static int protipsOn = 1;
 
     // Save instance of self over scene loads
 	void Awake() {
@@ -136,6 +137,7 @@ public class DataManagerScript : MonoBehaviour {
 
         // TODO: Load all player pref values from a separate, filesystem manager.
         vibrationOn = PlayerPrefs.HasKey("vibrationOn") ? PlayerPrefs.GetInt("vibrationOn") : 1;
+        protipsOn = PlayerPrefs.HasKey("protipsOn") ? PlayerPrefs.GetInt("protipsOn") : 1;
 
     }
  

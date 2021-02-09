@@ -32,7 +32,7 @@ public class OptionsManagerScript : MonoBehaviour
 
 	private EventSystem es;
 
-	static private int[] validIndexes = { 0, 1, 2, 5, 6, 7};
+	static private int[] validIndexes = { 0, 1, 2, 5, 6, 7, 8};
     static private int[] toggleIndexes = { 7 };
 
     private Player player;
@@ -69,7 +69,7 @@ public class OptionsManagerScript : MonoBehaviour
         // TODO: This is stupid.
         bool optionIsPlayable = selectedIndex == 5;
         bool optionIsViewable = selectedIndex == 6;
-        bool optionIsToggleable = selectedIndex == 7;
+        bool optionIsToggleable = selectedIndex == 7 || selectedIndex == 8;
 		optionEditButton.SetActive(optionIsSelectable && !optionIsOpen && !optionIsPlayable && !optionIsViewable && !optionIsToggleable);
         optionPlayButton.SetActive(optionIsSelectable && !optionIsOpen && optionIsPlayable);
         optionViewButton.SetActive(optionIsSelectable && !optionIsOpen && !optionIsPlayable && optionIsViewable);

@@ -23,11 +23,11 @@ public class ToggleScript : MonoBehaviour
         switch (whichVariable)
         {
             case ToggleVariable.Vibration:
-                toggleStatus = DataManagerScript.vibrationOn == 1 ? true : false;
+                toggleStatus = FileSystemLayer.Instance.vibrationOn == 1 ? true : false;
                 break;
 
             case ToggleVariable.Protips:
-                toggleStatus = DataManagerScript.protipsOn == 1 ? true : false;
+                toggleStatus = FileSystemLayer.Instance.protipsOn == 1 ? true : false;
                 break;
 
         }
@@ -50,13 +50,13 @@ public class ToggleScript : MonoBehaviour
         switch (whichVariable)
         {
             case ToggleVariable.Vibration:
-                DataManagerScript.vibrationOn = toggleStatus ? 1 : 0;
-                PlayerPrefs.SetInt("vibrationOn", DataManagerScript.vibrationOn);
+                FileSystemLayer.Instance.vibrationOn = toggleStatus ? 1 : 0;
+                FileSystemLayer.Instance.SavePref("vibrationOn", FileSystemLayer.Instance.vibrationOn )
                 break;
 
             case ToggleVariable.Protips:
-                DataManagerScript.protipsOn = toggleStatus ? 1 : 0;
-                PlayerPrefs.SetInt("protipsOn", DataManagerScript.vibrationOn);
+                FileSystemLayer.Instance.protipsOn = toggleStatus ? 1 : 0;
+                FileSystemLayer.Instance.SavePref("protipsOn", FileSystemLayer.Instance.protipsOn )
                 break;
 
         }

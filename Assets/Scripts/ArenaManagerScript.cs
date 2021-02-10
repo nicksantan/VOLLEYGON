@@ -156,7 +156,7 @@ public class ArenaManagerScript : MonoBehaviour {
             locked = true;
             GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
             yield return new WaitForSeconds(1f);
-            if (DataManagerScript.protipsOn == 1)
+            if (FileSystemLayer.Instance.protipsOn == 1)
             {
                 SceneManager.LoadSceneAsync("proTipScene");
             } else

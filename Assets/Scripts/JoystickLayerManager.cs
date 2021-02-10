@@ -60,7 +60,7 @@ public class JoystickLayerManager : MonoBehaviour
     // Rumble methods
     public void ActivateLargeRumble(int playerIndex, float duration) // Note: this goes from 0 through 3.
     {
-        if (DataManagerScript.vibrationOn == 1)
+        if (FileSystemLayer.Instance.vibrationOn == 1)
         {
             switch (currentJoystickProvider)
             {
@@ -78,8 +78,8 @@ public class JoystickLayerManager : MonoBehaviour
     public void SmallRumblePulse(int playerIndex, float strength) // Note: this goes from 0 through 3.
     {
         Debug.Log("is rumble on?>");
-        Debug.Log(DataManagerScript.vibrationOn);
-        if (DataManagerScript.vibrationOn == 1)
+        Debug.Log(FileSystemLayer.Instance.vibrationOn);
+        if (FileSystemLayer.Instance.vibrationOn == 1)
         {
             switch (currentJoystickProvider)
             {
@@ -96,7 +96,7 @@ public class JoystickLayerManager : MonoBehaviour
 
     public void BeginSmallRumble(int playerIndex)
     {
-        if (DataManagerScript.vibrationOn == 1)
+        if (FileSystemLayer.Instance.vibrationOn == 1)
         {
             smallRumbleOn = true;
             Debug.Log(playerIndex);
@@ -115,7 +115,7 @@ public class JoystickLayerManager : MonoBehaviour
 
     public void StopRumble(int playerIndex)
     {
-        if (DataManagerScript.vibrationOn == 1)
+        if (FileSystemLayer.Instance.vibrationOn == 1)
         {
             smallRumbleOn = false;
             switch (currentJoystickProvider)

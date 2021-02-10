@@ -104,30 +104,38 @@ public class ChoosePlayerScript : MonoBehaviour {
         {
             // Add CPU4 BG
             CPU4BG.SetActive(true);
+            Text dt = CPU4BG.transform.Find("difficultyText").Find("dt").GetComponent<Text>();
             int whichShapeTwo = Mathf.FloorToInt(Random.Range(0, 6));
             DataManagerScript.botTwoType = whichShapeTwo;
             switch (whichShapeTwo)
             {
                 case 0:
                     fakePlayer4.transform.Find("Square").gameObject.SetActive(true);
+                    dt.text = "HARD";
 
                     break;
                 case 1:
                     fakePlayer4.transform.Find("Circle").gameObject.SetActive(true);
+                    dt.text = "NORMAL";
                     break;
                 case 2:
                     fakePlayer4.transform.Find("Triangle").gameObject.SetActive(true);
+                    dt.text = "NORMAL";
                     break;
                 case 3:
                     fakePlayer4.transform.Find("Trapezoid").gameObject.SetActive(true);
+                    dt.text = "EASY";
                     break;
                 case 4:
                     fakePlayer4.transform.Find("Rectangle").gameObject.SetActive(true);
+                    dt.text = "HARD";
                     break;
                 case 5:
                     fakePlayer4.transform.Find("Star").gameObject.SetActive(true);
+                    dt.text = "NORMAL";
                     break;
             }
+
             DataManagerScript.playerFourPlaying = true;
             DataManagerScript.playerFourType = DataManagerScript.botTwoType;
             CPUFourLabel.GetComponent<Text>().color = new Color(1f, 1f, 1f, 1f);
@@ -184,7 +192,8 @@ public class ChoosePlayerScript : MonoBehaviour {
             CPULabels.SetActive(true);
             RightPlayerLabels.SetActive(false);
             CPU3BG.SetActive(true);
-           
+            Text dt = CPU3BG.transform.Find("difficultyText").Find("dt").GetComponent<Text>();
+
             //Randomly choose bots.
             int whichShapeOne = Mathf.FloorToInt(Random.Range(0, 6));
             DataManagerScript.botOneType = whichShapeOne;
@@ -192,22 +201,27 @@ public class ChoosePlayerScript : MonoBehaviour {
             {
                 case 0:
                     fakePlayer3.transform.Find("Square").gameObject.SetActive(true);
-                  
+                    dt.text = "HARD";
                     break;
                 case 1:
                     fakePlayer3.transform.Find("Circle").gameObject.SetActive(true);
+                    dt.text = "NORMAL";
                     break;
                 case 2:
                     fakePlayer3.transform.Find("Triangle").gameObject.SetActive(true);
+                    dt.text = "NORMAL";
                     break;
                 case 3:
                     fakePlayer3.transform.Find("Trapezoid").gameObject.SetActive(true);
+                    dt.text = "EASY";
                     break;
                 case 4:
                     fakePlayer3.transform.Find("Rectangle").gameObject.SetActive(true);
+                    dt.text = "HARD";
                     break;
                 case 5:
                     fakePlayer3.transform.Find("Star").gameObject.SetActive(true);
+                    dt.text = "NORMAL";
                     break;
             }
 

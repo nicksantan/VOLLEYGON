@@ -51,13 +51,13 @@ public class ToggleScript : MonoBehaviour
         {
             case ToggleVariable.Vibration:
                 FileSystemLayer.Instance.vibrationOn = toggleStatus ? 1 : 0;
-                FileSystemLayer.Instance.SavePref("vibrationOn", FileSystemLayer.Instance.vibrationOn )
+                FileSystemLayer.Instance.SavePref("vibrationOn", FileSystemLayer.Instance.vibrationOn);
                 break;
 
             case ToggleVariable.Protips:
                 FileSystemLayer.Instance.protipsOn = toggleStatus ? 1 : 0;
-                FileSystemLayer.Instance.SavePref("protipsOn", FileSystemLayer.Instance.protipsOn )
-                break;
+                FileSystemLayer.Instance.SavePref("protipsOn", FileSystemLayer.Instance.protipsOn);
+                break; 
 
         }
     }

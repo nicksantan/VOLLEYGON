@@ -18,8 +18,8 @@ public class SoundManagerScript : MonoBehaviour {
 		} else if (instance != null) {
 			Destroy (gameObject);
 		}
-        float sfxVolume = PlayerPrefs.HasKey("sfxVolume") ? PlayerPrefs.GetFloat("sfxVolume") : 10f;
-        float masterVolume = PlayerPrefs.HasKey("masterVolume") ? PlayerPrefs.GetFloat("masterVolume") : 10f;
+        float sfxVolume = FileSystemLayer.Instance.sfxVolume;
+        float masterVolume = FileSystemLayer.Instance.masterVolume;
         sfxSource.volume = sfxSource.volume * masterVolume / 10f * sfxVolume / 10f;
         DontDestroyOnLoad (gameObject);
 	}

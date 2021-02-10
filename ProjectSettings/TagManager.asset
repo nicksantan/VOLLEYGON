@@ -29,6 +29,7 @@ TagManager:
   - BestTimeWinText
   - BestTimeLoseText
   - ButtSensor
+  - PlayersContainer
   layers:
   - Default
   - TransparentFX

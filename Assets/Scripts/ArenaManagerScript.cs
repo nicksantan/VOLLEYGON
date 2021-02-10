@@ -102,8 +102,10 @@ public class ArenaManagerScript : MonoBehaviour {
         int whichPlayerIsControlling = DataManagerScript.gamepadControllingMenus;
         // JoystickButtons joystick = new JoystickButtons(whichPlayerIsControlling);
 
-        var rsim = EventSystem.current.GetComponent<Rewired.Integration.UnityUI.RewiredStandaloneInputModule>();
-        rsim.RewiredPlayerIds = new int[] { whichPlayerIsControlling };
+        if (JoystickLayerManager.Instance != null){
+            JoystickLayerManager.Instance.AssignPlayerToEventSystem(whichPlayerIsControlling);
+        }
+      
     }
 
     void IncreasePlayCount(string whichType)
@@ -154,7 +156,14 @@ public class ArenaManagerScript : MonoBehaviour {
             locked = true;
             GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
             yield return new WaitForSeconds(1f);
-            SceneManager.LoadSceneAsync("proTipScene");
+            if (DataManagerScript.protipsOn == 1)
+            {
+                SceneManager.LoadSceneAsync("proTipScene");
+            } else
+            {
+                SceneManager.LoadSceneAsync("gameScene");
+            }
+
         }
     }
 

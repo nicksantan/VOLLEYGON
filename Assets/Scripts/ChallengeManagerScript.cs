@@ -97,11 +97,11 @@ public class ChallengeManagerScript : MonoBehaviour
         es = EventSystem.current;
         // Assign joystick to player
         int joystickIdentifier = DataManagerScript.gamepadControllingMenus;
-        player = ReInput.players.GetPlayer(joystickIdentifier);
-        var rsim = EventSystem.current.GetComponent<Rewired.Integration.UnityUI.RewiredStandaloneInputModule>();
-
-        rsim.RewiredPlayerIds = new int[] { joystickIdentifier };
-
+        
+        if (JoystickLayerManager.Instance != null)
+        {
+            JoystickLayerManager.Instance.AssignPlayerToEventSystem(joystickIdentifier);
+        }
         //JoystickButtons buttons = new JoystickButtons(joystickIdentifier);
 
         //es.GetComponent<StandaloneInputModule>().horizontalAxis = buttons.horizontal;
@@ -302,6 +302,10 @@ public class ChallengeManagerScript : MonoBehaviour
         // Display success text
         winPanel.SetActive(true);
         challengeRunning = false;
+
+        // Make the winning player's gamepad rumble
+        GameObject activePlayer = GameObject.FindGameObjectWithTag("Player");
+        activePlayer.BroadcastMessage("WinRumble");
 
         // set the next option to play again
         Debug.Log("Setting next challenge");

@@ -176,7 +176,7 @@ public class GameManagerScript : MonoBehaviour {
             Debug.Log("Does data manager tyhink this is single player mode?");
             Debug.Log(DataManagerScript.isSinglePlayerMode);
 
-            if (playersActive <= 1)
+            if (DataManagerScript.isSinglePlayerMode)
             {
 
                 OnePlayerMode = true;

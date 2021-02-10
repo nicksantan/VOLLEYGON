@@ -35,10 +35,11 @@ public class PauseManagerScript : MonoBehaviour
             pausePanel.SetActive(true);
 
             // Assign butons
-            var rsim = EventSystem.current.GetComponent<Rewired.Integration.UnityUI.RewiredStandaloneInputModule>();
+            if (JoystickLayerManager.Instance != null)
+            {
+                JoystickLayerManager.Instance.AssignPlayerToEventSystem(gamepadIndex);
+            }
            
-            rsim.RewiredPlayerIds = new int[] { gamepadIndex };
-
             // Reset menu
             es.SetSelectedGameObject(null);
             es.SetSelectedGameObject(es.firstSelectedGameObject);

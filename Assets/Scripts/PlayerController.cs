@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour {
 	// Eventsystem
 	public EventSystem es;
     // Rigidbody, mesh, colliders
-    Rigidbody2D rb;
+    public Rigidbody2D rb;
     MeshRenderer mr;
     public PolygonCollider2D trianglePC, trapezoidPC, rectanglePC, starPC;
     private Collider2D shapeCollider;
@@ -136,10 +136,19 @@ public class PlayerController : MonoBehaviour {
 		rb = GetComponent<Rigidbody2D>();
 		mr = GetComponent<MeshRenderer>();
 
+        //Special case, rectangle needs its own trail.
+        GameObject rect_trail = null;
+        if (transform.Find("Trail-Rectangle") != null)
+        {
+            rect_trail = transform.Find("Trail-Rectangle").gameObject;
+        }
+      
+
         // Make single reference for appropriate collider and set up pandemonium counter 
         switch (shapeNames[playerType]) {
             case "square":
                 shapeCollider = GetComponent<BoxCollider2D>();
+                if (rect_trail != null) { rect_trail.SetActive(false); }
                 break;
             case "circle":
                 Transform circle = transform.Find("Circle");
@@ -148,24 +157,31 @@ public class PlayerController : MonoBehaviour {
                 shapeCollider = GetComponent<CircleCollider2D>();
                 pandemoniumCounter.transform.localPosition = new Vector3(0f, 0f, 0f);
                 pandemoniumCounter.GetComponent<TextMesh>().fontSize = 100;
+                if (rect_trail != null) { rect_trail.SetActive(false); }
                 break;
             case "triangle":
                 shapeCollider = trianglePC;
                 pandemoniumCounter.transform.localPosition = new Vector3(0f, -0.12f, 0f);
                 pandemoniumCounter.GetComponent<TextMesh>().fontSize = 87;
+                if (rect_trail != null) { rect_trail.SetActive(false); }
                 break;
             case "trapezoid":
                 shapeCollider = trapezoidPC;
+                if (rect_trail != null) { rect_trail.SetActive(false); }
                 break;
             case "rectangle":
                 shapeCollider = rectanglePC;
                 pandemoniumCounter.transform.localPosition = new Vector3(0f, 0f, 0f);
                 pandemoniumCounter.GetComponent<TextMesh>().fontSize = 30;
+                // Special case, rectangle needs a smaller trail
+                trail.SetActive(false);
+                trail = rect_trail;
                 break;
             case "star":
                 shapeCollider = starPC;
                 pandemoniumCounter.transform.localPosition = new Vector3(0f, 0.15f, 0f);
                 pandemoniumCounter.GetComponent<TextMesh>().fontSize = 52;
+                if (rect_trail != null) { rect_trail.SetActive(false); }
                 break;
         }
 
@@ -532,7 +548,45 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	void DisableShapeAndCollider(){
+    public void WinRumble()
+    {
+        // This joystick - 1 shit has got to go.
+        if (JoystickLayerManager.Instance != null && !isAI)
+        {
+            JoystickLayerManager.Instance.ActivateLargeRumble(joystick - 1, 3f);
+        }
+    }
+
+    public void SmallRumblePulse()
+    {
+        // This joystick - 1 shit has got to go.
+        if (JoystickLayerManager.Instance != null && !isAI)
+        {
+            JoystickLayerManager.Instance.SmallRumblePulse(joystick - 1, .25f);
+        }
+    }
+
+    public void StartTinyRumble()
+    {
+        Debug.Log("Starting tiny rumble");
+        // This joystick - 1 shit has got to go.
+        if (JoystickLayerManager.Instance != null && !isAI)
+        {
+            JoystickLayerManager.Instance.BeginSmallRumble(joystick - 1);
+        }
+    }
+
+    public void StopAllRumble()
+    {
+        // This joystick - 1 shit has got to go.
+        if (JoystickLayerManager.Instance != null && !isAI)
+        {
+            JoystickLayerManager.Instance.StopRumble(joystick - 1);
+        }
+    }
+
+
+    void DisableShapeAndCollider(){
 
         // Disable trail
         trail.GetComponent<Trail>().ClearSystem(true);

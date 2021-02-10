@@ -107,6 +107,10 @@ public class DataManagerScript : MonoBehaviour {
     public static int botTwoType = 0;
     public static int numBots = 0;
 
+    // Have saved options here
+    public static int vibrationOn = 1;
+    public static int protipsOn = 1;
+
     // Save instance of self over scene loads
 	void Awake() {
 
@@ -131,7 +135,11 @@ public class DataManagerScript : MonoBehaviour {
 			gamepadMode = true;
 		}
 
-	}
+        // TODO: Load all player pref values from a separate, filesystem manager.
+        vibrationOn = PlayerPrefs.HasKey("vibrationOn") ? PlayerPrefs.GetInt("vibrationOn") : 1;
+        protipsOn = PlayerPrefs.HasKey("protipsOn") ? PlayerPrefs.GetInt("protipsOn") : 1;
+
+    }
  
     // Reset all player shape choices
     public static void ResetPlayerTypes(){

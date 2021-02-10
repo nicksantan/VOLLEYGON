@@ -23,6 +23,9 @@ public class Challenge_Script_Multiball : MonoBehaviour
     public bool canDie = true;
     public bool randomGravOnStart = false;
 
+    public bool PadsLeftOnTop = true;
+    public bool PadsLeftOnBottom = true;
+
     void Awake()
     {
 
@@ -69,6 +72,31 @@ public class Challenge_Script_Multiball : MonoBehaviour
                    ChallengeManagerScript.Instance.ChallengeFail();
                     CancelInvoke("LaunchBallRandom");
                 }
+
+                bool padsOnTop = false;
+                bool padsOnBottom = false;
+
+                for (int i = 0; i < pads.Length; i++)
+                {
+                    if (pads[i].active)
+                    {
+                        foreach (Transform child in pads[i].transform)
+                        {
+                            if (child.gameObject.transform.position.y > 0 && child.gameObject.activeInHierarchy)
+                            {
+                                padsOnTop = true;
+                            }
+                            if (child.gameObject.transform.position.y < 0 && child.gameObject.activeInHierarchy)
+                            {
+                                padsOnBottom = true;
+                            }
+
+                        }
+                    }
+                }
+
+                PadsLeftOnBottom = padsOnBottom;
+                PadsLeftOnTop = padsOnTop;
 
                 for (int i = 0; i < pads.Length; i++)
                 {
@@ -117,6 +145,14 @@ public class Challenge_Script_Multiball : MonoBehaviour
         // set ball's gravChangeMode to true;
         Debug.Log("setting gravchange mode to true");
         // TODO: There has to be a more scalable way to set these settings
+        if (!PadsLeftOnTop)
+        {
+            gravScale = 1;
+        } else if (!PadsLeftOnBottom)
+        {
+            gravScale = -1;
+        }
+        
         ball_1.GetComponent<BallScript>().gravScale = gravScale;
         ball_1.GetComponent<BallScript>().setAppropriateGravSprite(gravScale);
         //ball_1.GetComponent<BallScript>().startWithRandomGrav = true;

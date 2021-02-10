@@ -18,6 +18,9 @@ public class ScoreboardManagerScript : MonoBehaviour {
     public int team2Score = 0;
 
     public int numberOfDeuces = 0;
+
+    public GameObject playersContainer;
+
 	// Use this for initialization
 	void Start () {
 
@@ -39,7 +42,9 @@ public class ScoreboardManagerScript : MonoBehaviour {
 		}
 		Invoke ("moveIntoPlace", 1f);
 		Invoke ("cleanUp", 1f);
-		//cleanUp ();
+        //cleanUp ();
+
+        playersContainer = GameObject.FindGameObjectWithTag("PlayersContainer");
 	}
 
 	// Update is called once per frame
@@ -165,6 +170,13 @@ public class ScoreboardManagerScript : MonoBehaviour {
     void teamWins(int whichTeam)
     {
         isGameOver = true;
+        
+        // Make gamepads rumble when game is over
+        if (playersContainer != null)
+        {
+            playersContainer.BroadcastMessage("StopAllRumble", SendMessageOptions.DontRequireReceiver);
+            playersContainer.BroadcastMessage("WinRumble", SendMessageOptions.DontRequireReceiver);
+        }
         switch (whichTeam)
         {
             case 1:
@@ -174,9 +186,18 @@ public class ScoreboardManagerScript : MonoBehaviour {
                 background.GetComponent<BackgroundColorScript>().TurnOffMatchPoint();
                 DataManagerScript.whichTeamWon = 1;
 
-                // check for achievement
+                // check for achievements
                 if (AchievementManagerScript.Instance != null)
-                {
+                {   
+
+                    // achievement vs. two hard AI bots
+                    if (DataManagerScript.isBotsMode && (DataManagerScript.playerThreePlaying && DataManagerScript.playerFourPlaying) ){
+                        if ((DataManagerScript.playerThreeType == 0 || DataManagerScript.playerThreeType == 4) && (DataManagerScript.playerFourType == 0 || DataManagerScript.playerFourType == 4))
+                        {
+                            AchievementManagerScript.Instance.Achievements[11].Unlock();
+                        }
+                    }
+                    // 1 vs. 2 achievement (multiplayer)
                     if (((DataManagerScript.playerOnePlaying && !DataManagerScript.playerTwoPlaying) || (DataManagerScript.playerTwoPlaying && !DataManagerScript.playerOnePlaying)) && (DataManagerScript.playerThreePlaying && DataManagerScript.playerFourPlaying))
                     {
                         if (!DataManagerScript.isBotsMode)
@@ -220,17 +241,33 @@ public class ScoreboardManagerScript : MonoBehaviour {
         // check for match point
         if (team2Score == team1Score)
         {
+            if (playersContainer != null)
+            {
+                playersContainer.BroadcastMessage("StopAllRumble", SendMessageOptions.DontRequireReceiver);
+            }
             background.GetComponent<BackgroundColorScript>().TurnOffMatchPoint();
           
         }
         else if (team1Score == scorePlayedTo - 1 && team2Score < scorePlayedTo)
         {
+            // Send rumble to players if supported.
+            if (playersContainer != null)
+            {
+                Debug.Log("Trying to start tiny rumble");
+                playersContainer.BroadcastMessage("StartTinyRumble", SendMessageOptions.DontRequireReceiver);
+            }
             background.GetComponent<BackgroundColorScript>().TurnOnMatchPoint(1);
             background.GetComponent<BackgroundColorScript>().TurnOffDeuce();
             MusicManagerScript.Instance.StartFifth();
         }
         else if (team2Score == scorePlayedTo - 1 && team1Score < scorePlayedTo)
         {
+            // Send rumble to players if supported.
+            if (playersContainer != null)
+            {
+                Debug.Log("Trying to start tiny rumble");
+                playersContainer.BroadcastMessage("StartTinyRumble", SendMessageOptions.DontRequireReceiver);
+            }
             background.GetComponent<BackgroundColorScript>().TurnOnMatchPoint(2);
             background.GetComponent<BackgroundColorScript>().TurnOffDeuce();
             MusicManagerScript.Instance.StartFifth();
@@ -240,6 +277,12 @@ public class ScoreboardManagerScript : MonoBehaviour {
     public void OnBallDied(int whichSide)
     { 
         ManageScore(whichSide);
+        
+        // Send rumble to players if supported.
+        if (playersContainer != null)
+        {
+            playersContainer.BroadcastMessage("SmallRumblePulse", .5f, SendMessageOptions.DontRequireReceiver);
+        }
     }
 
     public void enableNumbers (int team1Score, int team2Score, bool overtime){
@@ -254,7 +297,13 @@ public class ScoreboardManagerScript : MonoBehaviour {
 			iTween.FadeTo (theNumTwo.gameObject, 0.8f, .25f);
 			enableDash ();
 		} else {
-			if (team1Score > team2Score) {
+            // Send rumble to players if supported.
+            if (playersContainer != null)
+            {
+                Debug.Log("Trying to start tiny rumble");
+                playersContainer.BroadcastMessage("StartTinyRumble", SendMessageOptions.DontRequireReceiver);
+            }
+            if (team1Score > team2Score) {
 				Transform theNumOne = Team1Scores.transform.Find ("A");
 				theNumOne.gameObject.SetActive (true);
 				iTween.FadeTo (theNumOne.gameObject, 0.8f, .25f);
@@ -273,6 +322,11 @@ public class ScoreboardManagerScript : MonoBehaviour {
 			} else if (team1Score == team2Score) {
 
 				deuce.SetActive (true);
+                if (playersContainer != null)
+                {
+                    
+                    playersContainer.BroadcastMessage("StopAllRumble", SendMessageOptions.DontRequireReceiver);
+                }
                 numberOfDeuces++;
                 if (numberOfDeuces >= 5)
                 {

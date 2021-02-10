@@ -108,9 +108,11 @@ public class TitleManagerScript : MonoBehaviour {
                 {
                     showQuitAppPanel();
                     DataManagerScript.gamepadControllingMenus = i;
-                    var rsim = EventSystem.current.GetComponent<Rewired.Integration.UnityUI.RewiredStandaloneInputModule>();
-               
-                    rsim.RewiredPlayerIds = new int[] { i };
+
+                    if (JoystickLayerManager.Instance != null){
+                        JoystickLayerManager.Instance.AssignPlayerToEventSystem(i);
+                    }
+                   
                 }
 
                 if (inputAllowed && (players[i].GetButtonDown("Jump") || players[i].GetButtonDown("Start"))) {
@@ -142,6 +144,8 @@ public class TitleManagerScript : MonoBehaviour {
                         // remove press start animation
                         pressStartAnimation.SetActive(false);
                         int currentGP = i;
+                        // NOTE: Prevent user from summoning quit menu while main menu is animating.
+                        allowQuit = false;
                         LeanTween.move(Camera.main.gameObject, new Vector3(0f, -3.3f, -10f), 0.5f).setOnComplete(()=>activateMainMenu(currentGP)).setEase(LeanTweenType.easeOutQuad);
                       // activateMainMenu(gamepadIndex);
 						#endif
@@ -210,6 +214,9 @@ public class TitleManagerScript : MonoBehaviour {
 			mainMenuActive = false;
 			mainMenuPanel.SetActive (false);
 			singlePlayerPanel.SetActive (false);
+            // disallow input for a moment for the title screen to reset
+            inputAllowed = false;
+            allowInputSoon();
             LeanTween.move(Camera.main.gameObject, new Vector3(0f, 0f, -10f), 0.5f).setEase(LeanTweenType.easeOutQuad);
             pressStartAnimation.SetActive(true);
             pressStartAnimation.GetComponent<PlayAnimationScript>().PlayAnimation();
@@ -242,6 +249,7 @@ public class TitleManagerScript : MonoBehaviour {
 
 	public void activateMainMenu(int gamepad) {
 
+        allowQuit = true;
         // Assign gamepad to menus
         // Note: This is a player index (0 index). So 3 means player 4.
         DataManagerScript.gamepadControllingMenus = gamepad;
@@ -257,16 +265,14 @@ public class TitleManagerScript : MonoBehaviour {
 		mainMenuActive = true;
 		mainMenuPanel.SetActive (true);
 
-    
+        // Test rumble
+        //JoystickLayerManager.Instance.ActivateLargeRumble(gamepad, 15f);
 
         es1.SetSelectedGameObject(null);
 		es1.SetSelectedGameObject(es1.firstSelectedGameObject);
 
-        var rsim = EventSystem.current.GetComponent<Rewired.Integration.UnityUI.RewiredStandaloneInputModule>();
-        Debug.Log("gamepad is ");
-        Debug.Log(gamepad);
-        rsim.RewiredPlayerIds = new int[] { gamepad };
-
+        JoystickLayerManager.Instance.AssignPlayerToEventSystem(gamepad);
+     
         // depending on which controller was tagged in, set the input stringes here
         controllingGamepad = players[gamepad];
         //	controllingGamepad = new JoystickButtons (gamepad);
@@ -313,7 +319,8 @@ public class TitleManagerScript : MonoBehaviour {
         SceneManager.LoadSceneAsync("ChoosePlayerScene");
     }
     public void StartChallengesGame(){
-		DataManagerScript.isChallengeMode = true;
+        DataManagerScript.isSinglePlayerMode = false;
+        DataManagerScript.isChallengeMode = true;
         DataManagerScript.isBotsMode = false;
         SceneManager.LoadSceneAsync ("ChooseChallengeScene");
 

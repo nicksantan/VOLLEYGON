@@ -186,9 +186,18 @@ public class ScoreboardManagerScript : MonoBehaviour {
                 background.GetComponent<BackgroundColorScript>().TurnOffMatchPoint();
                 DataManagerScript.whichTeamWon = 1;
 
-                // check for achievement
+                // check for achievements
                 if (AchievementManagerScript.Instance != null)
-                {
+                {   
+
+                    // achievement vs. two hard AI bots
+                    if (DataManagerScript.isBotsMode && (DataManagerScript.playerThreePlaying && DataManagerScript.playerFourPlaying) ){
+                        if ((DataManagerScript.playerThreeType == 0 || DataManagerScript.playerThreeType == 4) && (DataManagerScript.playerFourType == 0 || DataManagerScript.playerFourType == 4))
+                        {
+                            AchievementManagerScript.Instance.Achievements[11].Unlock();
+                        }
+                    }
+                    // 1 vs. 2 achievement (multiplayer)
                     if (((DataManagerScript.playerOnePlaying && !DataManagerScript.playerTwoPlaying) || (DataManagerScript.playerTwoPlaying && !DataManagerScript.playerOnePlaying)) && (DataManagerScript.playerThreePlaying && DataManagerScript.playerFourPlaying))
                     {
                         if (!DataManagerScript.isBotsMode)

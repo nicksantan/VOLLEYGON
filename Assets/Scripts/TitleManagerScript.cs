@@ -144,6 +144,8 @@ public class TitleManagerScript : MonoBehaviour {
                         // remove press start animation
                         pressStartAnimation.SetActive(false);
                         int currentGP = i;
+                        // NOTE: Prevent user from summoning quit menu while main menu is animating.
+                        allowQuit = false;
                         LeanTween.move(Camera.main.gameObject, new Vector3(0f, -3.3f, -10f), 0.5f).setOnComplete(()=>activateMainMenu(currentGP)).setEase(LeanTweenType.easeOutQuad);
                       // activateMainMenu(gamepadIndex);
 						#endif
@@ -212,6 +214,9 @@ public class TitleManagerScript : MonoBehaviour {
 			mainMenuActive = false;
 			mainMenuPanel.SetActive (false);
 			singlePlayerPanel.SetActive (false);
+            // disallow input for a moment for the title screen to reset
+            inputAllowed = false;
+            allowInputSoon();
             LeanTween.move(Camera.main.gameObject, new Vector3(0f, 0f, -10f), 0.5f).setEase(LeanTweenType.easeOutQuad);
             pressStartAnimation.SetActive(true);
             pressStartAnimation.GetComponent<PlayAnimationScript>().PlayAnimation();
@@ -244,6 +249,7 @@ public class TitleManagerScript : MonoBehaviour {
 
 	public void activateMainMenu(int gamepad) {
 
+        allowQuit = true;
         // Assign gamepad to menus
         // Note: This is a player index (0 index). So 3 means player 4.
         DataManagerScript.gamepadControllingMenus = gamepad;

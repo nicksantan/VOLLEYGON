@@ -85,7 +85,7 @@ public class ArenaManagerScript : MonoBehaviour {
 
         player = ReInput.players.GetPlayer(DataManagerScript.gamepadControllingMenus);
         audio = GetComponent<AudioSource>();
-        float sfxVolume = PlayerPrefs.HasKey("sfxVolume") ? PlayerPrefs.GetFloat("sfxVolume") : 10f;
+        float sfxVolume = FileSystemLayer.Instance.sfxVolume;
         float masterVolume = PlayerPrefs.HasKey("masterVolume") ? PlayerPrefs.GetFloat("masterVolume") : 10f;
         audio.volume = audio.volume * masterVolume / 10f * sfxVolume / 10f;
         locked = false;
@@ -108,11 +108,11 @@ public class ArenaManagerScript : MonoBehaviour {
       
     }
 
-    void IncreasePlayCount(string whichType)
+    void IncreasePlayCount(int whichType)
     {
-        int tempTotal = PlayerPrefs.GetInt(whichType);
+        int tempTotal = FileSystemLayer.Instance.arenaPlays[whichType];
         tempTotal += 1;
-        PlayerPrefs.SetInt(whichType, tempTotal);
+        FileSystemLayer.Instance.SaveArenaPlay(whichType, tempTotal);
     }
 
     // Update is called once per frame
@@ -128,7 +128,7 @@ public class ArenaManagerScript : MonoBehaviour {
 
                         // Get and log random arena type
                         DataManagerScript.arenaType = Random.Range(0, numberOfArenas);
-                        IncreasePlayCount("randomArenaPlays"); // log which arena
+                        IncreasePlayCount(0); // log which arena
 
                     } else {
 
@@ -136,7 +136,7 @@ public class ArenaManagerScript : MonoBehaviour {
                         Debug.Log("selected index is");
                         Debug.Log(selectedIndex);
                         DataManagerScript.arenaType = selectedIndex;
-                        IncreasePlayCount("arena" + selectedIndex + "Plays"); // log which arena
+                        IncreasePlayCount(selectedIndex); // log which arena
 
                     }
 

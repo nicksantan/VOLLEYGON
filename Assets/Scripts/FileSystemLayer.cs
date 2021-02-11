@@ -24,6 +24,10 @@ public class FileSystemLayer : MonoBehaviour
     int numberOfChallenges = 10;
     public List<float> bestTimes;
 
+    // Various playstats
+    public List<int> arenaPlays;
+    public List<int> playerPlays;
+
     // Static singleton property
     public static FileSystemLayer Instance { get; private set; }
 
@@ -35,6 +39,8 @@ public class FileSystemLayer : MonoBehaviour
         currentPlatform = Platform.Native;
 
         bestTimes = new List<float>();
+        arenaPlays = new List<int>();
+        playerPlays = new List<int>();
     }
 
     void Start()
@@ -59,10 +65,24 @@ public class FileSystemLayer : MonoBehaviour
                 // High scores and best times that use ints
                 soloRallyModeHighScore = PlayerPrefs.HasKey("soloRallyModeHighScore") ? PlayerPrefs.GetInt("soloRallyModeHighScore") : 0;
 
+                // Load all challenge times
                 for (int i = 1; i < numberOfChallenges+1; i++)
                 {
                     float currentBestTime = PlayerPrefs.HasKey(i.ToString()) ? PlayerPrefs.GetFloat(i.ToString()) : 9999f;
                     bestTimes.Add(currentBestTime);
+                }
+
+                // Load various playstats
+                for (int i = 0; i < 13; i++)
+                {
+                    int currentArenaPlays  = PlayerPrefs.HasKey("arena_"+i.ToString()+"_plays") ? PlayerPrefs.GetInt("arena_"+i.ToString()+"_plays") : 0;
+                    arenaPlays.Add(currentArenaPlays);
+                }
+
+                for (int i = 0; i < 6; i++)
+                {
+                    int currentPlayerPlays  = PlayerPrefs.HasKey("player_"+i.ToString()+"_plays") ? PlayerPrefs.GetInt("player_"+i.ToString()+"_plays") : 0;
+                    playerPlays.Add(currentPlayerPlays);
                 }
 
             break;
@@ -79,6 +99,28 @@ public class FileSystemLayer : MonoBehaviour
             }
     }
 
+    public void SaveArenaPlay(int whichArena, int plays)
+    {
+        switch (currentPlatform)
+        {
+            case Platform.Native:
+                arenaPlays[whichArena] = plays;
+                PlayerPrefs.SetInt("arena_"+whichArena.ToString()+"_plays", plays);
+                break;
+        }
+    }
+
+     public void SavePlayerPlay(int whichPlayer, int plays)
+    {
+        switch (currentPlatform)
+        {
+            case Platform.Native:
+                playerPlays[whichPlayer] = plays;
+                PlayerPrefs.SetInt("player_"+whichPlayer.ToString()+"_plays", plays);
+                break;
+        }
+    }
+
     public void SaveChallengeTime(int whichChallenge, float time)
     {
         switch (currentPlatform)
@@ -90,6 +132,7 @@ public class FileSystemLayer : MonoBehaviour
         }
     }
 
+    
     public float GetChallengeTime(int whichChallenge)
     {
         switch (currentPlatform)

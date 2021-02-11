@@ -355,7 +355,7 @@ PrefabInstance:
     - target: {fileID: 1559928864226068712, guid: 6370c9849af8a7845b51bb3d9f33ff94,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1559928864226068712, guid: 6370c9849af8a7845b51bb3d9f33ff94,
         type: 3}
@@ -421,6 +421,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1559928864226068713, guid: 6370c9849af8a7845b51bb3d9f33ff94,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnChangeSFXVolume
+      objectReference: {fileID: 0}
+    - target: {fileID: 1559928864226068713, guid: 6370c9849af8a7845b51bb3d9f33ff94,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1559928864226068715, guid: 6370c9849af8a7845b51bb3d9f33ff94,
         type: 3}
@@ -8266,7 +8276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 811.80786
+  Phase: 811.8179
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5
@@ -9320,7 +9330,7 @@ PrefabInstance:
     - target: {fileID: 1559928864226068712, guid: 6370c9849af8a7845b51bb3d9f33ff94,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1559928864226068712, guid: 6370c9849af8a7845b51bb3d9f33ff94,
         type: 3}
@@ -9386,6 +9396,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1559928864226068713, guid: 6370c9849af8a7845b51bb3d9f33ff94,
+        type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnChangeMusicVolume
       objectReference: {fileID: 0}
     - target: {fileID: 1559928864226068715, guid: 6370c9849af8a7845b51bb3d9f33ff94,
         type: 3}

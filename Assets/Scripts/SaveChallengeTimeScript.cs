@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SaveChallengeTimeScript : MonoBehaviour
 {
-    public string saveKey;
+    public int saveKey;
     public float challengeTime = 99999f;
     private GameObject bestTimeText;
 
@@ -35,13 +35,14 @@ public class SaveChallengeTimeScript : MonoBehaviour
 
     void SaveTime(float newTime)
     {
-        PlayerPrefs.SetFloat(saveKey, newTime);
+        FileSystemLayer.Instance.SaveChallengeTime(saveKey, newTime);
     }
 
     void LoadTime()
     {
+        challengeTime = FileSystemLayer.Instance.GetChallengeTime(saveKey);
         // make the default time really really high. I would prefer null but not sure how to do that right now.
-        challengeTime = PlayerPrefs.GetFloat(saveKey, 9999f);
+        //challengeTime = PlayerPrefs.GetFloat(saveKey, 9999f);
     }
 }
 

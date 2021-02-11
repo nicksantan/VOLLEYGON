@@ -19,19 +19,15 @@ public class SliderChangeScript : MonoBehaviour
         switch (whichType)
         {
             case 0:
-                val = PlayerPrefs.GetFloat("masterVolume");
-                VolumeSlider.value = PlayerPrefs.HasKey("masterVolume") ? val : 10f;
+                VolumeSlider.value = FileSystemLayer.Instance.masterVolume;
               //  MusicManagerScript.Instance.masterVolume = baseMasterVolume * (VolumeSlider.value / 10f); 
                 break;
             case 1:
-                 val = PlayerPrefs.GetFloat("musicVolume");
-                VolumeSlider.value = PlayerPrefs.HasKey("musicVolume") ? val : 10;
-               
+                VolumeSlider.value = FileSystemLayer.Instance.musicVolume; 
            //     MusicManagerScript.Instance.masterVolume = baseMasterVolume * (VolumeSlider.value / 10f);
                 break;
             case 2:
-                 val = PlayerPrefs.GetFloat("sfxVolume");
-                VolumeSlider.value = PlayerPrefs.HasKey("sfxVolume") ? val : 10f;
+                VolumeSlider.value = FileSystemLayer.Instance.sfxVolume;
                 break;
         }
 
@@ -39,21 +35,24 @@ public class SliderChangeScript : MonoBehaviour
   
     public void OnChangeMasterVolume(float value)
     {
-        PlayerPrefs.SetFloat("masterVolume", VolumeSlider.value);
-        float musicVolume = PlayerPrefs.HasKey("musicVolume") ? PlayerPrefs.GetFloat("musicVolume") : 10f;
-        MusicManagerScript.Instance.masterVolume = baseMasterVolume * (musicVolume / 10f) * (VolumeSlider.value / 10f);
+        FileSystemLayer.Instance.masterVolume = VolumeSlider.value;
+        FileSystemLayer.Instance.SaveFloatPref("masterVolume", VolumeSlider.value);
+        // Multiply master volume setting by default volume setting (.55);
+        MusicManagerScript.Instance.masterVolume = baseMasterVolume * (FileSystemLayer.Instance.musicVolume / 10f) * (VolumeSlider.value / 10f);
     }
 
     public void OnChangeMusicVolume(float value)
     {
-        PlayerPrefs.SetFloat("musicVolume", VolumeSlider.value);
-        float masterVolume = PlayerPrefs.HasKey("masterVolume") ? PlayerPrefs.GetFloat("masterVolume") : 10f;
-        MusicManagerScript.Instance.masterVolume = baseMasterVolume * (masterVolume/10f) * (VolumeSlider.value / 10f);
+        FileSystemLayer.Instance.musicVolume = VolumeSlider.value;
+        FileSystemLayer.Instance.SaveFloatPref("musicVolume", VolumeSlider.value);
+        
+        MusicManagerScript.Instance.masterVolume = baseMasterVolume * (FileSystemLayer.Instance.masterVolume / 10f) * (VolumeSlider.value / 10f);
     }
 
     public void OnChangeSFXVolume(float value)
     {
-        PlayerPrefs.SetFloat("sfxVolume", VolumeSlider.value);
+        FileSystemLayer.Instance.sfxVolume = VolumeSlider.value;
+        FileSystemLayer.Instance.SaveFloatPref("sfxVolume", VolumeSlider.value);
     }
 
     // Start is called before the first frame update

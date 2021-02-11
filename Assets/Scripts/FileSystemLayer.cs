@@ -13,7 +13,16 @@ public class FileSystemLayer : MonoBehaviour
     // User preferences
     public int vibrationOn = 1;
     public int protipsOn = 1;
+    public float sfxVolume = 10f;
+    public float masterVolume = 10f;
+    public float musicVolume = 10f;
 
+    // High scores and challenge best times
+    public int soloRallyModeHighScore = 0;
+
+    // Challenge best times
+    int numberOfChallenges = 10;
+    public List<float> bestTimes;
 
     // Static singleton property
     public static FileSystemLayer Instance { get; private set; }
@@ -24,6 +33,8 @@ public class FileSystemLayer : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         // For now, hardcode to Native Unity.
         currentPlatform = Platform.Native;
+
+        bestTimes = new List<float>();
     }
 
     void Start()
@@ -36,8 +47,24 @@ public class FileSystemLayer : MonoBehaviour
         switch (currentPlatform)
         {
             case Platform.Native:
+                // Prefs that use bools
                 vibrationOn = PlayerPrefs.HasKey("vibrationOn") ? PlayerPrefs.GetInt("vibrationOn") : 1;
                 protipsOn = PlayerPrefs.HasKey("protipsOn") ? PlayerPrefs.GetInt("protipsOn") : 1;
+
+                // Prefs that use floats
+                sfxVolume = PlayerPrefs.HasKey("sfxVolume") ? PlayerPrefs.GetFloat("sfxVolume") : 10f;
+                masterVolume = PlayerPrefs.HasKey("masterVolume") ? PlayerPrefs.GetFloat("masterVolume") : 10f;
+                musicVolume = PlayerPrefs.HasKey("musicVolume") ? PlayerPrefs.GetFloat("musicVolume") : 10f;
+
+                // High scores and best times that use ints
+                soloRallyModeHighScore = PlayerPrefs.HasKey("soloRallyModeHighScore") ? PlayerPrefs.GetInt("soloRallyModeHighScore") : 0;
+
+                for (int i = 1; i < numberOfChallenges+1; i++)
+                {
+                    float currentBestTime = PlayerPrefs.HasKey(i.ToString()) ? PlayerPrefs.GetFloat(i.ToString()) : 9999f;
+                    bestTimes.Add(currentBestTime);
+                }
+
             break;
         }
     }
@@ -52,12 +79,26 @@ public class FileSystemLayer : MonoBehaviour
             }
     }
 
-    public void SaveTime(string key, int val)
+    public void SaveChallengeTime(int whichChallenge, float time)
     {
         switch (currentPlatform)
         {
             case Platform.Native:
+                bestTimes[whichChallenge - 1] = time;
+                PlayerPrefs.SetFloat(whichChallenge.ToString(), time);
+                break;
+        }
+    }
 
+    public float GetChallengeTime(int whichChallenge)
+    {
+        switch (currentPlatform)
+        {
+            case Platform.Native:
+                return bestTimes[whichChallenge - 1];
+                break;
+            default:
+                return bestTimes[whichChallenge - 1];
                 break;
         }
     }
@@ -68,6 +109,16 @@ public class FileSystemLayer : MonoBehaviour
         {
             case Platform.Native:
                 PlayerPrefs.SetInt(key, val);
+                break;
+        }
+    }
+
+    public void SaveFloatPref(string key, float val)
+    {
+        switch (currentPlatform)
+        {
+            case Platform.Native:
+                PlayerPrefs.SetFloat(key, val);
                 break;
         }
     }

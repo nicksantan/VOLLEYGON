@@ -196,10 +196,11 @@ public class OptionsManagerScript : MonoBehaviour
         selectedOption.GetComponent<ToggleScript>().Toggle();
     }
 
+	// Not used? TODO: Remove
     public void SaveOption(float val)
     {
         // need to identify the option with the pref;
-        PlayerPrefs.SetFloat("masterVolume", val);
+        // Used to set master volume
 
     }
 

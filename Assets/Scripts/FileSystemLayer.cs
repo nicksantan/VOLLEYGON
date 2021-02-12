@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class FileSystemLayer : MonoBehaviour
 {
-    private enum Platform { Native, Steam, Switch, Xbox };
+    private enum Platform { Native, Steam, Switch, Xbox, Itch };
     private Platform currentPlatform;
 
 
@@ -86,6 +86,74 @@ public class FileSystemLayer : MonoBehaviour
                 }
 
             break;
+            case Platform.Steam:
+                // Prefs that use bools
+                vibrationOn = FileBasedPrefs.HasKey("vibrationOn") ? FileBasedPrefs.GetInt("vibrationOn") : 1;
+                protipsOn = FileBasedPrefs.HasKey("protipsOn") ? FileBasedPrefs.GetInt("protipsOn") : 1;
+
+                // Prefs that use floats
+                sfxVolume = FileBasedPrefs.HasKey("sfxVolume") ? FileBasedPrefs.GetFloat("sfxVolume") : 10f;
+                masterVolume = FileBasedPrefs.HasKey("masterVolume") ? FileBasedPrefs.GetFloat("masterVolume") : 10f;
+                musicVolume = FileBasedPrefs.HasKey("musicVolume") ? FileBasedPrefs.GetFloat("musicVolume") : 10f;
+
+                // High scores and best times that use ints
+                soloRallyModeHighScore = FileBasedPrefs.HasKey("soloRallyModeHighScore") ? FileBasedPrefs.GetInt("soloRallyModeHighScore") : 0;
+
+                // Load all challenge times
+                for (int i = 1; i < numberOfChallenges + 1; i++)
+                {
+                    float currentBestTime = FileBasedPrefs.HasKey(i.ToString()) ? FileBasedPrefs.GetFloat(i.ToString()) : 9999f;
+                    bestTimes.Add(currentBestTime);
+                }
+
+                // Load various playstats
+                for (int i = 0; i < 13; i++)
+                {
+                    int currentArenaPlays = FileBasedPrefs.HasKey("arena_" + i.ToString() + "_plays") ? FileBasedPrefs.GetInt("arena_" + i.ToString() + "_plays") : 0;
+                    arenaPlays.Add(currentArenaPlays);
+                }
+
+                for (int i = 0; i < 6; i++)
+                {
+                    int currentPlayerPlays = FileBasedPrefs.HasKey("player_" + i.ToString() + "_plays") ? FileBasedPrefs.GetInt("player_" + i.ToString() + "_plays") : 0;
+                    playerPlays.Add(currentPlayerPlays);
+                }
+
+                break;
+            case Platform.Itch:
+                // Prefs that use bools
+                vibrationOn = FileBasedPrefs.HasKey("vibrationOn") ? FileBasedPrefs.GetInt("vibrationOn") : 1;
+                protipsOn = FileBasedPrefs.HasKey("protipsOn") ? FileBasedPrefs.GetInt("protipsOn") : 1;
+
+                // Prefs that use floats
+                sfxVolume = FileBasedPrefs.HasKey("sfxVolume") ? FileBasedPrefs.GetFloat("sfxVolume") : 10f;
+                masterVolume = FileBasedPrefs.HasKey("masterVolume") ? FileBasedPrefs.GetFloat("masterVolume") : 10f;
+                musicVolume = FileBasedPrefs.HasKey("musicVolume") ? FileBasedPrefs.GetFloat("musicVolume") : 10f;
+
+                // High scores and best times that use ints
+                soloRallyModeHighScore = FileBasedPrefs.HasKey("soloRallyModeHighScore") ? FileBasedPrefs.GetInt("soloRallyModeHighScore") : 0;
+
+                // Load all challenge times
+                for (int i = 1; i < numberOfChallenges + 1; i++)
+                {
+                    float currentBestTime = FileBasedPrefs.HasKey(i.ToString()) ? FileBasedPrefs.GetFloat(i.ToString()) : 9999f;
+                    bestTimes.Add(currentBestTime);
+                }
+
+                // Load various playstats
+                for (int i = 0; i < 13; i++)
+                {
+                    int currentArenaPlays = FileBasedPrefs.HasKey("arena_" + i.ToString() + "_plays") ? FileBasedPrefs.GetInt("arena_" + i.ToString() + "_plays") : 0;
+                    arenaPlays.Add(currentArenaPlays);
+                }
+
+                for (int i = 0; i < 6; i++)
+                {
+                    int currentPlayerPlays = FileBasedPrefs.HasKey("player_" + i.ToString() + "_plays") ? FileBasedPrefs.GetInt("player_" + i.ToString() + "_plays") : 0;
+                    playerPlays.Add(currentPlayerPlays);
+                }
+
+                break;
         }
     }
 
@@ -107,6 +175,10 @@ public class FileSystemLayer : MonoBehaviour
                 arenaPlays[whichArena] = plays;
                 PlayerPrefs.SetInt("arena_"+whichArena.ToString()+"_plays", plays);
                 break;
+            case Platform.Steam:
+                Steamworks.SteamUserStats.SetStat("arena_" + whichArena.ToString() + "_plays", plays);
+                Steamworks.SteamUserStats.StoreStats();
+                break;
         }
     }
 
@@ -118,6 +190,10 @@ public class FileSystemLayer : MonoBehaviour
                 playerPlays[whichPlayer] = plays;
                 PlayerPrefs.SetInt("player_"+whichPlayer.ToString()+"_plays", plays);
                 break;
+            case Platform.Steam:
+                Steamworks.SteamUserStats.SetStat("player_" + whichPlayer.ToString() + "_plays", plays);
+                Steamworks.SteamUserStats.StoreStats();
+                break;
         }
     }
 
@@ -128,6 +204,13 @@ public class FileSystemLayer : MonoBehaviour
             case Platform.Native:
                 bestTimes[whichChallenge - 1] = time;
                 PlayerPrefs.SetFloat(whichChallenge.ToString(), time);
+                break;
+            case Platform.Steam:
+                bestTimes[whichChallenge - 1] = time;
+                FileBasedPrefs.SetFloat(whichChallenge.ToString(), time);
+                break;
+            case Platform.Itch:
+                FileBasedPrefs.SetFloat(whichChallenge.ToString(), time);
                 break;
         }
     }
@@ -153,7 +236,15 @@ public class FileSystemLayer : MonoBehaviour
             case Platform.Native:
                 PlayerPrefs.SetInt(key, val);
                 break;
+            case Platform.Steam:
+                FileBasedPrefs.SetInt(key, val);
+                break;
+            case Platform.Itch:
+                FileBasedPrefs.SetInt(key, val);
+                break;
+
         }
+        
     }
 
     public void SaveFloatPref(string key, float val)
@@ -162,6 +253,12 @@ public class FileSystemLayer : MonoBehaviour
         {
             case Platform.Native:
                 PlayerPrefs.SetFloat(key, val);
+                break;
+            case Platform.Steam:
+                FileBasedPrefs.SetFloat(key, val);
+                break;
+            case Platform.Itch:
+                FileBasedPrefs.SetFloat(key, val);
                 break;
         }
     }

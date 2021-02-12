@@ -111,34 +111,63 @@ public class AchievementManagerScript : MonoBehaviour
                 }
                 break;
             case Platform.Steam:
+                // TODO: Need to figure out how achievements with progress work. Perhaps use a logprogress method and poll for achievement complete?
                 // read from steam achievements and populate local array
+              
+                for (int i = 1; i < numberOfAchievements; i++)
+                {
+                    bool thisAchievementUnlocked = false;
+                    // NOTE: Currently unused.
+                    int thisAchievementUsesProgress = 0;
+                    int thisAchievementProgress = 0;
+
+                    Steamworks.SteamUserStats.GetAchievement("ach_"+ i.ToString(), out thisAchievementUnlocked);
+                   
+                    Achievements.Add(new Achievement(AchievementNames[i], AchievementDescriptions[i], thisAchievementUnlocked, thisAchievementUsesProgress == 1, i, thisAchievementProgress));
+                }
                 break;
         }
       
     }
 
-    public void SaveAchievements()
-    {
-        Debug.Log("Will save all achievements here");
-    }
-
     public void LogReturn()
     {
-        this.totalReturns += 1;
-        PlayerPrefs.SetInt("totalReturns", this.totalReturns);
+        switch (currentPlatform) {
+            case Platform.Native:
+            case Platform.Itch:
+                this.totalReturns += 1;
+                PlayerPrefs.SetInt("totalReturns", this.totalReturns);
 
-        if (this.totalReturns >= 100)
-        {
-            this.Achievements[1].Unlock();
+                if (this.totalReturns >= 100)
+                {
+                    this.Achievements[1].Unlock();
+                }
+                break;
+            case Platform.Steam:
+                int currentTotalReturns;
+                Steamworks.SteamUserStats.GetStat("totalReturns", out currentTotalReturns);
+                currentTotalReturns++;
+                Steamworks.SteamUserStats.SetStat("totalReturns", currentTotalReturns);
+                Steamworks.SteamUserStats.StoreStats();
+                // Poll for native achievement pop?
+                break;
         }
     }
 
     public void QueueToPop(int whichAchievement)
     {
-        // create a new achievement popup
-        GameObject newPopup = Instantiate(popupPrefab, a_canvas.transform);
-        newPopup.GetComponent<AchivementPopupScript>().whichAchievement = whichAchievement;
-        AchievementsToPop.Add(newPopup);
+        // create a new achievement popup but not on Steam
+        switch (currentPlatform)
+        {
+            case Platform.Steam:
+                Debug.Log("We're on steam so no need to pop native achievement");
+                break;
+            default:
+                    GameObject newPopup = Instantiate(popupPrefab, a_canvas.transform);
+                    newPopup.GetComponent<AchivementPopupScript>().whichAchievement = whichAchievement;
+                    AchievementsToPop.Add(newPopup);
+                break;
+        }
     }
 
     public void SaveAchievementUnlock(int achievementID)
@@ -151,10 +180,10 @@ public class AchievementManagerScript : MonoBehaviour
             case Platform.Steam:
                 // Need to look up achievement name here by index
                 bool achievementUnlocked;
-                Steamworks.SteamUserStats.GetAchievement("achievementName", out achievementUnlocked);
+                Steamworks.SteamUserStats.GetAchievement("ach_" + achievementID.ToString(), out achievementUnlocked);
                 if (achievementUnlocked == false)
                 {
-                    Steamworks.SteamUserStats.SetAchievement("achievementName");
+                    Steamworks.SteamUserStats.SetAchievement("ach_" + achievementID.ToString());
                 }
                 break;
             case Platform.Itch:

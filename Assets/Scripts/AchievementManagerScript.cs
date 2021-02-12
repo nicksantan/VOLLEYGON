@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class AchievementManagerScript : MonoBehaviour
 {
-    private enum Platform { Native, Steam, Switch, Xbox };
+    private enum Platform { Native, Steam, Switch, Xbox, Itch };
     private Platform currentPlatform;
 
     [SerializeField]
@@ -110,6 +110,9 @@ public class AchievementManagerScript : MonoBehaviour
                     Achievements.Add(new Achievement(AchievementNames[i], AchievementDescriptions[i], thisAchievementUnlocked == 1, thisAchievementUsesProgress == 1, i, thisAchievementProgress));
                 }
                 break;
+            case Platform.Steam:
+                // read from steam achievements and populate local array
+                break;
         }
       
     }
@@ -145,6 +148,19 @@ public class AchievementManagerScript : MonoBehaviour
             case Platform.Native:
                 PlayerPrefs.SetInt("a-" + achievementID.ToString() + "-unlocked", 1);
                 break;
+            case Platform.Steam:
+                // Need to look up achievement name here by index
+                bool achievementUnlocked;
+                Steamworks.SteamUserStats.GetAchievement("achievementName", out achievementUnlocked);
+                if (achievementUnlocked == false)
+                {
+                    Steamworks.SteamUserStats.SetAchievement("achievementName");
+                }
+                break;
+            case Platform.Itch:
+                PlayerPrefs.SetInt("a-" + achievementID.ToString() + "-unlocked", 1);
+                break;
+
         }
     }
 

@@ -11,10 +11,12 @@ public class CarouselScript : MonoBehaviour {
     private Player player;
 	public float axisSlideDuration = 0.3f;
 	public Text indexText;
-	public bool infinite = false;
     bool stickDownLast;
 
+	public bool infinite = false;
     public bool disabled = false;
+
+	public AudioClip selectSound;
 
 	private JoystickButtons[] joysticks = new JoystickButtons[4] {
 		new JoystickButtons(1),
@@ -111,7 +113,13 @@ public class CarouselScript : MonoBehaviour {
 	// Managing selected state and passing to ES
 	//
 
-	void Select(int index) {
+	void Select(int index, bool playSfx = true) {
+		// Play sfx
+		if (playSfx) {
+			Debug.Log("playing");
+			SoundManagerScript.instance.PlaySingle(selectSound);
+		}
+
 		// Save selected in event system
 		selectedItem = contentRect.GetChild(index);
 		if (es) es.SetSelectedGameObject(selectedItem.gameObject);
@@ -173,7 +181,8 @@ public class CarouselScript : MonoBehaviour {
 
 		// Set target index and animation option
 		shouldAnimate = animate;
-		Select(index);
+		bool playSfx = false;
+		Select(index, playSfx);
 	}
 
 	//

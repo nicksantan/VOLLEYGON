@@ -22,6 +22,10 @@ public class OptionsManagerScript : MonoBehaviour
     public GameObject optionToggleButton;
     public GameObject leftBackground;
 	public GameObject rightBackground;
+    
+	public AudioClip selectSound;
+	public AudioClip confirmSound;
+	public AudioClip cancelSound;
 
 	private int whichPlayerIsControlling;
 	private JoystickButtons joyButts;
@@ -74,6 +78,7 @@ public class OptionsManagerScript : MonoBehaviour
         optionPlayButton.SetActive(optionIsSelectable && !optionIsOpen && optionIsPlayable);
         optionViewButton.SetActive(optionIsSelectable && !optionIsOpen && !optionIsPlayable && optionIsViewable);
         optionToggleButton.SetActive(optionIsSelectable && !optionIsOpen && !optionIsPlayable && optionIsToggleable);
+		
         // Show options based on carousel slide selected
         if (es.currentSelectedGameObject && !inAchievementsMenu)
 		{
@@ -88,6 +93,7 @@ public class OptionsManagerScript : MonoBehaviour
 		// Check for cancel button
 		if (player.GetButtonDown("Grav"))
 		{
+			SoundManagerScript.instance.PlaySingle(cancelSound);
 
 			// Show/hide UI
 			optionBreadcrumb.SetActive(false);
@@ -115,7 +121,6 @@ public class OptionsManagerScript : MonoBehaviour
 
 		if (inputSelecting && !optionIsOpen && optionIsSelectable && !optionIsPlayable && !inAchievementsMenu && !optionIsToggleable)
 		{
-
             // Show/hide UI
             if (selectedIndex != 6 && selectedIndex != 7)
             {
@@ -138,7 +143,7 @@ public class OptionsManagerScript : MonoBehaviour
         {
             // Load how to video
             SceneManager.LoadSceneAsync("howToVideoScene");
-
+			SoundManagerScript.instance.PlaySingle(confirmSound);
         }
 
         if (inputSelecting && !optionIsOpen && optionIsSelectable && optionIsToggleable)
@@ -186,12 +191,14 @@ public class OptionsManagerScript : MonoBehaviour
 
 	void SelectShownOption()
 	{
+		SoundManagerScript.instance.PlaySingle(confirmSound);
 		Transform selectedOption = options.transform.GetChild(selectedIndex);
 		selectedOption.GetComponent<OptionScript>().enable();
 	}
 
     void ToggleShownOption()
     {
+		SoundManagerScript.instance.PlaySingle(confirmSound);
         Transform selectedOption = options.transform.GetChild(selectedIndex);
         selectedOption.GetComponent<ToggleScript>().Toggle();
     }

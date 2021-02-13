@@ -35,6 +35,10 @@ public class TitleManagerScript : MonoBehaviour {
 	public EventSystem es1;
 
 	public Button firstButton;
+    
+	public AudioClip startSound;
+	public AudioClip confirmSound;
+	public AudioClip cancelSound;
 
     private Player p1;
     private Player p2;
@@ -106,6 +110,7 @@ public class TitleManagerScript : MonoBehaviour {
 			if (!mainMenuActive) {
                 if (inputAllowed && players[i].GetButtonDown("Grav") && allowQuit)
                 {
+		            SoundManagerScript.instance.PlaySingle(cancelSound);
                     showQuitAppPanel();
                     DataManagerScript.gamepadControllingMenus = i;
 
@@ -116,6 +121,7 @@ public class TitleManagerScript : MonoBehaviour {
                 }
 
                 if (inputAllowed && (players[i].GetButtonDown("Jump") || players[i].GetButtonDown("Start"))) {
+		            SoundManagerScript.instance.PlaySingle(startSound);
                   
                     if (DataManagerScript.demoMode) {
 
@@ -193,11 +199,12 @@ public class TitleManagerScript : MonoBehaviour {
     }
     public void hideQuitAppPanel()
     {
-       
         quitPanel.SetActive(false); 
         es1.SetSelectedGameObject(null);
         controllingGamepad = null;
         allowInputSoon();
+        
+		SoundManagerScript.instance.PlaySingle(confirmSound);
     }
 
     public void quitApp()
@@ -208,6 +215,8 @@ public class TitleManagerScript : MonoBehaviour {
     void cancelCurrentMenu(bool cancelAll) {
         Debug.Log("is ai bot panel active?");
         Debug.Log(AIBotPanel.activeSelf);
+        
+		SoundManagerScript.instance.PlaySingle(cancelSound);
 
         if (!singlePlayerPanel.activeSelf && !AIBotPanel.activeSelf || cancelAll) {
 			// Canceling out of main menu
@@ -248,7 +257,6 @@ public class TitleManagerScript : MonoBehaviour {
 	}
 
 	public void activateMainMenu(int gamepad) {
-
         allowQuit = true;
         // Assign gamepad to menus
         // Note: This is a player index (0 index). So 3 means player 4.
@@ -282,30 +290,35 @@ public class TitleManagerScript : MonoBehaviour {
         //	es1.GetComponent<StandaloneInputModule> ().cancelButton = controllingGamepad.grav;
     }
 
-	public void SetUpSinglePlayerMenu (){
+	public void SetUpSinglePlayerMenu() {
+		SoundManagerScript.instance.PlaySingle(confirmSound);
 		es1.SetSelectedGameObject(soloModeButton);
 	}
 
-    public void SetUpAIMenu()
-    {
+    public void SetUpAIMenu() {
+		SoundManagerScript.instance.PlaySingle(confirmSound);
         es1.SetSelectedGameObject(oneBotButton);
     }
 
     public void StartSoloModeGame()
     {
+        SoundManagerScript.instance.PlaySingle(startSound);
         //TODO: This should be a different scene, specifically for choosing ONE shape. For now, just start the game with Square
         DataManagerScript.isSinglePlayerMode = true;
         DataManagerScript.isBotsMode = false;
         SceneManager.LoadSceneAsync("soloGameScene");
     }
 
-    public void StartMultiplayerGame(){
+    public void StartMultiplayerGame()
+    {
+        SoundManagerScript.instance.PlaySingle(startSound);
         DataManagerScript.isSinglePlayerMode = false;
         DataManagerScript.isBotsMode = false;
         SceneManager.LoadSceneAsync ("ChoosePlayerScene");
 	}
     public void StartOneBotGame()
     {
+        SoundManagerScript.instance.PlaySingle(startSound);
         DataManagerScript.isSinglePlayerMode = false;
         DataManagerScript.isBotsMode = true;
         DataManagerScript.numBots = 1;
@@ -313,19 +326,24 @@ public class TitleManagerScript : MonoBehaviour {
     }
     public void StartTwoBotGame()
     {
+        SoundManagerScript.instance.PlaySingle(startSound);
         DataManagerScript.isSinglePlayerMode = false;
         DataManagerScript.isBotsMode = true;
         DataManagerScript.numBots = 2;
         SceneManager.LoadSceneAsync("ChoosePlayerScene");
     }
-    public void StartChallengesGame(){
+    public void StartChallengesGame()
+    {
+        SoundManagerScript.instance.PlaySingle(startSound);
         DataManagerScript.isSinglePlayerMode = false;
         DataManagerScript.isChallengeMode = true;
         DataManagerScript.isBotsMode = false;
         SceneManager.LoadSceneAsync ("ChooseChallengeScene");
 
 	}
-	public void StartOptionsMenu(){
+	public void StartOptionsMenu()
+    {
+        SoundManagerScript.instance.PlaySingle(startSound);
 		SceneManager.LoadSceneAsync ("OptionsScene");
 	}
 }

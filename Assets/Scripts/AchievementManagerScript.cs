@@ -145,11 +145,28 @@ public class AchievementManagerScript : MonoBehaviour
                 break;
             case Platform.Steam:
                 int currentTotalReturns;
-                Steamworks.SteamUserStats.GetStat("totalReturns", out currentTotalReturns);
+                Steamworks.SteamUserStats.GetStat("stat_total_returns", out currentTotalReturns);
                 currentTotalReturns++;
-                Steamworks.SteamUserStats.SetStat("totalReturns", currentTotalReturns);
+                Steamworks.SteamUserStats.SetStat("stat_total_returns", currentTotalReturns);
                 Steamworks.SteamUserStats.StoreStats();
                 // Poll for native achievement pop?
+                if (currentTotalReturns >= 100)
+                {
+                    this.Achievements[1].Unlock();
+                }
+                break;
+        }
+    }
+
+    public void LogMedalProgress(int totalMedals, int goldMedals)
+    {
+        // This is for platforms that support displaying achievement 'progress'. Right now, that's only Steam.
+        switch (currentPlatform)
+        {
+            case Platform.Steam:
+                Steamworks.SteamUserStats.SetStat("stat_total_medals", totalMedals);
+                Steamworks.SteamUserStats.SetStat("stat_total_gold_medals", goldMedals);
+                Steamworks.SteamUserStats.StoreStats();
                 break;
         }
     }

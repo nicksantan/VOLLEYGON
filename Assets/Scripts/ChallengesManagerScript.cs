@@ -57,6 +57,10 @@ public class ChallengesManagerScript : MonoBehaviour {
 
         if (AchievementManagerScript.Instance != null)
         {
+
+            // Report progress to achievement manager
+            AchievementManagerScript.Instance.LogMedalProgress(HowManyMedals(), HowManyGoldMedals());
+
             if (IsAllMedals())
             {
                 AchievementManagerScript.Instance.Achievements[8].Unlock();
@@ -191,12 +195,44 @@ public class ChallengesManagerScript : MonoBehaviour {
         marker.transform.position = tempPos;
     }
 
+    public int HowManyMedals()
+    {
+        int howMany = 0;
+        for (int i = 0; i < 10; i++)
+        {
+            float bestTime = FileSystemLayer.Instance.GetChallengeTime(i);
+            MedalProvider mp = new MedalProvider(bestTime, i);
+            medalTypes whichMedal = mp.GetMedal();
+            if (whichMedal != medalTypes.none)
+            {
+                howMany++;
+            }
+        }
+        return howMany;
+    }
+
+    public int HowManyGoldMedals()
+    {
+        int howMany = 0;
+        for (int i = 0; i < 10; i++)
+        {
+            float bestTime = FileSystemLayer.Instance.GetChallengeTime(i);
+            MedalProvider mp = new MedalProvider(bestTime, i);
+            medalTypes whichMedal = mp.GetMedal();
+            if (whichMedal == medalTypes.gold)
+            {
+                howMany++;
+            }
+        }
+        return howMany;
+    }
+
     public bool IsAllMedals()
     {
 
         for (int i = 0; i < 10; i++)
         {
-            float bestTime = PlayerPrefs.GetFloat((i + 1).ToString());
+            float bestTime = FileSystemLayer.Instance.GetChallengeTime(i);
             MedalProvider mp = new MedalProvider(bestTime, i);
             medalTypes whichMedal = mp.GetMedal();
             if (whichMedal == medalTypes.none)
@@ -213,7 +249,7 @@ public class ChallengesManagerScript : MonoBehaviour {
 
         for (int i = 0; i < 10; i++)
         {
-            float bestTime = PlayerPrefs.GetFloat((i + 1).ToString());
+            float bestTime = FileSystemLayer.Instance.GetChallengeTime(i);
             MedalProvider mp = new MedalProvider(bestTime, i);
             medalTypes whichMedal = mp.GetMedal();
             if (whichMedal != medalTypes.gold)

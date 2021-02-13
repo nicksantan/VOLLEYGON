@@ -77,8 +77,8 @@ public class BallScript : MonoBehaviour {
         // Debug.Log ("assign arena");
         // Cahce local components
         audio = GetComponent<AudioSource>();
-        float sfxVolume = PlayerPrefs.HasKey("sfxVolume") ? PlayerPrefs.GetFloat("sfxVolume") : 10f;
-        float masterVolume = PlayerPrefs.HasKey("masterVolume") ? PlayerPrefs.GetFloat("masterVolume") : 10f;
+        float sfxVolume = FileSystemLayer.Instance.sfxVolume;
+        float masterVolume = FileSystemLayer.Instance.masterVolume;
         audio.volume = audio.volume * masterVolume / 10f * sfxVolume / 10f;
         rb = GetComponent<Rigidbody2D>();
         theSprite = GetComponent<SpriteRenderer>().sprite;

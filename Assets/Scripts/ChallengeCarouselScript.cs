@@ -160,10 +160,11 @@ public class ChallengeCarouselScript : MonoBehaviour
         SceneManager.LoadSceneAsync("challengeScene");
     }
 
+    // Don't believe this is used. TODO: Remove
     public void SaveOption(float val)
     {
         // need to identify the option with the pref;
-        PlayerPrefs.SetFloat("masterVolume", val);
+      // (used to set master volume to val)
 
     }
 

@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class AchievementManagerScript : MonoBehaviour
 {
+    private enum Platform { Native, Steam, Switch, Xbox, Itch };
+    private Platform currentPlatform;
+
     [SerializeField]
     public List<Achievement> Achievements = new List<Achievement>();
     public List<GameObject> AchievementsToPop = new List<GameObject>();
@@ -27,106 +30,184 @@ public class AchievementManagerScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //QueueToPop(0);
-        //QueueToPop(1);
-        //QueueToPop(2);
-        //QueueToPop(3);
-        //QueueToPop(4);
-        //QueueToPop(5);
-        //QueueToPop(6);
-        //QueueToPop(7);
-        //QueueToPop(8);
-        //QueueToPop(9);
-        //QueueToPop(10);
-        //QueueToPop(11);
+        currentPlatform = Platform.Native;
+
         // load achievement status from playerprefs or other source (Steam cloud save?)
 
         // Are we on steam?
-        if (SteamManager.Initialized)
+        if (currentPlatform == Platform.Steam)
         {
-            string steamname = SteamFriends.GetPersonaName();
-            Debug.Log(steamname);
-        } else {
-            Debug.Log("Not on steam");
-        }
-
-        // Check for achievements that have 'progress'
-        if (PlayerPrefs.HasKey("totalReturns"))
-        {
-            totalReturns = PlayerPrefs.GetInt("totalReturns");
-        }
-        else
-        {
-            PlayerPrefs.SetInt("totalReturns", 0);
-        }
-
-        // Populate local achievement status
-        for (int i = 0; i < numberOfAchievements; i++)
-        {
-
-            int thisAchievementUnlocked = 0;
-            int thisAchievementUsesProgress = 0;
-            int thisAchievementProgress = 0;
-
-            // Assuming local pc build for now
-            if (PlayerPrefs.HasKey("a-" + i + "-unlocked"))
+            if (SteamManager.Initialized)
             {
-                thisAchievementUnlocked = PlayerPrefs.GetInt("a-" + i + "-unlocked");
-            } else
-            {
-                PlayerPrefs.SetInt("a-" + i + "-unlocked", 0);
-            }
-
-            if (PlayerPrefs.HasKey("a-" + i + "-usesProgress"))
-            {
-                thisAchievementUsesProgress = PlayerPrefs.GetInt("a-" + i + "-usesProgress");
+                string steamname = SteamFriends.GetPersonaName();
+                Debug.Log(steamname);
             }
             else
             {
-                PlayerPrefs.SetInt("a-" + i + "-usesProgress", 0);
+                Debug.Log("Not on steam");
             }
-
-            if (PlayerPrefs.HasKey("a-" + i + "-progress"))
-            {
-                thisAchievementProgress = PlayerPrefs.GetInt("a-" + i + "-progress");
-            } else
-            {
-                PlayerPrefs.SetInt("a-" + i + "-progress", 0);
-            }
-
-          
-
-
-                Achievements.Add(new Achievement(AchievementNames[i], AchievementDescriptions[i], thisAchievementUnlocked == 1, thisAchievementUsesProgress == 1, i, thisAchievementProgress));
         }
+
+        PopulateAchievements();
     }
 
     private void Update()
     {
         PopNextAchievement();
     }
-    public void SaveAchievements()
+
+    public void PopulateAchievements()
     {
-        Debug.Log("Will save all achievements here");
+        switch (currentPlatform)
+        {
+            case Platform.Native:
+                // Check for achievements that have 'progress'
+                if (PlayerPrefs.HasKey("totalReturns"))
+                {
+                    totalReturns = PlayerPrefs.GetInt("totalReturns");
+                }
+                else
+                {
+                    PlayerPrefs.SetInt("totalReturns", 0);
+                }
+
+                // Populate local achievement status
+                for (int i = 0; i < numberOfAchievements; i++)
+                {
+
+                    int thisAchievementUnlocked = 0;
+                    int thisAchievementUsesProgress = 0;
+                    int thisAchievementProgress = 0;
+
+                    // Assuming local pc build for now
+                    if (PlayerPrefs.HasKey("a-" + i + "-unlocked"))
+                    {
+                        thisAchievementUnlocked = PlayerPrefs.GetInt("a-" + i + "-unlocked");
+                    }
+                    else
+                    {
+                        PlayerPrefs.SetInt("a-" + i + "-unlocked", 0);
+                    }
+
+                    if (PlayerPrefs.HasKey("a-" + i + "-usesProgress"))
+                    {
+                        thisAchievementUsesProgress = PlayerPrefs.GetInt("a-" + i + "-usesProgress");
+                    }
+                    else
+                    {
+                        PlayerPrefs.SetInt("a-" + i + "-usesProgress", 0);
+                    }
+
+                    if (PlayerPrefs.HasKey("a-" + i + "-progress"))
+                    {
+                        thisAchievementProgress = PlayerPrefs.GetInt("a-" + i + "-progress");
+                    }
+                    else
+                    {
+                        PlayerPrefs.SetInt("a-" + i + "-progress", 0);
+                    }
+
+                    Achievements.Add(new Achievement(AchievementNames[i], AchievementDescriptions[i], thisAchievementUnlocked == 1, thisAchievementUsesProgress == 1, i, thisAchievementProgress));
+                }
+                break;
+            case Platform.Steam:
+                // TODO: Need to figure out how achievements with progress work. Perhaps use a logprogress method and poll for achievement complete?
+                // read from steam achievements and populate local array
+              
+                for (int i = 1; i < numberOfAchievements; i++)
+                {
+                    bool thisAchievementUnlocked = false;
+                    // NOTE: Currently unused.
+                    int thisAchievementUsesProgress = 0;
+                    int thisAchievementProgress = 0;
+
+                    Steamworks.SteamUserStats.GetAchievement("ach_"+ i.ToString(), out thisAchievementUnlocked);
+                   
+                    Achievements.Add(new Achievement(AchievementNames[i], AchievementDescriptions[i], thisAchievementUnlocked, thisAchievementUsesProgress == 1, i, thisAchievementProgress));
+                }
+                break;
+        }
+      
     }
 
     public void LogReturn()
     {
-        this.totalReturns += 1;
-        PlayerPrefs.SetInt("totalReturns", this.totalReturns);
+        switch (currentPlatform) {
+            case Platform.Native:
+            case Platform.Itch:
+                this.totalReturns += 1;
+                PlayerPrefs.SetInt("totalReturns", this.totalReturns);
 
-        if (this.totalReturns >= 100)
+                if (this.totalReturns >= 100)
+                {
+                    this.Achievements[1].Unlock();
+                }
+                break;
+            case Platform.Steam:
+                int currentTotalReturns;
+                Steamworks.SteamUserStats.GetStat("stat_total_returns", out currentTotalReturns);
+                currentTotalReturns++;
+                Steamworks.SteamUserStats.SetStat("stat_total_returns", currentTotalReturns);
+                Steamworks.SteamUserStats.StoreStats();
+                // Poll for native achievement pop?
+                if (currentTotalReturns >= 100)
+                {
+                    this.Achievements[1].Unlock();
+                }
+                break;
+        }
+    }
+
+    public void LogMedalProgress(int totalMedals, int goldMedals)
+    {
+        // This is for platforms that support displaying achievement 'progress'. Right now, that's only Steam.
+        switch (currentPlatform)
         {
-            this.Achievements[1].Unlock();
+            case Platform.Steam:
+                Steamworks.SteamUserStats.SetStat("stat_total_medals", totalMedals);
+                Steamworks.SteamUserStats.SetStat("stat_total_gold_medals", goldMedals);
+                Steamworks.SteamUserStats.StoreStats();
+                break;
         }
     }
 
     public void QueueToPop(int whichAchievement)
     {
-        // create a new achievement popup
-        GameObject newPopup = Instantiate(popupPrefab, a_canvas.transform);
-        newPopup.GetComponent<AchivementPopupScript>().whichAchievement = whichAchievement;
-        AchievementsToPop.Add(newPopup);
+        // create a new achievement popup but not on Steam
+        switch (currentPlatform)
+        {
+            case Platform.Steam:
+                Debug.Log("We're on steam so no need to pop native achievement");
+                break;
+            default:
+                    GameObject newPopup = Instantiate(popupPrefab, a_canvas.transform);
+                    newPopup.GetComponent<AchivementPopupScript>().whichAchievement = whichAchievement;
+                    AchievementsToPop.Add(newPopup);
+                break;
+        }
+    }
+
+    public void SaveAchievementUnlock(int achievementID)
+    {
+        switch (currentPlatform)
+        {
+            case Platform.Native:
+                PlayerPrefs.SetInt("a-" + achievementID.ToString() + "-unlocked", 1);
+                break;
+            case Platform.Steam:
+                // Need to look up achievement name here by index
+                bool achievementUnlocked;
+                Steamworks.SteamUserStats.GetAchievement("ach_" + achievementID.ToString(), out achievementUnlocked);
+                if (achievementUnlocked == false)
+                {
+                    Steamworks.SteamUserStats.SetAchievement("ach_" + achievementID.ToString());
+                }
+                break;
+            case Platform.Itch:
+                PlayerPrefs.SetInt("a-" + achievementID.ToString() + "-unlocked", 1);
+                break;
+
+        }
     }
 
     public void PopNextAchievement()
@@ -182,12 +263,8 @@ public class Achievement
         {
             this.unlocked = true;
 
-            // Switch per platform here maybe. For now, save playerprefs
-            PlayerPrefs.SetInt("a-" + this.id + "-unlocked", 1);
-
-
-            // Save all status
-            AchievementManagerScript.Instance.SaveAchievements();
+           // Save all status
+           AchievementManagerScript.Instance.SaveAchievementUnlock(this.id);
 
             // Queue the achievement to be popped
             AchievementManagerScript.Instance.QueueToPop(this.id);

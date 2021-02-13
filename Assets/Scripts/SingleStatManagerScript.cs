@@ -115,10 +115,11 @@ public class SingleStatManagerScript : MonoBehaviour {
 		//populate matchtime and longest rally counters
 
 		rallyCountText.text = rallyCount.ToString ();
-		int highScore = PlayerPrefs.GetInt ("highscore");
+		int highScore = FileSystemLayer.Instance.soloRallyModeHighScore;
 		newText.enabled = false;
 		if (rallyCount > highScore) {
-			PlayerPrefs.SetInt ("highscore", rallyCount);
+			FileSystemLayer.Instance.soloRallyModeHighScore = rallyCount;
+			FileSystemLayer.Instance.SavePref("soloRallyModeHighScore", rallyCount);
 			highScore = rallyCount;
 			newText.enabled = true;
 

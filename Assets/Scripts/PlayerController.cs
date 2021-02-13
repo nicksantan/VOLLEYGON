@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour {
             rect_trail = transform.Find("Trail-Rectangle").gameObject;
         }
       
-
+      
         // Make single reference for appropriate collider and set up pandemonium counter 
         switch (shapeNames[playerType]) {
             case "square":
@@ -192,6 +192,9 @@ public class PlayerController : MonoBehaviour {
             startingGrav = Mathf.Abs(startingGrav);
         }
         if (rb != null) {
+            if (!isChallengeMode && !DataManagerScript.isSinglePlayerMode){
+            IncreasePlayCount(playerType);
+            }
             rb.gravityScale = startingGrav;
             startMass = rb.mass;
             pandemoniumCounter.GetComponent<TextMesh>().color = new Vector4(0f, 0f, 0f, 0f);
@@ -309,11 +312,13 @@ public class PlayerController : MonoBehaviour {
 
     }
 
-    void IncreasePlayCount(string whichType)
-    {
-        int tempTotal = PlayerPrefs.GetInt(whichType);
+    void IncreasePlayCount(int whichType)
+    {   
+        if (!isAI){
+        int tempTotal = FileSystemLayer.Instance.playerPlays[whichType];
         tempTotal += 1;
-        PlayerPrefs.SetInt(whichType, tempTotal);
+        FileSystemLayer.Instance.SavePlayerPlay(whichType, tempTotal);
+        }
     }
 
     void FixedUpdate()

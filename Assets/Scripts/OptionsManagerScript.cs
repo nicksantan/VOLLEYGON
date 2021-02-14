@@ -45,6 +45,12 @@ public class OptionsManagerScript : MonoBehaviour
 	{
 		curtain.SetActive(true);
 		curtain.GetComponent<NewFadeScript>().Fade(0f);
+		
+        MusicManagerScript.Instance.TurnOffEverything();
+        MusicManagerScript.Instance.whichSource += 1;
+        MusicManagerScript.Instance.whichSource = MusicManagerScript.Instance.whichSource % 2;
+        MusicManagerScript.Instance.SwitchToSource();
+		MusicManagerScript.Instance.StartRoot();
 
 		es = EventSystem.current;
 		if (es && es.currentSelectedGameObject)

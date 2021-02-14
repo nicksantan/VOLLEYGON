@@ -89,11 +89,13 @@ public class ChallengeManagerScript : MonoBehaviour
 
         // Display instruction panel
         DisplayChallengeInstructions();
+
         MusicManagerScript.Instance.TurnOffEverything();
         MusicManagerScript.Instance.whichSource += 1;
         MusicManagerScript.Instance.whichSource = MusicManagerScript.Instance.whichSource % 2;
         MusicManagerScript.Instance.SwitchToSource();
-        MusicManagerScript.Instance.StartMusic();
+		MusicManagerScript.Instance.StartRoot();
+
         es = EventSystem.current;
         // Assign joystick to player
         int joystickIdentifier = DataManagerScript.gamepadControllingMenus;

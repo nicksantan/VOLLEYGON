@@ -9,24 +9,28 @@ public class SoundManagerScript : MonoBehaviour {
 
 	public float lowPitchRange = .95f;
 	public float highPitchRange = 1.05f;
-	// Use this for initialization
 
-	void Awake(){
+	private float baseSfxVolume = 1f;
 
+	void Awake() {
 		if (instance == null) {
 			instance = this;
 		} else if (instance != null) {
 			Destroy (gameObject);
 		}
-        float sfxVolume = FileSystemLayer.Instance.sfxVolume;
-        float masterVolume = FileSystemLayer.Instance.masterVolume;
-        sfxSource.volume = sfxSource.volume * masterVolume / 10f * sfxVolume / 10f;
+		SetVolume();
         DontDestroyOnLoad (gameObject);
 	}
 
+	void SetVolume() {
+        float sfxVolume = FileSystemLayer.Instance.sfxVolume / 10f;
+        float masterVolume = FileSystemLayer.Instance.masterVolume / 10f;
+        sfxSource.volume = baseSfxVolume * masterVolume * sfxVolume;
+	}
+
 	public void PlaySingle (AudioClip clip){
-		//sfxSource.clip = clip;
-		sfxSource.PlayOneShot (clip);
+		SetVolume();
+		sfxSource.PlayOneShot(clip);
 	}
 
 	public void muteSFX(){
@@ -34,16 +38,15 @@ public class SoundManagerScript : MonoBehaviour {
 	}
 
 	public void unMuteSFX(){
-		sfxSource.volume = 1f;
+		SetVolume();
 	}
 
 	public void RandomizeSfx(params AudioClip[] clips){
-		int randomIndex = Random.Range (0, clips.Length);
-		float randomPitch = Random.Range (lowPitchRange, highPitchRange);
+		int randomIndex = Random.Range(0, clips.Length);
+		float randomPitch = Random.Range(lowPitchRange, highPitchRange);
 
+		SetVolume();
 		sfxSource.pitch = randomPitch;
-		//sfxSource.clip = clips [randomIndex];
-		//sfxSource.Play ();
-		sfxSource.PlayOneShot (clips [randomIndex]);
+		sfxSource.PlayOneShot(clips [randomIndex]);
 	}
 }

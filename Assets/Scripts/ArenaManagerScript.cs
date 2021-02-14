@@ -41,8 +41,9 @@ public class ArenaManagerScript : MonoBehaviour {
     private bool axis4InUse = false;
     private int numberOfArenas = 9;
     private bool locked = false;
-    public AudioClip tickUp;
-    public AudioClip tickDown;
+
+    public AudioClip nextSceneSound;
+    public AudioClip prevSceneSound;
 
     public CarouselScript carousel;
 
@@ -124,26 +125,28 @@ public class ArenaManagerScript : MonoBehaviour {
             //foreach (string butt in buttons) {
             if (player.GetButtonDown("Jump")) {
 
-                    if (selectedIndex == 0) {
+                if (selectedIndex == 0) {
 
-                        // Get and log random arena type
-                        DataManagerScript.arenaType = Random.Range(0, numberOfArenas);
-                        IncreasePlayCount(0); // log which arena
+                    // Get and log random arena type
+                    DataManagerScript.arenaType = Random.Range(0, numberOfArenas);
+                    IncreasePlayCount(0); // log which arena
 
-                    } else {
+                } else {
 
-                        // Set and log chosen arena type
-                        Debug.Log("selected index is");
-                        Debug.Log(selectedIndex);
-                        DataManagerScript.arenaType = selectedIndex;
-                        IncreasePlayCount(selectedIndex); // log which arena
+                    // Set and log chosen arena type
+                    Debug.Log("selected index is");
+                    Debug.Log(selectedIndex);
+                    DataManagerScript.arenaType = selectedIndex;
+                    IncreasePlayCount(selectedIndex); // log which arena
 
-                    }
+                }
 
-                    // Start fade to next scene
-                    StartCoroutine("NextScene");
-                } else if (player.GetButtonDown("Grav"))
-            {
+                // Start fade to next scene
+                SoundManagerScript.instance.PlaySingle(nextSceneSound);
+                StartCoroutine("NextScene");
+
+            } else if (player.GetButtonDown("Grav")) {
+                SoundManagerScript.instance.PlaySingle(prevSceneSound);
                 StartCoroutine("PrevScene");
             }
 

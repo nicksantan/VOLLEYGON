@@ -12,6 +12,9 @@ public class PauseManagerScript : MonoBehaviour
     public GameObject pausePanel;
     public EventSystem es;
     private Player player;
+    
+    public AudioClip unpauseSound;
+    public AudioClip pauseSound;
 
     void Start()
     {
@@ -43,13 +46,18 @@ public class PauseManagerScript : MonoBehaviour
             // Reset menu
             es.SetSelectedGameObject(null);
             es.SetSelectedGameObject(es.firstSelectedGameObject);
+
+            // SFX
             MusicManagerScript.Instance.TurnOffEverything();
-            SoundManagerScript.instance.muteSFX();
+            SoundManagerScript.instance.PlaySingle(pauseSound);
+            // SoundManagerScript.instance.muteSFX();
             //TODO: Move the ball's SFX to sound manager script. Also, will this work with multiple balls? Maybe broadcast pause to everything?
             GameObject ball = GameObject.FindWithTag("Ball");
             if (ball != null) { 
             ball.GetComponent<BallScript>().Pause();
             }
+
+            // Pause time
             Time.timeScale = 0;
             paused = true;
         }
@@ -59,6 +67,7 @@ public class PauseManagerScript : MonoBehaviour
     {
         StartCoroutine("UnpauseAndQuitRoutine");
     }
+
     public IEnumerator UnpauseAndQuitRoutine()
     {
         Unpause();
@@ -82,14 +91,18 @@ public class PauseManagerScript : MonoBehaviour
             paused = false;
             pausePanel.SetActive(false);
             recentlyPaused = true;
+
+            // SFX
+            // SoundManagerScript.instance.unMuteSFX();
             MusicManagerScript.Instance.RestoreFromPause();
             //TODO: Move the ball's SFX to sound manager script
-            SoundManagerScript.instance.unMuteSFX();
-            GameObject ball = GameObject.FindWithTag("Ball");
+            GameObject ball = GameObject.FindWithTag("Ball"); 
             if (ball != null)
             {
                 ball.GetComponent<BallScript>().UnPause();
             }
+			SoundManagerScript.instance.PlaySingle(unpauseSound);
+
             Invoke("CancelRecentlyPaused", 0.1f);
         }
     }

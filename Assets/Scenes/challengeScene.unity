@@ -3806,6 +3806,8 @@ MonoBehaviour:
   recentlyPaused: 0
   pausePanel: {fileID: 800938651}
   es: {fileID: 452662710}
+  unpauseSound: {fileID: 8300000, guid: f8418c91001c34f2488e62cbfd8a5c58, type: 3}
+  pauseSound: {fileID: 8300000, guid: 91668d08d748a4314b28d5ba4db24e66, type: 3}
 --- !u!1 &690586221
 GameObject:
   m_ObjectHideFlags: 0
@@ -7364,11 +7366,11 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 11400000, guid: 5e9ff7a88a5c9f2438a785c0e9349807, type: 3}
       propertyPath: timestampHigh
-      value: 30861453
+      value: 30865426
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 5e9ff7a88a5c9f2438a785c0e9349807, type: 3}
       propertyPath: timestampLow
-      value: -833349370
+      value: 1802385007
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 5e9ff7a88a5c9f2438a785c0e9349807, type: 3}
       propertyPath: m_size.x
@@ -11428,7 +11430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 220.53752
+  Phase: 220.62585
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5
@@ -11466,7 +11468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 22fe62a5d4de91a4995c1363cbc2492e, type: 3}
   Mode: 1
-  Timer: 40.408337
+  Timer: 40.691
   Speed: 0.8
   Frequency: 12
   Amplitude: 0

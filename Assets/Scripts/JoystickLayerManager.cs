@@ -58,7 +58,7 @@ public class JoystickLayerManager : MonoBehaviour
 
 
     // Rumble methods
-    public void ActivateLargeRumble(int playerIndex, float duration) // Note: this goes from 0 through 3.
+    public void ActivateLargeRumble(int playerIndex, float duration) // Note: playerIndex goes from 0 through 3.
     {
         if (FileSystemLayer.Instance.vibrationOn == 1)
         {

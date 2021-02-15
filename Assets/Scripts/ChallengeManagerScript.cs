@@ -167,7 +167,11 @@ public class ChallengeManagerScript : MonoBehaviour
     {
         challengeTitle.GetComponent<Text>().text = newText;
         // TODO: Make a helper function to format the challenge number string
-        challengeNumber.GetComponent<Text>().text = "CHALLENGE 0" + (DataManagerScript.challengeType + 1);
+        int value = DataManagerScript.challengeType + 1;
+        int paddedLength = 3;
+        int decimalLength = paddedLength - value.ToString("D").Length;
+        string paddedString = value.ToString("D" + decimalLength.ToString());
+        challengeNumber.GetComponent<Text>().text = "CHALLENGE " + paddedString;
     }
 
     private void SwitchToChallenge(int whichChallenge)

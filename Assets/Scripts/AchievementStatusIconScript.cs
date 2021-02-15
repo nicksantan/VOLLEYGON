@@ -17,13 +17,12 @@ public class AchievementStatusIconScript : MonoBehaviour, IDeselectHandler
     private EventSystem es;
     public Text a_title;
     public Text a_desc;
-	private AudioSource selectSound;
+
+	public AudioClip selectSound;
 
     // Start is called before the first frame update
     void Start()
     {
-		selectSound = GetComponent<AudioSource>();
-
         // Look up the appropriate icon for this achievement
         activeSprite = AchievementManagerScript.Instance.icons[achievementID];
         // Assign it to bg.
@@ -72,6 +71,6 @@ public class AchievementStatusIconScript : MonoBehaviour, IDeselectHandler
     }
 
 	public void OnDeselect(BaseEventData eventData){
-		if (selectSound) selectSound.Play(); // play on deselect to avoid initial selection
+		SoundManagerScript.instance.PlaySingle(selectSound);
 	}
 }

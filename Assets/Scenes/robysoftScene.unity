@@ -228,7 +228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 0.505
+  Phase: 0.6766666
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5
@@ -448,7 +448,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nextScene: titleScene
   sceneDuration: 5
-  isSkippable: 0
+  isSkippable: 1
 --- !u!4 &677127947
 Transform:
   m_ObjectHideFlags: 0

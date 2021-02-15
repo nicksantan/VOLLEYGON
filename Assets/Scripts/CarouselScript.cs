@@ -116,7 +116,6 @@ public class CarouselScript : MonoBehaviour {
 	void Select(int index, bool playSfx = true) {
 		// Play sfx
 		if (playSfx) {
-			Debug.Log("playing");
 			SoundManagerScript.instance.PlaySingle(selectSound);
 		}
 

@@ -4,30 +4,54 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ChangeButtonTextColorScript : MonoBehaviour, ISelectHandler, IDeselectHandler
+public class ChangeButtonTextColorScript : MonoBehaviour, ISelectHandler, IDeselectHandler, IUpdateSelectedHandler
 {
 	public Text t;
-	private AudioSource selectSound;
+	public AudioClip selectSound;
+	
+	public Color highlightColor = new Color(1f, 0.87f, 0.33f, 1f);
+	public Color defaultColor = Color.white;
+	
+	public GameObject highlight;
+
+	void Start()
+	{
+		highlight = GameObject.Find("Highlight");
+	}
 
 	public void ChangeColor(Color whichColor)
 	{
 		t.color = whichColor;
 	}
-//
-    void Start()
-    { 
-		selectSound = GetComponent<AudioSource>();
+
+    public void Unhighlight()
+    {
+        ChangeColor(defaultColor);
+		if (highlight) {
+			highlight.transform.position = new Vector3(-1000f, -1000f, 0);
+		}
     }
 
-    public void ChangeToWhite()
+    public void Highlight()
     {
-        ChangeColor(Color.white);
+        ChangeColor(highlightColor);
+		if (highlight != null && highlight.transform.position.y != transform.position.y) {
+			highlight.transform.position = transform.position;
+		}
     }
-	public void OnDeselect(BaseEventData eventData){
-		if (selectSound) selectSound.Play(); // play on deselect to avoid initial selection
-		ChangeColor (Color.white);
-	}
+		
 	public void OnSelect(BaseEventData eventData){
-		ChangeColor (Color.yellow);
+		Highlight();
+	}
+
+	public void OnDeselect(BaseEventData eventData){
+        SoundManagerScript.instance.PlaySingle(selectSound); // play on deselect so so don't play on first mount
+		Unhighlight();
+	}
+
+	public void OnUpdateSelected(BaseEventData eventData) {
+		if (eventData.selectedObject == gameObject) {
+			Highlight();
+		}
 	}
 }

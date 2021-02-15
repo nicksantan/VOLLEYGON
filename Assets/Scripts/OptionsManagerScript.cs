@@ -73,7 +73,7 @@ public class OptionsManagerScript : MonoBehaviour
 	void Update()
 	{
 		// Check for selection to enable selectable option
-		bool inputSelecting = player.GetButtonDown("Jump");
+		bool inputSelecting = (player != null) && player.GetButtonDown("Jump");
 		bool optionIsSelectable = OptionsManagerScript.CheckSelectableOptionIndex(selectedIndex);
         // special case for how-to video
         // TODO: This is stupid.

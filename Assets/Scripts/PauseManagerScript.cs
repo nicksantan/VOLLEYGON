@@ -15,10 +15,12 @@ public class PauseManagerScript : MonoBehaviour
     
     public AudioClip unpauseSound;
     public AudioClip pauseSound;
+    
+	public GameObject highlight;
 
     void Start()
     {
-        
+		highlight = GameObject.Find("Highlight");
     }
 
    
@@ -91,6 +93,11 @@ public class PauseManagerScript : MonoBehaviour
             paused = false;
             pausePanel.SetActive(false);
             recentlyPaused = true;
+
+            Debug.Log(highlight);
+            if (highlight) {
+                highlight.transform.position = new Vector3(-1000f, -1000f, 0);
+            }
 
             // SFX
             // SoundManagerScript.instance.unMuteSFX();

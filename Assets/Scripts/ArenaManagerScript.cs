@@ -47,8 +47,6 @@ public class ArenaManagerScript : MonoBehaviour {
 
     public CarouselScript carousel;
 
-    private new AudioSource audio;
-
     private Player player;
 
     vAxis va1;
@@ -85,10 +83,6 @@ public class ArenaManagerScript : MonoBehaviour {
     {
 
         player = ReInput.players.GetPlayer(DataManagerScript.gamepadControllingMenus);
-        audio = GetComponent<AudioSource>();
-        float sfxVolume = FileSystemLayer.Instance.sfxVolume;
-        float masterVolume = PlayerPrefs.HasKey("masterVolume") ? PlayerPrefs.GetFloat("masterVolume") : 10f;
-        audio.volume = audio.volume * masterVolume / 10f * sfxVolume / 10f;
         locked = false;
 
         Vector3 tempPos = new Vector3(markerXPositions[0], markerYPositions[0], 1f);
@@ -119,7 +113,7 @@ public class ArenaManagerScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (!locked && es.currentSelectedGameObject) {
+        if (!locked && es != null && es.currentSelectedGameObject) {
 			int selectedIndex = es.currentSelectedGameObject.transform.GetSiblingIndex();
      
             //foreach (string butt in buttons) {

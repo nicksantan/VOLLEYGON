@@ -571,6 +571,14 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public void TinyRumblePulse(){
+         // This joystick - 1 shit has got to go.
+        if (JoystickLayerManager.Instance != null && !isAI)
+        {
+            JoystickLayerManager.Instance.SmallRumblePulse(joystick - 1, .15f);
+        }
+    }
+
     public void StartTinyRumble()
     {
         Debug.Log("Starting tiny rumble");
@@ -658,7 +666,10 @@ public class PlayerController : MonoBehaviour {
             // update the ball's touch information
             coll.gameObject.GetComponent<BallScript>().secondToLastTouch = coll.gameObject.GetComponent<BallScript>().lastTouch;
             coll.gameObject.GetComponent<BallScript>().lastTouch = playerID;
-
+            
+            // Send a tiny rumble
+            TinyRumblePulse();
+            
             if (GameObject.FindWithTag("StatsModule"))
             {
                 GameObject.FindWithTag("StatsModule").GetComponent<StatsModuleScript>().secondToLastTouch = coll.gameObject.GetComponent<BallScript>().lastTouch;

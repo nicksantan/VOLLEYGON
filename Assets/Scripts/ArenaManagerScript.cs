@@ -41,12 +41,11 @@ public class ArenaManagerScript : MonoBehaviour {
     private bool axis4InUse = false;
     private int numberOfArenas = 9;
     private bool locked = false;
-    public AudioClip tickUp;
-    public AudioClip tickDown;
+
+    public AudioClip nextSceneSound;
+    public AudioClip prevSceneSound;
 
     public CarouselScript carousel;
-
-    private new AudioSource audio;
 
     private Player player;
 
@@ -84,10 +83,6 @@ public class ArenaManagerScript : MonoBehaviour {
     {
 
         player = ReInput.players.GetPlayer(DataManagerScript.gamepadControllingMenus);
-        audio = GetComponent<AudioSource>();
-        float sfxVolume = FileSystemLayer.Instance.sfxVolume;
-        float masterVolume = PlayerPrefs.HasKey("masterVolume") ? PlayerPrefs.GetFloat("masterVolume") : 10f;
-        audio.volume = audio.volume * masterVolume / 10f * sfxVolume / 10f;
         locked = false;
 
         Vector3 tempPos = new Vector3(markerXPositions[0], markerYPositions[0], 1f);
@@ -118,32 +113,34 @@ public class ArenaManagerScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (!locked && es.currentSelectedGameObject) {
+        if (!locked && es != null && es.currentSelectedGameObject) {
 			int selectedIndex = es.currentSelectedGameObject.transform.GetSiblingIndex();
      
             //foreach (string butt in buttons) {
             if (player.GetButtonDown("Jump")) {
 
-                    if (selectedIndex == 0) {
+                if (selectedIndex == 0) {
 
-                        // Get and log random arena type
-                        DataManagerScript.arenaType = Random.Range(0, numberOfArenas);
-                        IncreasePlayCount(0); // log which arena
+                    // Get and log random arena type
+                    DataManagerScript.arenaType = Random.Range(0, numberOfArenas);
+                    IncreasePlayCount(0); // log which arena
 
-                    } else {
+                } else {
 
-                        // Set and log chosen arena type
-                        Debug.Log("selected index is");
-                        Debug.Log(selectedIndex);
-                        DataManagerScript.arenaType = selectedIndex;
-                        IncreasePlayCount(selectedIndex); // log which arena
+                    // Set and log chosen arena type
+                    Debug.Log("selected index is");
+                    Debug.Log(selectedIndex);
+                    DataManagerScript.arenaType = selectedIndex;
+                    IncreasePlayCount(selectedIndex); // log which arena
 
-                    }
+                }
 
-                    // Start fade to next scene
-                    StartCoroutine("NextScene");
-                } else if (player.GetButtonDown("Grav"))
-            {
+                // Start fade to next scene
+                SoundManagerScript.instance.PlaySingle(nextSceneSound);
+                StartCoroutine("NextScene");
+
+            } else if (player.GetButtonDown("Grav")) {
+                SoundManagerScript.instance.PlaySingle(prevSceneSound);
                 StartCoroutine("PrevScene");
             }
 

@@ -28,6 +28,9 @@ public class ChallengeCarouselScript : MonoBehaviour
     private int selectedIndex = 0;
     private bool optionIsOpen = false;
 
+    public AudioClip nextSceneSound;
+    public AudioClip prevSceneSound;
+
     private EventSystem es;
 
     static private int[] validIndexes = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -72,7 +75,6 @@ public class ChallengeCarouselScript : MonoBehaviour
             if (selectedIndex != selectedSlideIndex)
             {
                 ShowOption(selectedSlideIndex);
-
             }
         }
 
@@ -87,9 +89,10 @@ public class ChallengeCarouselScript : MonoBehaviour
             }
             breadcrumb.SetActive(true);
      
-      
-               // Go to previous scene
-                SceneManager.LoadSceneAsync("titleScene");
+    
+            // Go to previous scene
+            SoundManagerScript.instance.PlaySingle(prevSceneSound);
+            SceneManager.LoadSceneAsync("titleScene");
 
         }
 
@@ -109,8 +112,9 @@ public class ChallengeCarouselScript : MonoBehaviour
             SelectShownOption();
             optionIsOpen = true;
         }
-            // Disable carousel when we have an option open
-            es.enabled = !optionIsOpen;
+
+        // Disable carousel when we have an option open
+        es.enabled = !optionIsOpen;
         if (es.enabled)
         {
             // Reset selected item on re-enable
@@ -149,6 +153,7 @@ public class ChallengeCarouselScript : MonoBehaviour
         Transform selectedOption = options.transform.GetChild(selectedIndex);
         // Set chosen challenge
         DataManagerScript.challengeType = selectedIndex;
+        SoundManagerScript.instance.PlaySingle(nextSceneSound);
         StartCoroutine("NextScene");
     }
 

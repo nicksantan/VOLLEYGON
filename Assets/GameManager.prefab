@@ -95,11 +95,13 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  TrainingMode: 0
   CurrentArena: {fileID: 0}
   startButton1: Start_P1
   startButton2: Start_P2
   startButton3: Start_P3
   startButton4: Start_P4
+  AIControllerPrefab: {fileID: 0}
   es: {fileID: 0}
 --- !u!114 &3999124773001654004
 MonoBehaviour:
@@ -134,3 +136,5 @@ MonoBehaviour:
   recentlyPaused: 0
   pausePanel: {fileID: 0}
   es: {fileID: 0}
+  unpauseSound: {fileID: 8300000, guid: f8418c91001c34f2488e62cbfd8a5c58, type: 3}
+  pauseSound: {fileID: 8300000, guid: 91668d08d748a4314b28d5ba4db24e66, type: 3}

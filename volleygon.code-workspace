@@ -1,0 +1,18 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "git.ignoreMissingGitWarning": true,
+    "files.exclude": {
+      "**/*.meta": true,
+      "**/*.meta~console": true,
+      "**/*.cs~console": true,
+      "**/*.prefab": true,
+      "Temp": true,
+      "Library": true
+    }
+  }
+}

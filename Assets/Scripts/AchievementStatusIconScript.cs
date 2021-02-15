@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class AchievementStatusIconScript : MonoBehaviour
+public class AchievementStatusIconScript : MonoBehaviour, IDeselectHandler
 {
     public int achievementID;
     public bool status = false;
@@ -18,11 +18,11 @@ public class AchievementStatusIconScript : MonoBehaviour
     public Text a_title;
     public Text a_desc;
 
+	public AudioClip selectSound;
 
     // Start is called before the first frame update
     void Start()
     {
-
         // Look up the appropriate icon for this achievement
         activeSprite = AchievementManagerScript.Instance.icons[achievementID];
         // Assign it to bg.
@@ -69,4 +69,8 @@ public class AchievementStatusIconScript : MonoBehaviour
             }
         }
     }
+
+	public void OnDeselect(BaseEventData eventData){
+		SoundManagerScript.instance.PlaySingle(selectSound);
+	}
 }

@@ -1139,6 +1139,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vibrationOn: 1
   protipsOn: 1
+  sfxVolume: 10
+  masterVolume: 10
+  musicVolume: 10
+  soloRallyModeHighScore: 0
+  bestTimes: []
+  arenaPlays: 
+  playerPlays: 
 --- !u!4 &938260323
 Transform:
   m_ObjectHideFlags: 0
@@ -2039,6 +2046,66 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
+        type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[19]._actionId
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
+        type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[21]._actionId
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
+        type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[21]._axisContribution
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
+        type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[20]._actionId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
+        type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[22]._actionId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
+        type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[22]._axisContribution
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
+        type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[1].actionElementMaps.Array.data[17]._actionId
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
+        type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[1].actionElementMaps.Array.data[18]._actionId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
+        type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[1].actionElementMaps.Array.data[19]._actionId
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
+        type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[1].actionElementMaps.Array.data[19]._axisContribution
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
+        type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[1].actionElementMaps.Array.data[20]._actionId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
+        type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[1].actionElementMaps.Array.data[20]._axisContribution
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6189489873529385675, guid: f7415e22e4247c24592fdbb8dc67617a,
         type: 3}
       propertyPath: m_Name

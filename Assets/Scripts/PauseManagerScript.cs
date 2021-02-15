@@ -70,6 +70,19 @@ public class PauseManagerScript : MonoBehaviour
         StartCoroutine("UnpauseAndQuitRoutine");
     }
 
+    public void UnpauseAndRestartChallenge()
+    {
+        StartCoroutine("UnpauseAndRestartChallengeRoutine");
+    }
+       
+    public IEnumerator UnpauseAndRestartChallengeRoutine()
+    {
+        Unpause();
+        GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadSceneAsync("challengeScene");
+    }
+
     public IEnumerator UnpauseAndQuitRoutine()
     {
         Unpause();

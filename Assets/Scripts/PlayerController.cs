@@ -558,7 +558,7 @@ public class PlayerController : MonoBehaviour {
         // This joystick - 1 shit has got to go.
         if (JoystickLayerManager.Instance != null && !isAI)
         {
-            JoystickLayerManager.Instance.ActivateLargeRumble(joystick - 1, 3f);
+            JoystickLayerManager.Instance.ActivateLargeRumble(joystick - 1, 2f);
         }
     }
 

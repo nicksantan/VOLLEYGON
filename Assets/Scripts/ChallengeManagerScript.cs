@@ -321,36 +321,32 @@ public class ChallengeManagerScript : MonoBehaviour
         GameObject ICM = GameObject.FindWithTag("IndividualChallengeManager");
         if (ICM)
         {
+
+            // First, set medal to current info
+            float previousTime = ICM.GetComponent<SaveChallengeTimeScript>().challengeTime;
+            DisplayMedal(winMedal, previousTime);
+
+
+
             ChallengeResult theResults = ICM.GetComponent<SaveChallengeTimeScript>().CompareTimes(rawTimer);
             Debug.Log("Checking time " + rawTimer + " against best time");
             bestTimeWinText.GetComponent<Text>().text = "BEST TIME: " + FormatTime(theResults.challengeTime);
+
             if (theResults.wasBestTime)
             {
                 newText.SetActive(true);
                 // Nudge over the whole text object slightly
                 newText.transform.parent.parent.GetComponent<RectTransform>().localPosition = new Vector3(50f, 257.3f, 0f);
-            }
 
-            MedalProvider mp = new MedalProvider(theResults.challengeTime, currentChallenge);
-            medalTypes whichMedal = mp.GetMedal();
-            switch (whichMedal)
-            {
-                case medalTypes.none:
-                    winMedal.GetComponent<Image>().sprite = noMedalImage;
-                    break;
-                case medalTypes.bronze:
-                    winMedal.GetComponent<Image>().sprite = bronzeMedalImage;
-                    break;
-                case medalTypes.silver:
-                    winMedal.GetComponent<Image>().sprite = silverMedalImage;
-                    break;
-                case medalTypes.gold:
-                    winMedal.GetComponent<Image>().sprite = goldMedalImage;
-                    break;
+                // If new Medal, wait a moment and then fire flash and play sfx before displaying new medal
+                if (CompareMedals(previousTime, theResults.challengeTime) == false)
+                {
+                    StartCoroutine(DelayedMedalDisplay(theResults.challengeTime));
+                }
             }
 
             // Nudge over medal based on length of best time message.
-            Invoke("NudgeWinMedal", .25f);
+            NudgeWinMedal();
 
         }
         else
@@ -361,6 +357,53 @@ public class ChallengeManagerScript : MonoBehaviour
         //Invoke("PlayNextChallenge", 5f);
 
 
+    }
+
+    IEnumerator DelayedMedalDisplay(float time)
+    {
+        yield return new WaitForSeconds(1f);
+        winMedal.BroadcastMessage("FlashIn");
+        yield return new WaitForSeconds(.25f);
+        DisplayMedal(winMedal, time);
+    }
+
+    // Returns true if two medals are the same and false if there is a new medal.
+    bool CompareMedals(float oldTime, float newTime)
+    {
+        MedalProvider oldMedal = new MedalProvider(oldTime, currentChallenge);
+        MedalProvider newMedal = new MedalProvider(newTime, currentChallenge);
+
+        if (oldMedal.GetMedal() == newMedal.GetMedal())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }       
+    }
+
+    void DisplayMedal(GameObject whichSlot, float time)
+    {
+        MedalProvider mp = new MedalProvider(time, currentChallenge);
+        medalTypes whichMedal = mp.GetMedal();
+
+
+        switch (whichMedal)
+        {
+            case medalTypes.none:
+                whichSlot.GetComponent<Image>().sprite = noMedalImage;
+                break;
+            case medalTypes.bronze:
+                whichSlot.GetComponent<Image>().sprite = bronzeMedalImage;
+                break;
+            case medalTypes.silver:
+                whichSlot.GetComponent<Image>().sprite = silverMedalImage;
+                break;
+            case medalTypes.gold:
+                whichSlot.GetComponent<Image>().sprite = goldMedalImage;
+                break;
+        }
     }
 
     void NudgeWinMedal()

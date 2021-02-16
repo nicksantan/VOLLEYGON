@@ -231,28 +231,11 @@ public class ChallengeManagerScript : MonoBehaviour
             bestTimeLoseText.SetActive(true);
             bestTimeLoseText.GetComponent<Text>().text = "BEST TIME: " + FormatTime(bestTime);
 
-            MedalProvider mp = new MedalProvider(bestTime, currentChallenge);
-            medalTypes whichMedal = mp.GetMedal();
-            switch (whichMedal)
-            {
-                case medalTypes.none:
-                    loseMedal.GetComponent<Image>().sprite = noMedalImage;
-                    break;
-                case medalTypes.bronze:
-                    loseMedal.GetComponent<Image>().sprite = bronzeMedalImage;
-                    break;
-                case medalTypes.silver:
-                    loseMedal.GetComponent<Image>().sprite = silverMedalImage;
-                    break;
-                case medalTypes.gold:
-                    loseMedal.GetComponent<Image>().sprite = goldMedalImage;
-                    break;
-            }
+            DisplayMedal(loseMedal, bestTime);
+
             // Nudge over medal based on length of best time message. Provide a little delay because I think this is not running in time sometimes.
-            Invoke("NudgeLoseMedal", .25f);
+            NudgeLoseMedal();
         }
-        //For now, restart the challenge
-        //   Invoke("RestartChallenge", 5f);
     }
 
     public void NudgeLoseMedal()

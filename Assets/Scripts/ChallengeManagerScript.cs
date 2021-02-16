@@ -346,7 +346,7 @@ public class ChallengeManagerScript : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         winMedal.BroadcastMessage("FlashIn");
-        yield return new WaitForSeconds(.25f);
+        yield return new WaitForSeconds(.75f);
         DisplayMedal(winMedal, time);
     }
 
@@ -411,7 +411,7 @@ public class ChallengeManagerScript : MonoBehaviour
                 totalSmallChars++;
             }
 
-            if (letter.ToString() == "8" || letter.ToString() == "7" || letter.ToString() == "6" || letter.ToString() == "3" || letter.ToString() == "2")
+            if (letter.ToString() == "8" || letter.ToString() == "6" || letter.ToString() == "2") // 3 and 7 were included here.
             {
                 totalMedChars++;
             }

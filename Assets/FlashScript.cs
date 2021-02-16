@@ -7,22 +7,30 @@ public class FlashScript : MonoBehaviour
 {
 
     private RectTransform rt;
+    public AudioClip sfx;
+    public AudioClip wooshSfx;
+    public GameObject flashOut;
+
     // Start is called before the first frame update
     void Start()
     {
         rt = GetComponent<Image>().GetComponent<RectTransform>();
-       // FlashIn();
+       
     }
 
     public void FlashIn()
     {
         rt = GetComponent<Image>().GetComponent<RectTransform>();
         Debug.Log("flashing in");
-        LeanTween.alpha(rt, 1f, .1f).setEaseInCubic().setOnComplete(FlashOut);
+        SoundManagerScript.instance.PlaySingle(wooshSfx);
+        LeanTween.alpha(rt, 1f, .75f).setEaseInCubic().setOnComplete(FlashOut);
+        LeanTween.scale(rt.gameObject, new Vector3(.125f,.125f, 1f), .75f);
     }
 
     public void FlashOut()
     {
-        LeanTween.alpha(rt, 0f, 3f).setEaseInCubic();
+        SoundManagerScript.instance.PlaySingle(sfx);
+        flashOut.SetActive(true);
+        LeanTween.alpha(rt, 0f, 1.5f).setEaseInCubic();
     }
 }

@@ -549,7 +549,7 @@ public class BallScript : MonoBehaviour {
                 rb.AddForce(new Vector3(0f, bonusBoost/2, 0f));
          //       Debug.Log("bonus boost");
             }
-            if (transform.position.y > -7.0f)
+            if (transform.position.y > 7.0f)
             {
                 rb.AddForce(new Vector3(0f, bonusBoost * -1/2, 0f));
          //       Debug.Log("bonus boost");

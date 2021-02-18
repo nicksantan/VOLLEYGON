@@ -517,9 +517,31 @@ public class ChoosePlayerScript : MonoBehaviour {
 			SceneManager.LoadSceneAsync ("titleScene");
 		}
 	}
+    
+    void HideNonTaggedInPlayers()
+    {
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (!gamepadIcons[i].GetComponent<GamepadController>().enabled)
+            {
+                gamepadIcons[i].GetComponent<GamepadController>().HideIcon();
+            }
+        }
+    }
 
-	// Update is called once per frame
-	void Update () {
+    public void ShowNonTaggedInPlayers()
+    {
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (!gamepadIcons[i].GetComponent<GamepadController>().enabled)
+            {
+                gamepadIcons[i].GetComponent<GamepadController>().ShowIcon();
+            }
+        }
+    }
+
+    // Update is called once per frame
+    void Update () {
 		// Look for start button presses
 		for (int i = 0; i < players.Length; i++) {
 			int slotId = i + 1;
@@ -546,6 +568,10 @@ public class ChoosePlayerScript : MonoBehaviour {
                     {
                         if (numberOfTaggedInPlayers() < 2)
                         {
+                            if (numberOfTaggedInPlayers() == 1)
+                            {
+                                HideNonTaggedInPlayers(); 
+                            }
                             gamepadIcons[i].GetComponent<GamepadController>().ToggleIcon(true);
                         }
                     }

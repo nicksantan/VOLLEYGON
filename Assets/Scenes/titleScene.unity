@@ -4133,7 +4133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 438.23404
+  Phase: 440.33414
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5
@@ -5864,31 +5864,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UiHighlightCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 4606404485584477639, guid: 9e384769ba3782f44ab79b8ad45be74b,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4606404485584477639, guid: 9e384769ba3782f44ab79b8ad45be74b,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4606404485584477639, guid: 9e384769ba3782f44ab79b8ad45be74b,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 4606404485584477639, guid: 9e384769ba3782f44ab79b8ad45be74b,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 6050558938489661672, guid: 9e384769ba3782f44ab79b8ad45be74b,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e384769ba3782f44ab79b8ad45be74b, type: 3}

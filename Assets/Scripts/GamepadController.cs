@@ -97,6 +97,10 @@ public class GamepadController : MonoBehaviour {
         if (player.GetButtonDown("Grav")) {
         	if (!slotSelected) {
         		ToggleIcon(false);
+                if (botMode)
+                {
+                    ChoosePlayerScript.Instance.ShowNonTaggedInPlayers();
+                }
         	} else if (!playerReady) {
                 ToggleIcon(true);
                 unselectSlotForJoystick();
@@ -110,6 +114,13 @@ public class GamepadController : MonoBehaviour {
         if (playerText) prompt.SetActive(false);
         if (prompt) playerText.SetActive(false);
         if (outline) outline.SetActive(false);
+    }
+
+    public void ShowIcon()
+    {
+        if (icon) icon.SetActive(true);
+        if (prompt) prompt.SetActive(true);
+        if (outline) outline.SetActive(true);
     }
 
     public void ToggleIcon(bool turnOn)

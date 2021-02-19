@@ -65,7 +65,8 @@ public class TitleManagerScript : MonoBehaviour {
 
     void Start() {
         curtain.SetActive(true);
-        curtain.GetComponent<NewFadeScript>().Fade(0f);
+        //curtain.GetComponent<NewFadeScript>().Fade(0f);
+        LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 0f, .5f);
         DataManagerScript.whichTeamWon = 0;
         MusicManagerScript.Instance.FadeOutEverything();
         versionText.text = DataManagerScript.version;
@@ -318,7 +319,8 @@ public class TitleManagerScript : MonoBehaviour {
         //TODO: This should be a different scene, specifically for choosing ONE shape. For now, just start the game with Square
         DataManagerScript.isSinglePlayerMode = true;
         DataManagerScript.isBotsMode = false;
-        SceneManager.LoadSceneAsync("soloGameScene");
+        LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("soloGameScene"); });
+    
     }
 
     public void StartMultiplayerGame()
@@ -326,7 +328,11 @@ public class TitleManagerScript : MonoBehaviour {
         SoundManagerScript.instance.PlaySingle(startSound);
         DataManagerScript.isSinglePlayerMode = false;
         DataManagerScript.isBotsMode = false;
-        SceneManager.LoadSceneAsync ("ChoosePlayerScene");
+
+        LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("ChoosePlayerScene"); });
+        
+      //  curtain..GetComponentInChildren<Image>();
+       // SceneManager.LoadSceneAsync ("ChoosePlayerScene");
 	}
     public void StartOneBotGame()
     {
@@ -334,7 +340,7 @@ public class TitleManagerScript : MonoBehaviour {
         DataManagerScript.isSinglePlayerMode = false;
         DataManagerScript.isBotsMode = true;
         DataManagerScript.numBots = 1;
-        SceneManager.LoadSceneAsync("ChoosePlayerScene");
+        LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("ChoosePlayerScene"); });
     }
     public void StartTwoBotGame()
     {
@@ -342,7 +348,7 @@ public class TitleManagerScript : MonoBehaviour {
         DataManagerScript.isSinglePlayerMode = false;
         DataManagerScript.isBotsMode = true;
         DataManagerScript.numBots = 2;
-        SceneManager.LoadSceneAsync("ChoosePlayerScene");
+        LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("ChoosePlayerScene"); });
     }
     public void StartChallengesGame()
     {
@@ -350,12 +356,12 @@ public class TitleManagerScript : MonoBehaviour {
         DataManagerScript.isSinglePlayerMode = false;
         DataManagerScript.isChallengeMode = true;
         DataManagerScript.isBotsMode = false;
-        SceneManager.LoadSceneAsync ("ChooseChallengeScene");
+        LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("ChooseChallengeScene"); });
 
-	}
+    }
 	public void StartOptionsMenu()
     {
         SoundManagerScript.instance.PlaySingle(startSound);
-		SceneManager.LoadSceneAsync ("OptionsScene");
+		LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("OptionsScene"); });
 	}
 }

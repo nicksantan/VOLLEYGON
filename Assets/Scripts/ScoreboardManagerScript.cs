@@ -200,7 +200,7 @@ public class ScoreboardManagerScript : MonoBehaviour {
                     // 1 vs. 2 achievement (multiplayer)
                     if (((DataManagerScript.playerOnePlaying && !DataManagerScript.playerTwoPlaying) || (DataManagerScript.playerTwoPlaying && !DataManagerScript.playerOnePlaying)) && (DataManagerScript.playerThreePlaying && DataManagerScript.playerFourPlaying))
                     {
-                        if (!DataManagerScript.isBotsMode)
+                        if (!DataManagerScript.isBotsMode && !DataManagerScript.isChallengeMode)
                         {
                             AchievementManagerScript.Instance.Achievements[5].Unlock();
                         }
@@ -220,7 +220,7 @@ public class ScoreboardManagerScript : MonoBehaviour {
                 {
                     if (((DataManagerScript.playerThreePlaying && !DataManagerScript.playerFourPlaying) || (DataManagerScript.playerFourPlaying && !DataManagerScript.playerThreePlaying)) && (DataManagerScript.playerOnePlaying && DataManagerScript.playerTwoPlaying))
                     {
-                        if (!DataManagerScript.isBotsMode)
+                        if (!DataManagerScript.isBotsMode && !DataManagerScript.isChallengeMode)
                         {
                             AchievementManagerScript.Instance.Achievements[5].Unlock();
                         }

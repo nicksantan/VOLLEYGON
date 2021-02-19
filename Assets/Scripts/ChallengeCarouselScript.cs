@@ -58,6 +58,92 @@ public class ChallengeCarouselScript : MonoBehaviour
         {
             ShowOption(0);
         }
+
+        if (AchievementManagerScript.Instance != null)
+        {
+
+            // Report progress to achievement manager
+            AchievementManagerScript.Instance.LogMedalProgress(HowManyMedals(), HowManyGoldMedals());
+            Debug.Log("counting medals");
+            if (IsAllMedals())
+            {
+                AchievementManagerScript.Instance.Achievements[8].Unlock();
+            }
+            if (IsAllGoldMedals())
+            {
+                AchievementManagerScript.Instance.Achievements[7].Unlock();
+            }
+        }
+    
+}
+
+    public bool IsAllMedals()
+    {
+        Debug.Log("running all medals");
+        for (int i = 1; i < 11; i++)
+        {
+            float bestTime = FileSystemLayer.Instance.GetChallengeTime(i);
+            MedalProvider mp = new MedalProvider(bestTime, i-1);
+            medalTypes whichMedal = mp.GetMedal();
+            Debug.Log("medal?");
+            Debug.Log(whichMedal);
+            if (whichMedal == medalTypes.none)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public bool IsAllGoldMedals()
+    {
+
+        for (int i = 1; i < 11; i++)
+        {
+            float bestTime = FileSystemLayer.Instance.GetChallengeTime(i);
+            MedalProvider mp = new MedalProvider(bestTime, i-1);
+            medalTypes whichMedal = mp.GetMedal();
+            if (whichMedal != medalTypes.gold)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public int HowManyMedals()
+    {
+        int howMany = 0;
+        for (int i = 1; i < 11; i++)
+        {
+            Debug.Log(i);
+            float bestTime = FileSystemLayer.Instance.GetChallengeTime(i);
+            MedalProvider mp = new MedalProvider(bestTime, i-1);
+            medalTypes whichMedal = mp.GetMedal();
+            if (whichMedal != medalTypes.none)
+            {
+                howMany++;
+            }
+        }
+        return howMany;
+    }
+
+    public int HowManyGoldMedals()
+    {
+        int howMany = 0;
+        for (int i = 1; i < 11; i++)
+        {
+            float bestTime = FileSystemLayer.Instance.GetChallengeTime(i);
+            MedalProvider mp = new MedalProvider(bestTime, i-1);
+            medalTypes whichMedal = mp.GetMedal();
+            if (whichMedal == medalTypes.gold)
+            {
+                howMany++;
+            }
+        }
+        return howMany;
     }
 
     // Update is called once per frame

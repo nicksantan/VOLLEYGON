@@ -55,12 +55,14 @@ public class ChallengesManagerScript : MonoBehaviour {
         es.GetComponent<StandaloneInputModule>().submitButton = buttons.jump;
         es.GetComponent<StandaloneInputModule>().cancelButton = buttons.grav;
 
+        Debug.Log("Achievement manager?");
+        Debug.Log(AchievementManagerScript.Instance);
         if (AchievementManagerScript.Instance != null)
         {
 
             // Report progress to achievement manager
             AchievementManagerScript.Instance.LogMedalProgress(HowManyMedals(), HowManyGoldMedals());
-
+            Debug.Log("counting medals");
             if (IsAllMedals())
             {
                 AchievementManagerScript.Instance.Achievements[8].Unlock();
@@ -229,12 +231,14 @@ public class ChallengesManagerScript : MonoBehaviour {
 
     public bool IsAllMedals()
     {
-
+        Debug.Log("running all medals");
         for (int i = 0; i < 10; i++)
         {
             float bestTime = FileSystemLayer.Instance.GetChallengeTime(i);
             MedalProvider mp = new MedalProvider(bestTime, i);
             medalTypes whichMedal = mp.GetMedal();
+            Debug.Log("medal?");
+            Debug.Log(whichMedal);
             if (whichMedal == medalTypes.none)
             {
                 return false;

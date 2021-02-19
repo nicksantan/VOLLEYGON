@@ -280,8 +280,7 @@ public class PlayerController : MonoBehaviour {
             //buttons = new JoystickButtons(joystick);
 
             // Note, convert joystick number to player index requires -1.
-            Debug.Log("This ran");
-            Debug.Log(DataManagerScript.gamepadControllingMenus);
+          
             player = ReInput.players.GetPlayer(joystick - 1);
         } else
         {

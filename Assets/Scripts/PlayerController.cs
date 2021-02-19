@@ -792,10 +792,10 @@ public class PlayerController : MonoBehaviour {
 			pandemoniumTimer -= Time.deltaTime;
             if (Mathf.Sign(rb.gravityScale) > 0)
             {
-                pandemoniumCounter.GetComponent<TextMesh>().color = new Vector4(1f, 1f, 1f, .85f);
+                pandemoniumCounter.GetComponent<TextMesh>().color = new Vector4(0f, 0f, 0f, .85f);
             } else
             {
-                pandemoniumCounter.GetComponent<TextMesh>().color = new Vector4(0f, 0f, 0f, .85f);
+                pandemoniumCounter.GetComponent<TextMesh>().color = new Vector4(1f, 1f, 1f, .85f);
             }
 			
 			pandemoniumCounter.GetComponent<TextMesh> ().text = Mathf.Floor(pandemoniumTimer).ToString();

@@ -30,6 +30,7 @@ TagManager:
   - BestTimeLoseText
   - ButtSensor
   - PlayersContainer
+  - SoloManager
   layers:
   - Default
   - TransparentFX

@@ -35,7 +35,7 @@ public class LivesManagerScript : MonoBehaviour
         UpdateLives();
         if (lives < 0)
         {
-            // broadcast gameover to.... where? TODO: For challenges, broadcast to ICM. Otherwise, broadcast to GameManager
+            // If regular game, tell game manager game is over.
             GameObject.FindWithTag("GameManager").BroadcastMessage("GameOver");
         }
     }

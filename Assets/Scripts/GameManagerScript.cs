@@ -446,7 +446,14 @@ public class GameManagerScript : MonoBehaviour {
     {
         isGameOver = true;
         Debug.Log("Game Over message received by game manager");
-        Invoke("LaunchStatsScreen", 5f);
+        if (!OnePlayerMode)
+        {
+            Invoke("LaunchStatsScreen", 5f);
+        } else
+        {
+            GameObject.FindGameObjectWithTag("SoloManager").gameObject.GetComponent<SoloManagerScript>().TurnOnMenu();
+        }
+        
     }
 
 	void Update () {

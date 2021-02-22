@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Rewired;
 
@@ -81,6 +82,14 @@ public class PauseManagerScript : MonoBehaviour
         GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
         yield return new WaitForSeconds(0.5f);
         SceneManager.LoadSceneAsync("challengeScene");
+    }
+
+    //TODO: Replace IENumerator methods for fade curtain with leantween based methods
+
+    public void UnPauseAndQuitSoloMode()
+    {
+        Unpause();
+        LeanTween.alpha(GameObject.Find("FadeCurtainCanvas").GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("titleScene"); });
     }
 
     public IEnumerator UnpauseAndQuitRoutine()

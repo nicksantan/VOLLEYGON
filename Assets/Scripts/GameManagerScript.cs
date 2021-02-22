@@ -586,7 +586,9 @@ public class GameManagerScript : MonoBehaviour {
 
 		if (soloMode && ball.GetComponent<BallScript> ().lastXPos != 0) {
 			GameManagerScript.Instance.GetComponent<GameManagerScript>().rallyCount++;
-		}
+            DataManagerScript.rallyCount = rallyCount;
+
+        }
 
 	}
 	public void ReturnArenaToOriginalColor(){

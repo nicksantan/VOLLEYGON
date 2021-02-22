@@ -14,6 +14,11 @@ public class SoloManagerScript : MonoBehaviour
     public GameObject PlayAgainButton;
     public bool gameRunning = true;
     private GameObject curtain;
+    public GameObject rallyText;
+    public GameObject highScoreText;
+    public GameObject newText;
+    private bool isHighScore = false;
+    public GameObject primaryText;
 
     // Start is called before the first frame update
     void Start()
@@ -32,8 +37,28 @@ public class SoloManagerScript : MonoBehaviour
             es.SetSelectedGameObject(PlayAgainButton);
         }
         gameRunning = false;
+        rallyText.GetComponent<Text>().text = "YOUR SCORE: " + DataManagerScript.rallyCount.ToString();
+
+        // Determine if high score
+        DetermineIfHighScore();
     }
 
+    public void DetermineIfHighScore()
+    {
+        int highScore = FileSystemLayer.Instance.soloRallyModeHighScore;
+       
+        if (DataManagerScript.rallyCount > highScore)
+        {
+            FileSystemLayer.Instance.soloRallyModeHighScore = DataManagerScript.rallyCount;
+            FileSystemLayer.Instance.SavePref("soloRallyModeHighScore", DataManagerScript.rallyCount);
+            highScore = DataManagerScript.rallyCount;
+            isHighScore = true;
+            newText.SetActive(true);
+            primaryText.GetComponent<Text>().text = "WELL DONE!";
+
+        }
+        highScoreText.GetComponent<Text>().text = "HIGH SCORE: " + highScore;
+    }
     public void PlayAgain()
     {
         LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("soloGameScene"); });   

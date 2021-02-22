@@ -454,7 +454,7 @@ public class PlayerController : MonoBehaviour {
                 && GameManagerScript.Instance != null
                 && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused
                 && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().recentlyPaused
-                && (!challengeManager || challengeManager.challengeRunning) && isAI == false
+                && (!challengeManager || challengeManager.challengeRunning) && (!soloManager || soloManager.gameRunning) && isAI == false
               
                 )
             {

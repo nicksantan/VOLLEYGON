@@ -119,7 +119,8 @@ public class GameManagerScript : MonoBehaviour {
         // Fade in
         if (GameObject.Find("FadeCurtainCanvas"))
         {
-            GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(0f);
+            GameObject fc = GameObject.Find("FadeCurtainCanvas");
+            LeanTween.alpha(fc.GetComponentInChildren<Image>().rectTransform, 0f, .5f);
         }
 
         // Set up arena based on options

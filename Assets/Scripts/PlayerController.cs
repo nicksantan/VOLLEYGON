@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour {
 
 	public bool isChallengeMode;
     private ChallengeManagerScript challengeManager;
+    private SoloManagerScript soloManager;
 
     // Core shape stats, public for tesitng
     public float jumpPower;
@@ -126,6 +127,12 @@ public class PlayerController : MonoBehaviour {
         {
             challengeManager = GameObject.FindWithTag("ChallengeManager").GetComponent<ChallengeManagerScript>();
         }
+
+        if (GameObject.FindWithTag("SoloManager"))
+        {
+            soloManager = GameObject.FindWithTag("SoloManager").GetComponent<SoloManagerScript>();
+        }
+
         // Particle system?
         if ( GetComponent<ParticleSystem>() != null) {
             ps = transform.Find("ssps").GetComponent<ParticleSystem>();
@@ -324,7 +331,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (transform.parent && transform.parent.tag != "FakePlayer")
         {
-            if (!challengeManager || challengeManager.challengeRunning)
+            if ((!challengeManager || challengeManager.challengeRunning) && (!soloManager || soloManager.gameRunning))
             {
                 // Get horizontal input
                 if (player != null)

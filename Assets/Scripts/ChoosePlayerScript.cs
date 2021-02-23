@@ -304,7 +304,7 @@ public class ChoosePlayerScript : MonoBehaviour {
 
 		// Fade in
 		curtain.SetActive(true);
-		curtain.GetComponent<NewFadeScript>().Fade(0f);
+        LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 0f, .5f);
 
 		// Make array of icons and usernames
 		gamepadIcons = new GameObject[4] { gamepadIcon1, gamepadIcon2, gamepadIcon3, gamepadIcon4 };
@@ -476,23 +476,25 @@ public class ChoosePlayerScript : MonoBehaviour {
         }
 	}
 
-	IEnumerator StartGame(){
+	void StartGame(){
 		if (!locked) {
 			locked = true;
-            yield return new WaitForSeconds (GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f));
-            Debug.Log("Solo mode?");
-            Debug.Log(DataManagerScript.isSinglePlayerMode);
-            if (!DataManagerScript.isSinglePlayerMode)
-            {
-                SceneManager.LoadSceneAsync("chooseArenaScene");
-            }
-            else
-            {
-                DataManagerScript.playerTwoPlaying = false;
-                DataManagerScript.playerThreePlaying = false;
-                DataManagerScript.playerFourPlaying = false;
-                SceneManager.LoadSceneAsync("soloGameScene");
-            }
+            GameObject curtain = GameObject.Find("FadeCurtainCanvas");
+            LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { 
+                Debug.Log("Solo mode?");
+                Debug.Log(DataManagerScript.isSinglePlayerMode);
+                if (!DataManagerScript.isSinglePlayerMode)
+                {
+                    SceneManager.LoadSceneAsync("chooseArenaScene");
+                }
+                else
+                {
+                    DataManagerScript.playerTwoPlaying = false;
+                    DataManagerScript.playerThreePlaying = false;
+                    DataManagerScript.playerFourPlaying = false;
+                    SceneManager.LoadSceneAsync("soloGameScene");
+                }
+            });
         }
 	}
 
@@ -506,15 +508,14 @@ public class ChoosePlayerScript : MonoBehaviour {
 		}
 
 		// If no gamepad icons were active, return to title
-		StartCoroutine ("BackToTitle");
+		BackToTitle();
 	}
 
-	IEnumerator BackToTitle(){
+	void BackToTitle(){
 		if (!locked) {
 			locked = true;
-            float fadeTime = GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
-			yield return new WaitForSeconds (fadeTime);
-			SceneManager.LoadSceneAsync ("titleScene");
+            GameObject curtain = GameObject.Find("FadeCurtainCanvas");
+			LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("titleScene"); });
 		}
 	}
     
@@ -559,7 +560,7 @@ public class ChoosePlayerScript : MonoBehaviour {
 
 				// Start game if startable and gamepad not tagged in
 				if (gameIsStartable && gamepadIcons[i].GetComponent<GamepadController>().enabled) {
-                    StartCoroutine("StartGame");
+                    StartGame();
                 }
 				else if (!gamepadIcons[i].GetComponent<GamepadController>().enabled) {
 

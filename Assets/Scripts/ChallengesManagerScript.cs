@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class ChallengesManagerScript : MonoBehaviour {
 
@@ -31,7 +32,8 @@ public class ChallengesManagerScript : MonoBehaviour {
     void Start()
     {
 		// Fade in
-		GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(0f);
+		GameObject curtain = GameObject.Find("FadeCurtainCanvas");
+        LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 0f, .5f);
 
         audio = GetComponent<AudioSource>();
         locked = false;
@@ -55,12 +57,14 @@ public class ChallengesManagerScript : MonoBehaviour {
         es.GetComponent<StandaloneInputModule>().submitButton = buttons.jump;
         es.GetComponent<StandaloneInputModule>().cancelButton = buttons.grav;
 
+        Debug.Log("Achievement manager?");
+        Debug.Log(AchievementManagerScript.Instance);
         if (AchievementManagerScript.Instance != null)
         {
 
             // Report progress to achievement manager
             AchievementManagerScript.Instance.LogMedalProgress(HowManyMedals(), HowManyGoldMedals());
-
+            Debug.Log("counting medals");
             if (IsAllMedals())
             {
                 AchievementManagerScript.Instance.Achievements[8].Unlock();
@@ -141,19 +145,18 @@ public class ChallengesManagerScript : MonoBehaviour {
                 {
                     // Set chosen challenge
                     DataManagerScript.challengeType = markerPos;
-                    StartCoroutine("NextScene");
+                    NextScene();
                 }
             }
         }
     }
 
-    IEnumerator NextScene()
+    void NextScene()
     {
         if (!locked) {
             locked = true;
-			GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
-            yield return new WaitForSeconds(1f);
-            SceneManager.LoadSceneAsync("challengeScene");
+			GameObject curtain = GameObject.Find("FadeCurtainCanvas");
+            LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("challengeScene"); });
         }
     }
 
@@ -229,12 +232,14 @@ public class ChallengesManagerScript : MonoBehaviour {
 
     public bool IsAllMedals()
     {
-
+        Debug.Log("running all medals");
         for (int i = 0; i < 10; i++)
         {
             float bestTime = FileSystemLayer.Instance.GetChallengeTime(i);
             MedalProvider mp = new MedalProvider(bestTime, i);
             medalTypes whichMedal = mp.GetMedal();
+            Debug.Log("medal?");
+            Debug.Log(whichMedal);
             if (whichMedal == medalTypes.none)
             {
                 return false;

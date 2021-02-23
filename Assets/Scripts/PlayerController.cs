@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour {
 
 	public bool isChallengeMode;
     private ChallengeManagerScript challengeManager;
+    private SoloManagerScript soloManager;
 
     // Core shape stats, public for tesitng
     public float jumpPower;
@@ -126,6 +127,12 @@ public class PlayerController : MonoBehaviour {
         {
             challengeManager = GameObject.FindWithTag("ChallengeManager").GetComponent<ChallengeManagerScript>();
         }
+
+        if (GameObject.FindWithTag("SoloManager"))
+        {
+            soloManager = GameObject.FindWithTag("SoloManager").GetComponent<SoloManagerScript>();
+        }
+
         // Particle system?
         if ( GetComponent<ParticleSystem>() != null) {
             ps = transform.Find("ssps").GetComponent<ParticleSystem>();
@@ -155,14 +162,18 @@ public class PlayerController : MonoBehaviour {
                 // Special case for circle mesh rendering
                 circle.gameObject.SetActive(true);
                 shapeCollider = GetComponent<CircleCollider2D>();
-                pandemoniumCounter.transform.localPosition = new Vector3(0f, 0f, 0f);
-                pandemoniumCounter.GetComponent<TextMesh>().fontSize = 100;
+                if (pandemoniumCounter != null) {
+                    pandemoniumCounter.transform.localPosition = new Vector3(0f, 0f, 0f);
+                    pandemoniumCounter.GetComponent<TextMesh>().fontSize = 100;
+                }
                 if (rect_trail != null) { rect_trail.SetActive(false); }
                 break;
             case "triangle":
                 shapeCollider = trianglePC;
-                pandemoniumCounter.transform.localPosition = new Vector3(0f, -0.12f, 0f);
-                pandemoniumCounter.GetComponent<TextMesh>().fontSize = 87;
+                if (pandemoniumCounter != null) {
+                    pandemoniumCounter.transform.localPosition = new Vector3(0f, -0.12f, 0f);
+                    pandemoniumCounter.GetComponent<TextMesh>().fontSize = 87;
+                }
                 if (rect_trail != null) { rect_trail.SetActive(false); }
                 break;
             case "trapezoid":
@@ -171,16 +182,20 @@ public class PlayerController : MonoBehaviour {
                 break;
             case "rectangle":
                 shapeCollider = rectanglePC;
-                pandemoniumCounter.transform.localPosition = new Vector3(0f, 0f, 0f);
-                pandemoniumCounter.GetComponent<TextMesh>().fontSize = 30;
+                if (pandemoniumCounter != null) {
+                    pandemoniumCounter.transform.localPosition = new Vector3(0f, 0f, 0f);
+                    pandemoniumCounter.GetComponent<TextMesh>().fontSize = 30;
+                }
                 // Special case, rectangle needs a smaller trail
                 trail.SetActive(false);
                 trail = rect_trail;
                 break;
             case "star":
                 shapeCollider = starPC;
-                pandemoniumCounter.transform.localPosition = new Vector3(0f, 0.15f, 0f);
-                pandemoniumCounter.GetComponent<TextMesh>().fontSize = 52;
+                if (pandemoniumCounter != null) {
+                    pandemoniumCounter.transform.localPosition = new Vector3(0f, 0.15f, 0f);
+                    pandemoniumCounter.GetComponent<TextMesh>().fontSize = 52;
+                }
                 if (rect_trail != null) { rect_trail.SetActive(false); }
                 break;
         }
@@ -280,8 +295,7 @@ public class PlayerController : MonoBehaviour {
             //buttons = new JoystickButtons(joystick);
 
             // Note, convert joystick number to player index requires -1.
-            Debug.Log("This ran");
-            Debug.Log(DataManagerScript.gamepadControllingMenus);
+          
             player = ReInput.players.GetPlayer(joystick - 1);
         } else
         {
@@ -325,7 +339,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (transform.parent && transform.parent.tag != "FakePlayer")
         {
-            if (!challengeManager || challengeManager.challengeRunning)
+            if ((!challengeManager || challengeManager.challengeRunning) && (!soloManager || soloManager.gameRunning) && GameManagerScript.Instance.GetComponent<PauseManagerScript>().isInputLocked == false)
             {
                 // Get horizontal input
                 if (player != null)
@@ -448,8 +462,8 @@ public class PlayerController : MonoBehaviour {
                 && GameManagerScript.Instance != null
                 && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused
                 && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().recentlyPaused
-                && (!challengeManager || challengeManager.challengeRunning) && isAI == false
-              
+                && (!challengeManager || challengeManager.challengeRunning) && (!soloManager || soloManager.gameRunning) && !isAI
+                && GameManagerScript.Instance.GetComponent<PauseManagerScript>().isInputLocked == false
                 )
             {
 
@@ -615,6 +629,9 @@ public class PlayerController : MonoBehaviour {
         } else {
             mr.enabled = false;
         }
+
+        // if it's on, turn off innershape as well
+        innerShape.SetActive(false);
 	}
 
 	void EnableShapeAndCollider()  {
@@ -790,7 +807,14 @@ public class PlayerController : MonoBehaviour {
 
 		if (pandemoniumPowerupActive){
 			pandemoniumTimer -= Time.deltaTime;
-			pandemoniumCounter.GetComponent<TextMesh> ().color = new Vector4(1f, 1f, 1f, .75f);
+            if (Mathf.Sign(rb.gravityScale) > 0)
+            {
+                pandemoniumCounter.GetComponent<TextMesh>().color = new Vector4(1f, 1f, 1f, .85f);
+            } else
+            {
+                pandemoniumCounter.GetComponent<TextMesh>().color = new Vector4(1f, 1f, 1f, .85f);
+            }
+			
 			pandemoniumCounter.GetComponent<TextMesh> ().text = Mathf.Floor(pandemoniumTimer).ToString();
 			if (pandemoniumTimer <= 0) {
 			    pandemoniumCounter.GetComponent<TextMesh> ().color = new Vector4(0f, 0f, 0f, 0f);

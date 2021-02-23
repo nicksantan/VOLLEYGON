@@ -155,6 +155,12 @@ public class FileSystemLayer : MonoBehaviour
 
                 break;
         }
+
+        ApplyMusicPrefs();
+    }
+
+    public void ApplyMusicPrefs(){
+        MusicManagerScript.Instance.masterVolume = .55f * masterVolume * musicVolume;
     }
 
     public void LoadData(string key)

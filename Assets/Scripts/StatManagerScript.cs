@@ -85,8 +85,8 @@ public class StatManagerScript : MonoBehaviour {
 	}
 
 	void Start () {
-		GameObject.Find ("FadeCurtainCanvas").GetComponent<NewFadeScript> ().Fade(0f);
-		MusicManagerScript.Instance.StartIntro ();
+		GameObject curtain = GameObject.Find ("FadeCurtainCanvas");
+        LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 0f, .5f);
 		Player1MVP.GetComponent<CanvasRenderer> ().SetAlpha (0f);
 		Player2MVP.GetComponent<CanvasRenderer> ().SetAlpha (0f);
 		Player3MVP.GetComponent<CanvasRenderer> ().SetAlpha (0f);
@@ -121,11 +121,11 @@ public class StatManagerScript : MonoBehaviour {
 
 	// Update is called once per frame
 	void TimeOutTitle(){
-		StartCoroutine ("BackToTitle");
+		BackToTitle();
 	}
 	void Update () {
 		if (playersReady == playersPlaying) {
-			StartCoroutine ("BackToTitle");
+			BackToTitle();
 		}
 	}
 
@@ -237,12 +237,11 @@ public class StatManagerScript : MonoBehaviour {
 		}
 	}
 
-	IEnumerator BackToTitle(){
+	void BackToTitle(){
 		if (!locked) {
 			locked = true;
-            float fadeTime = GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
-            yield return new WaitForSeconds(fadeTime);
-            SceneManager.LoadSceneAsync("titleScene");
+            GameObject curtain = GameObject.Find("FadeCurtainCanvas");
+			LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("titleScene"); });
 		}
 	}
 

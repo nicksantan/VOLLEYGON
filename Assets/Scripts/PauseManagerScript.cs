@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Rewired;
 
@@ -18,15 +19,10 @@ public class PauseManagerScript : MonoBehaviour
     
 	public GameObject highlight;
 
+    public bool isInputLocked = false;
     void Start()
     {
 		highlight = GameObject.Find("Highlight");
-    }
-
-   
-    void Update()
-    {
-        
     }
 
     public void Pause(int joystick)
@@ -67,37 +63,36 @@ public class PauseManagerScript : MonoBehaviour
 
     public void UnpauseAndQuit()
     {
-        StartCoroutine("UnpauseAndQuitRoutine");
+        isInputLocked = true;
+        Unpause();
+ 
+        LeanTween.alpha(GameObject.Find("FadeCurtainCanvas").GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => {
+            if (GameObject.Find("ChallengeManager"))
+            {
+                SceneManager.LoadSceneAsync("chooseChallengeScene");
+            }
+            else
+            {
+                SceneManager.LoadSceneAsync("titleScene");
+            }
+        });
     }
 
     public void UnpauseAndRestartChallenge()
     {
-        StartCoroutine("UnpauseAndRestartChallengeRoutine");
+        isInputLocked = true;
+        Unpause();
+        LeanTween.alpha(GameObject.Find("FadeCurtainCanvas").GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("challengeScene");});
     }
        
-    public IEnumerator UnpauseAndRestartChallengeRoutine()
+    public void UnPauseAndQuitSoloMode()
     {
+        isInputLocked = true;
         Unpause();
-        GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
-        yield return new WaitForSeconds(0.5f);
-        SceneManager.LoadSceneAsync("challengeScene");
+        LeanTween.alpha(GameObject.Find("FadeCurtainCanvas").GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("titleScene"); });
     }
 
-    public IEnumerator UnpauseAndQuitRoutine()
-    {
-        Unpause();
-        GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
-        yield return new WaitForSeconds(0.5f);
-        //If this is a challenge, go back to the challenge menu, not the main menu.
-        if (GameObject.Find("ChallengeManager"))
-        {
-            SceneManager.LoadSceneAsync("chooseChallengeScene");
-        }
-        else
-        {
-            SceneManager.LoadSceneAsync("titleScene");
-        }
-    }
+   
     public void Unpause()
     {
         if (paused)

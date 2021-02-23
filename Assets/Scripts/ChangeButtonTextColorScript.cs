@@ -37,6 +37,7 @@ public class ChangeButtonTextColorScript : MonoBehaviour, ISelectHandler, IDesel
         ChangeColor(highlightColor);
 		if (highlight != null && highlight.transform.position.y != transform.position.y) {
 			highlight.transform.position = transform.position;
+			highlight.BroadcastMessage("IncrementShape");
 		}
     }
 		

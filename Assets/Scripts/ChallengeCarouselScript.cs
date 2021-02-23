@@ -37,9 +37,13 @@ public class ChallengeCarouselScript : MonoBehaviour
 
     void Start()
     {
+        // intro music?
+      
+
         curtain.SetActive(true);
-        curtain.GetComponent<NewFadeScript>().Fade(0f);
-        MusicManagerScript.Instance.FadeOutEverything();
+        LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 0f, .5f);
+       // MusicManagerScript.Instance.FadeOutEverything();
+        	MusicManagerScript.Instance.StartIntro ();
         es = EventSystem.current;
         if (es && es.currentSelectedGameObject)
         {
@@ -58,12 +62,98 @@ public class ChallengeCarouselScript : MonoBehaviour
         {
             ShowOption(0);
         }
+
+        if (AchievementManagerScript.Instance != null)
+        {
+
+            // Report progress to achievement manager
+            AchievementManagerScript.Instance.LogMedalProgress(HowManyMedals(), HowManyGoldMedals());
+            Debug.Log("counting medals");
+            if (IsAllMedals())
+            {
+                AchievementManagerScript.Instance.Achievements[8].Unlock();
+            }
+            if (IsAllGoldMedals())
+            {
+                AchievementManagerScript.Instance.Achievements[7].Unlock();
+            }
+        }
+    
+}
+
+    public bool IsAllMedals()
+    {
+        Debug.Log("running all medals");
+        for (int i = 1; i < 11; i++)
+        {
+            float bestTime = FileSystemLayer.Instance.GetChallengeTime(i);
+            MedalProvider mp = new MedalProvider(bestTime, i-1);
+            medalTypes whichMedal = mp.GetMedal();
+            Debug.Log("medal?");
+            Debug.Log(whichMedal);
+            if (whichMedal == medalTypes.none)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public bool IsAllGoldMedals()
+    {
+
+        for (int i = 1; i < 11; i++)
+        {
+            float bestTime = FileSystemLayer.Instance.GetChallengeTime(i);
+            MedalProvider mp = new MedalProvider(bestTime, i-1);
+            medalTypes whichMedal = mp.GetMedal();
+            if (whichMedal != medalTypes.gold)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public int HowManyMedals()
+    {
+        int howMany = 0;
+        for (int i = 1; i < 11; i++)
+        {
+            Debug.Log(i);
+            float bestTime = FileSystemLayer.Instance.GetChallengeTime(i);
+            MedalProvider mp = new MedalProvider(bestTime, i-1);
+            medalTypes whichMedal = mp.GetMedal();
+            if (whichMedal != medalTypes.none)
+            {
+                howMany++;
+            }
+        }
+        return howMany;
+    }
+
+    public int HowManyGoldMedals()
+    {
+        int howMany = 0;
+        for (int i = 1; i < 11; i++)
+        {
+            float bestTime = FileSystemLayer.Instance.GetChallengeTime(i);
+            MedalProvider mp = new MedalProvider(bestTime, i-1);
+            medalTypes whichMedal = mp.GetMedal();
+            if (whichMedal == medalTypes.gold)
+            {
+                howMany++;
+            }
+        }
+        return howMany;
     }
 
     // Update is called once per frame
     void Update()
     {
-        MusicManagerScript.Instance.FadeOutEverything();
+        //MusicManagerScript.Instance.FadeOutEverything();
         // Check for selection to enable selectable option
         bool inputSelecting = player.GetButtonDown("Jump");
         bool optionIsSelectable = ChallengeCarouselScript.CheckSelectableOptionIndex(selectedIndex);
@@ -92,8 +182,7 @@ public class ChallengeCarouselScript : MonoBehaviour
     
             // Go to previous scene
             SoundManagerScript.instance.PlaySingle(prevSceneSound);
-            SceneManager.LoadSceneAsync("titleScene");
-
+            LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("titleScene"); });
         }
 
         if (inputSelecting && !optionIsOpen && optionIsSelectable)
@@ -154,15 +243,13 @@ public class ChallengeCarouselScript : MonoBehaviour
         // Set chosen challenge
         DataManagerScript.challengeType = selectedIndex;
         SoundManagerScript.instance.PlaySingle(nextSceneSound);
-        StartCoroutine("NextScene");
+
+        NextScene();
     }
 
-    IEnumerator NextScene()
+    void NextScene()
     {
-   
-        GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
-        yield return new WaitForSeconds(1f);
-        SceneManager.LoadSceneAsync("challengeScene");
+        LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("challengeScene"); });
     }
 
     // Don't believe this is used. TODO: Remove

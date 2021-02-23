@@ -123,7 +123,7 @@ public class DataManagerScript : MonoBehaviour {
 
         // Version number
         // TODO: Uncomment public property instead?
-		version = "V1.9.1";
+		version = "V1.9.2";
 
         // Determine if on Xbox
         xboxMode = Application.platform == RuntimePlatform.XboxOne;

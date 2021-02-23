@@ -119,7 +119,8 @@ public class GameManagerScript : MonoBehaviour {
         // Fade in
         if (GameObject.Find("FadeCurtainCanvas"))
         {
-            GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(0f);
+            GameObject fc = GameObject.Find("FadeCurtainCanvas");
+            LeanTween.alpha(fc.GetComponentInChildren<Image>().rectTransform, 0f, .5f);
         }
 
         // Set up arena based on options
@@ -402,37 +403,34 @@ public class GameManagerScript : MonoBehaviour {
 	}
 
 	 void LaunchTitleScreen(){
-        StartCoroutine("FadeToTitle");
-    }
-
-	void LaunchStatsScreen(){
-		StartCoroutine ("FadeToStats");
-	}
-
-    IEnumerator FadeToTitle()
-    {
-        if (!locked)
+         if (!locked)
         {
             locked = true;
-            GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
-            yield return new WaitForSeconds(0.5f);
-            SceneManager.LoadSceneAsync("titleScene");
+            GameObject curtain = GameObject.Find("FadeCurtainCanvas");
+			LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("titleScene"); });
+     
 
         }
     }
 
-    IEnumerator FadeToStats(){
+	void LaunchStatsScreen(){
 		if (!locked) {
 			locked = true;
-            GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
-            yield return new WaitForSeconds(0.5f);
-			if (!OnePlayerMode) {
-				SceneManager.LoadSceneAsync("statsScene");
-			} else {
-				SceneManager.LoadSceneAsync("singlePlayerStatsScene");
-			}
+            GameObject curtain = GameObject.Find("FadeCurtainCanvas");
+            LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() =>
+            {
+                if (!OnePlayerMode)
+                {
+                    SceneManager.LoadSceneAsync("statsScene");
+                }
+                else
+                {
+                    SceneManager.LoadSceneAsync("singlePlayerStatsScene");
+                }
+            });
 		}
 	}
+
 
 	// End game for single player only
 	public void endGame(){
@@ -446,7 +444,14 @@ public class GameManagerScript : MonoBehaviour {
     {
         isGameOver = true;
         Debug.Log("Game Over message received by game manager");
-        Invoke("LaunchStatsScreen", 5f);
+        if (!OnePlayerMode)
+        {
+            Invoke("LaunchStatsScreen", 5f);
+        } else
+        {
+            GameObject.FindGameObjectWithTag("SoloManager").gameObject.GetComponent<SoloManagerScript>().TurnOnMenu();
+        }
+        
     }
 
 	void Update () {
@@ -578,7 +583,9 @@ public class GameManagerScript : MonoBehaviour {
 
 		if (soloMode && ball.GetComponent<BallScript> ().lastXPos != 0) {
 			GameManagerScript.Instance.GetComponent<GameManagerScript>().rallyCount++;
-		}
+            DataManagerScript.rallyCount = rallyCount;
+
+        }
 
 	}
 	public void ReturnArenaToOriginalColor(){

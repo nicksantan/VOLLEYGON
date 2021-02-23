@@ -331,7 +331,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (transform.parent && transform.parent.tag != "FakePlayer")
         {
-            if ((!challengeManager || challengeManager.challengeRunning) && (!soloManager || soloManager.gameRunning))
+            if ((!challengeManager || challengeManager.challengeRunning) && (!soloManager || soloManager.gameRunning) && GameManagerScript.Instance.GetComponent<PauseManagerScript>().isInputLocked == false)
             {
                 // Get horizontal input
                 if (player != null)
@@ -454,8 +454,8 @@ public class PlayerController : MonoBehaviour {
                 && GameManagerScript.Instance != null
                 && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused
                 && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().recentlyPaused
-                && (!challengeManager || challengeManager.challengeRunning) && (!soloManager || soloManager.gameRunning) && isAI == false
-              
+                && (!challengeManager || challengeManager.challengeRunning) && (!soloManager || soloManager.gameRunning) && !isAI
+                && GameManagerScript.Instance.GetComponent<PauseManagerScript>().isInputLocked == false
                 )
             {
 

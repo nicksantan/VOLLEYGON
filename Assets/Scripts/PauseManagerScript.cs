@@ -19,6 +19,7 @@ public class PauseManagerScript : MonoBehaviour
     
 	public GameObject highlight;
 
+    public bool isInputLocked = false;
     void Start()
     {
 		highlight = GameObject.Find("Highlight");
@@ -68,11 +69,13 @@ public class PauseManagerScript : MonoBehaviour
 
     public void UnpauseAndQuit()
     {
+        isInputLocked = true;
         StartCoroutine("UnpauseAndQuitRoutine");
     }
 
     public void UnpauseAndRestartChallenge()
     {
+        isInputLocked = true;
         StartCoroutine("UnpauseAndRestartChallengeRoutine");
     }
        
@@ -88,6 +91,7 @@ public class PauseManagerScript : MonoBehaviour
 
     public void UnPauseAndQuitSoloMode()
     {
+        isInputLocked = true;
         Unpause();
         LeanTween.alpha(GameObject.Find("FadeCurtainCanvas").GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("titleScene"); });
     }

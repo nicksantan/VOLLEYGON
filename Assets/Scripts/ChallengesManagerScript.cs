@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class ChallengesManagerScript : MonoBehaviour {
 
@@ -31,7 +32,8 @@ public class ChallengesManagerScript : MonoBehaviour {
     void Start()
     {
 		// Fade in
-		GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(0f);
+		GameObject curtain = GameObject.Find("FadeCurtainCanvas");
+        LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 0f, .5f);
 
         audio = GetComponent<AudioSource>();
         locked = false;
@@ -143,19 +145,18 @@ public class ChallengesManagerScript : MonoBehaviour {
                 {
                     // Set chosen challenge
                     DataManagerScript.challengeType = markerPos;
-                    StartCoroutine("NextScene");
+                    NextScene();
                 }
             }
         }
     }
 
-    IEnumerator NextScene()
+    void NextScene()
     {
         if (!locked) {
             locked = true;
-			GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
-            yield return new WaitForSeconds(1f);
-            SceneManager.LoadSceneAsync("challengeScene");
+			GameObject curtain = GameObject.Find("FadeCurtainCanvas");
+            LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("challengeScene"); });
         }
     }
 

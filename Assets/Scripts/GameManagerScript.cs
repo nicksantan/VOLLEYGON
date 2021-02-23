@@ -403,37 +403,34 @@ public class GameManagerScript : MonoBehaviour {
 	}
 
 	 void LaunchTitleScreen(){
-        StartCoroutine("FadeToTitle");
-    }
-
-	void LaunchStatsScreen(){
-		StartCoroutine ("FadeToStats");
-	}
-
-    IEnumerator FadeToTitle()
-    {
-        if (!locked)
+         if (!locked)
         {
             locked = true;
-            GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
-            yield return new WaitForSeconds(0.5f);
-            SceneManager.LoadSceneAsync("titleScene");
+            GameObject curtain = GameObject.Find("FadeCurtainCanvas");
+			LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("titleScene"); });
+     
 
         }
     }
 
-    IEnumerator FadeToStats(){
+	void LaunchStatsScreen(){
 		if (!locked) {
 			locked = true;
-            GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
-            yield return new WaitForSeconds(0.5f);
-			if (!OnePlayerMode) {
-				SceneManager.LoadSceneAsync("statsScene");
-			} else {
-				SceneManager.LoadSceneAsync("singlePlayerStatsScene");
-			}
+            GameObject curtain = GameObject.Find("FadeCurtainCanvas");
+            LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() =>
+            {
+                if (!OnePlayerMode)
+                {
+                    SceneManager.LoadSceneAsync("statsScene");
+                }
+                else
+                {
+                    SceneManager.LoadSceneAsync("singlePlayerStatsScene");
+                }
+            });
 		}
 	}
+
 
 	// End game for single player only
 	public void endGame(){

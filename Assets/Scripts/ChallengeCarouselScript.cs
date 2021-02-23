@@ -38,7 +38,6 @@ public class ChallengeCarouselScript : MonoBehaviour
     void Start()
     {
         curtain.SetActive(true);
-       // curtain.GetComponent<NewFadeScript>().Fade(0f);
         LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 0f, .5f);
         MusicManagerScript.Instance.FadeOutEverything();
         es = EventSystem.current;

@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 using Rewired;
+using UnityEngine.UI;
 
 public class ArenaManagerScript : MonoBehaviour {
 
@@ -92,7 +93,8 @@ public class ArenaManagerScript : MonoBehaviour {
 
 		// Fade in
 		curtain.SetActive(true);
-        curtain.GetComponent<NewFadeScript>().Fade(0f);
+       
+        LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 0f, .5f);
 
         int whichPlayerIsControlling = DataManagerScript.gamepadControllingMenus;
         // JoystickButtons joystick = new JoystickButtons(whichPlayerIsControlling);
@@ -137,41 +139,42 @@ public class ArenaManagerScript : MonoBehaviour {
 
                 // Start fade to next scene
                 SoundManagerScript.instance.PlaySingle(nextSceneSound);
-                StartCoroutine("NextScene");
+                NextScene();
 
             } else if (player.GetButtonDown("Grav")) {
                 SoundManagerScript.instance.PlaySingle(prevSceneSound);
-                StartCoroutine("PrevScene");
+                PrevScene();
             }
 
         }
     }
 
-    IEnumerator NextScene()
+    void NextScene()
     {
         if (!locked) {
             locked = true;
-            GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
-            yield return new WaitForSeconds(1f);
-            if (FileSystemLayer.Instance.protipsOn == 1)
-            {
-                SceneManager.LoadSceneAsync("proTipScene");
-            } else
-            {
-                SceneManager.LoadSceneAsync("gameScene");
-            }
+            GameObject curtain = GameObject.Find("FadeCurtainCanvas");
+            LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => {
+                if (FileSystemLayer.Instance.protipsOn == 1)
+                {
+                    SceneManager.LoadSceneAsync("proTipScene");
+                } else
+                {
+                    SceneManager.LoadSceneAsync("gameScene");
+                }
+            });
+          
 
         }
     }
 
-    IEnumerator PrevScene()
+    void PrevScene()
     {
         if (!locked)
         {
             locked = true;
-            GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
-            yield return new WaitForSeconds(1f);
-            SceneManager.LoadSceneAsync("choosePlayerScene");
+             GameObject curtain = GameObject.Find("FadeCurtainCanvas");
+            LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("choosePlayerScene");});
         }
     }
 }

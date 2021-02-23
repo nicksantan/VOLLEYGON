@@ -182,14 +182,8 @@ public class ChallengeManagerScript : MonoBehaviour
 
     public void ReturnToChallengeMenu()
     {
-        StartCoroutine("ReturnToChallengeMenuRoutine");
-    }
-    public IEnumerator ReturnToChallengeMenuRoutine()
-    {
-
-        GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
-        yield return new WaitForSeconds(0.5f);
-        SceneManager.LoadSceneAsync("chooseChallengeScene");
+        GameObject curtain = GameObject.Find("FadeCurtainCanvas");
+        LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("chooseChallengeScene"); });
     }
 
     public string FormatTime(float rawTimer)

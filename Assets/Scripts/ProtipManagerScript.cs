@@ -17,7 +17,8 @@ public class ProtipManagerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		GameObject.Find ("FadeCurtainCanvas").GetComponent<NewFadeScript> ().Fade (0f);
+		GameObject curtain = GameObject.Find ("FadeCurtainCanvas");
+		LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 0f, .5f);
 		MusicManagerScript.Instance.StartIntro ();
 		Invoke ("StartGame", proTipTime);
 		// make this a common shared function somehow
@@ -47,21 +48,20 @@ public class ProtipManagerScript : MonoBehaviour {
 	}
 
 	void StartGame(){
-		StartCoroutine ("NextScene");
+		NextScene();
 	}
 
 	void Update(){
 		if (Input.GetButton (startButton1) && Input.GetButton (startButton2) && Input.GetButton (startButton3) && Input.GetButton (startButton4)) {
-			StartCoroutine ("NextScene");
+			NextScene();
 		}
 	}
 
-	IEnumerator NextScene(){
+	void NextScene(){
 		if (!locked) {
 			locked = true;
-            GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
-			yield return new WaitForSeconds (1f);
-			SceneManager.LoadSceneAsync("GameScene");
+            GameObject curtain = GameObject.Find("FadeCurtainCanvas");
+			LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("gameScene"); });
 		}
 	}
 

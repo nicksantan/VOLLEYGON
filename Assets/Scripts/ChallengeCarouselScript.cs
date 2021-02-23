@@ -37,9 +37,13 @@ public class ChallengeCarouselScript : MonoBehaviour
 
     void Start()
     {
+        // intro music?
+      
+
         curtain.SetActive(true);
         LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 0f, .5f);
-        MusicManagerScript.Instance.FadeOutEverything();
+       // MusicManagerScript.Instance.FadeOutEverything();
+        	MusicManagerScript.Instance.StartIntro ();
         es = EventSystem.current;
         if (es && es.currentSelectedGameObject)
         {
@@ -149,7 +153,7 @@ public class ChallengeCarouselScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MusicManagerScript.Instance.FadeOutEverything();
+        //MusicManagerScript.Instance.FadeOutEverything();
         // Check for selection to enable selectable option
         bool inputSelecting = player.GetButtonDown("Jump");
         bool optionIsSelectable = ChallengeCarouselScript.CheckSelectableOptionIndex(selectedIndex);

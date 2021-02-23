@@ -43,6 +43,8 @@ public class OptionsManagerScript : MonoBehaviour
 
 	void Start()
 	{
+	
+
 		curtain.SetActive(true);
         LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 0f, .5f);
         MusicManagerScript.Instance.TurnOffEverything();

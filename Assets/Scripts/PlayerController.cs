@@ -162,14 +162,18 @@ public class PlayerController : MonoBehaviour {
                 // Special case for circle mesh rendering
                 circle.gameObject.SetActive(true);
                 shapeCollider = GetComponent<CircleCollider2D>();
-                pandemoniumCounter.transform.localPosition = new Vector3(0f, 0f, 0f);
-                pandemoniumCounter.GetComponent<TextMesh>().fontSize = 100;
+                if (pandemoniumCounter != null) {
+                    pandemoniumCounter.transform.localPosition = new Vector3(0f, 0f, 0f);
+                    pandemoniumCounter.GetComponent<TextMesh>().fontSize = 100;
+                }
                 if (rect_trail != null) { rect_trail.SetActive(false); }
                 break;
             case "triangle":
                 shapeCollider = trianglePC;
-                pandemoniumCounter.transform.localPosition = new Vector3(0f, -0.12f, 0f);
-                pandemoniumCounter.GetComponent<TextMesh>().fontSize = 87;
+                if (pandemoniumCounter != null) {
+                    pandemoniumCounter.transform.localPosition = new Vector3(0f, -0.12f, 0f);
+                    pandemoniumCounter.GetComponent<TextMesh>().fontSize = 87;
+                }
                 if (rect_trail != null) { rect_trail.SetActive(false); }
                 break;
             case "trapezoid":
@@ -178,16 +182,20 @@ public class PlayerController : MonoBehaviour {
                 break;
             case "rectangle":
                 shapeCollider = rectanglePC;
-                pandemoniumCounter.transform.localPosition = new Vector3(0f, 0f, 0f);
-                pandemoniumCounter.GetComponent<TextMesh>().fontSize = 30;
+                if (pandemoniumCounter != null) {
+                    pandemoniumCounter.transform.localPosition = new Vector3(0f, 0f, 0f);
+                    pandemoniumCounter.GetComponent<TextMesh>().fontSize = 30;
+                }
                 // Special case, rectangle needs a smaller trail
                 trail.SetActive(false);
                 trail = rect_trail;
                 break;
             case "star":
                 shapeCollider = starPC;
-                pandemoniumCounter.transform.localPosition = new Vector3(0f, 0.15f, 0f);
-                pandemoniumCounter.GetComponent<TextMesh>().fontSize = 52;
+                if (pandemoniumCounter != null) {
+                    pandemoniumCounter.transform.localPosition = new Vector3(0f, 0.15f, 0f);
+                    pandemoniumCounter.GetComponent<TextMesh>().fontSize = 52;
+                }
                 if (rect_trail != null) { rect_trail.SetActive(false); }
                 break;
         }
@@ -621,6 +629,9 @@ public class PlayerController : MonoBehaviour {
         } else {
             mr.enabled = false;
         }
+
+        // if it's on, turn off innershape as well
+        innerShape.SetActive(false);
 	}
 
 	void EnableShapeAndCollider()  {

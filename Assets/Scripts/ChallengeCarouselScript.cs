@@ -38,7 +38,8 @@ public class ChallengeCarouselScript : MonoBehaviour
     void Start()
     {
         curtain.SetActive(true);
-        curtain.GetComponent<NewFadeScript>().Fade(0f);
+       // curtain.GetComponent<NewFadeScript>().Fade(0f);
+        LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 0f, .5f);
         MusicManagerScript.Instance.FadeOutEverything();
         es = EventSystem.current;
         if (es && es.currentSelectedGameObject)
@@ -178,8 +179,7 @@ public class ChallengeCarouselScript : MonoBehaviour
     
             // Go to previous scene
             SoundManagerScript.instance.PlaySingle(prevSceneSound);
-            SceneManager.LoadSceneAsync("titleScene");
-
+            LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("titleScene"); });
         }
 
         if (inputSelecting && !optionIsOpen && optionIsSelectable)
@@ -240,15 +240,13 @@ public class ChallengeCarouselScript : MonoBehaviour
         // Set chosen challenge
         DataManagerScript.challengeType = selectedIndex;
         SoundManagerScript.instance.PlaySingle(nextSceneSound);
-        StartCoroutine("NextScene");
+
+        NextScene();
     }
 
-    IEnumerator NextScene()
+    void NextScene()
     {
-   
-        GameObject.Find("FadeCurtainCanvas").GetComponent<NewFadeScript>().Fade(1f);
-        yield return new WaitForSeconds(1f);
-        SceneManager.LoadSceneAsync("challengeScene");
+        LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("challengeScene"); });
     }
 
     // Don't believe this is used. TODO: Remove

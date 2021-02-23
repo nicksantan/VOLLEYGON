@@ -234,7 +234,7 @@ public class ChallengeManagerScript : MonoBehaviour
             DisplayMedal(loseMedal, bestTime);
 
             // Nudge over medal based on length of best time message. Provide a little delay because I think this is not running in time sometimes.
-            NudgeLoseMedal();
+            //NudgeLoseMedal();
         }
     }
 
@@ -314,22 +314,26 @@ public class ChallengeManagerScript : MonoBehaviour
             ChallengeResult theResults = ICM.GetComponent<SaveChallengeTimeScript>().CompareTimes(rawTimer);
             Debug.Log("Checking time " + rawTimer + " against best time");
             bestTimeWinText.GetComponent<Text>().text = "BEST TIME: " + FormatTime(theResults.challengeTime);
-
+            Debug.Log(theResults.challengeTime);
+            Debug.Log(theResults.wasBestTime);
             if (theResults.wasBestTime)
             {
                 newText.SetActive(true);
                 // Nudge over the whole text object slightly
-                newText.transform.parent.parent.GetComponent<RectTransform>().localPosition = new Vector3(50f, 257.3f, 0f);
+               // newText.transform.parent.parent.GetComponent<RectTransform>().localPosition = new Vector3(50f, 257.3f, 0f);
 
                 // If new Medal, wait a moment and then fire flash and play sfx before displaying new medal
                 if (CompareMedals(previousTime, theResults.challengeTime) == false)
                 {
                     StartCoroutine(DelayedMedalDisplay(theResults.challengeTime));
                 }
+            } else
+            {
+                newText.SetActive(false);
             }
 
             // Nudge over medal based on length of best time message.
-            NudgeWinMedal();
+            //NudgeWinMedal();
 
         }
         else

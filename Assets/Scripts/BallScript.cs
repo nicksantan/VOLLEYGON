@@ -250,15 +250,15 @@ public class BallScript : MonoBehaviour {
             // If this is an individual challenge, broadcast to that manager. Otherwise, broadcast to the broader moduleContainer. TODO: This could be bad. This is a stopgap until we get rid of GameManager.
             if (GameObject.FindWithTag("IndividualChallengeManager"))
             {
-                GameObject.FindWithTag("IndividualChallengeManager").BroadcastMessage("OnBallReturned");
+                GameObject.FindWithTag("IndividualChallengeManager").BroadcastMessage("OnBallReturned", SendMessageOptions.DontRequireReceiver);
             }
             // Increase solo mode rally count. It is unusued if this is not solo mode.
             DataManagerScript.soloRallyCount = DataManagerScript.soloRallyCount + 1;
 
-            moduleContainer.BroadcastMessage("OnBallReturned", lastTouch);
+            moduleContainer.BroadcastMessage("OnBallReturned", lastTouch, SendMessageOptions.DontRequireReceiver);
 
             // get rid of this when not training
-            CurrentArena.BroadcastMessage("OnBallReturned", lastTouch);
+            CurrentArena.BroadcastMessage("OnBallReturned", lastTouch, SendMessageOptions.DontRequireReceiver);
 
             // TODO: Get Rid of this and use the modules instead
             GameManagerScript.Instance.SideChange ();
@@ -344,10 +344,10 @@ public class BallScript : MonoBehaviour {
 
         //TODO: Factor this down once Game Manager has been parted out. this is primarily aimed toward scoreboardmanager.
 
-        moduleContainer.BroadcastMessage("OnBallDied", whichSide);
+        moduleContainer.BroadcastMessage("OnBallDied", whichSide, SendMessageOptions.DontRequireReceiver);
 
         // Broadcast to the arena in case this a training scene.
-        CurrentArena.BroadcastMessage("OnBallDied", whichSide);
+        CurrentArena.BroadcastMessage("OnBallDied", whichSide, SendMessageOptions.DontRequireReceiver);
         // If stat manager exists, give it some touch info
         if (GameObject.FindWithTag("StatsModule"))
         {

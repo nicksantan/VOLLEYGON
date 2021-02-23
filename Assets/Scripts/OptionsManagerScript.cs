@@ -44,8 +44,7 @@ public class OptionsManagerScript : MonoBehaviour
 	void Start()
 	{
 		curtain.SetActive(true);
-		curtain.GetComponent<NewFadeScript>().Fade(0f);
-		
+        LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 0f, .5f);
         MusicManagerScript.Instance.TurnOffEverything();
         MusicManagerScript.Instance.whichSource += 1;
         MusicManagerScript.Instance.whichSource = MusicManagerScript.Instance.whichSource % 2;
@@ -120,8 +119,9 @@ public class OptionsManagerScript : MonoBehaviour
 			}
 			else
 			{
-				// Go to previous scene
-				SceneManager.LoadSceneAsync("titleScene");
+                // Go to previous scene
+                LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("titleScene"); });
+               
 			}
 		}
 

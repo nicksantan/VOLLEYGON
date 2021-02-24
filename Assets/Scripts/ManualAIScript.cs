@@ -23,9 +23,10 @@ public class ManualAIScript : MonoBehaviour
     public float randomXRate;
     private int whichTeam;
 
-    public float ballSpeedXTolerance = 3f;
-    public float ballSpeedYTolerance = 2f;
+    public float ballSpeedXTolerance = 5f;
+    public float ballSpeedYTolerance = 5f;
 
+    public float horizontalStuckThreshold = 1f;
     public void Start()
     {
         pc = playerBeingControlled.GetComponent<PlayerController>();
@@ -253,13 +254,15 @@ public class ManualAIScript : MonoBehaviour
         if (other.gameObject.tag == "Ball" && allowJumps && !pc.sizePowerupActive)
         {
            
-            float ballSpeed = other.gameObject.GetComponent<Rigidbody2D>().velocity.x;
-            float ballYSpeed = other.gameObject.GetComponent<Rigidbody2D>().velocity.y;
-         //   Debug.Log("Ball moving at");
-        //   Debug.Log(Mathf.Abs(ballSpeed));
+            float ballSpeed = Mathf.Abs(other.gameObject.GetComponent<Rigidbody2D>().velocity.x);
+            float ballYSpeed = Mathf.Abs(other.gameObject.GetComponent<Rigidbody2D>().velocity.y);
+            //   Debug.Log("Ball moving at");
+            //   Debug.Log(Mathf.Abs(ballSpeed));
             //TODO: Need a way to deal with this for both gravities
+            Debug.Log("entered trigger. What is ball y speed?");
+            Debug.Log(ballYSpeed);
             float distanceToBall = Mathf.Abs(Target.transform.position.x - rBody.position.x);
-            if (distanceToBall < .4f && ballSpeed < ballSpeedXTolerance && ballYSpeed < ballSpeedYTolerance) //nTODO: This number is wrong, should be smaller.
+            if (distanceToBall < horizontalStuckThreshold && ballSpeed < ballSpeedXTolerance && ballYSpeed < ballSpeedYTolerance) //nTODO: This number is wrong, should be smaller.
             {
                 Debug.Log("ball seems to be stuck, let's get it out");
                 // choose a direction to move toward the Net

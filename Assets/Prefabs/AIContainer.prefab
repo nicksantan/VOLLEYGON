@@ -754,16 +754,16 @@ MonoBehaviour:
   ball: {fileID: 0}
   Target: {fileID: 0}
   isTeammate: 0
-  ballSpeedToTriggerJump: 7
-  maxBallSpeedToTriggerJump: 20
-  allowGravityChanges: 1
-  allowJumps: 0
-  distanceTolerance: 1.15
-  randomXSpot: 0
-  randomXRate: 0
-  ballSpeedXTolerance: 13
-  ballSpeedYTolerance: 13
-  horizontalStuckThreshold: 1
+  ballSpeedToTriggerJump: 55
+  maxBallSpeedToTriggerJump: 56
+  allowGravityChanges: 0
+  allowJumps: 1
+  distanceTolerance: 1
+  randomXSpot: 15.13949
+  randomXRate: 0.16445155
+  ballSpeedXTolerance: 4
+  ballSpeedYTolerance: 4
+  horizontalStuckThreshold: 0.4
 --- !u!61 &3767974230688443821
 BoxCollider2D:
   m_ObjectHideFlags: 0

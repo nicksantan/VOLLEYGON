@@ -238,6 +238,13 @@ public class GameManagerScript : MonoBehaviour {
                 whichAIManager = "AIManager-triangle";
             }
 
+            if (Player3.GetComponent<PlayerController>().playerType == 5)
+            {
+                aic.transform.GetChild(3).gameObject.SetActive(true);
+                aic.transform.GetChild(0).gameObject.SetActive(false);
+                whichAIManager = "AIManager-star";
+            }
+
             aic.transform.Find(whichAIManager).GetComponent<ManualAIScript>().playerBeingControlled = Player3;
 
             aic.transform.Find(whichAIManager).GetComponent<ManualAIScript>().allowGravityChanges = true;
@@ -262,6 +269,14 @@ public class GameManagerScript : MonoBehaviour {
                     aic_two.transform.GetChild(0).gameObject.SetActive(false);
                     whichAIManagerTwo = "AIManager-triangle";
                 }
+
+                if (Player4.GetComponent<PlayerController>().playerType == 5)
+                {
+                    aic_two.transform.GetChild(3).gameObject.SetActive(true);
+                    aic_two.transform.GetChild(0).gameObject.SetActive(false);
+                    whichAIManager = "AIManager-star";
+                }
+
                 aic_two.transform.Find(whichAIManagerTwo).GetComponent<ManualAIScript>().playerBeingControlled = Player4;
                 aic_two.transform.Find(whichAIManagerTwo).GetComponent<ManualAIScript>().allowGravityChanges = false;
             }

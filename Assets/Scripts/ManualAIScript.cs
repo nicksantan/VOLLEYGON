@@ -25,6 +25,9 @@ public class ManualAIScript : MonoBehaviour
 
     public float ballSpeedXTolerance = 3f;
     public float ballSpeedYTolerance = 2f;
+    private GameObject powerupTarget;
+    private bool goingForPowerup = false;
+	
 
     public void Start()
     {
@@ -55,6 +58,38 @@ public class ManualAIScript : MonoBehaviour
         directionFactor = 1f;
     }
 
+    public void CheckForPowerup(){
+        // Are there powerups in the scene?
+        GameObject[] powerups = GameObject.FindGameObjectsWithTag("Powerup");
+
+        if (powerups.Length > 0){
+            // Find the powerup on the AI side of the screen
+            foreach (GameObject pu in powerups)
+            {
+                if (pu.transform.position.x > 0){
+                    powerupTarget = pu;
+                }
+            }
+        } else {
+            powerupTarget = null;
+        }
+        
+    }
+
+    // If I were smart, this would be a function to be shared more widely....
+    public bool OnSameHemisphere(Transform obj, Transform target){
+        if (Mathf.Sign(obj.transform.position.y) ==  Mathf.Sign(target.transform.position.y)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public void GoTowardPowerup(){
+        MoveGraduallyTowardTarget(powerupTarget.transform);
+        if (Mathf.Abs(rBody.transform.position.x - powerupTarget.transform.position.x) < 1f){
+            playerBeingControlled.GetComponent<PlayerController>().virtualButtons.jump = true;
+        }
+    }
     public void GoBackToNeutral()
     {
         if (rBody.position.x > randomXSpot + .2f)
@@ -86,7 +121,10 @@ public class ManualAIScript : MonoBehaviour
         }
         if (Target == null)
         {
-            GoBackToNeutral();
+            if (powerupTarget != null && OnSameHemisphere(powerupTarget.transform, rBody.gameObject.transform)){
+                GoTowardPowerup();
+            } else { GoBackToNeutral(); }
+            
             if (GameObject.FindWithTag("Ball"))
             {
                 Target = GameObject.FindWithTag("Ball").transform;
@@ -94,6 +132,7 @@ public class ManualAIScript : MonoBehaviour
         }
         else
         {
+            CheckForPowerup();
             float distanceToBall = Mathf.Abs(Target.transform.position.x - rBody.position.x);
 
             bool isBallDirectlyUnderPlayer = false;
@@ -124,66 +163,34 @@ public class ManualAIScript : MonoBehaviour
             if (distanceToBall > distanceTolerance && !isBallDirectlyUnderPlayer)
             {
                 // Move toward the ball.
-                if (Target.transform.position.x < rBody.position.x)
-                {
-                    float amountToMove = 1f;
-                    if (Mathf.Abs(Target.transform.position.x - rBody.position.x) < 2f)
-                    {
-                        amountToMove = (Target.transform.position.x - rBody.position.x) / 2f;
-                        amountToMove = .8f;
-                    }
-                    if (Mathf.Abs(Target.transform.position.x - rBody.position.x) < 1f)
-                    {
-                        amountToMove = (Target.transform.position.x - rBody.position.x) / 2f;
-                        amountToMove = .5f;
-                    }
-                    if (Mathf.Abs(Target.transform.position.x - rBody.position.x) < .2f)
-                    {
-                        amountToMove = (Target.transform.position.x - rBody.position.x) / 2f;
-                        amountToMove = .5f;
-                    }
-                    playerBeingControlled.GetComponent<PlayerController>().virtualButtons.horizontal = -amountToMove; //TODO: Change this to be proportionate to the distance
-                }
-                else if (Target.transform.position.x > rBody.position.x)
-                {
-                    float amountToMove = 1f;
-                    if (Mathf.Abs(Target.transform.position.x - rBody.position.x) < 2f)
-                    {
-                        amountToMove = (Target.transform.position.x - rBody.position.x) / 2f;
-                        amountToMove = .8f;
-                    }
-                    if (Mathf.Abs(Target.transform.position.x - rBody.position.x) < 1f)
-                    {
-                        amountToMove = (Target.transform.position.x - rBody.position.x) / 2f;
-                        amountToMove = .5f;
-                    }
-                    if (Mathf.Abs(Target.transform.position.x - rBody.position.x) < .2f)
-                    {
-                        amountToMove = (Target.transform.position.x - rBody.position.x) / 2f;
-                        amountToMove = .5f;
-                    }
-                    playerBeingControlled.GetComponent<PlayerController>().virtualButtons.horizontal = amountToMove * directionFactor;
-                }
+              MoveGraduallyTowardTarget(Target);
 
                 if (Target.transform.position.x > .5f && pc.team == 1) // TODO: sign based on which team.
                 {
                     //behavior to move to center here.
-                    GoBackToNeutral();
-                    //playerBeingControlled.GetComponent<PlayerController>().virtualButtons.horizontal = 0f;
+                    if (powerupTarget != null && OnSameHemisphere(powerupTarget.transform, rBody.gameObject.transform)){
+                        GoTowardPowerup();
+                    } else { GoBackToNeutral(); }
+
+              
                 }
 
                 if (Target.transform.position.x < -.5f && pc.team == 2) // TODO: sign based on which team.
                 {
                     //behavior to move to center here.
-                    //playerBeingControlled.GetComponent<PlayerController>().virtualButtons.horizontal = 0f;
-                    GoBackToNeutral();
+                    if (powerupTarget != null && OnSameHemisphere(powerupTarget.transform, rBody.gameObject.transform)){
+                        GoTowardPowerup();
+                    } else { GoBackToNeutral(); }
                 }
 
+                // Ball is awaiting serve
                 if (Target.GetComponent<Rigidbody2D>().isKinematic)
                 {
                     //behavior to move to center here.
-                    GoBackToNeutral();
-                    //playerBeingControlled.GetComponent<PlayerController>().virtualButtons.horizontal = 0f;
+                    if (powerupTarget != null && OnSameHemisphere(powerupTarget.transform, rBody.gameObject.transform)){
+                        GoTowardPowerup();
+                    } else { GoBackToNeutral(); }
+                  
                 }
             }
             else if (isBallDirectlyUnderPlayer)
@@ -248,6 +255,49 @@ public class ManualAIScript : MonoBehaviour
 
     }
 
+    private void MoveGraduallyTowardTarget(Transform tg){
+         // Move toward the ball.
+                if (tg.transform.position.x < rBody.position.x)
+                {
+                    float amountToMove = 1f;
+                    if (Mathf.Abs(tg.transform.position.x - rBody.position.x) < 2f)
+                    {
+                        amountToMove = (tg.transform.position.x - rBody.position.x) / 2f;
+                        amountToMove = .8f;
+                    }
+                    if (Mathf.Abs(tg.transform.position.x - rBody.position.x) < 1f)
+                    {
+                        amountToMove = (tg.transform.position.x - rBody.position.x) / 2f;
+                        amountToMove = .5f;
+                    }
+                    if (Mathf.Abs(tg.transform.position.x - rBody.position.x) < .2f)
+                    {
+                        amountToMove = (tg.transform.position.x - rBody.position.x) / 2f;
+                        amountToMove = .5f;
+                    }
+                    playerBeingControlled.GetComponent<PlayerController>().virtualButtons.horizontal = -amountToMove; //TODO: Change this to be proportionate to the distance
+                }
+                else if (tg.transform.position.x > rBody.position.x)
+                {
+                    float amountToMove = 1f;
+                    if (Mathf.Abs(tg.transform.position.x - rBody.position.x) < 2f)
+                    {
+                        amountToMove = (tg.transform.position.x - rBody.position.x) / 2f;
+                        amountToMove = .8f;
+                    }
+                    if (Mathf.Abs(tg.transform.position.x - rBody.position.x) < 1f)
+                    {
+                        amountToMove = (tg.transform.position.x - rBody.position.x) / 2f;
+                        amountToMove = .5f;
+                    }
+                    if (Mathf.Abs(tg.transform.position.x - rBody.position.x) < .2f)
+                    {
+                        amountToMove = (tg.transform.position.x - rBody.position.x) / 2f;
+                        amountToMove = .5f;
+                    }
+                    playerBeingControlled.GetComponent<PlayerController>().virtualButtons.horizontal = amountToMove * directionFactor;
+                }
+    }
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Ball" && allowJumps && !pc.sizePowerupActive)

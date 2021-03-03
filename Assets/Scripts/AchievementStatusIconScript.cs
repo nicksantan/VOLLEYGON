@@ -55,8 +55,8 @@ public class AchievementStatusIconScript : MonoBehaviour, IDeselectHandler
         if (es.currentSelectedGameObject == gameObject)
         {
             // Update the relevant fields with this info.
-            if (!a_title.gameObject.active) { a_title.gameObject.SetActive(true); };
-            if (!a_desc.gameObject.active) { a_desc.gameObject.SetActive(true); };
+            if (!a_title.gameObject.activeInHierarchy) { a_title.gameObject.SetActive(true); };
+            if (!a_desc.gameObject.activeInHierarchy) { a_desc.gameObject.SetActive(true); };
             a_title.text = achievementName.ToUpper();
             a_desc.text = achievementDescription.ToUpper();
 

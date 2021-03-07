@@ -529,7 +529,7 @@ public class DemoPlayerController : MonoBehaviour {
 
 		if (pandemoniumPowerupActive){
 			pandemoniumTimer -= Time.deltaTime;
-			pandemoniumCounter.GetComponent<TextMesh> ().color = new Vector4(1f, 1f, 1f, .25f);
+			pandemoniumCounter.GetComponent<TextMesh> ().color = new Vector4(1f, 1f, 1f, .85f);
 			pandemoniumCounter.GetComponent<TextMesh> ().text = Mathf.Floor(pandemoniumTimer).ToString();
 			if (pandemoniumTimer <= 0) {
 			    pandemoniumCounter.GetComponent<TextMesh> ().color = new Vector4(0f, 0f, 0f, 0f);

@@ -78,6 +78,7 @@ public class DemoPlayerController : MonoBehaviour {
 	private float trapezoidSpeed = 12f;
 	private float trapezoidSpinRate = -150f;
 
+    public GameObject innerShape;
 
 	Rigidbody2D rb;
 	// Use this for initialization
@@ -151,10 +152,30 @@ public class DemoPlayerController : MonoBehaviour {
 		Invoke ("Begin", startDelay);
 
 
+        // Set default innershape
+        innerShape = transform.Find("InnerShape").gameObject;
+
+        //Special case for Star innershape:
+        //0.06 y
+        //.6 scale
+    
+
+        if (innerShape)
+        {
+            if (rb.gravityScale < 0)
+            {
+                innerShape.SetActive(true);
+            }
+            else
+            {
+                innerShape.SetActive(false);
+            }
+        }
+    
 
 
 
-	}
+}
 
 	void Begin(){
 		switch (DemoType) {
@@ -240,9 +261,20 @@ public class DemoPlayerController : MonoBehaviour {
 
 	void ChangeGrav(){
 		rb.gravityScale *= -1f;
-		//SoundManagerScript.instance.RandomizeSfx (changeGravSound1, changeGravSound2);
-		StartCoroutine ("Flash");
-	}
+        //SoundManagerScript.instance.RandomizeSfx (changeGravSound1, changeGravSound2);
+        //StartCoroutine ("Flash");
+        if (innerShape)
+        {
+            if (rb.gravityScale < 0)
+            {
+                innerShape.SetActive(true);
+            }
+            else
+            {
+                innerShape.SetActive(false);
+            }
+        }
+    }
 	void JumpRepeatedly(){
 		Jump ();
 		Invoke ("JumpRepeatedly", 1f);

@@ -15,24 +15,42 @@ public class ColliderToMesh : MonoBehaviour {
 	public CircleCollider2D circleCollider;
 
     private bool isInnerShape = false;
+    public bool isDemoPlayer = false;
 
 	PolygonCollider2D pc2 ;
 	void Start () {
         int whichShape = 0;
 
-        if (gameObject.GetComponent<PlayerController>()) {
-            whichShape = gameObject.GetComponent<PlayerController>().playerType;
+        if (isDemoPlayer)
+        {
+            if (gameObject.GetComponent<DemoPlayerController>())
+            {
+                whichShape = gameObject.GetComponent<DemoPlayerController>().playerType;
+            }
+            else
+            {
+                isInnerShape = true;
+                Debug.Log("Using parent shape.. " + transform.parent.gameObject.GetComponent<DemoPlayerController>().playerType.ToString());
+                whichShape = transform.parent.gameObject.GetComponent<DemoPlayerController>().playerType;
+            }
         }
         else
         {
-            isInnerShape = true;
-            Debug.Log("Using parent shape.. " + transform.parent.gameObject.GetComponent<PlayerController>().playerType.ToString());
-            whichShape = transform.parent.gameObject.GetComponent<PlayerController>().playerType;
+            if (gameObject.GetComponent<PlayerController>())
+            {
+                whichShape = gameObject.GetComponent<PlayerController>().playerType;
+            }
+            else
+            {
+                isInnerShape = true;
+                Debug.Log("Using parent shape.. " + transform.parent.gameObject.GetComponent<PlayerController>().playerType.ToString());
+                whichShape = transform.parent.gameObject.GetComponent<PlayerController>().playerType;
+            }
+
         }
 
-
-
-
+        Debug.Log("shape is");
+            Debug.Log(whichShape);
         switch (whichShape) {
 
 		case 0:

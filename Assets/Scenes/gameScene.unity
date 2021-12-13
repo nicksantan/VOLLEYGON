@@ -2760,6 +2760,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 410775741}
   starCollider: {fileID: 410775742}
   circleCollider: {fileID: 410775737}
+  isDemoPlayer: 0
 --- !u!23 &410775729
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3284,7 +3285,7 @@ MonoBehaviour:
   submitActionId: -1
   cancelActionId: -1
   m_HorizontalAxis: MoveX
-  m_VerticalAxis: MoveY
+  m_VerticalAxis: MoveX
   m_SubmitButton: Jump
   m_CancelButton: Grav
   m_InputActionsPerSecond: 10
@@ -5267,6 +5268,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 727580275}
   starCollider: {fileID: 727580274}
   circleCollider: {fileID: 727580284}
+  isDemoPlayer: 0
 --- !u!23 &727580277
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5691,6 +5693,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 746879048}
   starCollider: {fileID: 746879047}
   circleCollider: {fileID: 746879057}
+  isDemoPlayer: 0
 --- !u!23 &746879050
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6386,6 +6389,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 780810430}
   starCollider: {fileID: 780810429}
   circleCollider: {fileID: 780810439}
+  isDemoPlayer: 0
 --- !u!23 &780810432
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8701,6 +8705,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 1094186025}
   starCollider: {fileID: 1094186026}
   circleCollider: {fileID: 1094186021}
+  isDemoPlayer: 0
 --- !u!23 &1094186013
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9337,11 +9342,11 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 11400000, guid: 5e9ff7a88a5c9f2438a785c0e9349807, type: 3}
       propertyPath: timestampHigh
-      value: 30865426
+      value: 30917513
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 5e9ff7a88a5c9f2438a785c0e9349807, type: 3}
       propertyPath: timestampLow
-      value: 1802385007
+      value: -1781931756
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 5e9ff7a88a5c9f2438a785c0e9349807, type: 3}
       propertyPath: m_size.x
@@ -10566,6 +10571,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 1468053650}
   starCollider: {fileID: 1468053651}
   circleCollider: {fileID: 1468053646}
+  isDemoPlayer: 0
 --- !u!23 &1468053638
 MeshRenderer:
   m_ObjectHideFlags: 0

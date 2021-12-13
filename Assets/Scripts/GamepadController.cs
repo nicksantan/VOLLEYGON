@@ -258,7 +258,7 @@ public class GamepadController : MonoBehaviour {
       
 
         // Left or right pressed
-        if (player.GetAxisRaw("MoveX") > 0 || player.GetAxisRaw("MoveY") < 0)
+        if (player.GetAxisRaw("MoveX") > 0 || player.GetAxisRaw("MoveX") < 0)
         {
 
             // Only proceed if slot is not already selected and joystick not already pressed

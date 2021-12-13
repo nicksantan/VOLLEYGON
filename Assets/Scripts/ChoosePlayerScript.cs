@@ -187,7 +187,7 @@ public class ChoosePlayerScript : MonoBehaviour {
         // Activate certain labels if this is bots mode
         if (isBotsMode)
         {
-            addBotButton.SetActive(true);
+           // addBotButton.SetActive(true); //Arcade hack
             // TODO: Choose how many CPUs
             CPULabels.SetActive(true);
             RightPlayerLabels.SetActive(false);

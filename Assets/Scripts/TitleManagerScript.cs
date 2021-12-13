@@ -339,7 +339,7 @@ public class TitleManagerScript : MonoBehaviour {
         SoundManagerScript.instance.PlaySingle(startSound);
         DataManagerScript.isSinglePlayerMode = false;
         DataManagerScript.isBotsMode = true;
-        DataManagerScript.numBots = 1;
+        DataManagerScript.numBots = 2; //TODO: Arcade hack
         LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("ChoosePlayerScene"); });
     }
     public void StartTwoBotGame()

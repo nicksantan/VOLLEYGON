@@ -866,7 +866,7 @@ MonoBehaviour:
   submitActionId: -1
   cancelActionId: -1
   m_HorizontalAxis: MoveX
-  m_VerticalAxis: MoveY
+  m_VerticalAxis: MoveX
   m_SubmitButton: Jump
   m_CancelButton: Grav
   m_InputActionsPerSecond: 10
@@ -4143,7 +4143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 469.40762
+  Phase: 469.7427
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5

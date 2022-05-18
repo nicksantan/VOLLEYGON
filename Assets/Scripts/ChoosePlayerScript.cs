@@ -296,6 +296,8 @@ public class ChoosePlayerScript : MonoBehaviour {
             {
                 DataManagerScript.playerFourPlaying = true;
                 DataManagerScript.playerFourType = DataManagerScript.botTwoType;
+                Debug.Log("playerfourtype is");
+                Debug.Log(DataManagerScript.playerFourType);
             } else
             {
                 CPUFourLabel.GetComponent<Text>().color = new Color(0f, 0f,0f,0f);

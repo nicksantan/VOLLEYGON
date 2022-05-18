@@ -24,12 +24,15 @@ public class TitleManagerScript : MonoBehaviour {
 	public GameObject singlePlayerPanel;
     public GameObject AIBotPanel;
     public GameObject soloModeButton;
+    public GameObject versusAIButton;
     public GameObject oneBotButton;
     public GameObject quitPanel;
     public GameObject quitButton;
     public GameObject resumeButton;
+    public GameObject singlePlayerButton;
 
 	public GameObject curtain;
+    public GameObject cutsceneManager;
 
 	private bool mainMenuActive = false;
 
@@ -120,13 +123,13 @@ public class TitleManagerScript : MonoBehaviour {
                         if (allowQuit)
                         {
                             // Back out to quit menu
-                            SoundManagerScript.instance.PlaySingle(cancelSound);
-                            showQuitAppPanel();
-                            DataManagerScript.gamepadControllingMenus = i;
+                          //  SoundManagerScript.instance.PlaySingle(cancelSound);
+                          //  showQuitAppPanel();
+                         //   DataManagerScript.gamepadControllingMenus = i;
 
-                            if (JoystickLayerManager.Instance != null){
-                                JoystickLayerManager.Instance.AssignPlayerToEventSystem(i);
-                            }
+                        //   if (JoystickLayerManager.Instance != null){
+                       //         JoystickLayerManager.Instance.AssignPlayerToEventSystem(i);
+                     //       }
                         }
                     }
 
@@ -162,6 +165,9 @@ public class TitleManagerScript : MonoBehaviour {
                             int currentGP = i;
                             // NOTE: Prevent user from summoning quit menu while main menu is animating.
                             allowQuit = false;
+
+                            // stop the cutscene manager from loading attract mode
+                            cutsceneManager.SetActive(false);
                             LeanTween.move(Camera.main.gameObject, new Vector3(0f, -3.3f, -10f), 0.3f).setOnComplete(()=>activateMainMenu(currentGP)).setEase(LeanTweenType.easeOutQuad);
                         // activateMainMenu(gamepadIndex);
 #endif
@@ -240,6 +246,7 @@ public class TitleManagerScript : MonoBehaviour {
             pressStartAnimation.GetComponent<PlayAnimationScript>().PlayAnimation();
             controllingGamepad = null;
             
+            cutsceneManager.SetActive(true);
             if (highlight) {
                 highlight.transform.position = new Vector3(-1000f, -1000f, 0);
             }
@@ -265,6 +272,10 @@ public class TitleManagerScript : MonoBehaviour {
                 es1.SetSelectedGameObject(es1.firstSelectedGameObject);
                 singlePlayerPanel.SetActive(false);
                 mainMenuPanel.SetActive(true);
+            
+                 es1.SetSelectedGameObject(null);
+                es1.SetSelectedGameObject(es1.firstSelectedGameObject);
+                singlePlayerButton.GetComponent<ChangeButtonTextColorScript>().Unhighlight();
             }
 		}
 	}
@@ -305,7 +316,7 @@ public class TitleManagerScript : MonoBehaviour {
 
 	public void SetUpSinglePlayerMenu() {
 		SoundManagerScript.instance.PlaySingle(confirmSound);
-		es1.SetSelectedGameObject(soloModeButton);
+		es1.SetSelectedGameObject(versusAIButton);
 	}
 
     public void SetUpAIMenu() {

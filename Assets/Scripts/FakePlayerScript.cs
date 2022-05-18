@@ -304,10 +304,12 @@ public class FakePlayerScript : MonoBehaviour {
             if (player.GetButtonDown("Jump") && taggedIn)
             {
                 activateReadyState();
+				ChoosePlayerScript.Instance.LogActivity();
             }
 
             if ( player.GetButtonDown ("Grav") ) {
                 shouldDeactivate = true;
+				ChoosePlayerScript.Instance.LogActivity();
 			}
 		}
 	}
@@ -323,6 +325,7 @@ public class FakePlayerScript : MonoBehaviour {
 
     public void checkForJoystick()
     {
+		ChoosePlayerScript.Instance.LogActivity();
         // Get joystick for player slot
         switch (playerIdentifier)
         {
@@ -359,7 +362,7 @@ public class FakePlayerScript : MonoBehaviour {
 		// Up or down pressed
 		string whichAxis = "MoveX";
 		if (player.GetAxisRaw(whichAxis) > 0 || player.GetAxisRaw(whichAxis) < 0) {
-
+			ChoosePlayerScript.Instance.LogActivity();
             // Only proceed if player is tagged in but not ready, and joystick not already pressed up/down
             if (axisInUse == false && !readyToPlay && taggedIn) { 
 

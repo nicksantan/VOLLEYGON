@@ -13,6 +13,7 @@ public class ChoosePlayerScript : MonoBehaviour {
 	public Image gutterBG;
     public Text versusText;
 
+    public float timeOfLastActivity;
     public bool fourthBotActive = false;
     public bool soloMode = false;
 	public GameObject fakePlayer1;
@@ -183,7 +184,7 @@ public class ChoosePlayerScript : MonoBehaviour {
 
 	void Start(){
         isBotsMode = DataManagerScript.isBotsMode;
-
+        LogActivity();
         // Activate certain labels if this is bots mode
         if (isBotsMode)
         {
@@ -545,6 +546,12 @@ public class ChoosePlayerScript : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+
+        // check for idle time out
+        if (Time.time - timeOfLastActivity > 20f){
+            // go back to title
+            BackToTitle();
+        }
 		// Look for start button presses
 		for (int i = 0; i < players.Length; i++) {
 			int slotId = i + 1;
@@ -560,6 +567,7 @@ public class ChoosePlayerScript : MonoBehaviour {
             }
 			if (players[i].GetButtonDown("Start") || players[i].GetButtonDown("Jump") && !gamepadIcons[i].GetComponent<GamepadController>().enabled) {
 
+                LogActivity();
 				// Start game if startable and gamepad not tagged in
 				if (gameIsStartable && gamepadIcons[i].GetComponent<GamepadController>().enabled) {
                     StartGame();
@@ -669,6 +677,13 @@ public class ChoosePlayerScript : MonoBehaviour {
 		// Back out if no gamepads
 		exitIfNoOtherGamepads();
 	}
+
+
+        public void LogActivity(){
+            Debug.Log("time of last activity is now");
+            Debug.Log(Time.time);
+            timeOfLastActivity = Time.time;
+        }
 
 	#if UNITY_XBOXONE
 		public void showLoginPrompt(int slotId, int userId) {

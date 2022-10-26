@@ -359,6 +359,7 @@ public class PlayerController : MonoBehaviour {
                         Vector3 v3 = GetComponent<Rigidbody2D>().velocity;
                         v3.x = moveHorizontal * speed;
                         GetComponent<Rigidbody2D>().velocity = v3;
+                       // GetComponent<Rigidbody2D>().AddForce(v3*10f);
                     }
                 }
             }
@@ -751,14 +752,17 @@ public class PlayerController : MonoBehaviour {
 			var pos = transform.position;
 			if (team == 1) {
 				// TODO: Make this dynamic based on raycasting
-				pos.x = Mathf.Clamp (transform.position.x, -27.2f, -1.0f);
+				pos.x = Mathf.Clamp (transform.position.x, -17f, -1.0f);
 				transform.position = pos;
 			} else if (team == 2) {
-				pos.x = Mathf.Clamp (transform.position.x, 1f, 27.2f);
+				pos.x = Mathf.Clamp (transform.position.x, 1f, 17f);
 				transform.position = pos;
 			}
 		}
-	}
+
+        if (rb.angularVelocity < -.2f) { rb.angularVelocity = -.2f; }
+        if (rb.angularVelocity > .2f) { rb.angularVelocity = .2f; }
+    }
 
     void ManagePenalty()
     {

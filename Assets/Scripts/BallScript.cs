@@ -50,7 +50,7 @@ public class BallScript : MonoBehaviour {
 	public bool scoringMode = false;
     public bool startWithRandomGrav = false;
     public bool playSoundOnGravChange = true;
-    public float bonusBoost = 250f;
+    public float bonusBoost = 500f; //was 250f
 
 	GameObject CurrentArena;
 
@@ -525,12 +525,12 @@ public class BallScript : MonoBehaviour {
         if (transform.position.y < -7.0f)
             {
                 rb.AddForce(new Vector3(0f, bonusBoost, 0f));
-        //        Debug.Log("bonus boost");
+                Debug.Log("bonus boost");
             }
             if (transform.position.y > -7.0f)
             {
                 rb.AddForce(new Vector3(0f, bonusBoost * -1, 0f));
-        //        Debug.Log("bonus boost");
+                Debug.Log("bonus boost");
             }
         } else if (coll.gameObject.tag == "Playfield"){
 			SoundManagerScript.instance.PlaySingle (bounceOffWallSound);
@@ -547,12 +547,12 @@ public class BallScript : MonoBehaviour {
             if (transform.position.y < -7.0f)
             {
                 rb.AddForce(new Vector3(0f, bonusBoost/2, 0f));
-         //       Debug.Log("bonus boost");
+                Debug.Log("bonus boost continuing");
             }
             if (transform.position.y > 7.0f)
             {
                 rb.AddForce(new Vector3(0f, bonusBoost * -1/2, 0f));
-         //       Debug.Log("bonus boost");
+                Debug.Log("bonus boost continuing");
             }
         }
     }

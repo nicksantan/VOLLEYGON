@@ -77,7 +77,7 @@ public class JoystickLayerManager : MonoBehaviour
 
     public void SmallRumblePulse(int playerIndex, float strength) // Note: this goes from 0 through 3.
     {
-        Debug.Log("is rumble on?>");
+  //      Debug.Log("is rumble on?>");
         Debug.Log(FileSystemLayer.Instance.vibrationOn);
         if (FileSystemLayer.Instance.vibrationOn == 1)
         {

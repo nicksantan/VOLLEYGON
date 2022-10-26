@@ -565,7 +565,7 @@ public class ChoosePlayerScript : MonoBehaviour {
                 Debug.Log("y hit");
                 ToggleFourthBot();
             }
-			if (players[i].GetButtonDown("Start") || players[i].GetButtonDown("Jump") && !gamepadIcons[i].GetComponent<GamepadController>().enabled) {
+			if (players[i].GetButtonDown("Jump") && !gamepadIcons[i].GetComponent<GamepadController>().enabled) {
 
                 LogActivity();
 				// Start game if startable and gamepad not tagged in
@@ -593,8 +593,12 @@ public class ChoosePlayerScript : MonoBehaviour {
 
 				}
 			}
+            if (players[i].GetButtonDown("Start") && gameIsStartable)
+            {
+                StartGame();
+            }
 
-			#if UNITY_XBOXONE
+#if UNITY_XBOXONE
 				// Show user select if on xbox
 				if (DataManagerScript.xboxMode) {
 
@@ -643,8 +647,8 @@ public class ChoosePlayerScript : MonoBehaviour {
 						UsersManager.RequestSignIn(Users.AccountPickerOptions.None, (ulong)joystickForSlot);
 					}
 				}
-			#endif
-		}
+#endif
+        }
 
 		// Go ahead and start if all players ready
 		if (fakePlayer1.GetComponent<FakePlayerScript>().readyToPlay

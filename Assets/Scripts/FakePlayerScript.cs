@@ -360,7 +360,7 @@ public class FakePlayerScript : MonoBehaviour {
     void checkVerticalAxis(){
 
 		// Up or down pressed
-		string whichAxis = "MoveX";
+		string whichAxis = "MoveY";
 		if (player.GetAxisRaw(whichAxis) > 0 || player.GetAxisRaw(whichAxis) < 0) {
 			ChoosePlayerScript.Instance.LogActivity();
             // Only proceed if player is tagged in but not ready, and joystick not already pressed up/down

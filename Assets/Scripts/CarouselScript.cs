@@ -83,7 +83,7 @@ public class CarouselScript : MonoBehaviour {
 		//int whichPlayerIsControlling = DataManagerScript.gamepadControllingMenus;
 		//JoystickButtons joystick  = new JoystickButtons(whichPlayerIsControlling);
 
-		string whichAxis = "MoveX";
+		string whichAxis = "MoveY";
         if (player.GetAxis(whichAxis) < 0)
         {
             if (!stickDownLast)

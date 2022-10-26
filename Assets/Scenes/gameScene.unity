@@ -3285,7 +3285,7 @@ MonoBehaviour:
   submitActionId: -1
   cancelActionId: -1
   m_HorizontalAxis: MoveX
-  m_VerticalAxis: MoveX
+  m_VerticalAxis: MoveY
   m_SubmitButton: Jump
   m_CancelButton: Grav
   m_InputActionsPerSecond: 10
@@ -9342,11 +9342,11 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 11400000, guid: 5e9ff7a88a5c9f2438a785c0e9349807, type: 3}
       propertyPath: timestampHigh
-      value: 30917513
+      value: 30701265
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 5e9ff7a88a5c9f2438a785c0e9349807, type: 3}
       propertyPath: timestampLow
-      value: -1781931756
+      value: 1169170560
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 5e9ff7a88a5c9f2438a785c0e9349807, type: 3}
       propertyPath: m_size.x

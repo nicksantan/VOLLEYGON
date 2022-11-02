@@ -359,7 +359,7 @@ public class PlayerController : MonoBehaviour {
                         Vector3 v3 = GetComponent<Rigidbody2D>().velocity;
                         v3.x = moveHorizontal * speed;
                         GetComponent<Rigidbody2D>().velocity = v3;
-                       // GetComponent<Rigidbody2D>().AddForce(v3*10f);
+                       // GetComponent<Rigidbody2D>().AddForce(new Vector2(moveHorizontal * speed * 10f, 0f));
                     }
                 }
             }
@@ -495,7 +495,7 @@ public class PlayerController : MonoBehaviour {
                         {
                             //  Debug.Log("fast fall!");
 
-                            Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -1900f *Time.deltaTime, 0f);
+                            Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -3900f *Time.deltaTime, 0f); //was 1900
                             rb.AddForce(fastFallForce);
                         }
 

@@ -34,6 +34,7 @@ public class PauseManagerScript : MonoBehaviour
         {
             // Show pause
             pausePanel.SetActive(true);
+            pausePanel.BroadcastMessage("ChangeActivePlayer", gamepadIndex);
 
             // Assign butons
             if (JoystickLayerManager.Instance != null)

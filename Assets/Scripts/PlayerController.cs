@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour {
     public int team = 1;
     public float startingGrav = 1;
     public bool isJumping = false;
+    public bool recentlyDidAGravChange = false;
     private bool inPenalty = false;
     private bool canMove = true;
 
@@ -390,7 +391,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Update() {
         //TODO: Oof, can this be changed?
-      
+        
         if (transform.parent && transform.parent.tag != "FakePlayer")
         {
             if (inPenalty && GameManagerScript.Instance != null
@@ -428,7 +429,7 @@ public class PlayerController : MonoBehaviour {
                     {
                         //  Debug.Log("fast fall!");
 
-                        Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -1900f * Time.deltaTime, 0f);
+                        Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -5900f * Time.deltaTime, 0f);
                         rb.AddForce(fastFallForce);
                     }
 
@@ -495,7 +496,7 @@ public class PlayerController : MonoBehaviour {
                         {
                             //  Debug.Log("fast fall!");
 
-                            Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -3900f *Time.deltaTime, 0f); //was 1900
+                            Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -5900f *Time.deltaTime, 0f); //was 1900
                             rb.AddForce(fastFallForce);
                         }
 
@@ -547,7 +548,10 @@ public class PlayerController : MonoBehaviour {
 
 
                 }
-
+                if (Mathf.Abs(transform.position.y) < 4f)
+                {
+                    isJumping = true;
+                }
                 ClampPosition();
 	            ManagePowerups();
 

@@ -429,7 +429,7 @@ public class PlayerController : MonoBehaviour {
                     {
                         //  Debug.Log("fast fall!");
 
-                        Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -5900f * Time.deltaTime, 0f);
+                        Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -4900f * Time.deltaTime, 0f);
                         rb.AddForce(fastFallForce);
                     }
 
@@ -496,7 +496,7 @@ public class PlayerController : MonoBehaviour {
                         {
                             //  Debug.Log("fast fall!");
 
-                            Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -5900f *Time.deltaTime, 0f); //was 1900
+                            Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -4900f *Time.deltaTime, 0f); //was 1900
                             rb.AddForce(fastFallForce);
                         }
 
@@ -764,8 +764,8 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 
-        if (rb.angularVelocity < -.2f) { rb.angularVelocity = -.2f; }
-        if (rb.angularVelocity > .2f) { rb.angularVelocity = .2f; }
+        if (rb.angularVelocity < -2f) { rb.angularVelocity = -2f; }
+        if (rb.angularVelocity > 2f) { rb.angularVelocity = 2f; } // was .2
     }
 
     void ManagePenalty()

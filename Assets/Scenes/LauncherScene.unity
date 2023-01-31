@@ -1652,6 +1652,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 0}
   starCollider: {fileID: 0}
   circleCollider: {fileID: 0}
+  isDemoPlayer: 0
 --- !u!33 &1844411589
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2048,63 +2049,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
         type: 3}
-      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[19]._actionId
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
-        type: 3}
-      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[21]._actionId
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
-        type: 3}
-      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[21]._axisContribution
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
-        type: 3}
-      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[20]._actionId
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
-        type: 3}
-      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[22]._actionId
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
-        type: 3}
-      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[22]._axisContribution
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
-        type: 3}
-      propertyPath: _userData.joystickMaps.Array.data[1].actionElementMaps.Array.data[17]._actionId
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
-        type: 3}
-      propertyPath: _userData.joystickMaps.Array.data[1].actionElementMaps.Array.data[18]._actionId
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
-        type: 3}
-      propertyPath: _userData.joystickMaps.Array.data[1].actionElementMaps.Array.data[19]._actionId
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
-        type: 3}
-      propertyPath: _userData.joystickMaps.Array.data[1].actionElementMaps.Array.data[19]._axisContribution
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
-        type: 3}
-      propertyPath: _userData.joystickMaps.Array.data[1].actionElementMaps.Array.data[20]._actionId
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6189489873529385674, guid: f7415e22e4247c24592fdbb8dc67617a,
-        type: 3}
-      propertyPath: _userData.joystickMaps.Array.data[1].actionElementMaps.Array.data[20]._axisContribution
-      value: 1
+      propertyPath: _userData.keyboardMaps.Array.data[2].actionElementMaps.Array.data[3]._keyboardKeyCode
+      value: 114
       objectReference: {fileID: 0}
     - target: {fileID: 6189489873529385675, guid: f7415e22e4247c24592fdbb8dc67617a,
         type: 3}

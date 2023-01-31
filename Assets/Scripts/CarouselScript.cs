@@ -76,15 +76,15 @@ public class CarouselScript : MonoBehaviour {
 			return;
 		}
 
-        // Iterate over controllers
-        //for (int i = 0; i < joysticks.Length; i++) {
+		// Iterate over controllers
+		//for (int i = 0; i < joysticks.Length; i++) {
 
-        //Just respect the joystick controlling menus.
-        //int whichPlayerIsControlling = DataManagerScript.gamepadControllingMenus;
-        //JoystickButtons joystick  = new JoystickButtons(whichPlayerIsControlling);
-       
+		//Just respect the joystick controlling menus.
+		//int whichPlayerIsControlling = DataManagerScript.gamepadControllingMenus;
+		//JoystickButtons joystick  = new JoystickButtons(whichPlayerIsControlling);
 
-        if (player.GetAxis("MoveY") < 0)
+		string whichAxis = "MoveY";
+        if (player.GetAxis(whichAxis) < 0)
         {
             if (!stickDownLast)
             {
@@ -92,7 +92,7 @@ public class CarouselScript : MonoBehaviour {
                 stickDownLast = true;
             }
         }
-        else if (player.GetAxis("MoveY") > 0)
+        else if (player.GetAxis(whichAxis) > 0)
         {
             if (!stickDownLast)
             {

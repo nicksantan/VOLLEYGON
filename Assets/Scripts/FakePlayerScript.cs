@@ -304,10 +304,12 @@ public class FakePlayerScript : MonoBehaviour {
             if (player.GetButtonDown("Jump") && taggedIn)
             {
                 activateReadyState();
+				ChoosePlayerScript.Instance.LogActivity();
             }
 
             if ( player.GetButtonDown ("Grav") ) {
                 shouldDeactivate = true;
+				ChoosePlayerScript.Instance.LogActivity();
 			}
 		}
 	}
@@ -323,6 +325,7 @@ public class FakePlayerScript : MonoBehaviour {
 
     public void checkForJoystick()
     {
+		ChoosePlayerScript.Instance.LogActivity();
         // Get joystick for player slot
         switch (playerIdentifier)
         {
@@ -356,10 +359,10 @@ public class FakePlayerScript : MonoBehaviour {
 
     void checkVerticalAxis(){
 
-        // Up or down pressed
-     
-		if (player.GetAxisRaw("MoveY") > 0 || player.GetAxisRaw("MoveY") < 0) {
-
+		// Up or down pressed
+		string whichAxis = "MoveY";
+		if (player.GetAxisRaw(whichAxis) > 0 || player.GetAxisRaw(whichAxis) < 0) {
+			ChoosePlayerScript.Instance.LogActivity();
             // Only proceed if player is tagged in but not ready, and joystick not already pressed up/down
             if (axisInUse == false && !readyToPlay && taggedIn) { 
 
@@ -367,7 +370,7 @@ public class FakePlayerScript : MonoBehaviour {
                 axisInUse = true;
 
                 // See if going up or down
-                bool goingUp = player.GetAxisRaw("MoveY") > 0;
+                bool goingUp = player.GetAxisRaw(whichAxis) > 0;
 
                 // Move up or down through shape ints
                 int difference = (goingUp) ? 1 : -1;
@@ -399,7 +402,7 @@ public class FakePlayerScript : MonoBehaviour {
             }
 
         }
-        else if (player.GetAxisRaw("MoveY") == 0)
+        else if (player.GetAxisRaw(whichAxis) == 0)
         {
             // Reset boolean to prevent scrolling more than one tick per press when joystick returns to 0
             axisInUse = false;

@@ -274,7 +274,7 @@ public class GameManagerScript : MonoBehaviour {
                 {
                     aic_two.transform.GetChild(3).gameObject.SetActive(true);
                     aic_two.transform.GetChild(0).gameObject.SetActive(false);
-                    whichAIManager = "AIManager-star";
+                    whichAIManagerTwo = "AIManager-star";
                 }
 
                 aic_two.transform.Find(whichAIManagerTwo).GetComponent<ManualAIScript>().playerBeingControlled = Player4;

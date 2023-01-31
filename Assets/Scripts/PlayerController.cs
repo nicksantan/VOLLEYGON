@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour {
     public int team = 1;
     public float startingGrav = 1;
     public bool isJumping = false;
+    public bool recentlyDidAGravChange = false;
     private bool inPenalty = false;
     private bool canMove = true;
 
@@ -359,6 +360,7 @@ public class PlayerController : MonoBehaviour {
                         Vector3 v3 = GetComponent<Rigidbody2D>().velocity;
                         v3.x = moveHorizontal * speed;
                         GetComponent<Rigidbody2D>().velocity = v3;
+                       // GetComponent<Rigidbody2D>().AddForce(new Vector2(moveHorizontal * speed * 10f, 0f));
                     }
                 }
             }
@@ -389,7 +391,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Update() {
         //TODO: Oof, can this be changed?
-      
+        
         if (transform.parent && transform.parent.tag != "FakePlayer")
         {
             if (inPenalty && GameManagerScript.Instance != null
@@ -427,7 +429,7 @@ public class PlayerController : MonoBehaviour {
                     {
                         //  Debug.Log("fast fall!");
 
-                        Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -1900f * Time.deltaTime, 0f);
+                        Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -4900f * Time.deltaTime, 0f);
                         rb.AddForce(fastFallForce);
                     }
 
@@ -494,7 +496,7 @@ public class PlayerController : MonoBehaviour {
                         {
                             //  Debug.Log("fast fall!");
 
-                            Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -1900f *Time.deltaTime, 0f);
+                            Vector3 fastFallForce = new Vector3(0f, rb.gravityScale * -4900f *Time.deltaTime, 0f); //was 1900
                             rb.AddForce(fastFallForce);
                         }
 
@@ -546,7 +548,10 @@ public class PlayerController : MonoBehaviour {
 
 
                 }
-
+                if (Mathf.Abs(transform.position.y) < 4f)
+                {
+                    isJumping = true;
+                }
                 ClampPosition();
 	            ManagePowerups();
 
@@ -751,14 +756,17 @@ public class PlayerController : MonoBehaviour {
 			var pos = transform.position;
 			if (team == 1) {
 				// TODO: Make this dynamic based on raycasting
-				pos.x = Mathf.Clamp (transform.position.x, -27.2f, -1.0f);
+				pos.x = Mathf.Clamp (transform.position.x, -17f, -1.0f);
 				transform.position = pos;
 			} else if (team == 2) {
-				pos.x = Mathf.Clamp (transform.position.x, 1f, 27.2f);
+				pos.x = Mathf.Clamp (transform.position.x, 1f, 17f);
 				transform.position = pos;
 			}
 		}
-	}
+
+        if (rb.angularVelocity < -2f) { rb.angularVelocity = -2f; }
+        if (rb.angularVelocity > 2f) { rb.angularVelocity = 2f; } // was .2
+    }
 
     void ManagePenalty()
     {

@@ -478,6 +478,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 0}
   starCollider: {fileID: 0}
   circleCollider: {fileID: 70616940}
+  isDemoPlayer: 0
 --- !u!23 &70616933
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2252,6 +2253,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 0}
   starCollider: {fileID: 0}
   circleCollider: {fileID: 251343694}
+  isDemoPlayer: 0
 --- !u!23 &251343687
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5511,6 +5513,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 480526821}
   starCollider: {fileID: 0}
   circleCollider: {fileID: 480526818}
+  isDemoPlayer: 0
 --- !u!23 &480526811
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6006,6 +6009,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 0}
   starCollider: {fileID: 0}
   circleCollider: {fileID: 499084702}
+  isDemoPlayer: 0
 --- !u!23 &499084695
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6739,6 +6743,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 0}
   starCollider: {fileID: 0}
   circleCollider: {fileID: 555820043}
+  isDemoPlayer: 0
 --- !u!23 &555820036
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8099,6 +8104,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 0}
   starCollider: {fileID: 0}
   circleCollider: {fileID: 622331649}
+  isDemoPlayer: 0
 --- !u!23 &622331642
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10582,6 +10588,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 792009930}
   starCollider: {fileID: 0}
   circleCollider: {fileID: 792009927}
+  isDemoPlayer: 0
 --- !u!23 &792009920
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11750,6 +11757,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 0}
   starCollider: {fileID: 0}
   circleCollider: {fileID: 894976737}
+  isDemoPlayer: 0
 --- !u!23 &894976730
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -13605,6 +13613,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 0}
   starCollider: {fileID: 0}
   circleCollider: {fileID: 1047990874}
+  isDemoPlayer: 0
 --- !u!23 &1047990867
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -14124,7 +14133,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0.7
-  m_Text: PRESS ANY START BUTTON TO PLAY SINGLE PLAYER
+  m_Text: PRESS ANY TOP BUTTON TO PLAY SINGLE PLAYER
 --- !u!222 &1111910145
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14511,6 +14520,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 0}
   starCollider: {fileID: 0}
   circleCollider: {fileID: 1146637872}
+  isDemoPlayer: 0
 --- !u!23 &1146637865
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -14900,6 +14910,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 0}
   starCollider: {fileID: 0}
   circleCollider: {fileID: 1147612618}
+  isDemoPlayer: 0
 --- !u!23 &1147612611
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -15415,7 +15426,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0.7
-  m_Text: PRESS ANY START BUTTON TO PLAY TWO ON ONE
+  m_Text: PRESS ANY TOP BUTTON TO PLAY TWO ON ONE
 --- !u!222 &1190058801
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16940,6 +16951,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 0}
   starCollider: {fileID: 0}
   circleCollider: {fileID: 1439899513}
+  isDemoPlayer: 0
 --- !u!23 &1439899506
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -17479,6 +17491,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 1456609313}
   starCollider: {fileID: 0}
   circleCollider: {fileID: 1456609310}
+  isDemoPlayer: 0
 --- !u!23 &1456609303
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -18261,6 +18274,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 0}
   starCollider: {fileID: 0}
   circleCollider: {fileID: 1539305111}
+  isDemoPlayer: 0
 --- !u!23 &1539305104
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -21935,7 +21949,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0.7
-  m_Text: PRESS ANY START BUTTON TO PLAY ONE ON ONE
+  m_Text: PRESS ANY TOP BUTTON TO PLAY ONE ON ONE
 --- !u!222 &1899593085
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -23067,6 +23081,7 @@ MonoBehaviour:
   rectangleCollider: {fileID: 0}
   starCollider: {fileID: 0}
   circleCollider: {fileID: 2035558790}
+  isDemoPlayer: 0
 --- !u!23 &2035558783
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -24018,6 +24033,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gutterBG: {fileID: 873934555}
   versusText: {fileID: 1820631355}
+  timeOfLastActivity: 0
   fourthBotActive: 0
   soloMode: 0
   fakePlayer1: {fileID: 1370663620}
@@ -24404,6 +24420,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 666405468}
     m_Modifications:
+    - target: {fileID: 882658895550944223, guid: 46c157017aee56b49a2dcd7911689ce9,
+        type: 3}
+      propertyPath: timestampHigh
+      value: 30917118
+      objectReference: {fileID: 0}
+    - target: {fileID: 882658895550944223, guid: 46c157017aee56b49a2dcd7911689ce9,
+        type: 3}
+      propertyPath: timestampLow
+      value: 829419260
+      objectReference: {fileID: 0}
     - target: {fileID: 882658895557518911, guid: 46c157017aee56b49a2dcd7911689ce9,
         type: 3}
       propertyPath: m_Name

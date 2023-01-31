@@ -4176,7 +4176,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 0.7853982
+  m_Mass: 1
   m_LinearDrag: 0.1
   m_AngularDrag: 0.05
   m_GravityScale: 0.8
@@ -5505,7 +5505,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 0.7853982
+  m_Mass: 1
   m_LinearDrag: 0.1
   m_AngularDrag: 0.05
   m_GravityScale: 0.8
@@ -21204,7 +21204,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1529094963985220, guid: 7f25193abdabe4b6593eb6f23079dd90, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224296100145431504, guid: 7f25193abdabe4b6593eb6f23079dd90,
         type: 3}
@@ -26721,7 +26721,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1037891456
 Transform:
   m_ObjectHideFlags: 0
@@ -38780,7 +38780,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 5e9ff7a88a5c9f2438a785c0e9349807, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3300000, guid: 5e9ff7a88a5c9f2438a785c0e9349807, type: 3}
       propertyPath: m_Mesh
@@ -38801,11 +38801,11 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 11400000, guid: 5e9ff7a88a5c9f2438a785c0e9349807, type: 3}
       propertyPath: timestampHigh
-      value: 30861453
+      value: 30917513
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 5e9ff7a88a5c9f2438a785c0e9349807, type: 3}
       propertyPath: timestampLow
-      value: -833349370
+      value: -1781931756
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 5e9ff7a88a5c9f2438a785c0e9349807, type: 3}
       propertyPath: m_size.y
@@ -51840,7 +51840,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 83.74881
+  Phase: 83.83714
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5

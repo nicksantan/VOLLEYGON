@@ -97,7 +97,7 @@ MonoBehaviour:
   background: {fileID: 0}
   isOnePlayer: 0
   timer: 0
-  gravScale: 0.8
+  gravScale: 0.785
   singleMode: 0
   bouncesOnTop: 0
   baseTimeBetweenGravChanges: 8

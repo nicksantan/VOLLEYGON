@@ -6,8 +6,9 @@ using UnityEngine.UI;
 
 public class AchievementManagerScript : MonoBehaviour
 {
-    private enum Platform { Native, Steam, Switch, Xbox, Itch };
-    private Platform currentPlatform;
+    public enum Platform { Native, Steam, Switch, Xbox, Itch };
+    [SerializeField]
+    public Platform currentPlatform;
 
     [SerializeField]
     public List<Achievement> Achievements = new List<Achievement>();
@@ -30,15 +31,16 @@ public class AchievementManagerScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        currentPlatform = Platform.Native;
+        //currentPlatform = Platform.Native;
 
         // load achievement status from playerprefs or other source (Steam cloud save?)
-
+        Debug.Log("Achievement manager init");
         // Are we on steam?
         if (currentPlatform == Platform.Steam)
         {
             if (SteamManager.Initialized)
             {
+                Debug.Log(SteamManager.Initialized);
                 string steamname = SteamFriends.GetPersonaName();
                 Debug.Log(steamname);
             }
@@ -114,14 +116,14 @@ public class AchievementManagerScript : MonoBehaviour
                 // TODO: Need to figure out how achievements with progress work. Perhaps use a logprogress method and poll for achievement complete?
                 // read from steam achievements and populate local array
               
-                for (int i = 1; i < numberOfAchievements; i++)
+                for (int i = 0; i < numberOfAchievements; i++)
                 {
                     bool thisAchievementUnlocked = false;
                     // NOTE: Currently unused.
                     int thisAchievementUsesProgress = 0;
                     int thisAchievementProgress = 0;
 
-                    Steamworks.SteamUserStats.GetAchievement("ach_"+ i.ToString(), out thisAchievementUnlocked);
+                    Steamworks.SteamUserStats.GetAchievement("ach_"+ (i+1).ToString(), out thisAchievementUnlocked);
                    
                     Achievements.Add(new Achievement(AchievementNames[i], AchievementDescriptions[i], thisAchievementUnlocked, thisAchievementUsesProgress == 1, i, thisAchievementProgress));
                 }
@@ -173,12 +175,9 @@ public class AchievementManagerScript : MonoBehaviour
 
     public void QueueToPop(int whichAchievement)
     {
-        // create a new achievement popup but not on Steam
+        // create a new achievement popup 
         switch (currentPlatform)
         {
-            case Platform.Steam:
-                Debug.Log("We're on steam so no need to pop native achievement");
-                break;
             default:
                     GameObject newPopup = Instantiate(popupPrefab, a_canvas.transform);
                     newPopup.GetComponent<AchivementPopupScript>().whichAchievement = whichAchievement;
@@ -197,10 +196,10 @@ public class AchievementManagerScript : MonoBehaviour
             case Platform.Steam:
                 // Need to look up achievement name here by index
                 bool achievementUnlocked;
-                Steamworks.SteamUserStats.GetAchievement("ach_" + achievementID.ToString(), out achievementUnlocked);
+                Steamworks.SteamUserStats.GetAchievement("ach_" + (achievementID+1).ToString(), out achievementUnlocked);
                 if (achievementUnlocked == false)
                 {
-                    Steamworks.SteamUserStats.SetAchievement("ach_" + achievementID.ToString());
+                    Steamworks.SteamUserStats.SetAchievement("ach_" + (achievementID+1).ToString());
                 }
                 break;
             case Platform.Itch:
@@ -237,11 +236,6 @@ public class Achievement
     public int progress;
     public int id;
 
-    //List<List<float>> medalRanges = new List<List<float>>();
-
-
-    // List of List<int>
-
     public Achievement(string achievementName, string achievementDescription, bool achievementUnlocked, bool usesProgress, int id, int progress = 0)
     {
         this.name = achievementName;
@@ -250,7 +244,6 @@ public class Achievement
         this.usesProgress = usesProgress;
         this.progress = progress;
         this.id = id;
-
     }
 
     public void Unlock()

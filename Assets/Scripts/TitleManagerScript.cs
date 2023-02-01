@@ -316,7 +316,7 @@ public class TitleManagerScript : MonoBehaviour {
 
 	public void SetUpSinglePlayerMenu() {
 		SoundManagerScript.instance.PlaySingle(confirmSound);
-		es1.SetSelectedGameObject(versusAIButton);
+		es1.SetSelectedGameObject(soloModeButton);
 	}
 
     public void SetUpAIMenu() {

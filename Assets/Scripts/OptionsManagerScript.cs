@@ -122,7 +122,7 @@ public class OptionsManagerScript : MonoBehaviour
 			else
 			{
                 // Go to previous scene
-                LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("titleScene"); });
+                LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("consoleTitle"); });
                
 			}
 		}

@@ -199,7 +199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11459550, guid: 3723fb8617feb40a9b12a7029741a475, type: 3}
       propertyPath: nextScene
-      value: titleScene
+      value: consoleTitle
       objectReference: {fileID: 0}
     - target: {fileID: 11459550, guid: 3723fb8617feb40a9b12a7029741a475, type: 3}
       propertyPath: sceneDuration
@@ -255,6 +255,7 @@ MonoBehaviour:
   resumeButton: {fileID: 0}
   singlePlayerButton: {fileID: 0}
   curtain: {fileID: 0}
+  cutsceneManager: {fileID: 0}
   es1: {fileID: 0}
   firstButton: {fileID: 0}
   startSound: {fileID: 0}
@@ -391,7 +392,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 9.313341
+  Phase: 9.747035
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5

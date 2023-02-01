@@ -16,7 +16,7 @@ public class CutsceneScript : MonoBehaviour {
     private Player playerThree;
     private Player playerFour;
     public bool playerWantsToSkipToTitle = false;
-
+    public string titleSceneName = "consoleTitle";
     // Use this for initialization
     void OnEnable () {
 		Invoke ("NextScene", sceneDuration);
@@ -25,7 +25,7 @@ public class CutsceneScript : MonoBehaviour {
 	void NextScene(){
         if (gameObject.activeSelf == true){
          if (playerWantsToSkipToTitle){
-                SceneManager.LoadSceneAsync("titleScene");
+                SceneManager.LoadSceneAsync(titleSceneName);
          } else {
 	    	SceneManager.LoadSceneAsync(nextScene);
           }

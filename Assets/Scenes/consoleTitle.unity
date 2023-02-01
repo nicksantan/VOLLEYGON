@@ -1660,7 +1660,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 123058, guid: 3723fb8617feb40a9b12a7029741a475, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 446018, guid: 3723fb8617feb40a9b12a7029741a475, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1704,6 +1704,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3723fb8617feb40a9b12a7029741a475, type: 3}
+--- !u!1 &801772576 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 123058, guid: 3723fb8617feb40a9b12a7029741a475,
+    type: 3}
+  m_PrefabInstance: {fileID: 801772575}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &856795035
 GameObject:
   m_ObjectHideFlags: 0
@@ -4143,7 +4149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 469.40762
+  Phase: 469.58932
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5
@@ -4800,11 +4806,14 @@ MonoBehaviour:
   singlePlayerPanel: {fileID: 1756215892}
   AIBotPanel: {fileID: 660926544}
   soloModeButton: {fileID: 1267099894}
+  versusAIButton: {fileID: 0}
   oneBotButton: {fileID: 1852807369}
   quitPanel: {fileID: 283604589545881707}
   quitButton: {fileID: 283604590470941541}
   resumeButton: {fileID: 283604589097200024}
+  singlePlayerButton: {fileID: 1884776964}
   curtain: {fileID: 468954782}
+  cutsceneManager: {fileID: 801772576}
   es1: {fileID: 452662710}
   firstButton: {fileID: 1884776966}
   startSound: {fileID: 8300000, guid: f8418c91001c34f2488e62cbfd8a5c58, type: 3}

@@ -74,7 +74,7 @@ public class PauseManagerScript : MonoBehaviour
             }
             else
             {
-                SceneManager.LoadSceneAsync("titleScene");
+                SceneManager.LoadSceneAsync("consoleTitle");
             }
         });
     }
@@ -90,7 +90,7 @@ public class PauseManagerScript : MonoBehaviour
     {
         isInputLocked = true;
         Unpause();
-        LeanTween.alpha(GameObject.Find("FadeCurtainCanvas").GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("titleScene"); });
+        LeanTween.alpha(GameObject.Find("FadeCurtainCanvas").GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("consoleTitle"); });
     }
 
    

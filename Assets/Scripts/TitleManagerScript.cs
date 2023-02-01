@@ -123,13 +123,13 @@ public class TitleManagerScript : MonoBehaviour {
                         if (allowQuit)
                         {
                             // Back out to quit menu
-                          //  SoundManagerScript.instance.PlaySingle(cancelSound);
-                          //  showQuitAppPanel();
-                         //   DataManagerScript.gamepadControllingMenus = i;
+                           SoundManagerScript.instance.PlaySingle(cancelSound);
+                           showQuitAppPanel();
+                           DataManagerScript.gamepadControllingMenus = i;
 
-                        //   if (JoystickLayerManager.Instance != null){
-                       //         JoystickLayerManager.Instance.AssignPlayerToEventSystem(i);
-                     //       }
+                          if (JoystickLayerManager.Instance != null){
+                               JoystickLayerManager.Instance.AssignPlayerToEventSystem(i);
+                           }
                         }
                     }
 
@@ -316,7 +316,7 @@ public class TitleManagerScript : MonoBehaviour {
 
 	public void SetUpSinglePlayerMenu() {
 		SoundManagerScript.instance.PlaySingle(confirmSound);
-		es1.SetSelectedGameObject(versusAIButton);
+		es1.SetSelectedGameObject(soloModeButton);
 	}
 
     public void SetUpAIMenu() {

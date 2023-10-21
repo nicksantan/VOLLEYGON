@@ -71,4 +71,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/consoleTitle.unity
     guid: 8e77849339c042b43ab1cc65ee86cae7
+  - enabled: 1
+    path: Assets/Scenes/arcadeCommonsScene.unity
+    guid: 7ffbccc8567894dfb9fdad98d387d1f3
   m_configObjects: {}

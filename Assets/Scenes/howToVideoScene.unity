@@ -199,7 +199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11459550, guid: 3723fb8617feb40a9b12a7029741a475, type: 3}
       propertyPath: nextScene
-      value: consoleTitle
+      value: arcadeCommonsScene
       objectReference: {fileID: 0}
     - target: {fileID: 11459550, guid: 3723fb8617feb40a9b12a7029741a475, type: 3}
       propertyPath: sceneDuration
@@ -392,7 +392,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 9.747035
+  Phase: 10.550371
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5

@@ -182,7 +182,7 @@ public class ChallengeCarouselScript : MonoBehaviour
     
             // Go to previous scene
             SoundManagerScript.instance.PlaySingle(prevSceneSound);
-            LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("consoleTitle"); });
+            LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("titleScene"); });
         }
 
         if (inputSelecting && !optionIsOpen && optionIsSelectable)

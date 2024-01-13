@@ -228,7 +228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 3.4524853
+  Phase: 3.7123318
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5
@@ -451,7 +451,7 @@ MonoBehaviour:
   isSkippable: 1
   isSkippableToTitle: 1
   playerWantsToSkipToTitle: 0
-  titleSceneName: consoleTitle
+  titleSceneName: titleScene
 --- !u!4 &677127947
 Transform:
   m_ObjectHideFlags: 0

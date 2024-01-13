@@ -38,16 +38,16 @@ public class AchievementManagerScript : MonoBehaviour
         // Are we on steam?
         if (currentPlatform == Platform.Steam)
         {
-            if (SteamManager.Initialized)
-            {
-                Debug.Log(SteamManager.Initialized);
-                string steamname = SteamFriends.GetPersonaName();
-                Debug.Log(steamname);
-            }
-            else
-            {
-                Debug.Log("Not on steam");
-            }
+            //if (SteamManager.Initialized)
+            //{
+            //    Debug.Log(SteamManager.Initialized);
+            //    string steamname = SteamFriends.GetPersonaName();
+            //    Debug.Log(steamname);
+            //}
+            //else
+            //{
+            //    Debug.Log("Not on steam");
+            //}
         }
 
         PopulateAchievements();

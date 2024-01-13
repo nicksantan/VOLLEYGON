@@ -1597,7 +1597,7 @@ MonoBehaviour:
         _axisRange: 0
         _invert: 0
         _axisContribution: 0
-        _keyboardKeyCode: 122
+        _keyboardKeyCode: 120
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
@@ -1608,7 +1608,7 @@ MonoBehaviour:
         _axisRange: 0
         _invert: 0
         _axisContribution: 0
-        _keyboardKeyCode: 120
+        _keyboardKeyCode: 122
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
@@ -1692,7 +1692,7 @@ MonoBehaviour:
         _axisRange: 0
         _invert: 0
         _axisContribution: 0
-        _keyboardKeyCode: 99
+        _keyboardKeyCode: 118
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
@@ -1703,7 +1703,7 @@ MonoBehaviour:
         _axisRange: 0
         _invert: 0
         _axisContribution: 0
-        _keyboardKeyCode: 118
+        _keyboardKeyCode: 99
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
@@ -1787,7 +1787,7 @@ MonoBehaviour:
         _axisRange: 0
         _invert: 0
         _axisContribution: 0
-        _keyboardKeyCode: 98
+        _keyboardKeyCode: 110
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
@@ -1798,7 +1798,7 @@ MonoBehaviour:
         _axisRange: 0
         _invert: 0
         _axisContribution: 0
-        _keyboardKeyCode: 110
+        _keyboardKeyCode: 98
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
@@ -1882,7 +1882,7 @@ MonoBehaviour:
         _axisRange: 0
         _invert: 0
         _axisContribution: 0
-        _keyboardKeyCode: 109
+        _keyboardKeyCode: 44
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0
@@ -1893,7 +1893,7 @@ MonoBehaviour:
         _axisRange: 0
         _invert: 0
         _axisContribution: 0
-        _keyboardKeyCode: 44
+        _keyboardKeyCode: 109
         _modifierKey1: 0
         _modifierKey2: 0
         _modifierKey3: 0

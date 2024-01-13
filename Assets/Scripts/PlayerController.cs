@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour {
     public JoystickButtons buttons;
     public VirtualJoystickButtons virtualButtons;
     private Player player;
+    private Player pauseButtonPlayer;
     public int joystick = -1;
 
     // Properties of player by ID
@@ -298,6 +299,7 @@ public class PlayerController : MonoBehaviour {
             // Note, convert joystick number to player index requires -1.
           
             player = ReInput.players.GetPlayer(joystick - 1);
+            pauseButtonPlayer = ReInput.players.GetPlayer(2);
         } else
         {
             virtualButtons = new VirtualJoystickButtons();
@@ -519,7 +521,7 @@ public class PlayerController : MonoBehaviour {
                     }
 
                     // Handle start button
-                    if (player.GetButtonDown("Start")
+                    if (pauseButtonPlayer.GetButtonDown("Start")
                         && GameManagerScript.Instance != null
                         && !GameManagerScript.Instance.GetComponent<PauseManagerScript>().paused)
                     {
@@ -541,7 +543,8 @@ public class PlayerController : MonoBehaviour {
                         Debug.Log("allowed to pause?");
                         Debug.Log(allowedToPause);
                         if (allowedToPause)
-                        {
+                        { 
+                            
                             GameManagerScript.Instance.GetComponent<PauseManagerScript>().Pause(joystick);
                         }
                     }

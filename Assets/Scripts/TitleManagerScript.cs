@@ -123,17 +123,17 @@ public class TitleManagerScript : MonoBehaviour {
                         if (allowQuit)
                         {
                             // Back out to quit menu
-                           SoundManagerScript.instance.PlaySingle(cancelSound);
-                           showQuitAppPanel();
-                           DataManagerScript.gamepadControllingMenus = i;
+                        //   SoundManagerScript.instance.PlaySingle(cancelSound);
+                        //  showQuitAppPanel();
+                        //   DataManagerScript.gamepadControllingMenus = i;
 
-                          if (JoystickLayerManager.Instance != null){
-                               JoystickLayerManager.Instance.AssignPlayerToEventSystem(i);
-                           }
+                       //   if (JoystickLayerManager.Instance != null){
+                       //        JoystickLayerManager.Instance.AssignPlayerToEventSystem(i);
+                       //    }
                         }
                     }
 
-                    if (players[i].GetButtonDown("Jump") || players[i].GetButtonDown("Start")) {
+                    if (players[i].GetButtonDown("Jump")) { //used to check for start here as well
                         SoundManagerScript.instance.PlaySingle(startSound);
                     
                         if (DataManagerScript.demoMode) {
@@ -281,7 +281,7 @@ public class TitleManagerScript : MonoBehaviour {
 	}
 
 	public void activateMainMenu(int gamepad) {
-        allowQuit = true;
+      //  allowQuit = true;
         // Assign gamepad to menus
         // Note: This is a player index (0 index). So 3 means player 4.
         DataManagerScript.gamepadControllingMenus = gamepad;

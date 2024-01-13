@@ -16,7 +16,7 @@ public class CutsceneScript : MonoBehaviour {
     private Player playerThree;
     private Player playerFour;
     public bool playerWantsToSkipToTitle = false;
-    public string titleSceneName = "consoleTitle";
+    public string titleSceneName = "titleScene";
     // Use this for initialization
     void OnEnable () {
 		Invoke ("NextScene", sceneDuration);

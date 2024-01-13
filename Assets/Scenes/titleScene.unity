@@ -1706,6 +1706,10 @@ PrefabInstance:
       propertyPath: isSkippableToTitle
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11459550, guid: 3723fb8617feb40a9b12a7029741a475, type: 3}
+      propertyPath: titleSceneName
+      value: titleScene
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3723fb8617feb40a9b12a7029741a475, type: 3}
 --- !u!1 &801772576 stripped
@@ -4153,7 +4157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 483.7958
+  Phase: 484.2698
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5
@@ -4803,7 +4807,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pressStartAnimation: {fileID: 1461209255}
-  allowQuit: 1
+  allowQuit: 0
   versionText: {fileID: 1690449425}
   highlightImages: {fileID: 1554668083}
   mainMenuPanel: {fileID: 2106787734}

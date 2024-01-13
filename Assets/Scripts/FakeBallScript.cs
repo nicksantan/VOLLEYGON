@@ -205,7 +205,7 @@ public class FakeBallScript : MonoBehaviour {
 		gravityIndicator.GetComponent<PlayAnimationScript> ().PlayAnimation ();
 	}
 	void GameOver(){
-		//Application.LoadLevel ("consoleTitle");
+		//Application.LoadLevel ("titleScene");
 	}
 	void ComputeStat(int whichTeamScored){
 

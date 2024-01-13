@@ -422,7 +422,7 @@ public class GameManagerScript : MonoBehaviour {
         {
             locked = true;
             GameObject curtain = GameObject.Find("FadeCurtainCanvas");
-			LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("consoleTitle"); });
+			LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 1f, .5f).setOnComplete(() => { SceneManager.LoadSceneAsync("titleScene"); });
      
 
         }
@@ -480,7 +480,7 @@ public class GameManagerScript : MonoBehaviour {
 		// if all 4 start buttons are pressed, warp back to title screen
 		if (Input.GetButton (startButton1) && Input.GetButton (startButton2) && Input.GetButton (startButton3) && Input.GetButton (startButton4)) {
 			Debug.Log ("returning to title");
-			SceneManager.LoadSceneAsync("consoleTitle");
+			SceneManager.LoadSceneAsync("titleScene");
 		}
 
 		// keep track of match time

@@ -18684,6 +18684,10 @@ PrefabInstance:
       propertyPath: isSkippable
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11459550, guid: 3723fb8617feb40a9b12a7029741a475, type: 3}
+      propertyPath: titleSceneName
+      value: titleScene
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3723fb8617feb40a9b12a7029741a475, type: 3}
 --- !u!1 &1710890511
@@ -22308,7 +22312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shader: {fileID: 4800000, guid: 6b426a8c366d0584dadb551db862ddeb, type: 3}
   AutomaticPhase: 1
-  Phase: 1.7356055
+  Phase: 1.9906056
   ConvertToGrayscale: 0
   NoiseIntensity: 0.4
   ScanlinesIntensity: 0.5

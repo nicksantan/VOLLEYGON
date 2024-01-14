@@ -87,7 +87,6 @@ public class FakePlayerScript : MonoBehaviour {
 	}
 
 	public void activateReadyState(){
-
 		if (taggedIn) {
 
             // Ready up
@@ -325,36 +324,9 @@ public class FakePlayerScript : MonoBehaviour {
 
     public void checkForJoystick()
     {
+		// Arcade: we can always grab the rewired player for our given slot
 		ChoosePlayerScript.Instance.LogActivity();
-        // Get joystick for player slot
-        switch (playerIdentifier)
-        {
-
-            case 1:
-                joystickIdentifier = DataManagerScript.playerOneJoystick;
-                break;
-            case 2:
-                joystickIdentifier = DataManagerScript.playerTwoJoystick;
-                break;
-            case 3:
-                joystickIdentifier = DataManagerScript.playerThreeJoystick;
-                break;
-            case 4:
-                joystickIdentifier = DataManagerScript.playerFourJoystick;
-                break;
-
-        }
-
-        // Activate slot if a joystick was selected
-        if (joystickIdentifier != -1)
-        {
-            // Assign joystick to player
-            //buttons = new JoystickButtons(joystickIdentifier);
-            player = ReInput.players.GetPlayer(joystickIdentifier - 1);
-
-            // Get axis string from joystick class
-            //verticalAxis = new vAxis(buttons.vertical);
-        }
+        player = ReInput.players.GetPlayer(playerIdentifier - 1);
     }
 
     void checkVerticalAxis(){

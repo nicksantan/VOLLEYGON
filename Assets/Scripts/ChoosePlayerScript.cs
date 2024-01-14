@@ -23,11 +23,11 @@ public class ChoosePlayerScript : MonoBehaviour {
 
 	public GameObject curtain;
 
-	public GameObject gamepadIcon1;
-	public GameObject gamepadIcon2;
-	public GameObject gamepadIcon3;
-	public GameObject gamepadIcon4;
-	public GameObject[] gamepadIcons;
+	// public GameObject gamepadIcon1;
+	// public GameObject gamepadIcon2;
+	// public GameObject gamepadIcon3;
+	// public GameObject gamepadIcon4;
+	// public GameObject[] gamepadIcons;
 
 	public GameObject userText1;
 	public GameObject userText2;
@@ -55,7 +55,7 @@ public class ChoosePlayerScript : MonoBehaviour {
 	private int playersOnLeft = 0;
 	private int playersOnRight = 0;
 
-	private GameObject[] fakePlayers;
+	private FakePlayerScript[] fakePlayers;
 	public static ChoosePlayerScript Instance { get; private set; }
 
     private string defaultText = "Y: LOG IN";
@@ -309,69 +309,50 @@ public class ChoosePlayerScript : MonoBehaviour {
 		curtain.SetActive(true);
         LeanTween.alpha(curtain.GetComponentInChildren<Image>().rectTransform, 0f, .5f);
 
-		// Make array of icons and usernames
-		gamepadIcons = new GameObject[4] { gamepadIcon1, gamepadIcon2, gamepadIcon3, gamepadIcon4 };
+		// Make array of icons, usernames, and fake players
         usernames = new GameObject[4] { userText1, userText2, userText3, userText4 };
+        fakePlayers = new FakePlayerScript[4] { 
+            fakePlayer1.GetComponent<FakePlayerScript>(), 
+            fakePlayer2.GetComponent<FakePlayerScript>(), 
+            fakePlayer3.GetComponent<FakePlayerScript>(), 
+            fakePlayer4.GetComponent<FakePlayerScript>()
+        };
 
         // Loop over icons and activate any already active in menu
-        for (int i = 0; i < gamepadIcons.Length; i++)
+        for (int gamepadId = 0; gamepadId < fakePlayers.Length; gamepadId++)
         {
-            int gamepadId = i;
-
-            // Activate gamepad for player who selected the game mode
-            bool isActive = DataManagerScript.gamepadControllingMenus == gamepadId;
-            gamepadIcons[i].GetComponent<GamepadController>().botMode = isBotsMode;
-            gamepadIcons[i].GetComponent<GamepadController>().ToggleIcon(isActive);
-
-           
+            // Activate slot for player who selected the game mode
+            if (DataManagerScript.gamepadControllingMenus == gamepadId)
+            {
+                fakePlayers[gamepadId].checkForJoystick();
+                fakePlayers[gamepadId].activateReadyState();
+            }
         }
-
     }
 
     // See if all players that are tagged in have also readied up
 	bool noUnreadyPlayers(){
-
         // Only need two humans for bots mode.
-        if (isBotsMode)
+        int totalHumans = isBotsMode ? 2 : 4;
+
+        for (int i = 0; i < totalHumans; i++)
         {
-            if (fakePlayer1.GetComponent<FakePlayerScript>().taggedIn && !fakePlayer1.GetComponent<FakePlayerScript>().readyToPlay)
+            if (fakePlayers[i].taggedIn && !fakePlayers[i].readyToPlay)
             {
                 return false;
-            }
-            else if (fakePlayer2.GetComponent<FakePlayerScript>().taggedIn && !fakePlayer2.GetComponent<FakePlayerScript>().readyToPlay)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
             }
         }
 
-		if (fakePlayer1.GetComponent<FakePlayerScript> ().taggedIn && !fakePlayer1.GetComponent<FakePlayerScript> ().readyToPlay) {
-			return false;
-		} else if (fakePlayer2.GetComponent<FakePlayerScript> ().taggedIn && !fakePlayer2.GetComponent<FakePlayerScript> ().readyToPlay) {
-			return false;
-		} else if (fakePlayer3.GetComponent<FakePlayerScript> ().taggedIn && !fakePlayer3.GetComponent<FakePlayerScript> ().readyToPlay) {
-			return false;
-		} else if (fakePlayer4.GetComponent<FakePlayerScript> ().taggedIn && !fakePlayer4.GetComponent<FakePlayerScript> ().readyToPlay) {
-			return false;
-		} else {
-			return true;
-		}
-
+        return true;
 	}
 
     int numberOfTaggedInPlayers()
     {
-        int num = 0; ;
+        int num = 0;
 
-        for (int i = 0; i < gamepadIcons.Length; i++)
+        for (int i = 0; i < fakePlayers.Length; i++)
         {
-            int gamepadId = i + 1;
-
-
-            if (gamepadIcons[i].GetComponent<GamepadController>().enabled == true)
+            if (fakePlayers[i].taggedIn)
             {
                 num++;
             }
@@ -503,14 +484,15 @@ public class ChoosePlayerScript : MonoBehaviour {
 
 	void exitIfNoOtherGamepads() {
 
-		// See if any gamepads besides this one are active
-		for ( int i = 0; i < gamepadIcons.Length; i++) {
-			if (gamepadIcons[i].GetComponent<GamepadController>().enabled) {
+		// See if any slots besides this one are active
+		for (int i = 0; i < fakePlayers.Length; i++) {
+			if (fakePlayers[i].taggedIn) {
 				return;
 			}
 		}
 
-		// If no gamepad icons were active, return to title
+		// If no slots were active, return to title
+        Debug.Log("back to title");
 		BackToTitle();
 	}
 
@@ -522,27 +504,27 @@ public class ChoosePlayerScript : MonoBehaviour {
 		}
 	}
     
-    void HideNonTaggedInPlayers()
-    {
-        for (int i = 0; i < players.Length; i++)
-        {
-            if (!gamepadIcons[i].GetComponent<GamepadController>().enabled)
-            {
-                gamepadIcons[i].GetComponent<GamepadController>().HideIcon();
-            }
-        }
-    }
+    // void HideNonTaggedInPlayers()
+    // {
+    //     for (int i = 0; i < players.Length; i++)
+    //     {
+    //         if (!gamepadIcons[i].GetComponent<GamepadController>().enabled)
+    //         {
+    //             gamepadIcons[i].GetComponent<GamepadController>().HideIcon();
+    //         }
+    //     }
+    // }
 
-    public void ShowNonTaggedInPlayers()
-    {
-        for (int i = 0; i < players.Length; i++)
-        {
-            if (!gamepadIcons[i].GetComponent<GamepadController>().enabled)
-            {
-                gamepadIcons[i].GetComponent<GamepadController>().ShowIcon();
-            }
-        }
-    }
+    // public void ShowNonTaggedInPlayers()
+    // {
+    //     for (int i = 0; i < players.Length; i++)
+    //     {
+    //         if (!gamepadIcons[i].GetComponent<GamepadController>().enabled)
+    //         {
+    //             gamepadIcons[i].GetComponent<GamepadController>().ShowIcon();
+    //         }
+    //     }
+    // }
 
     // Update is called once per frame
     void Update () {
@@ -565,30 +547,34 @@ public class ChoosePlayerScript : MonoBehaviour {
                 Debug.Log("y hit");
                 ToggleFourthBot();
             }
-			if (players[i].GetButtonDown("Jump") && !gamepadIcons[i].GetComponent<GamepadController>().enabled) {
+			if (players[i].GetButtonDown("Jump") && !fakePlayers[i].taggedIn) {
 
                 LogActivity();
+
 				// Start game if startable and gamepad not tagged in
-				if (gameIsStartable && gamepadIcons[i].GetComponent<GamepadController>().enabled) {
+				if (gameIsStartable && fakePlayers[i].taggedIn) {
                     StartGame();
                 }
-				else if (!gamepadIcons[i].GetComponent<GamepadController>().enabled) {
+				else if (!fakePlayers[i].taggedIn) {
 
                     // Tag in gamepad if not
                     if (isBotsMode) // Check if max slots have been exceeded first
                     {
                         if (numberOfTaggedInPlayers() < 2)
                         {
-                            if (numberOfTaggedInPlayers() == 1)
-                            {
-                                HideNonTaggedInPlayers(); 
-                            }
-                            gamepadIcons[i].GetComponent<GamepadController>().ToggleIcon(true);
+                            // if (numberOfTaggedInPlayers() == 1)
+                            // {
+                            //     HideNonTaggedInPlayers(); 
+                            // }
+                            
+                            fakePlayers[i].checkForJoystick();
+                            fakePlayers[i].activateReadyState();
                         }
                     }
                     else
                     {
-                        gamepadIcons[i].GetComponent<GamepadController>().ToggleIcon(true);
+                        fakePlayers[i].checkForJoystick();
+                        fakePlayers[i].activateReadyState();
                     }
 
 				}
@@ -682,12 +668,11 @@ public class ChoosePlayerScript : MonoBehaviour {
 		exitIfNoOtherGamepads();
 	}
 
-
-        public void LogActivity(){
-            Debug.Log("time of last activity is now");
-            Debug.Log(Time.time);
-            timeOfLastActivity = Time.time;
-        }
+    public void LogActivity(){
+        // Debug.Log("time of last activity is now");
+        // Debug.Log(Time.time);
+        timeOfLastActivity = Time.time;
+    }
 
 	#if UNITY_XBOXONE
 		public void showLoginPrompt(int slotId, int userId) {

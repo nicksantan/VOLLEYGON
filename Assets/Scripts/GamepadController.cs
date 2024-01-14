@@ -99,7 +99,7 @@ public class GamepadController : MonoBehaviour {
         		ToggleIcon(false);
                 if (botMode)
                 {
-                    ChoosePlayerScript.Instance.ShowNonTaggedInPlayers();
+                    // ChoosePlayerScript.Instance.ShowNonTaggedInPlayers();
                 }
         	} else if (!playerReady) {
                 ToggleIcon(true);
@@ -255,7 +255,10 @@ public class GamepadController : MonoBehaviour {
 
     void checkHorizontalAxis()
     {
-      
+        if (player == null)
+        {
+            return;
+        }
 
         // Left or right pressed
         if (player.GetAxisRaw("MoveX") > 0 || player.GetAxisRaw("MoveX") < 0)

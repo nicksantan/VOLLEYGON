@@ -77,16 +77,16 @@ public class StatsPlayerScript : MonoBehaviour {
 		int joystick = -1;
 		switch (playerIdentifier) {
 		case 1:
-			joystick = DataManagerScript.playerOneJoystick;
+			joystick = 1;
 			break;
 		case 2:
-			joystick = DataManagerScript.playerTwoJoystick;
+			joystick = 2;
 			break;
 		case 3:
-			joystick = DataManagerScript.playerThreeJoystick;
+			joystick = 3;
 			break;
 		case 4:
-			joystick = DataManagerScript.playerFourJoystick;
+			joystick =4;
 			break;
 		}
 

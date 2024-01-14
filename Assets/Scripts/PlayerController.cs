@@ -265,19 +265,19 @@ public class PlayerController : MonoBehaviour {
 			switch (playerID) {
 				case 1:
 					playerColor = "1069A8";
-					joystick = DataManagerScript.playerOneJoystick;
+					joystick = 1;
 					break;
 				case 2:
 					playerColor = "7CBEE8";
-					joystick = DataManagerScript.playerTwoJoystick;
+					joystick = 2;
 					break;
 				case 3:
 					playerColor = "D63236";
-					joystick = DataManagerScript.playerThreeJoystick;
+					joystick = 3;
 					break;
 				case 4:
 					playerColor = "D97A7B";
-					joystick = DataManagerScript.playerFourJoystick;
+					joystick = 4;
 					break;
 
                 case 5:
